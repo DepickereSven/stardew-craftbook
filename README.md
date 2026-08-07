@@ -134,14 +134,14 @@ The app is complete: an Items view (what you own, what it's worth raw vs. proces
 
 The JSON API behind it:
 
-| Endpoint              | Returns                                                |
-|-----------------------|--------------------------------------------------------|
-| `GET /api/version`    | Snapshot counter, for cheap change polling             |
-| `GET /api/state`      | Every recipe with its craftability and what's missing  |
-| `GET /api/plan/{key}` | Step chain to produce a recipe's missing intermediates |
-| `GET /api/items`      | Item reference: sell price, buffs, processing time     |
-| `GET /api/inventory`  | Everything you own, most valuable stack first          |
-| `GET /api/item/{id}`  | One item, the recipes it feeds, and whether they pay   |
+| Endpoint              | Returns                                                    |
+|-----------------------|------------------------------------------------------------|
+| `GET /api/version`    | Snapshot counter, for cheap change polling                 |
+| `GET /api/state`      | Every recipe: craftability, what's missing, sale economics |
+| `GET /api/plan/{key}` | Step chain to produce a recipe's missing intermediates     |
+| `GET /api/items`      | Item reference: sell price, buffs, processing time         |
+| `GET /api/inventory`  | Everything you own, most valuable stack first              |
+| `GET /api/item/{id}`  | One item, the recipes it feeds, and whether they pay       |
 
 ```sh
 curl -s localhost:8375/api/plan/Anvil
