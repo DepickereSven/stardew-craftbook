@@ -1,0 +1,351 @@
+package engine
+
+import (
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
+
+	"github.com/svendep/stardew-craftbook/internal/parser"
+)
+
+// InventoryItem is one owned item, aggregated across every container in the
+// save. SellPrice and StackValue are pointers because an item with no recorded
+// price must not render as free — see ui-spec-items.md §4.2.
+type InventoryItem struct {
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Count       int    `json:"count"`
+	SellPrice   *int   `json:"sell_price,omitempty"`
+	StackValue  *int   `json:"stack_value,omitempty"`
+	Category    int    `json:"category"`
+	RecipeCount int    `json:"recipe_count"`
+	WikiURL     string `json:"wiki_url,omitempty"`
+}
+
+// Verdict answers "is making this worth it?" for one recipe. The four states
+// exist because two would lie: a Bee House is not a loss-making trade, it is
+// something you build to use, and a recipe whose output price is simply
+// unrecorded must not be reported as breaking even.
+type Verdict string
+
+const (
+	// VerdictProfit means the output sells for more than the ingredients.
+	VerdictProfit Verdict = "profit"
+	// VerdictLoss means it sells for less. Meaningful mostly for cooking.
+	VerdictLoss Verdict = "loss"
+	// VerdictNotForSale means the output cannot be sold at all.
+	VerdictNotForSale Verdict = "not_for_sale"
+	// VerdictUnknown means a price is missing somewhere. Show no number.
+	VerdictUnknown Verdict = "unknown"
+)
+
+// UsedIn is one recipe that consumes a given item, with the economics of
+// making it once.
+type UsedIn struct {
+	RecipeKey   string  `json:"recipe_key"`
+	Name        string  `json:"name"`
+	Type        string  `json:"type"`
+	State       State   `json:"state"`
+	Learned     bool    `json:"learned"`
+	QtyHere     int     `json:"qty_here"`
+	MaxMakeable int     `json:"max_makeable"`
+	OutputQty   int     `json:"output_qty"`
+	OutputValue *int    `json:"output_value,omitempty"`
+	InputCost   *int    `json:"input_cost,omitempty"`
+	Delta       *int    `json:"delta,omitempty"`
+	Verdict     Verdict `json:"verdict"`
+	WikiURL     string  `json:"wiki_url,omitempty"`
+}
+
+// ItemDetail is the payload behind GET /api/item/{id}.
+type ItemDetail struct {
+	ID         string   `json:"id"`
+	Name       string   `json:"name"`
+	Count      int      `json:"count"`
+	SellPrice  *int     `json:"sell_price,omitempty"`
+	StackValue *int     `json:"stack_value,omitempty"`
+	Category   int      `json:"category"`
+	WikiURL    string   `json:"wiki_url,omitempty"`
+	UsedIn     []UsedIn `json:"used_in"`
+}
+
+// priceTemplate catches prices the wiki scraper left as raw markup in
+// sell_price_note ("{{Price|50}}"), recovering about 19 items that would
+// otherwise report no price at all.
+var priceTemplate = regexp.MustCompile(`^\{\{Price\|(\d+)\}\}$`)
+
+// ItemIndex resolves item metadata for ids taken from a save. It exists because
+// a bare id alone is not a safe key: the dataset holds 131 as Sardine while a
+// save may hold furniture under the same number. Every lookup is therefore
+// checked against the name the save reports.
+type ItemIndex struct {
+	byID   map[string]Item
+	byName map[string]Item
+}
+
+// NewItemIndex normalises the raw dataset and indexes it by id and by name.
+func NewItemIndex(items map[string]Item) *ItemIndex {
+	idx := &ItemIndex{byID: make(map[string]Item, len(items)), byName: make(map[string]Item, len(items))}
+	for id, it := range items {
+		if it.SellPrice == nil && it.SellPriceNote != "" {
+			if m := priceTemplate.FindStringSubmatch(strings.TrimSpace(it.SellPriceNote)); m != nil {
+				if n, err := strconv.Atoi(m[1]); err == nil {
+					it.SellPrice = &n
+					it.SellPriceNote = ""
+				}
+			}
+		}
+		idx.byID[id] = it
+		if it.Name != "" {
+			if _, seen := idx.byName[it.Name]; !seen {
+				idx.byName[it.Name] = it
+			}
+		}
+	}
+	return idx
+}
+
+// Lookup resolves an owned item. name is what the save calls it; when the
+// dataset disagrees about that id the entry is rejected rather than trusted,
+// which is what stops a held Coffee Maker inheriting Wheat Flour's price.
+func (idx *ItemIndex) Lookup(id, name string) (Item, bool) {
+	it, ok := idx.byID[id]
+	if ok && (name == "" || strings.EqualFold(it.Name, name)) {
+		return it, true
+	}
+	// A qualified id ((BC)146) is not in the dataset, which keys big craftables
+	// bare; fall back to the bare number, still under the name guard.
+	if bare := stripQualifier(id); bare != id {
+		if it, ok := idx.byID[bare]; ok && (name == "" || strings.EqualFold(it.Name, name)) {
+			return it, true
+		}
+	}
+	if name != "" {
+		if it, ok := idx.byName[name]; ok {
+			return it, true
+		}
+	}
+	return Item{}, false
+}
+
+// ByName resolves a recipe's output, which the recipe dataset identifies by
+// name only — it carries no output item id.
+func (idx *ItemIndex) ByName(name string) (Item, bool) {
+	it, ok := idx.byName[name]
+	return it, ok
+}
+
+func stripQualifier(id string) string {
+	if i := strings.IndexByte(id, ')'); strings.HasPrefix(id, "(") && i > 0 {
+		return id[i+1:]
+	}
+	return id
+}
+
+// notForSale reports whether the dataset states outright that an item cannot be
+// sold. The wiki writes this two ways; "N/A" is deliberately not included,
+// since it records absence of information rather than a rule.
+func notForSale(it Item) bool {
+	return it.SellPrice == nil && strings.EqualFold(strings.TrimSpace(it.SellPriceNote), "cannot be sold")
+}
+
+// recipeIndex maps an ingredient id to the recipes that consume it.
+func recipeIndex(recipes []Recipe) map[string][]Recipe {
+	idx := map[string][]Recipe{}
+	for _, r := range recipes {
+		for _, ing := range r.Ingredients {
+			if ing.ID == "" {
+				continue
+			}
+			idx[ing.ID] = append(idx[ing.ID], r)
+		}
+	}
+	return idx
+}
+
+// BuildInventory lists everything the save holds, most valuable stack first.
+// Items with no known price sort last but keep their place in the list — absent
+// and zero are different facts.
+func BuildInventory(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe) []InventoryItem {
+	rev := recipeIndex(recipes)
+	out := make([]InventoryItem, 0, len(snap.Items))
+	for id, count := range snap.Items {
+		name := snap.Names[id]
+		inv := InventoryItem{
+			ID:          id,
+			Name:        name,
+			Count:       count,
+			Category:    snap.Categories[id],
+			RecipeCount: len(rev[id]),
+		}
+		if it, ok := idx.Lookup(id, name); ok {
+			inv.WikiURL = it.WikiURL
+			if inv.Name == "" {
+				inv.Name = it.Name
+			}
+			if it.SellPrice != nil {
+				price := *it.SellPrice
+				value := price * count
+				inv.SellPrice = &price
+				inv.StackValue = &value
+			}
+		}
+		if inv.Name == "" {
+			inv.Name = id
+		}
+		out = append(out, inv)
+	}
+	sort.Slice(out, func(i, j int) bool {
+		vi, vj := 0, 0
+		if out[i].StackValue != nil {
+			vi = *out[i].StackValue
+		}
+		if out[j].StackValue != nil {
+			vj = *out[j].StackValue
+		}
+		if vi != vj {
+			return vi > vj
+		}
+		if out[i].Count != out[j].Count {
+			return out[i].Count > out[j].Count
+		}
+		return out[i].Name < out[j].Name
+	})
+	return out
+}
+
+// maxMakeable reports how many times a recipe can be made from what is owned,
+// every ingredient considered.
+func maxMakeable(snap *parser.Snapshot, r Recipe) int {
+	best := -1
+	for _, ing := range r.Ingredients {
+		if ing.Qty <= 0 {
+			continue
+		}
+		n := countOf(snap, ing) / ing.Qty
+		if best < 0 || n < best {
+			best = n
+		}
+	}
+	if best < 0 {
+		return 0
+	}
+	return best
+}
+
+// inputCost sums the sell value of one crafting's ingredients, and reports
+// false unless every one of them is priced — a partial total is worse than
+// none, because it reads as a real number.
+func inputCost(idx *ItemIndex, r Recipe) (int, bool) {
+	total := 0
+	for _, ing := range r.Ingredients {
+		it, ok := idx.Lookup(ing.ID, ing.Name)
+		if !ok || it.SellPrice == nil {
+			return 0, false
+		}
+		total += *it.SellPrice * ing.Qty
+	}
+	return total, true
+}
+
+// BuildItemDetail answers GET /api/item/{id}. avail supplies each recipe's
+// state and learned flag so this view never recomputes them.
+func BuildItemDetail(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe, avail []Availability, id string) (ItemDetail, bool) {
+	count, owned := snap.Items[id]
+	if !owned {
+		return ItemDetail{}, false
+	}
+	name := snap.Names[id]
+	detail := ItemDetail{ID: id, Name: name, Count: count, Category: snap.Categories[id], UsedIn: []UsedIn{}}
+	if it, ok := idx.Lookup(id, name); ok {
+		detail.WikiURL = it.WikiURL
+		if detail.Name == "" {
+			detail.Name = it.Name
+		}
+		if it.SellPrice != nil {
+			price := *it.SellPrice
+			value := price * count
+			detail.SellPrice = &price
+			detail.StackValue = &value
+		}
+	}
+	if detail.Name == "" {
+		detail.Name = id
+	}
+
+	byKey := make(map[string]Availability, len(avail))
+	for _, av := range avail {
+		byKey[av.Recipe.Key] = av
+	}
+
+	for _, r := range recipeIndex(recipes)[id] {
+		qty := 0
+		for _, ing := range r.Ingredients {
+			if ing.ID == id {
+				qty = ing.Qty
+				break
+			}
+		}
+		u := UsedIn{
+			RecipeKey:   r.Key,
+			Name:        r.Name,
+			Type:        r.Type,
+			QtyHere:     qty,
+			MaxMakeable: maxMakeable(snap, r),
+			OutputQty:   r.OutputQty,
+			WikiURL:     r.WikiURL,
+			Verdict:     VerdictUnknown,
+		}
+		if av, ok := byKey[r.Key]; ok {
+			u.State, u.Learned = av.State, av.Learned
+		}
+
+		out, outKnown := idx.ByName(r.Name)
+		cost, costKnown := inputCost(idx, r)
+		if costKnown {
+			c := cost
+			u.InputCost = &c
+		}
+		switch {
+		case outKnown && notForSale(out):
+			u.Verdict = VerdictNotForSale
+			// An input cost is real but meaningless next to an unsellable
+			// output; leaving it visible invites a subtraction that has no
+			// answer.
+			u.InputCost = nil
+		case outKnown && out.SellPrice != nil:
+			v := *out.SellPrice
+			u.OutputValue = &v
+			if costKnown {
+				d := v*r.OutputQty - cost
+				u.Delta = &d
+				if d >= 0 {
+					u.Verdict = VerdictProfit
+				} else {
+					u.Verdict = VerdictLoss
+				}
+			}
+		}
+		detail.UsedIn = append(detail.UsedIn, u)
+	}
+	sort.Slice(detail.UsedIn, func(i, j int) bool {
+		a, b := detail.UsedIn[i], detail.UsedIn[j]
+		// Actionable first, then by how much it earns, then by name.
+		if (a.MaxMakeable > 0) != (b.MaxMakeable > 0) {
+			return a.MaxMakeable > 0
+		}
+		da, db := 0, 0
+		if a.Delta != nil {
+			da = *a.Delta
+		}
+		if b.Delta != nil {
+			db = *b.Delta
+		}
+		if da != db {
+			return da > db
+		}
+		return a.Name < b.Name
+	})
+	return detail, true
+}
