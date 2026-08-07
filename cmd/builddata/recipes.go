@@ -132,8 +132,6 @@ func translateUnlock(raw string) string {
 		return fmt.Sprintf("%s Level %s", f[1], f[2])
 	case len(f) == 3 && f[0] == "f":
 		return fmt.Sprintf("%s (%s hearts)", f[1], f[2])
-	case len(f) == 2 && f[0] == "l":
-		return "Level " + f[1]
 	default:
 		return "Special (see wiki)"
 	}

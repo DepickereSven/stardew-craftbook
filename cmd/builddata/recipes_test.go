@@ -63,6 +63,7 @@ func TestTranslateUnlock(t *testing.T) {
 	cases := map[string]string{
 		"default":     "Starter",
 		"l 0":         "Starter",
+		"l 100":       "Special (see wiki)",
 		"s Farming 2": "Farming Level 2",
 		"f Pam 3":     "Pam (3 hearts)",
 		"null":        "Special (see wiki)",
