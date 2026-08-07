@@ -34,10 +34,10 @@ type Server struct {
 	parseErr string
 }
 
-// unknownItemIDs lists item ids held in the save that no recipe or machine in
-// the dataset refers to — mod leftovers, or items added by a newer game
-// version. They are counted under their raw id and simply never match.
-func unknownItemIDs(snap *parser.Snapshot, recipes []engine.Recipe, machines []engine.Machine) []string {
+// unknownItemIDs lists held items that are neither relevant to planning nor
+// represented by item metadata. This keeps decorative items out of the warning
+// while surfacing modded or newer-game items the app cannot describe.
+func unknownItemIDs(snap *parser.Snapshot, recipes []engine.Recipe, machines []engine.Machine, itemIdx *engine.ItemIndex) []string {
 	known := map[string]bool{}
 	for _, r := range recipes {
 		for _, ing := range r.Ingredients {
@@ -52,7 +52,10 @@ func unknownItemIDs(snap *parser.Snapshot, recipes []engine.Recipe, machines []e
 	}
 	var out []string
 	for id := range snap.Items {
-		if !known[id] {
+		if known[id] {
+			continue
+		}
+		if _, ok := itemIdx.Lookup(id, snap.Names[id]); !ok {
 			out = append(out, id)
 		}
 	}
@@ -103,13 +106,12 @@ func (s *Server) refresh() {
 	// Spec §8: report items the dataset does not know about, once, so a game
 	// update or a modded save is visible without spamming every poll.
 	s.logUnknown.Do(func() {
-		if unknown := unknownItemIDs(snap, s.recipes, s.machines); len(unknown) > 0 {
+		if unknown := unknownItemIDs(snap, s.recipes, s.machines, s.itemIdx); len(unknown) > 0 {
 			shown := unknown
 			if len(shown) > 10 {
 				shown = shown[:10]
 			}
-			log.Printf("%d item ids in the save are not referenced by any recipe or machine "+
-				"(counted, but never matched): %v...", len(unknown), shown)
+			log.Printf("%d item ids in the save are neither described by item metadata nor used in planning: %v...", len(unknown), shown)
 		}
 	})
 }
