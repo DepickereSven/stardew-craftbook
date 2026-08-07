@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SaveGame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <player>
+    <name>Test</name>
+    <items />
+    <craftingRecipes />
+    <cookingRecipes />
+  </player>
+  <locations>
+    <GameLocation xsi:type="Farm">
+      <objects>
+        <item>
+          <key><Vector2><X>4</X><Y>4</Y></Vector2></key>
+          <value>
+            <Object xsi:type="Object">
+              <name>Keg</name><itemId>12</itemId><stack>1</stack><category>-9</category>
+              <lastInputItem xsi:type="Object">
+                <name>Hops</name><itemId>304</itemId><stack>999</stack><category>-75</category>
+              </lastInputItem>
+              <heldObject xsi:type="Object">
+                <name>Pale Ale</name><itemId>303</itemId><stack>1</stack><category>-26</category>
+              </heldObject>
+            </Object>
+          </value>
+        </item>
+      </objects>
+      <itemsFromPlayerToSell>
+        <Item xsi:type="Object"><name>Wine</name><itemId>348</itemId><stack>40</stack><category>-26</category></Item>
+      </itemsFromPlayerToSell>
+      <furniture>
+        <Furniture xsi:type="Furniture"><name>Chair</name><itemId>1120</itemId><stack>1</stack><category>-24</category></Furniture>
+      </furniture>
+    </GameLocation>
+  </locations>
+</SaveGame>
