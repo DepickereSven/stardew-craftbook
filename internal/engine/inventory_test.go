@@ -58,6 +58,20 @@ func TestLookupFallsBackToBareIDWhenNameAgrees(t *testing.T) {
 	}
 }
 
+func TestLookupUsesIDlessMetadataAfterAnIDCollision(t *testing.T) {
+	idx := NewItemIndex(map[string]Item{
+		"147":          {ID: "147", Name: "Stump Brazier"},
+		"name:Herring": {ID: "name:Herring", Name: "Herring", SellPrice: ptr(30)},
+	})
+	it, ok := idx.Lookup("147", "Herring")
+	if !ok || it.SellPrice == nil || *it.SellPrice != 30 {
+		t.Fatalf("Herring did not resolve through name metadata: %+v", it)
+	}
+	if _, ok := idx.Lookup("147", "Stump Brazier"); !ok {
+		t.Error("Stump Brazier no longer resolves by its direct ID")
+	}
+}
+
 func TestPriceTemplateRecovered(t *testing.T) {
 	idx := testIndex()
 	it, ok := idx.Lookup("TemplItem", "Templated")

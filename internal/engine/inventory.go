@@ -78,9 +78,8 @@ type ItemDetail struct {
 	UsedIn     []UsedIn `json:"used_in"`
 }
 
-// priceTemplate catches prices the wiki scraper left as raw markup in
-// sell_price_note ("{{Price|50}}"), recovering about 19 items that would
-// otherwise report no price at all.
+// priceTemplate preserves compatibility with older generated datasets whose
+// sell_price_note contains raw wiki markup ("{{Price|50}}").
 var priceTemplate = regexp.MustCompile(`^\{\{Price\|(\d+)\}\}$`)
 
 // ItemIndex resolves item metadata for ids taken from a save. It exists because
