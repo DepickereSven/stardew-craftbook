@@ -1,5 +1,5 @@
-// Package web embeds the UI. index.html is a placeholder until the UI agent
-// delivers the real page per docs/ui-spec.md.
+// Package web embeds the UI: a single self-contained page covering the
+// recipes view (docs/ui-spec.md) and the items view (docs/ui-spec-items.md).
 package web
 
 import _ "embed"
