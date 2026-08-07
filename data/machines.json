@@ -1,0 +1,320 @@
+[
+  {
+    "machine": "Furnace",
+    "inputs": [
+      {
+        "id": "378",
+        "name": "Copper Ore",
+        "qty": 5
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "334",
+      "name": "Copper Bar",
+      "qty": 1
+    },
+    "minutes": 30
+  },
+  {
+    "machine": "Furnace",
+    "inputs": [
+      {
+        "id": "380",
+        "name": "Iron Ore",
+        "qty": 5
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "335",
+      "name": "Iron Bar",
+      "qty": 1
+    },
+    "minutes": 120
+  },
+  {
+    "machine": "Furnace",
+    "inputs": [
+      {
+        "id": "384",
+        "name": "Gold Ore",
+        "qty": 5
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "336",
+      "name": "Gold Bar",
+      "qty": 1
+    },
+    "minutes": 300
+  },
+  {
+    "machine": "Furnace",
+    "inputs": [
+      {
+        "id": "386",
+        "name": "Iridium Ore",
+        "qty": 5
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "337",
+      "name": "Iridium Bar",
+      "qty": 1
+    },
+    "minutes": 480
+  },
+  {
+    "machine": "Furnace",
+    "inputs": [
+      {
+        "id": "80",
+        "name": "Quartz",
+        "qty": 1
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "338",
+      "name": "Refined Quartz",
+      "qty": 1
+    },
+    "minutes": 90
+  },
+  {
+    "machine": "Furnace",
+    "inputs": [
+      {
+        "id": "82",
+        "name": "Fire Quartz",
+        "qty": 1
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "338",
+      "name": "Refined Quartz",
+      "qty": 3
+    },
+    "minutes": 90
+  },
+  {
+    "machine": "Cheese Press",
+    "inputs": [
+      {
+        "id": "184",
+        "name": "Milk",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "424",
+      "name": "Cheese",
+      "qty": 1
+    },
+    "minutes": 200
+  },
+  {
+    "machine": "Cheese Press",
+    "inputs": [
+      {
+        "id": "436",
+        "name": "Goat Milk",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "426",
+      "name": "Goat Cheese",
+      "qty": 1
+    },
+    "minutes": 200
+  },
+  {
+    "machine": "Mayonnaise Machine",
+    "inputs": [
+      {
+        "id": "176",
+        "name": "Egg",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "306",
+      "name": "Mayonnaise",
+      "qty": 1
+    },
+    "minutes": 180
+  },
+  {
+    "machine": "Mayonnaise Machine",
+    "inputs": [
+      {
+        "id": "442",
+        "name": "Duck Egg",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "307",
+      "name": "Duck Mayonnaise",
+      "qty": 1
+    },
+    "minutes": 180
+  },
+  {
+    "machine": "Loom",
+    "inputs": [
+      {
+        "id": "440",
+        "name": "Wool",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "428",
+      "name": "Cloth",
+      "qty": 1
+    },
+    "minutes": 240
+  },
+  {
+    "machine": "Oil Maker",
+    "inputs": [
+      {
+        "id": "270",
+        "name": "Corn",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "247",
+      "name": "Oil",
+      "qty": 1
+    },
+    "minutes": 1000
+  },
+  {
+    "machine": "Oil Maker",
+    "inputs": [
+      {
+        "id": "421",
+        "name": "Sunflower",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "247",
+      "name": "Oil",
+      "qty": 1
+    },
+    "minutes": 60
+  },
+  {
+    "machine": "Oil Maker",
+    "inputs": [
+      {
+        "id": "431",
+        "name": "Sunflower Seeds",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "247",
+      "name": "Oil",
+      "qty": 1
+    },
+    "minutes": 3200
+  },
+  {
+    "machine": "Oil Maker",
+    "inputs": [
+      {
+        "id": "430",
+        "name": "Truffle",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "432",
+      "name": "Truffle Oil",
+      "qty": 1
+    },
+    "minutes": 360
+  },
+  {
+    "machine": "Keg",
+    "inputs": [
+      {
+        "id": "433",
+        "name": "Coffee Bean",
+        "qty": 5
+      }
+    ],
+    "output": {
+      "id": "395",
+      "name": "Coffee",
+      "qty": 1
+    },
+    "minutes": 120
+  },
+  {
+    "machine": "Charcoal Kiln",
+    "inputs": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 10
+      }
+    ],
+    "output": {
+      "id": "382",
+      "name": "Coal",
+      "qty": 1
+    },
+    "minutes": 30
+  },
+  {
+    "machine": "Recycling Machine",
+    "inputs": [
+      {
+        "id": "168",
+        "name": "Trash",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "338",
+      "name": "Refined Quartz",
+      "qty": 1
+    },
+    "minutes": 60
+  }
+]

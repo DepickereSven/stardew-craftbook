@@ -1,0 +1,5096 @@
+[
+  {
+    "key": "Algae Soup",
+    "name": "Algae Soup",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "153",
+        "name": "Green Algae",
+        "qty": 4
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Clint (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Algae_Soup"
+  },
+  {
+    "key": "Ancient Seeds",
+    "name": "Ancient Seeds",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "114",
+        "name": "Ancient Seed",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Ancient_Seeds"
+  },
+  {
+    "key": "Anvil",
+    "name": "Anvil",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 50
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 2",
+    "wiki_url": "https://stardewvalleywiki.com/Anvil"
+  },
+  {
+    "key": "Artichoke Dip",
+    "name": "Artichoke Dip",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "274",
+        "name": "Artichoke",
+        "qty": 1
+      },
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Artichoke_Dip"
+  },
+  {
+    "key": "Autumn's Bounty",
+    "name": "Autumn's Bounty",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "280",
+        "name": "Yam",
+        "qty": 1
+      },
+      {
+        "id": "276",
+        "name": "Pumpkin",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Demetrius (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Autumn's_Bounty"
+  },
+  {
+    "key": "Bait",
+    "name": "Bait",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "684",
+        "name": "Bug Meat",
+        "qty": 1
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Fishing Level 2",
+    "wiki_url": "https://stardewvalleywiki.com/Bait"
+  },
+  {
+    "key": "Bait Maker",
+    "name": "Bait Maker",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 3
+      },
+      {
+        "id": "393",
+        "name": "Coral",
+        "qty": 3
+      },
+      {
+        "id": "397",
+        "name": "Sea Urchin",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Bait_Maker"
+  },
+  {
+    "key": "Baked Fish",
+    "name": "Baked Fish",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "145",
+        "name": "Sunfish",
+        "qty": 1
+      },
+      {
+        "id": "132",
+        "name": "Bream",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 12",
+    "wiki_url": "https://stardewvalleywiki.com/Baked_Fish"
+  },
+  {
+    "key": "Banana Pudding",
+    "name": "Banana Pudding",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "91",
+        "name": "Banana",
+        "qty": 1
+      },
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Banana_Pudding"
+  },
+  {
+    "key": "Barbed Hook",
+    "name": "Barbed Hook",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 1
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      },
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Barbed_Hook"
+  },
+  {
+    "key": "Barrel Brazier",
+    "name": "Barrel Brazier",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 50
+      },
+      {
+        "id": "768",
+        "name": "Solar Essence",
+        "qty": 1
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Barrel_Brazier"
+  },
+  {
+    "key": "Basic Fertilizer",
+    "name": "Basic Fertilizer",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "92",
+        "name": "Sap",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 1",
+    "wiki_url": "https://stardewvalleywiki.com/Basic_Fertilizer"
+  },
+  {
+    "key": "Basic Retaining Soil",
+    "name": "Basic Retaining Soil",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Basic_Retaining_Soil"
+  },
+  {
+    "key": "Bean Hotpot",
+    "name": "Bean Hotpot",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "188",
+        "name": "Green Bean",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Clint (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Bean_Hotpot"
+  },
+  {
+    "key": "Bee House",
+    "name": "Bee House",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 40
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 8
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      },
+      {
+        "id": "724",
+        "name": "Maple Syrup",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 3",
+    "wiki_url": "https://stardewvalleywiki.com/Bee_House"
+  },
+  {
+    "key": "Big Chest",
+    "name": "Big Chest",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 120
+      },
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Big_Chest"
+  },
+  {
+    "key": "Big Stone Chest",
+    "name": "Big Stone Chest",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 250
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Big_Stone_Chest"
+  },
+  {
+    "key": "Blackberry Cobbler",
+    "name": "Blackberry Cobbler",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "410",
+        "name": "Blackberry",
+        "qty": 2
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Blackberry_Cobbler"
+  },
+  {
+    "key": "Blue Grass Starter",
+    "name": "Blue Grass Starter",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 25
+      },
+      {
+        "id": "Moss",
+        "name": "Moss",
+        "qty": 10
+      },
+      {
+        "id": "MysticSyrup",
+        "name": "Mystic Syrup",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Grass_Starter"
+  },
+  {
+    "key": "Blueberry Tart",
+    "name": "Blueberry Tart",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "258",
+        "name": "Blueberry",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      },
+      {
+        "id": "-5",
+        "name": "Egg (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Pierre (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Blueberry_Tart"
+  },
+  {
+    "key": "Bomb",
+    "name": "Bomb",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "380",
+        "name": "Iron Ore",
+        "qty": 4
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Mining Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Bomb"
+  },
+  {
+    "key": "Bone Mill",
+    "name": "Bone Mill",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "881",
+        "name": "Bone Fragment",
+        "qty": 10
+      },
+      {
+        "id": "330",
+        "name": "Clay",
+        "qty": 3
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 20
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Bone_Mill"
+  },
+  {
+    "key": "Bread",
+    "name": "Bread",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 11",
+    "wiki_url": "https://stardewvalleywiki.com/Bread"
+  },
+  {
+    "key": "Brick Floor",
+    "name": "Brick Floor",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "330",
+        "name": "Clay",
+        "qty": 2
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 5
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Brick_Floor"
+  },
+  {
+    "key": "Bruschetta",
+    "name": "Bruschetta",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "216",
+        "name": "Bread",
+        "qty": 1
+      },
+      {
+        "id": "247",
+        "name": "Oil",
+        "qty": 1
+      },
+      {
+        "id": "256",
+        "name": "Tomato",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Bruschetta"
+  },
+  {
+    "key": "Bug Steak",
+    "name": "Bug Steak",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "684",
+        "name": "Bug Meat",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 1",
+    "wiki_url": "https://stardewvalleywiki.com/Bug_Steak"
+  },
+  {
+    "key": "Campfire",
+    "name": "Campfire",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 10
+      },
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 10
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Campfire"
+  },
+  {
+    "key": "Carp Surprise",
+    "name": "Carp Surprise",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "142",
+        "name": "Carp",
+        "qty": 4
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 16",
+    "wiki_url": "https://stardewvalleywiki.com/Carp_Surprise"
+  },
+  {
+    "key": "Carved Brazier",
+    "name": "Carved Brazier",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 10
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Carved_Brazier"
+  },
+  {
+    "key": "Cask",
+    "name": "Cask",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 20
+      },
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Cask"
+  },
+  {
+    "key": "Challenge Bait",
+    "name": "Challenge Bait",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "881",
+        "name": "Bone Fragment",
+        "qty": 5
+      },
+      {
+        "id": "Moss",
+        "name": "Moss",
+        "qty": 2
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Challenge_Bait"
+  },
+  {
+    "key": "Charcoal Kiln",
+    "name": "Charcoal Kiln",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 20
+      },
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 2",
+    "wiki_url": "https://stardewvalleywiki.com/Charcoal_Kiln"
+  },
+  {
+    "key": "Cheese Cauli.",
+    "name": "Cheese Cauliflower",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "190",
+        "name": "Cauliflower",
+        "qty": 1
+      },
+      {
+        "id": "424",
+        "name": "Cheese",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Pam (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Cheese_Cauliflower"
+  },
+  {
+    "key": "Cheese Press",
+    "name": "Cheese Press",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 45
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 45
+      },
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 10
+      },
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Cheese_Press"
+  },
+  {
+    "key": "Cherry Bomb",
+    "name": "Cherry Bomb",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "378",
+        "name": "Copper Ore",
+        "qty": 4
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Mining Level 1",
+    "wiki_url": "https://stardewvalleywiki.com/Cherry_Bomb"
+  },
+  {
+    "key": "Chest",
+    "name": "Chest",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 50
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Chest"
+  },
+  {
+    "key": "Chocolate Cake",
+    "name": "Chocolate Cake",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      },
+      {
+        "id": "-5",
+        "name": "Egg (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 23",
+    "wiki_url": "https://stardewvalleywiki.com/Chocolate_Cake"
+  },
+  {
+    "key": "Chowder",
+    "name": "Chowder",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "372",
+        "name": "Clam",
+        "qty": 1
+      },
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Willy (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Chowder"
+  },
+  {
+    "key": "Cobblestone Path",
+    "name": "Cobblestone Path",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Cobblestone_Path"
+  },
+  {
+    "key": "Coleslaw",
+    "name": "Coleslaw",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "266",
+        "name": "Red Cabbage",
+        "qty": 1
+      },
+      {
+        "id": "419",
+        "name": "Vinegar",
+        "qty": 1
+      },
+      {
+        "id": "306",
+        "name": "Mayonnaise",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Coleslaw"
+  },
+  {
+    "key": "Complete Breakfast",
+    "name": "Complete Breakfast",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "194",
+        "name": "Fried Egg",
+        "qty": 1
+      },
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      },
+      {
+        "id": "210",
+        "name": "Hashbrowns",
+        "qty": 1
+      },
+      {
+        "id": "211",
+        "name": "Pancakes",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 26",
+    "wiki_url": "https://stardewvalleywiki.com/Complete_Breakfast"
+  },
+  {
+    "key": "Cookies",
+    "name": "Cookie",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      },
+      {
+        "id": "-5",
+        "name": "Egg (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Cookie"
+  },
+  {
+    "key": "Cookout Kit",
+    "name": "Cookout Kit",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 15
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 10
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 3
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 3",
+    "wiki_url": "https://stardewvalleywiki.com/Cookout_Kit"
+  },
+  {
+    "key": "Cork Bobber",
+    "name": "Cork Bobber",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 10
+      },
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 5
+      },
+      {
+        "id": "766",
+        "name": "Slime",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 7",
+    "wiki_url": "https://stardewvalleywiki.com/Cork_Bobber"
+  },
+  {
+    "key": "Crab Cakes",
+    "name": "Crab Cakes",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "717",
+        "name": "Crab",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "-5",
+        "name": "Egg (Any)",
+        "qty": 1,
+        "category": true
+      },
+      {
+        "id": "247",
+        "name": "Oil",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Crab_Cakes"
+  },
+  {
+    "key": "Crab Pot",
+    "name": "Crab Pot",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 40
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 3
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 3",
+    "wiki_url": "https://stardewvalleywiki.com/Crab_Pot"
+  },
+  {
+    "key": "Cran. Sauce",
+    "name": "Cranberry Sauce",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "282",
+        "name": "Cranberries",
+        "qty": 1
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Gus (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Cranberry_Sauce"
+  },
+  {
+    "key": "Cranberry Candy",
+    "name": "Cranberry Candy",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "282",
+        "name": "Cranberries",
+        "qty": 1
+      },
+      {
+        "id": "613",
+        "name": "Apple",
+        "qty": 1
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Cranberry_Candy"
+  },
+  {
+    "key": "Crispy Bass",
+    "name": "Crispy Bass",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "136",
+        "name": "Largemouth Bass",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "247",
+        "name": "Oil",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Kent (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Crispy_Bass"
+  },
+  {
+    "key": "Crystal Floor",
+    "name": "Crystal Floor",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "338",
+        "name": "Refined Quartz",
+        "qty": 1
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Crystal_Floor"
+  },
+  {
+    "key": "Crystal Path",
+    "name": "Crystal Path",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "338",
+        "name": "Refined Quartz",
+        "qty": 1
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Crystal_Path"
+  },
+  {
+    "key": "Crystalarium",
+    "name": "Crystalarium",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 99
+      },
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 5
+      },
+      {
+        "id": "337",
+        "name": "Iridium Bar",
+        "qty": 2
+      },
+      {
+        "id": "787",
+        "name": "Battery Pack",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Mining Level 9",
+    "wiki_url": "https://stardewvalleywiki.com/Crystalarium"
+  },
+  {
+    "key": "Dark Sign",
+    "name": "Dark Sign",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "767",
+        "name": "Bat Wing",
+        "qty": 5
+      },
+      {
+        "id": "881",
+        "name": "Bone Fragment",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Krobus (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Sign"
+  },
+  {
+    "key": "Dehydrator",
+    "name": "Dehydrator",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 30
+      },
+      {
+        "id": "330",
+        "name": "Clay",
+        "qty": 2
+      },
+      {
+        "id": "82",
+        "name": "Fire Quartz",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Dehydrator"
+  },
+  {
+    "key": "Deluxe Bait",
+    "name": "Deluxe Bait",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "685",
+        "name": "Bait",
+        "qty": 5
+      },
+      {
+        "id": "Moss",
+        "name": "Moss",
+        "qty": 2
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Fishing Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Deluxe_Bait"
+  },
+  {
+    "key": "Deluxe Fertilizer",
+    "name": "Deluxe Fertilizer",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "337",
+        "name": "Iridium Bar",
+        "qty": 1
+      },
+      {
+        "id": "92",
+        "name": "Sap",
+        "qty": 40
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Deluxe_Fertilizer"
+  },
+  {
+    "key": "Deluxe Retaining Soil",
+    "name": "Deluxe Retaining Soil",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 5
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 3
+      },
+      {
+        "id": "330",
+        "name": "Clay",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Deluxe_Retaining_Soil"
+  },
+  {
+    "key": "Deluxe Scarecrow",
+    "name": "Deluxe Scarecrow",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 50
+      },
+      {
+        "id": "386",
+        "name": "Iridium Ore",
+        "qty": 1
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 40
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Deluxe_Scarecrow"
+  },
+  {
+    "key": "Deluxe Speed-Gro",
+    "name": "Deluxe Speed-Gro",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "725",
+        "name": "Oak Resin",
+        "qty": 1
+      },
+      {
+        "id": "881",
+        "name": "Bone Fragment",
+        "qty": 5
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Farming Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Deluxe_Speed-Gro"
+  },
+  {
+    "key": "Deluxe Worm Bin",
+    "name": "Deluxe Worm Bin",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "(BC)154",
+        "name": "Worm Bin",
+        "qty": 1
+      },
+      {
+        "id": "Moss",
+        "name": "Moss",
+        "qty": 30
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Deluxe_Worm_Bin"
+  },
+  {
+    "key": "Dish o' The Sea",
+    "name": "Dish O' The Sea",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "131",
+        "name": "Sardine",
+        "qty": 2
+      },
+      {
+        "id": "210",
+        "name": "Hashbrowns",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 3",
+    "wiki_url": "https://stardewvalleywiki.com/Dish_O'_The_Sea"
+  },
+  {
+    "key": "Dressed Spinner",
+    "name": "Dressed Spinner",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 2
+      },
+      {
+        "id": "428",
+        "name": "Cloth",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Dressed_Spinner"
+  },
+  {
+    "key": "Drum Block",
+    "name": "Drum Block",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 10
+      },
+      {
+        "id": "378",
+        "name": "Copper Ore",
+        "qty": 2
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 20
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Drum_Block"
+  },
+  {
+    "key": "Eggplant Parm.",
+    "name": "Eggplant Parmesan",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "272",
+        "name": "Eggplant",
+        "qty": 1
+      },
+      {
+        "id": "256",
+        "name": "Tomato",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Lewis (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Eggplant_Parmesan"
+  },
+  {
+    "key": "Escargot",
+    "name": "Escargot",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "721",
+        "name": "Snail",
+        "qty": 1
+      },
+      {
+        "id": "248",
+        "name": "Garlic",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Willy (5 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Escargot"
+  },
+  {
+    "key": "Explosive Ammo",
+    "name": "Explosive Ammo",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 2
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Combat Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Explosive_Ammo"
+  },
+  {
+    "key": "Fairy Dust",
+    "name": "Fairy Dust",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "72",
+        "name": "Diamond",
+        "qty": 1
+      },
+      {
+        "id": "595",
+        "name": "Fairy Rose",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Fairy_Dust"
+  },
+  {
+    "key": "Farm Computer",
+    "name": "Farm Computer",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "122",
+        "name": "Dwarf Gadget",
+        "qty": 1
+      },
+      {
+        "id": "787",
+        "name": "Battery Pack",
+        "qty": 1
+      },
+      {
+        "id": "338",
+        "name": "Refined Quartz",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Farm_Computer"
+  },
+  {
+    "key": "Farmer's Lunch",
+    "name": "Farmer's Lunch",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "195",
+        "name": "Omelet",
+        "qty": 1
+      },
+      {
+        "id": "24",
+        "name": "Parsnip",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 3",
+    "wiki_url": "https://stardewvalleywiki.com/Farmer's_Lunch"
+  },
+  {
+    "key": "Fiber Seeds",
+    "name": "Fiber Seeds",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "770",
+        "name": "Mixed Seeds",
+        "qty": 1
+      },
+      {
+        "id": "92",
+        "name": "Sap",
+        "qty": 5
+      },
+      {
+        "id": "330",
+        "name": "Clay",
+        "qty": 1
+      }
+    ],
+    "output_qty": 4,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Fiber_Seeds"
+  },
+  {
+    "key": "Fiddlehead Risotto",
+    "name": "Fiddlehead Risotto",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "247",
+        "name": "Oil",
+        "qty": 1
+      },
+      {
+        "id": "259",
+        "name": "Fiddlehead Fern",
+        "qty": 1
+      },
+      {
+        "id": "248",
+        "name": "Garlic",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Fiddlehead_Risotto"
+  },
+  {
+    "key": "Field Snack",
+    "name": "Field Snack",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "309",
+        "name": "Acorn",
+        "qty": 1
+      },
+      {
+        "id": "310",
+        "name": "Maple Seed",
+        "qty": 1
+      },
+      {
+        "id": "311",
+        "name": "Pine Cone",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 1",
+    "wiki_url": "https://stardewvalleywiki.com/Field_Snack"
+  },
+  {
+    "key": "Fish Smoker",
+    "name": "Fish Smoker",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 10
+      },
+      {
+        "id": "SeaJelly",
+        "name": "Sea Jelly",
+        "qty": 1
+      },
+      {
+        "id": "RiverJelly",
+        "name": "River Jelly",
+        "qty": 1
+      },
+      {
+        "id": "CaveJelly",
+        "name": "Cave Jelly",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Fish_Smoker"
+  },
+  {
+    "key": "Fish Stew",
+    "name": "Fish Stew",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "716",
+        "name": "Crayfish",
+        "qty": 1
+      },
+      {
+        "id": "719",
+        "name": "Mussel",
+        "qty": 1
+      },
+      {
+        "id": "722",
+        "name": "Periwinkle",
+        "qty": 1
+      },
+      {
+        "id": "256",
+        "name": "Tomato",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Willy (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Fish_Stew"
+  },
+  {
+    "key": "Fish Taco",
+    "name": "Fish Taco",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "130",
+        "name": "Tuna",
+        "qty": 1
+      },
+      {
+        "id": "229",
+        "name": "Tortilla",
+        "qty": 1
+      },
+      {
+        "id": "266",
+        "name": "Red Cabbage",
+        "qty": 1
+      },
+      {
+        "id": "306",
+        "name": "Mayonnaise",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Linus (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Fish_Taco"
+  },
+  {
+    "key": "Flute Block",
+    "name": "Flute Block",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 10
+      },
+      {
+        "id": "378",
+        "name": "Copper Ore",
+        "qty": 2
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 20
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Flute_Block"
+  },
+  {
+    "key": "Fried Calamari",
+    "name": "Fried Calamari",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "151",
+        "name": "Squid",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "247",
+        "name": "Oil",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Jodi (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Fried_Calamari"
+  },
+  {
+    "key": "Fried Eel",
+    "name": "Fried Eel",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "148",
+        "name": "Eel",
+        "qty": 1
+      },
+      {
+        "id": "247",
+        "name": "Oil",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "George (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Fried_Eel"
+  },
+  {
+    "key": "Fried Egg",
+    "name": "Fried Egg",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "-5",
+        "name": "Egg (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Fried_Egg"
+  },
+  {
+    "key": "Fried Mushroom",
+    "name": "Fried Mushroom",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "404",
+        "name": "Common Mushroom",
+        "qty": 1
+      },
+      {
+        "id": "257",
+        "name": "Morel",
+        "qty": 1
+      },
+      {
+        "id": "247",
+        "name": "Oil",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Demetrius (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Fried_Mushroom"
+  },
+  {
+    "key": "Fruit Salad",
+    "name": "Fruit Salad",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "258",
+        "name": "Blueberry",
+        "qty": 1
+      },
+      {
+        "id": "254",
+        "name": "Melon",
+        "qty": 1
+      },
+      {
+        "id": "634",
+        "name": "Apricot",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Fruit_Salad"
+  },
+  {
+    "key": "Furnace",
+    "name": "Furnace",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "378",
+        "name": "Copper Ore",
+        "qty": 20
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 25
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 2",
+    "wiki_url": "https://stardewvalleywiki.com/Furnace"
+  },
+  {
+    "key": "Garden Pot",
+    "name": "Garden Pot",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "330",
+        "name": "Clay",
+        "qty": 1
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 10
+      },
+      {
+        "id": "338",
+        "name": "Refined Quartz",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Garden_Pot"
+  },
+  {
+    "key": "Gate",
+    "name": "Gate",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Gate"
+  },
+  {
+    "key": "Geode Crusher",
+    "name": "Geode Crusher",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 2
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 50
+      },
+      {
+        "id": "72",
+        "name": "Diamond",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Geode_Crusher"
+  },
+  {
+    "key": "Ginger Ale",
+    "name": "Ginger Ale",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "829",
+        "name": "Ginger",
+        "qty": 3
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Ginger_Ale"
+  },
+  {
+    "key": "Glazed Yams",
+    "name": "Glazed Yams",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "280",
+        "name": "Yam",
+        "qty": 1
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 22",
+    "wiki_url": "https://stardewvalleywiki.com/Glazed_Yams"
+  },
+  {
+    "key": "Glowstone Ring",
+    "name": "Glowstone Ring",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "768",
+        "name": "Solar Essence",
+        "qty": 5
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Mining Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Glowstone_Ring"
+  },
+  {
+    "key": "Gold Brazier",
+    "name": "Gold Brazier",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 1
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Gold_Brazier"
+  },
+  {
+    "key": "Grass Starter",
+    "name": "Grass Starter",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Grass_Starter"
+  },
+  {
+    "key": "Gravel Path",
+    "name": "Gravel Path",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Gravel_Path"
+  },
+  {
+    "key": "Hardwood Fence",
+    "name": "Hardwood Fence",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Hardwood_Fence"
+  },
+  {
+    "key": "Hashbrowns",
+    "name": "Hashbrowns",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "192",
+        "name": "Potato",
+        "qty": 1
+      },
+      {
+        "id": "247",
+        "name": "Oil",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 14",
+    "wiki_url": "https://stardewvalleywiki.com/Hashbrowns"
+  },
+  {
+    "key": "Heavy Furnace",
+    "name": "Heavy Furnace",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "(BC)13",
+        "name": "Furnace",
+        "qty": 2
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 3
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 50
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 2",
+    "wiki_url": "https://stardewvalleywiki.com/Heavy_Furnace"
+  },
+  {
+    "key": "Heavy Tapper",
+    "name": "Heavy Tapper",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 30
+      },
+      {
+        "id": "910",
+        "name": "Radioactive Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Heavy_Tapper"
+  },
+  {
+    "key": "Hopper",
+    "name": "Hopper",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 10
+      },
+      {
+        "id": "337",
+        "name": "Iridium Bar",
+        "qty": 1
+      },
+      {
+        "id": "910",
+        "name": "Radioactive Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Hopper"
+  },
+  {
+    "key": "Hyper Speed-Gro",
+    "name": "Hyper Speed-Gro",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "909",
+        "name": "Radioactive Ore",
+        "qty": 1
+      },
+      {
+        "id": "881",
+        "name": "Bone Fragment",
+        "qty": 3
+      },
+      {
+        "id": "768",
+        "name": "Solar Essence",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Hyper_Speed-Gro"
+  },
+  {
+    "key": "Ice Cream",
+    "name": "Ice Cream",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Jodi (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Ice_Cream"
+  },
+  {
+    "key": "Iridium Band",
+    "name": "Iridium Band",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "337",
+        "name": "Iridium Bar",
+        "qty": 5
+      },
+      {
+        "id": "768",
+        "name": "Solar Essence",
+        "qty": 50
+      },
+      {
+        "id": "769",
+        "name": "Void Essence",
+        "qty": 50
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 9",
+    "wiki_url": "https://stardewvalleywiki.com/Iridium_Band"
+  },
+  {
+    "key": "Iridium Sprinkler",
+    "name": "Iridium Sprinkler",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 1
+      },
+      {
+        "id": "337",
+        "name": "Iridium Bar",
+        "qty": 1
+      },
+      {
+        "id": "787",
+        "name": "Battery Pack",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 9",
+    "wiki_url": "https://stardewvalleywiki.com/Iridium_Sprinkler"
+  },
+  {
+    "key": "Iron Fence",
+    "name": "Iron Fence",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 10,
+    "unlock": "Farming Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Iron_Fence"
+  },
+  {
+    "key": "Iron Lamp-post",
+    "name": "Iron Lamp-post",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      },
+      {
+        "id": "787",
+        "name": "Battery Pack",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Iron_Lamp-post"
+  },
+  {
+    "key": "Jack-O-Lantern",
+    "name": "Jack-O-Lantern",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "276",
+        "name": "Pumpkin",
+        "qty": 1
+      },
+      {
+        "id": "93",
+        "name": "Torch",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Jack-O-Lantern"
+  },
+  {
+    "key": "Keg",
+    "name": "Keg",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 30
+      },
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 1
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      },
+      {
+        "id": "725",
+        "name": "Oak Resin",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Keg"
+  },
+  {
+    "key": "Life Elixir",
+    "name": "Life Elixir",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "420",
+        "name": "Red Mushroom",
+        "qty": 1
+      },
+      {
+        "id": "422",
+        "name": "Purple Mushroom",
+        "qty": 1
+      },
+      {
+        "id": "257",
+        "name": "Morel",
+        "qty": 1
+      },
+      {
+        "id": "281",
+        "name": "Chanterelle",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 2",
+    "wiki_url": "https://stardewvalleywiki.com/Life_Elixir"
+  },
+  {
+    "key": "Lightning Rod",
+    "name": "Lightning Rod",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      },
+      {
+        "id": "338",
+        "name": "Refined Quartz",
+        "qty": 1
+      },
+      {
+        "id": "767",
+        "name": "Bat Wing",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Lightning_Rod"
+  },
+  {
+    "key": "Lobster Bisque",
+    "name": "Lobster Bisque",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "715",
+        "name": "Lobster",
+        "qty": 1
+      },
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Willy (9 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Lobster_Bisque"
+  },
+  {
+    "key": "Loom",
+    "name": "Loom",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 60
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 30
+      },
+      {
+        "id": "726",
+        "name": "Pine Tar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 7",
+    "wiki_url": "https://stardewvalleywiki.com/Loom"
+  },
+  {
+    "key": "Lucky Lunch",
+    "name": "Lucky Lunch",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "154",
+        "name": "Sea Cucumber",
+        "qty": 1
+      },
+      {
+        "id": "229",
+        "name": "Tortilla",
+        "qty": 1
+      },
+      {
+        "id": "597",
+        "name": "Blue Jazz",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Luck Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Lucky_Lunch"
+  },
+  {
+    "key": "Magic Bait",
+    "name": "Magic Bait",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "909",
+        "name": "Radioactive Ore",
+        "qty": 1
+      },
+      {
+        "id": "684",
+        "name": "Bug Meat",
+        "qty": 3
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Magic_Bait"
+  },
+  {
+    "key": "Magnet",
+    "name": "Magnet",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 3,
+    "unlock": "Fishing Level 9",
+    "wiki_url": "https://stardewvalleywiki.com/Magnet"
+  },
+  {
+    "key": "Maki Roll",
+    "name": "Maki Roll",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "-4",
+        "name": "Fish (Any)",
+        "qty": 1,
+        "category": true
+      },
+      {
+        "id": "152",
+        "name": "Seaweed",
+        "qty": 1
+      },
+      {
+        "id": "423",
+        "name": "Rice",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 15",
+    "wiki_url": "https://stardewvalleywiki.com/Maki_Roll"
+  },
+  {
+    "key": "Mango Sticky Rice",
+    "name": "Mango Sticky Rice",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "834",
+        "name": "Mango",
+        "qty": 1
+      },
+      {
+        "id": "88",
+        "name": "Coconut",
+        "qty": 1
+      },
+      {
+        "id": "423",
+        "name": "Rice",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Leo (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Mango_Sticky_Rice"
+  },
+  {
+    "key": "Maple Bar",
+    "name": "Maple Bar",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "724",
+        "name": "Maple Syrup",
+        "qty": 1
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Maple_Bar"
+  },
+  {
+    "key": "Marble Brazier",
+    "name": "Marble Brazier",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "567",
+        "name": "Marble",
+        "qty": 1
+      },
+      {
+        "id": "62",
+        "name": "Aquamarine",
+        "qty": 1
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 100
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Marble_Brazier"
+  },
+  {
+    "key": "Mayonnaise Machine",
+    "name": "Mayonnaise Machine",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 15
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 15
+      },
+      {
+        "id": "86",
+        "name": "Earth Crystal",
+        "qty": 1
+      },
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 2",
+    "wiki_url": "https://stardewvalleywiki.com/Mayonnaise_Machine"
+  },
+  {
+    "key": "Mega Bomb",
+    "name": "Mega Bomb",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "384",
+        "name": "Gold Ore",
+        "qty": 4
+      },
+      {
+        "id": "768",
+        "name": "Solar Essence",
+        "qty": 1
+      },
+      {
+        "id": "769",
+        "name": "Void Essence",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Mining Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Mega_Bomb"
+  },
+  {
+    "key": "Miner's Treat",
+    "name": "Miner's Treat",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "78",
+        "name": "Cave Carrot",
+        "qty": 2
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      },
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Mining Level 3",
+    "wiki_url": "https://stardewvalleywiki.com/Miner's_Treat"
+  },
+  {
+    "key": "Mini-Forge",
+    "name": "Mini-Forge",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "852",
+        "name": "Dragon Tooth",
+        "qty": 5
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 10
+      },
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 10
+      },
+      {
+        "id": "337",
+        "name": "Iridium Bar",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 2",
+    "wiki_url": "https://stardewvalleywiki.com/Mini-Forge"
+  },
+  {
+    "key": "Mini-Jukebox",
+    "name": "Mini-Jukebox",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 2
+      },
+      {
+        "id": "787",
+        "name": "Battery Pack",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Mini-Jukebox"
+  },
+  {
+    "key": "Mini-Obelisk",
+    "name": "Mini-Obelisk",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 30
+      },
+      {
+        "id": "768",
+        "name": "Solar Essence",
+        "qty": 20
+      },
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 3
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Mini-Obelisk"
+  },
+  {
+    "key": "Monster Musk",
+    "name": "Monster Musk",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "767",
+        "name": "Bat Wing",
+        "qty": 30
+      },
+      {
+        "id": "766",
+        "name": "Slime",
+        "qty": 30
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Monster_Musk"
+  },
+  {
+    "key": "Moss Soup",
+    "name": "Moss Soup",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "Moss",
+        "name": "Moss",
+        "qty": 20
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 3",
+    "wiki_url": "https://stardewvalleywiki.com/Moss_Soup"
+  },
+  {
+    "key": "Mushroom Log",
+    "name": "Mushroom Log",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 10
+      },
+      {
+        "id": "Moss",
+        "name": "Moss",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Mushroom_Log"
+  },
+  {
+    "key": "Mystic Tree Seed",
+    "name": "Mystic Tree Seed",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "309",
+        "name": "Acorn",
+        "qty": 5
+      },
+      {
+        "id": "310",
+        "name": "Maple Seed",
+        "qty": 5
+      },
+      {
+        "id": "311",
+        "name": "Pine Cone",
+        "qty": 5
+      },
+      {
+        "id": "292",
+        "name": "Mahogany Seed",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Mystic_Tree_Seed"
+  },
+  {
+    "key": "Oil Maker",
+    "name": "Oil Maker",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "766",
+        "name": "Slime",
+        "qty": 50
+      },
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 20
+      },
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Oil_Maker"
+  },
+  {
+    "key": "Oil Of Garlic",
+    "name": "Oil of Garlic",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "248",
+        "name": "Garlic",
+        "qty": 10
+      },
+      {
+        "id": "247",
+        "name": "Oil",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Oil_of_Garlic"
+  },
+  {
+    "key": "Omelet",
+    "name": "Omelet",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "-5",
+        "name": "Egg (Any)",
+        "qty": 1,
+        "category": true
+      },
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 10",
+    "wiki_url": "https://stardewvalleywiki.com/Omelet"
+  },
+  {
+    "key": "Ostrich Incubator",
+    "name": "Ostrich Incubator",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "881",
+        "name": "Bone Fragment",
+        "qty": 50
+      },
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 50
+      },
+      {
+        "id": "848",
+        "name": "Cinder Shard",
+        "qty": 20
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Ostrich_Incubator"
+  },
+  {
+    "key": "Pale Broth",
+    "name": "Pale Broth",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "157",
+        "name": "White Algae",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Marnie (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Pale_Broth"
+  },
+  {
+    "key": "Pancakes",
+    "name": "Pancakes",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "-5",
+        "name": "Egg (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 18",
+    "wiki_url": "https://stardewvalleywiki.com/Pancakes"
+  },
+  {
+    "key": "Parsnip Soup",
+    "name": "Parsnip Soup",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "24",
+        "name": "Parsnip",
+        "qty": 1
+      },
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      },
+      {
+        "id": "419",
+        "name": "Vinegar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Caroline (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Parsnip_Soup"
+  },
+  {
+    "key": "Pepper Poppers",
+    "name": "Pepper Poppers",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "260",
+        "name": "Hot Pepper",
+        "qty": 1
+      },
+      {
+        "id": "424",
+        "name": "Cheese",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Shane (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Pepper_Poppers"
+  },
+  {
+    "key": "Pink Cake",
+    "name": "Pink Cake",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "254",
+        "name": "Melon",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      },
+      {
+        "id": "-5",
+        "name": "Egg (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 25",
+    "wiki_url": "https://stardewvalleywiki.com/Pink_Cake"
+  },
+  {
+    "key": "Pizza",
+    "name": "Pizza",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "256",
+        "name": "Tomato",
+        "qty": 1
+      },
+      {
+        "id": "424",
+        "name": "Cheese",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 20",
+    "wiki_url": "https://stardewvalleywiki.com/Pizza"
+  },
+  {
+    "key": "Plum Pudding",
+    "name": "Plum Pudding",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "406",
+        "name": "Wild Plum",
+        "qty": 2
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Plum_Pudding"
+  },
+  {
+    "key": "Poi",
+    "name": "Poi",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "830",
+        "name": "Taro Root",
+        "qty": 4
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Leo (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Poi"
+  },
+  {
+    "key": "Poppyseed Muffin",
+    "name": "Poppyseed Muffin",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "376",
+        "name": "Poppy",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Poppyseed_Muffin"
+  },
+  {
+    "key": "Preserves Jar",
+    "name": "Preserves Jar",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 50
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 40
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 8
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Preserves_Jar"
+  },
+  {
+    "key": "Pumpkin Pie",
+    "name": "Pumpkin Pie",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "276",
+        "name": "Pumpkin",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Pumpkin_Pie"
+  },
+  {
+    "key": "Pumpkin Soup",
+    "name": "Pumpkin Soup",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "276",
+        "name": "Pumpkin",
+        "qty": 1
+      },
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Robin (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Pumpkin_Soup"
+  },
+  {
+    "key": "Quality Bobber",
+    "name": "Quality Bobber",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 1
+      },
+      {
+        "id": "92",
+        "name": "Sap",
+        "qty": 20
+      },
+      {
+        "id": "768",
+        "name": "Solar Essence",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Quality_Bobber"
+  },
+  {
+    "key": "Quality Fertilizer",
+    "name": "Quality Fertilizer",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "92",
+        "name": "Sap",
+        "qty": 4
+      },
+      {
+        "id": "-4",
+        "name": "Fish (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 2,
+    "unlock": "Farming Level 9",
+    "wiki_url": "https://stardewvalleywiki.com/Quality_Fertilizer"
+  },
+  {
+    "key": "Quality Retaining Soil",
+    "name": "Quality Retaining Soil",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 3
+      },
+      {
+        "id": "330",
+        "name": "Clay",
+        "qty": 1
+      }
+    ],
+    "output_qty": 2,
+    "unlock": "Farming Level 7",
+    "wiki_url": "https://stardewvalleywiki.com/Quality_Retaining_Soil"
+  },
+  {
+    "key": "Quality Sprinkler",
+    "name": "Quality Sprinkler",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      },
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 1
+      },
+      {
+        "id": "338",
+        "name": "Refined Quartz",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Quality_Sprinkler"
+  },
+  {
+    "key": "Radish Salad",
+    "name": "Radish Salad",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "247",
+        "name": "Oil",
+        "qty": 1
+      },
+      {
+        "id": "419",
+        "name": "Vinegar",
+        "qty": 1
+      },
+      {
+        "id": "264",
+        "name": "Radish",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Radish_Salad"
+  },
+  {
+    "key": "Rain Totem",
+    "name": "Rain Totem",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 1
+      },
+      {
+        "id": "432",
+        "name": "Truffle Oil",
+        "qty": 1
+      },
+      {
+        "id": "726",
+        "name": "Pine Tar",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 9",
+    "wiki_url": "https://stardewvalleywiki.com/Rain_Totem"
+  },
+  {
+    "key": "Recycling Machine",
+    "name": "Recycling Machine",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 25
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 25
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Recycling_Machine"
+  },
+  {
+    "key": "Red Plate",
+    "name": "Red Plate",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "266",
+        "name": "Red Cabbage",
+        "qty": 1
+      },
+      {
+        "id": "264",
+        "name": "Radish",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Emily (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Red_Plate"
+  },
+  {
+    "key": "Rhubarb Pie",
+    "name": "Rhubarb Pie",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "252",
+        "name": "Rhubarb",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Marnie (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Rhubarb_Pie"
+  },
+  {
+    "key": "Rice Pudding",
+    "name": "Rice Pudding",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "-6",
+        "name": "Milk (Any)",
+        "qty": 1,
+        "category": true
+      },
+      {
+        "id": "245",
+        "name": "Sugar",
+        "qty": 1
+      },
+      {
+        "id": "423",
+        "name": "Rice",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Evelyn (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Rice_Pudding"
+  },
+  {
+    "key": "Ring of Yoba",
+    "name": "Ring of Yoba",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 5
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 5
+      },
+      {
+        "id": "72",
+        "name": "Diamond",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 7",
+    "wiki_url": "https://stardewvalleywiki.com/Ring_of_Yoba"
+  },
+  {
+    "key": "Roasted Hazelnuts",
+    "name": "Roasted Hazelnuts",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "408",
+        "name": "Hazelnut",
+        "qty": 3
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Roasted_Hazelnuts"
+  },
+  {
+    "key": "Roots Platter",
+    "name": "Roots Platter",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "78",
+        "name": "Cave Carrot",
+        "qty": 1
+      },
+      {
+        "id": "412",
+        "name": "Winter Root",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 3",
+    "wiki_url": "https://stardewvalleywiki.com/Roots_Platter"
+  },
+  {
+    "key": "Rustic Plank Floor",
+    "name": "Rustic Plank Floor",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Rustic_Plank_Floor"
+  },
+  {
+    "key": "Salad",
+    "name": "Salad",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "20",
+        "name": "Leek",
+        "qty": 1
+      },
+      {
+        "id": "22",
+        "name": "Dandelion",
+        "qty": 1
+      },
+      {
+        "id": "419",
+        "name": "Vinegar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Emily (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Salad"
+  },
+  {
+    "key": "Salmon Dinner",
+    "name": "Salmon Dinner",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "139",
+        "name": "Salmon",
+        "qty": 1
+      },
+      {
+        "id": "300",
+        "name": "Amaranth",
+        "qty": 1
+      },
+      {
+        "id": "250",
+        "name": "Kale",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Gus (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Salmon_Dinner"
+  },
+  {
+    "key": "Sashimi",
+    "name": "Sashimi",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "-4",
+        "name": "Fish (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Linus (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Sashimi"
+  },
+  {
+    "key": "Scarecrow",
+    "name": "Scarecrow",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 50
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 20
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 1",
+    "wiki_url": "https://stardewvalleywiki.com/Scarecrow"
+  },
+  {
+    "key": "Seafoam Pudding",
+    "name": "Seafoam Pudding",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "267",
+        "name": "Flounder",
+        "qty": 1
+      },
+      {
+        "id": "269",
+        "name": "Midnight Carp",
+        "qty": 1
+      },
+      {
+        "id": "814",
+        "name": "Squid Ink",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 9",
+    "wiki_url": "https://stardewvalleywiki.com/Seafoam_Pudding"
+  },
+  {
+    "key": "Seed Maker",
+    "name": "Seed Maker",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 25
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 10
+      },
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 9",
+    "wiki_url": "https://stardewvalleywiki.com/Seed_Maker"
+  },
+  {
+    "key": "Shrimp Cocktail",
+    "name": "Shrimp Cocktail",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "720",
+        "name": "Shrimp",
+        "qty": 1
+      },
+      {
+        "id": "256",
+        "name": "Tomato",
+        "qty": 1
+      },
+      {
+        "id": "16",
+        "name": "Wild Horseradish",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Shrimp_Cocktail"
+  },
+  {
+    "key": "Skull Brazier",
+    "name": "Skull Brazier",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "881",
+        "name": "Bone Fragment",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Skull_Brazier"
+  },
+  {
+    "key": "Slime Egg-Press",
+    "name": "Slime Egg-Press",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 25
+      },
+      {
+        "id": "82",
+        "name": "Fire Quartz",
+        "qty": 1
+      },
+      {
+        "id": "787",
+        "name": "Battery Pack",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Slime_Egg-Press"
+  },
+  {
+    "key": "Slime Incubator",
+    "name": "Slime Incubator",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "337",
+        "name": "Iridium Bar",
+        "qty": 2
+      },
+      {
+        "id": "766",
+        "name": "Slime",
+        "qty": 100
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Slime_Incubator"
+  },
+  {
+    "key": "Solar Panel",
+    "name": "Solar Panel",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "338",
+        "name": "Refined Quartz",
+        "qty": 10
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 5
+      },
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Solar_Panel"
+  },
+  {
+    "key": "Sonar Bobber",
+    "name": "Sonar Bobber",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      },
+      {
+        "id": "338",
+        "name": "Refined Quartz",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Sonar_Bobber"
+  },
+  {
+    "key": "Spaghetti",
+    "name": "Spaghetti",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "256",
+        "name": "Tomato",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Lewis (3 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Spaghetti"
+  },
+  {
+    "key": "Speed-Gro",
+    "name": "Speed-Gro",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "726",
+        "name": "Pine Tar",
+        "qty": 1
+      },
+      {
+        "id": "Moss",
+        "name": "Moss",
+        "qty": 5
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Farming Level 3",
+    "wiki_url": "https://stardewvalleywiki.com/Speed-Gro"
+  },
+  {
+    "key": "Spicy Eel",
+    "name": "Spicy Eel",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "148",
+        "name": "Eel",
+        "qty": 1
+      },
+      {
+        "id": "260",
+        "name": "Hot Pepper",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "George (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Spicy_Eel"
+  },
+  {
+    "key": "Spinner",
+    "name": "Spinner",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Spinner"
+  },
+  {
+    "key": "Sprinkler",
+    "name": "Sprinkler",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 1
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 2",
+    "wiki_url": "https://stardewvalleywiki.com/Sprinkler"
+  },
+  {
+    "key": "Squid Ink Ravioli",
+    "name": "Squid Ink Ravioli",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "814",
+        "name": "Squid Ink",
+        "qty": 1
+      },
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "256",
+        "name": "Tomato",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 9",
+    "wiki_url": "https://stardewvalleywiki.com/Squid_Ink_Ravioli"
+  },
+  {
+    "key": "Staircase",
+    "name": "Staircase",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 99
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Mining Level 2",
+    "wiki_url": "https://stardewvalleywiki.com/Staircase"
+  },
+  {
+    "key": "Statue Of Blessings",
+    "name": "Statue Of Blessings",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 999
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 999
+      },
+      {
+        "id": "92",
+        "name": "Sap",
+        "qty": 999
+      },
+      {
+        "id": "Moss",
+        "name": "Moss",
+        "qty": 333
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Statue_Of_Blessings"
+  },
+  {
+    "key": "Statue Of The Dwarf King",
+    "name": "Statue Of The Dwarf King",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "337",
+        "name": "Iridium Bar",
+        "qty": 20
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Statue_Of_The_Dwarf_King"
+  },
+  {
+    "key": "Stepping Stone Path",
+    "name": "Stepping Stone Path",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Stepping_Stone_Path"
+  },
+  {
+    "key": "Stir Fry",
+    "name": "Stir Fry",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "78",
+        "name": "Cave Carrot",
+        "qty": 1
+      },
+      {
+        "id": "404",
+        "name": "Common Mushroom",
+        "qty": 1
+      },
+      {
+        "id": "250",
+        "name": "Kale",
+        "qty": 1
+      },
+      {
+        "id": "247",
+        "name": "Oil",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Stir_Fry"
+  },
+  {
+    "key": "Stone Brazier",
+    "name": "Stone Brazier",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 10
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Brazier"
+  },
+  {
+    "key": "Stone Chest",
+    "name": "Stone Chest",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 50
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Chest"
+  },
+  {
+    "key": "Stone Fence",
+    "name": "Stone Fence",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Farming Level 2",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Fence"
+  },
+  {
+    "key": "Stone Floor",
+    "name": "Stone Floor",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Floor"
+  },
+  {
+    "key": "Stone Sign",
+    "name": "Stone Sign",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 25
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Sign"
+  },
+  {
+    "key": "Stone Walkway Floor",
+    "name": "Stone Walkway Floor",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Walkway_Floor"
+  },
+  {
+    "key": "Strange Bun",
+    "name": "Strange Bun",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "246",
+        "name": "Wheat Flour",
+        "qty": 1
+      },
+      {
+        "id": "722",
+        "name": "Periwinkle",
+        "qty": 1
+      },
+      {
+        "id": "308",
+        "name": "Void Mayonnaise",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Shane (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Strange_Bun"
+  },
+  {
+    "key": "Straw Floor",
+    "name": "Straw Floor",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 1
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Straw_Floor"
+  },
+  {
+    "key": "Stuffing",
+    "name": "Stuffing",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "216",
+        "name": "Bread",
+        "qty": 1
+      },
+      {
+        "id": "282",
+        "name": "Cranberries",
+        "qty": 1
+      },
+      {
+        "id": "408",
+        "name": "Hazelnut",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Pam (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Stuffing"
+  },
+  {
+    "key": "Stump Brazier",
+    "name": "Stump Brazier",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 5
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Stump_Brazier"
+  },
+  {
+    "key": "Sturdy Ring",
+    "name": "Sturdy Ring",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 2
+      },
+      {
+        "id": "684",
+        "name": "Bug Meat",
+        "qty": 25
+      },
+      {
+        "id": "766",
+        "name": "Slime",
+        "qty": 25
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 1",
+    "wiki_url": "https://stardewvalleywiki.com/Sturdy_Ring"
+  },
+  {
+    "key": "Super Meal",
+    "name": "Super Meal",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "278",
+        "name": "Bok Choy",
+        "qty": 1
+      },
+      {
+        "id": "282",
+        "name": "Cranberries",
+        "qty": 1
+      },
+      {
+        "id": "274",
+        "name": "Artichoke",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Kent (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Super_Meal"
+  },
+  {
+    "key": "Survival Burger",
+    "name": "Survival Burger",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "216",
+        "name": "Bread",
+        "qty": 1
+      },
+      {
+        "id": "78",
+        "name": "Cave Carrot",
+        "qty": 1
+      },
+      {
+        "id": "272",
+        "name": "Eggplant",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Survival_Burger"
+  },
+  {
+    "key": "Tapper",
+    "name": "Tapper",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 40
+      },
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Tapper"
+  },
+  {
+    "key": "Tea Sapling",
+    "name": "Tea Sapling",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "-777",
+        "name": "Wild Seeds (Any)",
+        "qty": 2,
+        "category": true
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 5
+      },
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Tea_Sapling"
+  },
+  {
+    "key": "Tent Kit",
+    "name": "Tent Kit",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 10
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 25
+      },
+      {
+        "id": "428",
+        "name": "Cloth",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Tent_Kit"
+  },
+  {
+    "key": "Text Sign",
+    "name": "Text Sign",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 25
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Text_Sign"
+  },
+  {
+    "key": "Thorns Ring",
+    "name": "Thorns Ring",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "881",
+        "name": "Bone Fragment",
+        "qty": 50
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 50
+      },
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 7",
+    "wiki_url": "https://stardewvalleywiki.com/Thorns_Ring"
+  },
+  {
+    "key": "Tom Kha Soup",
+    "name": "Tom Kha Soup",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "88",
+        "name": "Coconut",
+        "qty": 1
+      },
+      {
+        "id": "720",
+        "name": "Shrimp",
+        "qty": 1
+      },
+      {
+        "id": "404",
+        "name": "Common Mushroom",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Sandy (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Tom_Kha_Soup"
+  },
+  {
+    "key": "Torch",
+    "name": "Torch",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 1
+      },
+      {
+        "id": "92",
+        "name": "Sap",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Torch"
+  },
+  {
+    "key": "Tortilla",
+    "name": "Tortilla",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "270",
+        "name": "Corn",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 13",
+    "wiki_url": "https://stardewvalleywiki.com/Tortilla"
+  },
+  {
+    "key": "Transmute (Au)",
+    "name": "Transmute (Au)",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Mining Level 7",
+    "wiki_url": "https://stardewvalleywiki.com/Crafting"
+  },
+  {
+    "key": "Transmute (Fe)",
+    "name": "Transmute (Fe)",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 3
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Mining Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Crafting"
+  },
+  {
+    "key": "Trap Bobber",
+    "name": "Trap Bobber",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "334",
+        "name": "Copper Bar",
+        "qty": 1
+      },
+      {
+        "id": "92",
+        "name": "Sap",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Trap_Bobber"
+  },
+  {
+    "key": "Treasure Hunter",
+    "name": "Treasure Hunter",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 7",
+    "wiki_url": "https://stardewvalleywiki.com/Treasure_Hunter"
+  },
+  {
+    "key": "Treasure Totem",
+    "name": "Treasure Totem",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 5
+      },
+      {
+        "id": "MysticSyrup",
+        "name": "Mystic Syrup",
+        "qty": 1
+      },
+      {
+        "id": "Moss",
+        "name": "Moss",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Treasure_Totem"
+  },
+  {
+    "key": "Tree Fertilizer",
+    "name": "Tree Fertilizer",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 5
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 7",
+    "wiki_url": "https://stardewvalleywiki.com/Tree_Fertilizer"
+  },
+  {
+    "key": "Triple Shot Espresso",
+    "name": "Triple Shot Espresso",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "395",
+        "name": "Coffee",
+        "qty": 3
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Triple_Shot_Espresso"
+  },
+  {
+    "key": "Tropical Curry",
+    "name": "Tropical Curry",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "88",
+        "name": "Coconut",
+        "qty": 1
+      },
+      {
+        "id": "832",
+        "name": "Pineapple",
+        "qty": 1
+      },
+      {
+        "id": "260",
+        "name": "Hot Pepper",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 100",
+    "wiki_url": "https://stardewvalleywiki.com/Tropical_Curry"
+  },
+  {
+    "key": "Trout Soup",
+    "name": "Trout Soup",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "138",
+        "name": "Rainbow Trout",
+        "qty": 1
+      },
+      {
+        "id": "153",
+        "name": "Green Algae",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Level 19",
+    "wiki_url": "https://stardewvalleywiki.com/Trout_Soup"
+  },
+  {
+    "key": "Tub o' Flowers",
+    "name": "Tub o' Flowers",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 15
+      },
+      {
+        "id": "427",
+        "name": "Tulip Bulb",
+        "qty": 1
+      },
+      {
+        "id": "429",
+        "name": "Jazz Seeds",
+        "qty": 1
+      },
+      {
+        "id": "453",
+        "name": "Poppy Seeds",
+        "qty": 1
+      },
+      {
+        "id": "455",
+        "name": "Spangle Seeds",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Tub_o'_Flowers"
+  },
+  {
+    "key": "Vegetable Stew",
+    "name": "Vegetable Medley",
+    "type": "cooking",
+    "ingredients": [
+      {
+        "id": "256",
+        "name": "Tomato",
+        "qty": 1
+      },
+      {
+        "id": "284",
+        "name": "Beet",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Caroline (7 hearts)",
+    "wiki_url": "https://stardewvalleywiki.com/Vegetable_Medley"
+  },
+  {
+    "key": "Warp Totem: Beach",
+    "name": "Warp Totem: Beach",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 1
+      },
+      {
+        "id": "393",
+        "name": "Coral",
+        "qty": 2
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Warp_Totem:_Beach"
+  },
+  {
+    "key": "Warp Totem: Desert",
+    "name": "Warp Totem: Desert",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 2
+      },
+      {
+        "id": "88",
+        "name": "Coconut",
+        "qty": 1
+      },
+      {
+        "id": "386",
+        "name": "Iridium Ore",
+        "qty": 4
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Warp_Totem:_Desert"
+  },
+  {
+    "key": "Warp Totem: Farm",
+    "name": "Warp Totem: Farm",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 1
+      },
+      {
+        "id": "340",
+        "name": "Honey",
+        "qty": 1
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 20
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 8",
+    "wiki_url": "https://stardewvalleywiki.com/Warp_Totem:_Farm"
+  },
+  {
+    "key": "Warp Totem: Island",
+    "name": "Warp Totem: Island",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 5
+      },
+      {
+        "id": "852",
+        "name": "Dragon Tooth",
+        "qty": 1
+      },
+      {
+        "id": "829",
+        "name": "Ginger",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Warp_Totem:_Island"
+  },
+  {
+    "key": "Warp Totem: Mountains",
+    "name": "Warp Totem: Mountains",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 1
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 25
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Foraging Level 7",
+    "wiki_url": "https://stardewvalleywiki.com/Warp_Totem:_Mountains"
+  },
+  {
+    "key": "Warrior Ring",
+    "name": "Warrior Ring",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 10
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 25
+      },
+      {
+        "id": "84",
+        "name": "Frozen Tear",
+        "qty": 10
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Combat Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Warrior_Ring"
+  },
+  {
+    "key": "Weathered Floor",
+    "name": "Weathered Floor",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Weathered_Floor"
+  },
+  {
+    "key": "Wedding Ring",
+    "name": "Wedding Ring",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "337",
+        "name": "Iridium Bar",
+        "qty": 5
+      },
+      {
+        "id": "74",
+        "name": "Prismatic Shard",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Wedding_Ring"
+  },
+  {
+    "key": "Wicked Statue",
+    "name": "Wicked Statue",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 5
+      },
+      {
+        "id": "390",
+        "name": "Stone",
+        "qty": 25
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Wicked_Statue"
+  },
+  {
+    "key": "Wild Bait",
+    "name": "Wild Bait",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 10
+      },
+      {
+        "id": "684",
+        "name": "Bug Meat",
+        "qty": 5
+      },
+      {
+        "id": "766",
+        "name": "Slime",
+        "qty": 5
+      }
+    ],
+    "output_qty": 5,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Wild_Bait"
+  },
+  {
+    "key": "Wild Seeds (Fa)",
+    "name": "Fall Seeds",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "404",
+        "name": "Common Mushroom",
+        "qty": 1
+      },
+      {
+        "id": "406",
+        "name": "Wild Plum",
+        "qty": 1
+      },
+      {
+        "id": "408",
+        "name": "Hazelnut",
+        "qty": 1
+      },
+      {
+        "id": "410",
+        "name": "Blackberry",
+        "qty": 1
+      }
+    ],
+    "output_qty": 10,
+    "unlock": "Foraging Level 6",
+    "wiki_url": "https://stardewvalleywiki.com/Fall_Seeds"
+  },
+  {
+    "key": "Wild Seeds (Sp)",
+    "name": "Spring Seeds",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "16",
+        "name": "Wild Horseradish",
+        "qty": 1
+      },
+      {
+        "id": "18",
+        "name": "Daffodil",
+        "qty": 1
+      },
+      {
+        "id": "20",
+        "name": "Leek",
+        "qty": 1
+      },
+      {
+        "id": "22",
+        "name": "Dandelion",
+        "qty": 1
+      }
+    ],
+    "output_qty": 10,
+    "unlock": "Foraging Level 1",
+    "wiki_url": "https://stardewvalleywiki.com/Spring_Seeds"
+  },
+  {
+    "key": "Wild Seeds (Su)",
+    "name": "Summer Seeds",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "396",
+        "name": "Spice Berry",
+        "qty": 1
+      },
+      {
+        "id": "398",
+        "name": "Grape",
+        "qty": 1
+      },
+      {
+        "id": "402",
+        "name": "Sweet Pea",
+        "qty": 1
+      }
+    ],
+    "output_qty": 10,
+    "unlock": "Foraging Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Summer_Seeds"
+  },
+  {
+    "key": "Wild Seeds (Wi)",
+    "name": "Winter Seeds",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "412",
+        "name": "Winter Root",
+        "qty": 1
+      },
+      {
+        "id": "414",
+        "name": "Crocus",
+        "qty": 1
+      },
+      {
+        "id": "416",
+        "name": "Crystal Fruit",
+        "qty": 1
+      },
+      {
+        "id": "418",
+        "name": "Snow Yam",
+        "qty": 1
+      }
+    ],
+    "output_qty": 10,
+    "unlock": "Foraging Level 7",
+    "wiki_url": "https://stardewvalleywiki.com/Winter_Seeds"
+  },
+  {
+    "key": "Wood Fence",
+    "name": "Wood Fence",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 2
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Wood_Fence"
+  },
+  {
+    "key": "Wood Floor",
+    "name": "Wood Floor",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Wood_Floor"
+  },
+  {
+    "key": "Wood Lamp-post",
+    "name": "Wood Lamp-post",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 50
+      },
+      {
+        "id": "787",
+        "name": "Battery Pack",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Wood_Lamp-post"
+  },
+  {
+    "key": "Wood Path",
+    "name": "Wood Path",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 1
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Wood_Path"
+  },
+  {
+    "key": "Wood Sign",
+    "name": "Wood Sign",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 25
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Starter",
+    "wiki_url": "https://stardewvalleywiki.com/Wood_Sign"
+  },
+  {
+    "key": "Wooden Brazier",
+    "name": "Wooden Brazier",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 10
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 5
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Special (see wiki)",
+    "wiki_url": "https://stardewvalleywiki.com/Wooden_Brazier"
+  },
+  {
+    "key": "Worm Bin",
+    "name": "Worm Bin",
+    "type": "crafting",
+    "ingredients": [
+      {
+        "id": "709",
+        "name": "Hardwood",
+        "qty": 15
+      },
+      {
+        "id": "336",
+        "name": "Gold Bar",
+        "qty": 1
+      },
+      {
+        "id": "335",
+        "name": "Iron Bar",
+        "qty": 1
+      },
+      {
+        "id": "771",
+        "name": "Fiber",
+        "qty": 50
+      }
+    ],
+    "output_qty": 1,
+    "unlock": "Fishing Level 4",
+    "wiki_url": "https://stardewvalleywiki.com/Worm_Bin"
+  }
+]
