@@ -200,7 +200,7 @@ func TestUnknownItemIDsReported(t *testing.T) {
 	snap := &parser.Snapshot{Items: map[string]int{
 		"388": 1, "380": 1, "335": 1, "SomeModItem": 1, "9999": 1,
 	}}
-	got := unknownItemIDs(snap, recipes, machines)
+	got := unknownItemIDs(snap, recipes, machines, engine.NewItemIndex(nil))
 	if len(got) != 2 || got[0] != "9999" || got[1] != "SomeModItem" {
 		t.Errorf("unknown ids = %v, want [9999 SomeModItem]", got)
 	}
@@ -209,7 +209,18 @@ func TestUnknownItemIDsReported(t *testing.T) {
 func TestUnknownItemIDsEmptyWhenAllKnown(t *testing.T) {
 	recipes := []engine.Recipe{{Key: "R", Ingredients: []engine.Ingredient{{ID: "388"}}}}
 	snap := &parser.Snapshot{Items: map[string]int{"388": 1}}
-	if got := unknownItemIDs(snap, recipes, nil); len(got) != 0 {
+	if got := unknownItemIDs(snap, recipes, nil, engine.NewItemIndex(nil)); len(got) != 0 {
+		t.Errorf("unknown ids = %v, want none", got)
+	}
+}
+
+func TestUnknownItemIDsSkipsKnownMetadata(t *testing.T) {
+	snap := &parser.Snapshot{Items: map[string]int{"147": 1}, Names: map[string]string{"147": "Herring"}}
+	items := engine.NewItemIndex(map[string]engine.Item{
+		"147":          {ID: "147", Name: "Stump Brazier"},
+		"name:Herring": {ID: "name:Herring", Name: "Herring"},
+	})
+	if got := unknownItemIDs(snap, nil, nil, items); len(got) != 0 {
 		t.Errorf("unknown ids = %v, want none", got)
 	}
 }
