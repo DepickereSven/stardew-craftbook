@@ -32,11 +32,11 @@
     "name": "Adventurer's Guild",
     "wiki_url": "https://stardewvalleywiki.com/Adventurer's_Guild"
   },
-  "(BC)13": {
-    "id": "(BC)13",
-    "name": "Furnace",
+  "(BC)154": {
+    "id": "(BC)154",
+    "name": "Worm Bin",
     "sell_price_note": "Cannot be sold",
-    "wiki_url": "https://stardewvalleywiki.com/Furnace"
+    "wiki_url": "https://stardewvalleywiki.com/Worm_Bin"
   },
   "10": {
     "id": "10",
@@ -74,6 +74,12 @@
     "sell_price": 200,
     "wiki_url": "https://stardewvalleywiki.com/Dwarf_Gadget"
   },
+  "13": {
+    "id": "13",
+    "name": "Furnace",
+    "sell_price_note": "Cannot be sold",
+    "wiki_url": "https://stardewvalleywiki.com/Furnace"
+  },
   "130": {
     "id": "130",
     "name": "Chest",
@@ -83,36 +89,42 @@
   "131": {
     "id": "131",
     "name": "Sardine",
+    "sell_price": 40,
     "edibility": 5,
     "wiki_url": "https://stardewvalleywiki.com/Sardine"
   },
   "132": {
     "id": "132",
     "name": "Bream",
+    "sell_price": 45,
     "edibility": 5,
     "wiki_url": "https://stardewvalleywiki.com/Bream"
   },
   "136": {
     "id": "136",
     "name": "Largemouth Bass",
+    "sell_price": 100,
     "edibility": 15,
     "wiki_url": "https://stardewvalleywiki.com/Largemouth_Bass"
   },
   "138": {
     "id": "138",
     "name": "Rainbow Trout",
+    "sell_price": 65,
     "edibility": 10,
     "wiki_url": "https://stardewvalleywiki.com/Rainbow_Trout"
   },
   "139": {
     "id": "139",
     "name": "Salmon",
+    "sell_price": 75,
     "edibility": 15,
     "wiki_url": "https://stardewvalleywiki.com/Salmon"
   },
   "142": {
     "id": "142",
     "name": "Carp",
+    "sell_price": 30,
     "edibility": 5,
     "wiki_url": "https://stardewvalleywiki.com/Carp"
   },
@@ -188,12 +200,6 @@
     "sell_price_note": "Cannot be sold",
     "wiki_url": "https://stardewvalleywiki.com/Iron_Lamp-post"
   },
-  "154": {
-    "id": "154",
-    "name": "Worm Bin",
-    "sell_price_note": "Cannot be sold",
-    "wiki_url": "https://stardewvalleywiki.com/Worm_Bin"
-  },
   "156": {
     "id": "156",
     "name": "Slime Incubator",
@@ -203,6 +209,7 @@
   "157": {
     "id": "157",
     "name": "White Algae",
+    "sell_price": 25,
     "edibility": 8,
     "wiki_url": "https://stardewvalleywiki.com/White_Algae"
   },
@@ -881,7 +888,7 @@
   "251": {
     "id": "251",
     "name": "Tea Sapling",
-    "sell_price_note": "{{Price|250}}",
+    "sell_price": 250,
     "wiki_url": "https://stardewvalleywiki.com/Tea_Sapling"
   },
   "252": {
@@ -982,12 +989,14 @@
   "267": {
     "id": "267",
     "name": "Flounder",
+    "sell_price": 100,
     "edibility": 15,
     "wiki_url": "https://stardewvalleywiki.com/Flounder"
   },
   "269": {
     "id": "269",
     "name": "Midnight Carp",
+    "sell_price": 150,
     "edibility": 20,
     "wiki_url": "https://stardewvalleywiki.com/Midnight_Carp"
   },
@@ -1081,7 +1090,7 @@
   "292": {
     "id": "292",
     "name": "Mahogany Seed",
-    "sell_price_note": "{{Price|100}}",
+    "sell_price": 100,
     "wiki_url": "https://stardewvalleywiki.com/Mahogany_Seed"
   },
   "293": {
@@ -1093,7 +1102,7 @@
   "297": {
     "id": "297",
     "name": "Grass Starter",
-    "sell_price_note": "{{Price|50}}",
+    "sell_price": 50,
     "wiki_url": "https://stardewvalleywiki.com/Grass_Starter"
   },
   "298": {
@@ -1153,19 +1162,19 @@
   "309": {
     "id": "309",
     "name": "Acorn",
-    "sell_price_note": "{{Price|20}}",
+    "sell_price": 20,
     "wiki_url": "https://stardewvalleywiki.com/Acorn"
   },
   "310": {
     "id": "310",
     "name": "Maple Seed",
-    "sell_price_note": "{{Price|5}}",
+    "sell_price": 5,
     "wiki_url": "https://stardewvalleywiki.com/Maple_Seed"
   },
   "311": {
     "id": "311",
     "name": "Pine Cone",
-    "sell_price_note": "{{Price|5}}",
+    "sell_price": 5,
     "wiki_url": "https://stardewvalleywiki.com/Pine_Cone"
   },
   "322": {
@@ -1319,6 +1328,7 @@
   "372": {
     "id": "372",
     "name": "Clam",
+    "sell_price": 50,
     "edibility": -300,
     "wiki_url": "https://stardewvalleywiki.com/Clam"
   },
@@ -1380,6 +1390,7 @@
   "393": {
     "id": "393",
     "name": "Coral",
+    "sell_price": 80,
     "edibility": -300,
     "wiki_url": "https://stardewvalleywiki.com/Coral"
   },
@@ -1408,6 +1419,7 @@
   "397": {
     "id": "397",
     "name": "Sea Urchin",
+    "sell_price": 160,
     "edibility": -300,
     "wiki_url": "https://stardewvalleywiki.com/Sea_Urchin"
   },
@@ -1565,7 +1577,7 @@
   "427": {
     "id": "427",
     "name": "Tulip Bulb",
-    "sell_price_note": "{{Price|10}}",
+    "sell_price": 10,
     "wiki_url": "https://stardewvalleywiki.com/Tulip_Bulb"
   },
   "428": {
@@ -1578,7 +1590,7 @@
   "429": {
     "id": "429",
     "name": "Jazz Seeds",
-    "sell_price_note": "{{Price|15}}",
+    "sell_price": 15,
     "wiki_url": "https://stardewvalleywiki.com/Jazz_Seeds"
   },
   "432": {
@@ -1598,13 +1610,13 @@
   "453": {
     "id": "453",
     "name": "Poppy Seeds",
-    "sell_price_note": "{{Price|50}}",
+    "sell_price": 50,
     "wiki_url": "https://stardewvalleywiki.com/Poppy_Seeds"
   },
   "455": {
     "id": "455",
     "name": "Spangle Seeds",
-    "sell_price_note": "{{Price|25}}",
+    "sell_price": 25,
     "wiki_url": "https://stardewvalleywiki.com/Spangle_Seeds"
   },
   "456": {
@@ -1666,31 +1678,31 @@
   "495": {
     "id": "495",
     "name": "Spring Seeds",
-    "sell_price_note": "{{Price|35}}",
+    "sell_price": 35,
     "wiki_url": "https://stardewvalleywiki.com/Spring_Seeds"
   },
   "496": {
     "id": "496",
     "name": "Summer Seeds",
-    "sell_price_note": "{{Price|55}}",
+    "sell_price": 55,
     "wiki_url": "https://stardewvalleywiki.com/Summer_Seeds"
   },
   "497": {
     "id": "497",
     "name": "Fall Seeds",
-    "sell_price_note": "{{Price|45}}",
+    "sell_price": 45,
     "wiki_url": "https://stardewvalleywiki.com/Fall_Seeds"
   },
   "498": {
     "id": "498",
     "name": "Winter Seeds",
-    "sell_price_note": "{{Price|30}}",
+    "sell_price": 30,
     "wiki_url": "https://stardewvalleywiki.com/Winter_Seeds"
   },
   "499": {
     "id": "499",
     "name": "Ancient Seeds",
-    "sell_price_note": "{{Price|30}}",
+    "sell_price": 30,
     "wiki_url": "https://stardewvalleywiki.com/Ancient_Seeds"
   },
   "521": {
@@ -1981,24 +1993,28 @@
   "715": {
     "id": "715",
     "name": "Lobster",
+    "sell_price": 120,
     "edibility": -300,
     "wiki_url": "https://stardewvalleywiki.com/Lobster"
   },
   "716": {
     "id": "716",
     "name": "Crayfish",
+    "sell_price": 75,
     "edibility": -300,
     "wiki_url": "https://stardewvalleywiki.com/Crayfish"
   },
   "717": {
     "id": "717",
     "name": "Crab",
+    "sell_price": 100,
     "edibility": -300,
     "wiki_url": "https://stardewvalleywiki.com/Crab"
   },
   "719": {
     "id": "719",
     "name": "Mussel",
+    "sell_price": 30,
     "edibility": -300,
     "wiki_url": "https://stardewvalleywiki.com/Mussel"
   },
@@ -2011,18 +2027,21 @@
   "720": {
     "id": "720",
     "name": "Shrimp",
+    "sell_price": 60,
     "edibility": -300,
     "wiki_url": "https://stardewvalleywiki.com/Shrimp"
   },
   "721": {
     "id": "721",
     "name": "Snail",
+    "sell_price": 65,
     "edibility": -300,
     "wiki_url": "https://stardewvalleywiki.com/Snail"
   },
   "722": {
     "id": "722",
     "name": "Periwinkle",
+    "sell_price": 20,
     "edibility": -300,
     "wiki_url": "https://stardewvalleywiki.com/Periwinkle"
   },
@@ -2152,21 +2171,11 @@
   },
   "733": {
     "id": "733",
-    "name": "Shrimp Cocktail",
-    "sell_price": 160,
-    "edibility": 90,
-    "buffs": [
-      {
-        "name": "Fishing",
-        "value": "+1"
-      },
-      {
-        "name": "Luck",
-        "value": "+1"
-      }
-    ],
-    "buff_duration": "10m 2s",
-    "wiki_url": "https://stardewvalleywiki.com/Shrimp_Cocktail"
+    "name": "Raisins",
+    "sell_price": 600,
+    "edibility": 50,
+    "processing_minutes": 1750,
+    "wiki_url": "https://stardewvalleywiki.com/Raisins"
   },
   "74": {
     "id": "74",
@@ -2207,7 +2216,7 @@
   "770": {
     "id": "770",
     "name": "Mixed Seeds",
-    "sell_price_note": "{{Price|0}}",
+    "sell_price": 0,
     "wiki_url": "https://stardewvalleywiki.com/Mixed_Seeds"
   },
   "771": {
@@ -2406,7 +2415,7 @@
   "885": {
     "id": "885",
     "name": "Fiber Seeds",
-    "sell_price_note": "{{Price|5}}",
+    "sell_price": 5,
     "wiki_url": "https://stardewvalleywiki.com/Fiber_Seeds"
   },
   "886": {
@@ -2608,7 +2617,7 @@
   "BlueGrassStarter": {
     "id": "BlueGrassStarter",
     "name": "Blue Grass Starter",
-    "sell_price_note": "{{Price|50}}",
+    "sell_price": 50,
     "wiki_url": "https://stardewvalleywiki.com/Blue_Grass_Starter"
   },
   "CaveJelly": {
@@ -2698,7 +2707,7 @@
   "MysticTreeSeed": {
     "id": "MysticTreeSeed",
     "name": "Mystic Tree Seed",
-    "sell_price_note": "{{Price|100}}",
+    "sell_price": 100,
     "wiki_url": "https://stardewvalleywiki.com/Mystic_Tree_Seed"
   },
   "RiverJelly": {
