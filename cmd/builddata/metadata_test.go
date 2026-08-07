@@ -51,3 +51,19 @@ func TestParseMetadataHandlesVariablePriceCategoryAndNestedBuff(t *testing.T) {
 		t.Errorf("machine = %+v", m)
 	}
 }
+
+func TestMachineMergeKeepsBaselineIDs(t *testing.T) {
+	baseline := Machine{Machine: "Keg", Inputs: []Ingredient{{ID: "433", Name: "Coffee Bean", Qty: 5}}, Output: Ingredient{ID: "395", Name: "Coffee", Qty: 1}, Minutes: 120}
+	scraped := Machine{Machine: "Keg", Inputs: []Ingredient{{Name: "Coffee Bean", Qty: 5}}, Output: Ingredient{ID: "395", Name: "Coffee", Qty: 1}, Minutes: 120}
+	got := appendMachineUnique([]Machine{baseline}, scraped)
+	if len(got) != 1 || got[0].Inputs[0].ID != "433" {
+		t.Errorf("baseline conversion was not retained: %+v", got)
+	}
+}
+
+func TestParseMachineIngredientsNormalizesDehydratorFruit(t *testing.T) {
+	got := parseMachineIngredients(`Any [[Fruit]] except [[Grape]]s (5)`, nil)
+	if len(got) != 1 || got[0].Name != "Fruit (Any)" || !got[0].Category || got[0].Qty != 5 {
+		t.Errorf("ingredients = %+v", got)
+	}
+}

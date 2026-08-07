@@ -214,6 +214,13 @@ func parseMachineIngredients(raw string, idsByName map[string]string) []Ingredie
 	if len(out) > 0 {
 		return out
 	}
+	if strings.Contains(raw, "[[Fruit]]") {
+		match := trailingQuantityRe.FindStringSubmatch(raw)
+		if match != nil {
+			qty, _ := strconv.Atoi(match[1])
+			return []Ingredient{{ID: "-79", Name: "Fruit (Any)", Qty: qty, Category: true}}
+		}
+	}
 	if strings.HasPrefix(strings.TrimSpace(raw), "[[") {
 		name := strings.TrimSpace(raw)
 		name = strings.TrimPrefix(name, "[[")
@@ -308,13 +315,24 @@ var machineItemIDs = map[string]string{
 }
 
 func appendMachineUnique(machines []Machine, candidate Machine) []Machine {
-	key := machineKey(candidate)
+	key := machineSemanticKey(candidate)
 	for _, existing := range machines {
-		if machineKey(existing) == key {
+		if machineSemanticKey(existing) == key {
 			return machines
 		}
 	}
 	return append(machines, candidate)
+}
+
+// machineSemanticKey deliberately excludes item IDs. Scraped infobox data
+// sometimes lacks an ID that the hand-checked baseline has; that must update
+// neither the baseline row nor the planner's ability to use it.
+func machineSemanticKey(m Machine) string {
+	var inputs []string
+	for _, input := range m.Inputs {
+		inputs = append(inputs, input.Name+":"+strconv.Itoa(input.Qty))
+	}
+	return m.Machine + "|" + strings.Join(inputs, ",") + "|" + m.Output.Name + ":" + strconv.Itoa(m.Output.Qty) + "|" + strconv.Itoa(m.Minutes)
 }
 
 func machineKey(m Machine) string {
