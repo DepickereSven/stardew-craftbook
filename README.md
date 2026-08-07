@@ -10,6 +10,20 @@ It answers three questions:
 
 One static binary, no dependencies, no installer, no accounts, no telemetry, nothing leaves your network. The recipe data and the web UI are compiled into the executable.
 
+## Install a release
+
+Download the archive for your platform from the [GitHub Releases page](https://github.com/DepickereSven/stardew-craftbook/releases), extract it, and run the included binary. Each release includes Linux (x86_64 and ARM64), macOS (Intel and Apple Silicon), and Windows (x86_64) builds, plus `checksums.txt` for verification.
+
+On Linux or macOS:
+
+```sh
+tar -xzf stardew-craftbook-<platform>.tar.gz
+chmod +x stardew-craftbook
+./stardew-craftbook
+```
+
+On Windows, extract the `.zip` and double-click `stardew-craftbook.exe` (or run it from PowerShell).
+
 ## Quick start
 
 ```sh
