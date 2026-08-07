@@ -130,9 +130,9 @@ This rewrites `data/recipes.json`, `data/machines.json` and `data/items.json`, v
 
 ## Status
 
-The API and the engine are complete. The web page at `/` is currently a **placeholder** that only proves static serving works.
+The app is complete: an Items view (what you own, what it's worth raw vs. processed) and a Recipes view (what's craftable, what's missing, how to get there), both in a single self-contained page at `/`.
 
-The JSON API is stable and usable on its own:
+The JSON API behind it:
 
 | Endpoint              | Returns                                                |
 |-----------------------|--------------------------------------------------------|
