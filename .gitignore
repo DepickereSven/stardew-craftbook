@@ -2,5 +2,7 @@
 .idea/
 saved/
 docs/
-stardew-craftbook
-stardew-craftbook.exe
+# Anchored to the repo root: an unanchored pattern would also swallow the
+# cmd/stardew-craftbook/ source directory.
+/stardew-craftbook
+/stardew-craftbook.exe
