@@ -32,12 +32,6 @@
     "name": "Adventurer's Guild",
     "wiki_url": "https://stardewvalleywiki.com/Adventurer's_Guild"
   },
-  "(BC)154": {
-    "id": "(BC)154",
-    "name": "Worm Bin",
-    "sell_price_note": "Cannot be sold",
-    "wiki_url": "https://stardewvalleywiki.com/Worm_Bin"
-  },
   "10": {
     "id": "10",
     "name": "Bee House",
@@ -199,6 +193,12 @@
     "name": "Iron Lamp-post",
     "sell_price_note": "Cannot be sold",
     "wiki_url": "https://stardewvalleywiki.com/Iron_Lamp-post"
+  },
+  "154": {
+    "id": "154",
+    "name": "Worm Bin",
+    "sell_price_note": "Cannot be sold",
+    "wiki_url": "https://stardewvalleywiki.com/Worm_Bin"
   },
   "156": {
     "id": "156",
@@ -1708,21 +1708,25 @@
   "521": {
     "id": "521",
     "name": "Warrior Ring",
+    "sell_price": 750,
     "wiki_url": "https://stardewvalleywiki.com/Warrior_Ring"
   },
   "524": {
     "id": "524",
     "name": "Ring of Yoba",
+    "sell_price": 750,
     "wiki_url": "https://stardewvalleywiki.com/Ring_of_Yoba"
   },
   "525": {
     "id": "525",
     "name": "Sturdy Ring",
+    "sell_price": 750,
     "wiki_url": "https://stardewvalleywiki.com/Sturdy_Ring"
   },
   "527": {
     "id": "527",
     "name": "Iridium Band",
+    "sell_price": 1000,
     "wiki_url": "https://stardewvalleywiki.com/Iridium_Band"
   },
   "567": {
@@ -1861,10 +1865,10 @@
   },
   "634": {
     "id": "634",
-    "name": "Dried Mushrooms",
-    "sell_price_note": "(7.5 × mushroom Base Price) + 25",
-    "processing_minutes": 1750,
-    "wiki_url": "https://stardewvalleywiki.com/Dried_Mushrooms"
+    "name": "Apricot",
+    "sell_price": 50,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Apricot"
   },
   "635": {
     "id": "635",
@@ -2335,6 +2339,7 @@
   "839": {
     "id": "839",
     "name": "Thorns Ring",
+    "sell_price": 100,
     "wiki_url": "https://stardewvalleywiki.com/Thorns_Ring"
   },
   "84": {
@@ -2427,6 +2432,7 @@
   "888": {
     "id": "888",
     "name": "Glowstone Ring",
+    "sell_price": 100,
     "wiki_url": "https://stardewvalleywiki.com/Glowstone_Ring"
   },
   "9": {
@@ -2773,5 +2779,4269 @@
     "name": "Treasure Totem",
     "sell_price": 20,
     "wiki_url": "https://stardewvalleywiki.com/Treasure_Totem"
+  },
+  "name:'1000 Years From Now'": {
+    "id": "name:'1000 Years From Now'",
+    "name": "'1000 Years From Now'",
+    "wiki_url": "https://stardewvalleywiki.com/'1000_Years_From_Now'"
+  },
+  "name:'A Night On Eco-Hill'": {
+    "id": "name:'A Night On Eco-Hill'",
+    "name": "'A Night On Eco-Hill'",
+    "wiki_url": "https://stardewvalleywiki.com/'A_Night_On_Eco-Hill'"
+  },
+  "name:'Abstract'": {
+    "id": "name:'Abstract'",
+    "name": "'Abstract'",
+    "wiki_url": "https://stardewvalleywiki.com/'Abstract'"
+  },
+  "name:'Binary'": {
+    "id": "name:'Binary'",
+    "name": "'Binary'",
+    "wiki_url": "https://stardewvalleywiki.com/'Binary'"
+  },
+  "name:'Blue City'": {
+    "id": "name:'Blue City'",
+    "name": "'Blue City'",
+    "wiki_url": "https://stardewvalleywiki.com/'Blue_City'"
+  },
+  "name:'Blueberries'": {
+    "id": "name:'Blueberries'",
+    "name": "'Blueberries'",
+    "wiki_url": "https://stardewvalleywiki.com/'Blueberries'"
+  },
+  "name:'Boat'": {
+    "id": "name:'Boat'",
+    "name": "'Boat'",
+    "wiki_url": "https://stardewvalleywiki.com/'Boat'"
+  },
+  "name:'Burnt Offering'": {
+    "id": "name:'Burnt Offering'",
+    "name": "'Burnt Offering'",
+    "wiki_url": "https://stardewvalleywiki.com/'Burnt_Offering'"
+  },
+  "name:'Checkers'": {
+    "id": "name:'Checkers'",
+    "name": "'Checkers'",
+    "wiki_url": "https://stardewvalleywiki.com/'Checkers'"
+  },
+  "name:'Clouds'": {
+    "id": "name:'Clouds'",
+    "name": "'Clouds'",
+    "wiki_url": "https://stardewvalleywiki.com/'Clouds'"
+  },
+  "name:'Community Center'": {
+    "id": "name:'Community Center'",
+    "name": "'Community Center'",
+    "wiki_url": "https://stardewvalleywiki.com/'Community_Center'"
+  },
+  "name:'Dancing Grass'": {
+    "id": "name:'Dancing Grass'",
+    "name": "'Dancing Grass'",
+    "wiki_url": "https://stardewvalleywiki.com/'Dancing_Grass'"
+  },
+  "name:'Frozen Dreams'": {
+    "id": "name:'Frozen Dreams'",
+    "name": "'Frozen Dreams'",
+    "wiki_url": "https://stardewvalleywiki.com/'Frozen_Dreams'"
+  },
+  "name:'Groovy'": {
+    "id": "name:'Groovy'",
+    "name": "'Groovy'",
+    "wiki_url": "https://stardewvalleywiki.com/'Groovy'"
+  },
+  "name:'Highway 89'": {
+    "id": "name:'Highway 89'",
+    "name": "'Highway 89'",
+    "wiki_url": "https://stardewvalleywiki.com/'Highway_89'"
+  },
+  "name:'Hut'": {
+    "id": "name:'Hut'",
+    "name": "'Hut'",
+    "wiki_url": "https://stardewvalleywiki.com/'Hut'"
+  },
+  "name:'It Howls In The Rain'": {
+    "id": "name:'It Howls In The Rain'",
+    "name": "'It Howls In The Rain'",
+    "wiki_url": "https://stardewvalleywiki.com/'It_Howls_In_The_Rain'"
+  },
+  "name:'Jade Hills Extended'": {
+    "id": "name:'Jade Hills Extended'",
+    "name": "'Jade Hills Extended'",
+    "wiki_url": "https://stardewvalleywiki.com/'Jade_Hills_Extended'"
+  },
+  "name:'Jade Hills'": {
+    "id": "name:'Jade Hills'",
+    "name": "'Jade Hills'",
+    "wiki_url": "https://stardewvalleywiki.com/'Jade_Hills'"
+  },
+  "name:'Journey Of The Prairie King: The Motion Picture'": {
+    "id": "name:'Journey Of The Prairie King: The Motion Picture'",
+    "name": "'Journey Of The Prairie King: The Motion Picture'",
+    "wiki_url": "https://stardewvalleywiki.com/'Journey_Of_The_Prairie_King:_The_Motion_Picture'"
+  },
+  "name:'Kitemaster '95'": {
+    "id": "name:'Kitemaster '95'",
+    "name": "'Kitemaster '95'",
+    "wiki_url": "https://stardewvalleywiki.com/'Kitemaster_'95'"
+  },
+  "name:'Land Of Clay'": {
+    "id": "name:'Land Of Clay'",
+    "name": "'Land Of Clay'",
+    "wiki_url": "https://stardewvalleywiki.com/'Land_Of_Clay'"
+  },
+  "name:'Little Buddies'": {
+    "id": "name:'Little Buddies'",
+    "name": "'Little Buddies'",
+    "wiki_url": "https://stardewvalleywiki.com/'Little_Buddies'"
+  },
+  "name:'Little Tree'": {
+    "id": "name:'Little Tree'",
+    "name": "'Little Tree'",
+    "wiki_url": "https://stardewvalleywiki.com/'Little_Tree'"
+  },
+  "name:'Mysterium'": {
+    "id": "name:'Mysterium'",
+    "name": "'Mysterium'",
+    "wiki_url": "https://stardewvalleywiki.com/'Mysterium'"
+  },
+  "name:'Natural Wonders: Exploring Our Vibrant World'": {
+    "id": "name:'Natural Wonders: Exploring Our Vibrant World'",
+    "name": "'Natural Wonders: Exploring Our Vibrant World'",
+    "wiki_url": "https://stardewvalleywiki.com/'Natural_Wonders:_Exploring_Our_Vibrant_World'"
+  },
+  "name:'Pathways'": {
+    "id": "name:'Pathways'",
+    "name": "'Pathways'",
+    "wiki_url": "https://stardewvalleywiki.com/'Pathways'"
+  },
+  "name:'Physics 101'": {
+    "id": "name:'Physics 101'",
+    "name": "'Physics 101'",
+    "wiki_url": "https://stardewvalleywiki.com/'Physics_101'"
+  },
+  "name:'Portrait Of A Mermaid'": {
+    "id": "name:'Portrait Of A Mermaid'",
+    "name": "'Portrait Of A Mermaid'",
+    "wiki_url": "https://stardewvalleywiki.com/'Portrait_Of_A_Mermaid'"
+  },
+  "name:'Primal Motion'": {
+    "id": "name:'Primal Motion'",
+    "name": "'Primal Motion'",
+    "wiki_url": "https://stardewvalleywiki.com/'Primal_Motion'"
+  },
+  "name:'Queen of the Gem Sea'": {
+    "id": "name:'Queen of the Gem Sea'",
+    "name": "'Queen of the Gem Sea'",
+    "wiki_url": "https://stardewvalleywiki.com/'Queen_of_the_Gem_Sea'"
+  },
+  "name:'Red Eagle'": {
+    "id": "name:'Red Eagle'",
+    "name": "'Red Eagle'",
+    "wiki_url": "https://stardewvalleywiki.com/'Red_Eagle'"
+  },
+  "name:'Runes'": {
+    "id": "name:'Runes'",
+    "name": "'Runes'",
+    "wiki_url": "https://stardewvalleywiki.com/'Runes'"
+  },
+  "name:'Solar Kingdom'": {
+    "id": "name:'Solar Kingdom'",
+    "name": "'Solar Kingdom'",
+    "wiki_url": "https://stardewvalleywiki.com/'Solar_Kingdom'"
+  },
+  "name:'Spires'": {
+    "id": "name:'Spires'",
+    "name": "'Spires'",
+    "wiki_url": "https://stardewvalleywiki.com/'Spires'"
+  },
+  "name:'Squid Kid'": {
+    "id": "name:'Squid Kid'",
+    "name": "'Squid Kid'",
+    "wiki_url": "https://stardewvalleywiki.com/'Squid_Kid'"
+  },
+  "name:'Stardrop'": {
+    "id": "name:'Stardrop'",
+    "name": "'Stardrop'",
+    "wiki_url": "https://stardewvalleywiki.com/'Stardrop'"
+  },
+  "name:'Starship'": {
+    "id": "name:'Starship'",
+    "name": "'Starship'",
+    "wiki_url": "https://stardewvalleywiki.com/'Starship'"
+  },
+  "name:'Sun 44'": {
+    "id": "name:'Sun 44'",
+    "name": "'Sun 44'",
+    "wiki_url": "https://stardewvalleywiki.com/'Sun_44'"
+  },
+  "name:'Sun 45'": {
+    "id": "name:'Sun 45'",
+    "name": "'Sun 45'",
+    "wiki_url": "https://stardewvalleywiki.com/'Sun_45'"
+  },
+  "name:'The Brave Little Sapling'": {
+    "id": "name:'The Brave Little Sapling'",
+    "name": "'The Brave Little Sapling'",
+    "wiki_url": "https://stardewvalleywiki.com/'The_Brave_Little_Sapling'"
+  },
+  "name:'The Miracle At Coldstar Ranch'": {
+    "id": "name:'The Miracle At Coldstar Ranch'",
+    "name": "'The Miracle At Coldstar Ranch'",
+    "wiki_url": "https://stardewvalleywiki.com/'The_Miracle_At_Coldstar_Ranch'"
+  },
+  "name:'The Muzzamaroo'": {
+    "id": "name:'The Muzzamaroo'",
+    "name": "'The Muzzamaroo'",
+    "wiki_url": "https://stardewvalleywiki.com/'The_Muzzamaroo'"
+  },
+  "name:'The Serpent'": {
+    "id": "name:'The Serpent'",
+    "name": "'The Serpent'",
+    "wiki_url": "https://stardewvalleywiki.com/'The_Serpent'"
+  },
+  "name:'The Zuzu City Express'": {
+    "id": "name:'The Zuzu City Express'",
+    "name": "'The Zuzu City Express'",
+    "wiki_url": "https://stardewvalleywiki.com/'The_Zuzu_City_Express'"
+  },
+  "name:'Three Trees'": {
+    "id": "name:'Three Trees'",
+    "name": "'Three Trees'",
+    "wiki_url": "https://stardewvalleywiki.com/'Three_Trees'"
+  },
+  "name:'Tropical Fish 173'": {
+    "id": "name:'Tropical Fish 173'",
+    "name": "'Tropical Fish 173'",
+    "wiki_url": "https://stardewvalleywiki.com/'Tropical_Fish_173'"
+  },
+  "name:'UFO'": {
+    "id": "name:'UFO'",
+    "name": "'UFO'",
+    "wiki_url": "https://stardewvalleywiki.com/'UFO'"
+  },
+  "name:'VGA Paradise'": {
+    "id": "name:'VGA Paradise'",
+    "name": "'VGA Paradise'",
+    "wiki_url": "https://stardewvalleywiki.com/'VGA_Paradise'"
+  },
+  "name:'Vanilla Villa'": {
+    "id": "name:'Vanilla Villa'",
+    "name": "'Vanilla Villa'",
+    "wiki_url": "https://stardewvalleywiki.com/'Vanilla_Villa'"
+  },
+  "name:'Vista'": {
+    "id": "name:'Vista'",
+    "name": "'Vista'",
+    "wiki_url": "https://stardewvalleywiki.com/'Vista'"
+  },
+  "name:'Void Swirls'": {
+    "id": "name:'Void Swirls'",
+    "name": "'Void Swirls'",
+    "wiki_url": "https://stardewvalleywiki.com/'Void_Swirls'"
+  },
+  "name:'Volcano' Photo": {
+    "id": "name:'Volcano' Photo",
+    "name": "'Volcano' Photo",
+    "wiki_url": "https://stardewvalleywiki.com/'Volcano'_Photo"
+  },
+  "name:'Wizard's Tower'": {
+    "id": "name:'Wizard's Tower'",
+    "name": "'Wizard's Tower'",
+    "wiki_url": "https://stardewvalleywiki.com/'Wizard's_Tower'"
+  },
+  "name:'Wumbus'": {
+    "id": "name:'Wumbus'",
+    "name": "'Wumbus'",
+    "wiki_url": "https://stardewvalleywiki.com/'Wumbus'"
+  },
+  "name:??Foroguemon??": {
+    "id": "name:??Foroguemon??",
+    "name": "??Foroguemon??",
+    "wiki_url": "https://stardewvalleywiki.com/??Foroguemon??"
+  },
+  "name:??HMTGF??": {
+    "id": "name:??HMTGF??",
+    "name": "??HMTGF??",
+    "wiki_url": "https://stardewvalleywiki.com/??HMTGF??"
+  },
+  "name:??Pinky Lemon??": {
+    "id": "name:??Pinky Lemon??",
+    "name": "??Pinky Lemon??",
+    "wiki_url": "https://stardewvalleywiki.com/??Pinky_Lemon??"
+  },
+  "name:Abby's Planchette": {
+    "id": "name:Abby's Planchette",
+    "name": "Abby's Planchette",
+    "sell_price": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Abby's_Planchette"
+  },
+  "name:Abigail Portrait": {
+    "id": "name:Abigail Portrait",
+    "name": "Abigail Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Abigail_Portrait"
+  },
+  "name:Advanced Iridium Rod": {
+    "id": "name:Advanced Iridium Rod",
+    "name": "Advanced Iridium Rod",
+    "wiki_url": "https://stardewvalleywiki.com/Advanced_Iridium_Rod"
+  },
+  "name:Albacore": {
+    "id": "name:Albacore",
+    "name": "Albacore",
+    "sell_price": 75,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Albacore"
+  },
+  "name:Alex Portrait": {
+    "id": "name:Alex Portrait",
+    "name": "Alex Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Alex_Portrait"
+  },
+  "name:Alex's Bat": {
+    "id": "name:Alex's Bat",
+    "name": "Alex's Bat",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Alex's_Bat"
+  },
+  "name:Aluminum Can": {
+    "id": "name:Aluminum Can",
+    "name": "Aluminum Can",
+    "wiki_url": "https://stardewvalleywiki.com/Aluminum_Can"
+  },
+  "name:Amethyst Crystal Ball": {
+    "id": "name:Amethyst Crystal Ball",
+    "name": "Amethyst Crystal Ball",
+    "wiki_url": "https://stardewvalleywiki.com/Amethyst_Crystal_Ball"
+  },
+  "name:Amethyst Ring": {
+    "id": "name:Amethyst Ring",
+    "name": "Amethyst Ring",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Amethyst_Ring"
+  },
+  "name:Anchor (furniture)": {
+    "id": "name:Anchor (furniture)",
+    "name": "Anchor (furniture)",
+    "wiki_url": "https://stardewvalleywiki.com/Anchor_(furniture)"
+  },
+  "name:Anchovy": {
+    "id": "name:Anchovy",
+    "name": "Anchovy",
+    "sell_price": 30,
+    "edibility": 5,
+    "wiki_url": "https://stardewvalleywiki.com/Anchovy"
+  },
+  "name:Angler": {
+    "id": "name:Angler",
+    "name": "Angler",
+    "sell_price": 900,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Angler"
+  },
+  "name:Aquamarine Crystal Ball": {
+    "id": "name:Aquamarine Crystal Ball",
+    "name": "Aquamarine Crystal Ball",
+    "wiki_url": "https://stardewvalleywiki.com/Aquamarine_Crystal_Ball"
+  },
+  "name:Aquamarine Ring": {
+    "id": "name:Aquamarine Ring",
+    "name": "Aquamarine Ring",
+    "sell_price": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Aquamarine_Ring"
+  },
+  "name:Aquatic Sanctuary": {
+    "id": "name:Aquatic Sanctuary",
+    "name": "Aquatic Sanctuary",
+    "wiki_url": "https://stardewvalleywiki.com/Aquatic_Sanctuary"
+  },
+  "name:Arcane Hat": {
+    "id": "name:Arcane Hat",
+    "name": "Arcane Hat",
+    "sell_price_note": "Cannot be sold",
+    "wiki_url": "https://stardewvalleywiki.com/Arcane_Hat"
+  },
+  "name:Art Photo": {
+    "id": "name:Art Photo",
+    "name": "Art Photo",
+    "wiki_url": "https://stardewvalleywiki.com/Art_Photo"
+  },
+  "name:Art Photo 2": {
+    "id": "name:Art Photo 2",
+    "name": "Art Photo 2",
+    "wiki_url": "https://stardewvalleywiki.com/Art_Photo_2"
+  },
+  "name:Artist Bookcase": {
+    "id": "name:Artist Bookcase",
+    "name": "Artist Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Artist_Bookcase"
+  },
+  "name:Auto-Grabber": {
+    "id": "name:Auto-Grabber",
+    "name": "Auto-Grabber",
+    "wiki_url": "https://stardewvalleywiki.com/Auto-Grabber"
+  },
+  "name:Auto-Petter": {
+    "id": "name:Auto-Petter",
+    "name": "Auto-Petter",
+    "wiki_url": "https://stardewvalleywiki.com/Auto-Petter"
+  },
+  "name:Bamboo Mat": {
+    "id": "name:Bamboo Mat",
+    "name": "Bamboo Mat",
+    "wiki_url": "https://stardewvalleywiki.com/Bamboo_Mat"
+  },
+  "name:Bamboo Pole": {
+    "id": "name:Bamboo Pole",
+    "name": "Bamboo Pole",
+    "wiki_url": "https://stardewvalleywiki.com/Bamboo_Pole"
+  },
+  "name:Basic Log": {
+    "id": "name:Basic Log",
+    "name": "Basic Log",
+    "wiki_url": "https://stardewvalleywiki.com/Basic_Log"
+  },
+  "name:Basic Window": {
+    "id": "name:Basic Window",
+    "name": "Basic Window",
+    "wiki_url": "https://stardewvalleywiki.com/Basic_Window"
+  },
+  "name:Basilisk Paw": {
+    "id": "name:Basilisk Paw",
+    "name": "Basilisk Paw",
+    "sell_price": 1000,
+    "wiki_url": "https://stardewvalleywiki.com/Basilisk_Paw"
+  },
+  "name:Bear Statue": {
+    "id": "name:Bear Statue",
+    "name": "Bear Statue",
+    "wiki_url": "https://stardewvalleywiki.com/Bear_Statue"
+  },
+  "name:Big Green Cane": {
+    "id": "name:Big Green Cane",
+    "name": "Big Green Cane",
+    "wiki_url": "https://stardewvalleywiki.com/Big_Green_Cane"
+  },
+  "name:Big Red Cane": {
+    "id": "name:Big Red Cane",
+    "name": "Big Red Cane",
+    "wiki_url": "https://stardewvalleywiki.com/Big_Red_Cane"
+  },
+  "name:Birch Bench": {
+    "id": "name:Birch Bench",
+    "name": "Birch Bench",
+    "wiki_url": "https://stardewvalleywiki.com/Birch_Bench"
+  },
+  "name:Birch Chair": {
+    "id": "name:Birch Chair",
+    "name": "Birch Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Birch_Chair"
+  },
+  "name:Birch Double Bed": {
+    "id": "name:Birch Double Bed",
+    "name": "Birch Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Birch_Double_Bed"
+  },
+  "name:Birch Dresser": {
+    "id": "name:Birch Dresser",
+    "name": "Birch Dresser",
+    "wiki_url": "https://stardewvalleywiki.com/Birch_Dresser"
+  },
+  "name:Birch End Table": {
+    "id": "name:Birch End Table",
+    "name": "Birch End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Birch_End_Table"
+  },
+  "name:Birch Lamp End Table": {
+    "id": "name:Birch Lamp End Table",
+    "name": "Birch Lamp End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Birch_Lamp_End_Table"
+  },
+  "name:Birch Table": {
+    "id": "name:Birch Table",
+    "name": "Birch Table",
+    "wiki_url": "https://stardewvalleywiki.com/Birch_Table"
+  },
+  "name:Birch Tea-Table": {
+    "id": "name:Birch Tea-Table",
+    "name": "Birch Tea-Table",
+    "wiki_url": "https://stardewvalleywiki.com/Birch_Tea-Table"
+  },
+  "name:Bird House": {
+    "id": "name:Bird House",
+    "name": "Bird House",
+    "wiki_url": "https://stardewvalleywiki.com/Bird_House"
+  },
+  "name:Black Cushion": {
+    "id": "name:Black Cushion",
+    "name": "Black Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Black_Cushion"
+  },
+  "name:Blobfish": {
+    "id": "name:Blobfish",
+    "name": "Blobfish",
+    "sell_price": 500,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Blobfish"
+  },
+  "name:Blossom Rug": {
+    "id": "name:Blossom Rug",
+    "name": "Blossom Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Blossom_Rug"
+  },
+  "name:Blue Armchair": {
+    "id": "name:Blue Armchair",
+    "name": "Blue Armchair",
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Armchair"
+  },
+  "name:Blue Book": {
+    "id": "name:Blue Book",
+    "name": "Blue Book",
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Book"
+  },
+  "name:Blue Bottle": {
+    "id": "name:Blue Bottle",
+    "name": "Blue Bottle",
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Bottle"
+  },
+  "name:Blue Couch": {
+    "id": "name:Blue Couch",
+    "name": "Blue Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Couch"
+  },
+  "name:Blue Cushion": {
+    "id": "name:Blue Cushion",
+    "name": "Blue Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Cushion"
+  },
+  "name:Blue Diner Chair": {
+    "id": "name:Blue Diner Chair",
+    "name": "Blue Diner Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Diner_Chair"
+  },
+  "name:Blue Discus": {
+    "id": "name:Blue Discus",
+    "name": "Blue Discus",
+    "sell_price": 120,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Discus"
+  },
+  "name:Blue Pinstripe Bed": {
+    "id": "name:Blue Pinstripe Bed",
+    "name": "Blue Pinstripe Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Pinstripe_Bed"
+  },
+  "name:Blue Pinstripe Double Bed": {
+    "id": "name:Blue Pinstripe Double Bed",
+    "name": "Blue Pinstripe Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Pinstripe_Double_Bed"
+  },
+  "name:Blue Sleeping Junimo": {
+    "id": "name:Blue Sleeping Junimo",
+    "name": "Blue Sleeping Junimo",
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Sleeping_Junimo"
+  },
+  "name:Blue Stool": {
+    "id": "name:Blue Stool",
+    "name": "Blue Stool",
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Stool"
+  },
+  "name:Boarded Window": {
+    "id": "name:Boarded Window",
+    "name": "Boarded Window",
+    "wiki_url": "https://stardewvalleywiki.com/Boarded_Window"
+  },
+  "name:Bobo Statue": {
+    "id": "name:Bobo Statue",
+    "name": "Bobo Statue",
+    "wiki_url": "https://stardewvalleywiki.com/Bobo_Statue"
+  },
+  "name:Bone Rug": {
+    "id": "name:Bone Rug",
+    "name": "Bone Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Bone_Rug"
+  },
+  "name:Bone Sword": {
+    "id": "name:Bone Sword",
+    "name": "Bone Sword",
+    "sell_price": 250,
+    "wiki_url": "https://stardewvalleywiki.com/Bone_Sword"
+  },
+  "name:Bonsai Tree": {
+    "id": "name:Bonsai Tree",
+    "name": "Bonsai Tree",
+    "wiki_url": "https://stardewvalleywiki.com/Bonsai_Tree"
+  },
+  "name:Book Pile": {
+    "id": "name:Book Pile",
+    "name": "Book Pile",
+    "wiki_url": "https://stardewvalleywiki.com/Book_Pile"
+  },
+  "name:Book Stack": {
+    "id": "name:Book Stack",
+    "name": "Book Stack",
+    "wiki_url": "https://stardewvalleywiki.com/Book_Stack"
+  },
+  "name:Bountiful Dining Table": {
+    "id": "name:Bountiful Dining Table",
+    "name": "Bountiful Dining Table",
+    "wiki_url": "https://stardewvalleywiki.com/Bountiful_Dining_Table"
+  },
+  "name:Box Lamp": {
+    "id": "name:Box Lamp",
+    "name": "Box Lamp",
+    "wiki_url": "https://stardewvalleywiki.com/Box_Lamp"
+  },
+  "name:Breakfast Chair": {
+    "id": "name:Breakfast Chair",
+    "name": "Breakfast Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Breakfast_Chair"
+  },
+  "name:Brick Fireplace": {
+    "id": "name:Brick Fireplace",
+    "name": "Brick Fireplace",
+    "wiki_url": "https://stardewvalleywiki.com/Brick_Fireplace"
+  },
+  "name:Brochure Cabinet": {
+    "id": "name:Brochure Cabinet",
+    "name": "Brochure Cabinet",
+    "wiki_url": "https://stardewvalleywiki.com/Brochure_Cabinet"
+  },
+  "name:Broken Television": {
+    "id": "name:Broken Television",
+    "name": "Broken Television",
+    "wiki_url": "https://stardewvalleywiki.com/Broken_Television"
+  },
+  "name:Broken Trident": {
+    "id": "name:Broken Trident",
+    "name": "Broken Trident",
+    "sell_price": 250,
+    "wiki_url": "https://stardewvalleywiki.com/Broken_Trident"
+  },
+  "name:Brown Armchair": {
+    "id": "name:Brown Armchair",
+    "name": "Brown Armchair",
+    "wiki_url": "https://stardewvalleywiki.com/Brown_Armchair"
+  },
+  "name:Brown Book": {
+    "id": "name:Brown Book",
+    "name": "Brown Book",
+    "wiki_url": "https://stardewvalleywiki.com/Brown_Book"
+  },
+  "name:Brown Couch": {
+    "id": "name:Brown Couch",
+    "name": "Brown Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Brown_Couch"
+  },
+  "name:Brown Cushion": {
+    "id": "name:Brown Cushion",
+    "name": "Brown Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Brown_Cushion"
+  },
+  "name:Budget TV": {
+    "id": "name:Budget TV",
+    "name": "Budget TV",
+    "wiki_url": "https://stardewvalleywiki.com/Budget_TV"
+  },
+  "name:Bulletin Board": {
+    "id": "name:Bulletin Board",
+    "name": "Bulletin Board",
+    "wiki_url": "https://stardewvalleywiki.com/Bulletin_Board"
+  },
+  "name:Bullhead": {
+    "id": "name:Bullhead",
+    "name": "Bullhead",
+    "sell_price": 75,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Bullhead"
+  },
+  "name:Burglar's Ring": {
+    "id": "name:Burglar's Ring",
+    "name": "Burglar's Ring",
+    "sell_price": 750,
+    "wiki_url": "https://stardewvalleywiki.com/Burglar's_Ring"
+  },
+  "name:Burglar's Shank": {
+    "id": "name:Burglar's Shank",
+    "name": "Burglar's Shank",
+    "sell_price": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Burglar's_Shank"
+  },
+  "name:Buried Tire": {
+    "id": "name:Buried Tire",
+    "name": "Buried Tire",
+    "wiki_url": "https://stardewvalleywiki.com/Buried_Tire"
+  },
+  "name:Burlap Rug": {
+    "id": "name:Burlap Rug",
+    "name": "Burlap Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Burlap_Rug"
+  },
+  "name:Butterfly Hutch": {
+    "id": "name:Butterfly Hutch",
+    "name": "Butterfly Hutch",
+    "wiki_url": "https://stardewvalleywiki.com/Butterfly_Hutch"
+  },
+  "name:Calendar": {
+    "id": "name:Calendar",
+    "name": "Calendar",
+    "wiki_url": "https://stardewvalleywiki.com/Calendar"
+  },
+  "name:Calico Falls": {
+    "id": "name:Calico Falls",
+    "name": "Calico Falls",
+    "wiki_url": "https://stardewvalleywiki.com/Calico_Falls"
+  },
+  "name:Calico Statue": {
+    "id": "name:Calico Statue",
+    "name": "Calico Statue",
+    "wiki_url": "https://stardewvalleywiki.com/Calico_Statue"
+  },
+  "name:Candle Lamp": {
+    "id": "name:Candle Lamp",
+    "name": "Candle Lamp",
+    "wiki_url": "https://stardewvalleywiki.com/Candle_Lamp"
+  },
+  "name:Candy Table": {
+    "id": "name:Candy Table",
+    "name": "Candy Table",
+    "wiki_url": "https://stardewvalleywiki.com/Candy_Table"
+  },
+  "name:Carved Window": {
+    "id": "name:Carved Window",
+    "name": "Carved Window",
+    "wiki_url": "https://stardewvalleywiki.com/Carved_Window"
+  },
+  "name:Carving Knife": {
+    "id": "name:Carving Knife",
+    "name": "Carving Knife",
+    "sell_price": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Carving_Knife"
+  },
+  "name:Cash Register": {
+    "id": "name:Cash Register",
+    "name": "Cash Register",
+    "wiki_url": "https://stardewvalleywiki.com/Cash_Register"
+  },
+  "name:Cat Tree": {
+    "id": "name:Cat Tree",
+    "name": "Cat Tree",
+    "wiki_url": "https://stardewvalleywiki.com/Cat_Tree"
+  },
+  "name:Catalogue": {
+    "id": "name:Catalogue",
+    "name": "Catalogue",
+    "wiki_url": "https://stardewvalleywiki.com/Catalogue"
+  },
+  "name:Catfish": {
+    "id": "name:Catfish",
+    "name": "Catfish",
+    "sell_price": 200,
+    "edibility": 20,
+    "wiki_url": "https://stardewvalleywiki.com/Catfish"
+  },
+  "name:Cauldron": {
+    "id": "name:Cauldron",
+    "name": "Cauldron",
+    "wiki_url": "https://stardewvalleywiki.com/Cauldron"
+  },
+  "name:Ceiling Flags": {
+    "id": "name:Ceiling Flags",
+    "name": "Ceiling Flags",
+    "wiki_url": "https://stardewvalleywiki.com/Ceiling_Flags"
+  },
+  "name:Ceiling Leaves": {
+    "id": "name:Ceiling Leaves",
+    "name": "Ceiling Leaves",
+    "wiki_url": "https://stardewvalleywiki.com/Ceiling_Leaves"
+  },
+  "name:Ceramic Pillar": {
+    "id": "name:Ceramic Pillar",
+    "name": "Ceramic Pillar",
+    "wiki_url": "https://stardewvalleywiki.com/Ceramic_Pillar"
+  },
+  "name:Chicken Decal": {
+    "id": "name:Chicken Decal",
+    "name": "Chicken Decal",
+    "wiki_url": "https://stardewvalleywiki.com/Chicken_Decal"
+  },
+  "name:Chicken Statue (furniture)": {
+    "id": "name:Chicken Statue (furniture)",
+    "name": "Chicken Statue (furniture)",
+    "wiki_url": "https://stardewvalleywiki.com/Chicken_Statue_(furniture)"
+  },
+  "name:Child Bed": {
+    "id": "name:Child Bed",
+    "name": "Child Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Child_Bed"
+  },
+  "name:China Cabinet": {
+    "id": "name:China Cabinet",
+    "name": "China Cabinet",
+    "wiki_url": "https://stardewvalleywiki.com/China_Cabinet"
+  },
+  "name:Chub": {
+    "id": "name:Chub",
+    "name": "Chub",
+    "sell_price": 50,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Chub"
+  },
+  "name:Cinderclown Shoes": {
+    "id": "name:Cinderclown Shoes",
+    "name": "Cinderclown Shoes",
+    "sell_price": 550,
+    "wiki_url": "https://stardewvalleywiki.com/Cinderclown_Shoes"
+  },
+  "name:Circular Junimo Rug": {
+    "id": "name:Circular Junimo Rug",
+    "name": "Circular Junimo Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Circular_Junimo_Rug"
+  },
+  "name:Classic Lamp": {
+    "id": "name:Classic Lamp",
+    "name": "Classic Lamp",
+    "wiki_url": "https://stardewvalleywiki.com/Classic_Lamp"
+  },
+  "name:Claymore": {
+    "id": "name:Claymore",
+    "name": "Claymore",
+    "sell_price": 250,
+    "wiki_url": "https://stardewvalleywiki.com/Claymore"
+  },
+  "name:Clothesline": {
+    "id": "name:Clothesline",
+    "name": "Clothesline",
+    "wiki_url": "https://stardewvalleywiki.com/Clothesline"
+  },
+  "name:Cloud Decal": {
+    "id": "name:Cloud Decal",
+    "name": "Cloud Decal",
+    "wiki_url": "https://stardewvalleywiki.com/Cloud_Decal"
+  },
+  "name:Clouds Banner": {
+    "id": "name:Clouds Banner",
+    "name": "Clouds Banner",
+    "wiki_url": "https://stardewvalleywiki.com/Clouds_Banner"
+  },
+  "name:Coat Stand": {
+    "id": "name:Coat Stand",
+    "name": "Coat Stand",
+    "wiki_url": "https://stardewvalleywiki.com/Coat_Stand"
+  },
+  "name:Cockle": {
+    "id": "name:Cockle",
+    "name": "Cockle",
+    "sell_price": 50,
+    "edibility": -300,
+    "wiki_url": "https://stardewvalleywiki.com/Cockle"
+  },
+  "name:Coffee Table": {
+    "id": "name:Coffee Table",
+    "name": "Coffee Table",
+    "wiki_url": "https://stardewvalleywiki.com/Coffee_Table"
+  },
+  "name:Colorful Set": {
+    "id": "name:Colorful Set",
+    "name": "Colorful Set",
+    "wiki_url": "https://stardewvalleywiki.com/Colorful_Set"
+  },
+  "name:Combat Boots": {
+    "id": "name:Combat Boots",
+    "name": "Combat Boots",
+    "sell_price": 150,
+    "wiki_url": "https://stardewvalleywiki.com/Combat_Boots"
+  },
+  "name:Corn Plant": {
+    "id": "name:Corn Plant",
+    "name": "Corn Plant",
+    "wiki_url": "https://stardewvalleywiki.com/Corn_Plant"
+  },
+  "name:Country Chair": {
+    "id": "name:Country Chair",
+    "name": "Country Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Country_Chair"
+  },
+  "name:Country Lamp": {
+    "id": "name:Country Lamp",
+    "name": "Country Lamp",
+    "wiki_url": "https://stardewvalleywiki.com/Country_Lamp"
+  },
+  "name:Cow Decal": {
+    "id": "name:Cow Decal",
+    "name": "Cow Decal",
+    "wiki_url": "https://stardewvalleywiki.com/Cow_Decal"
+  },
+  "name:Cowboy Boots": {
+    "id": "name:Cowboy Boots",
+    "name": "Cowboy Boots",
+    "sell_price": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Cowboy_Boots"
+  },
+  "name:Crabshell Ring": {
+    "id": "name:Crabshell Ring",
+    "name": "Crabshell Ring",
+    "sell_price": 1000,
+    "wiki_url": "https://stardewvalleywiki.com/Crabshell_Ring"
+  },
+  "name:Crimsonfish": {
+    "id": "name:Crimsonfish",
+    "name": "Crimsonfish",
+    "sell_price": 1500,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Crimsonfish"
+  },
+  "name:Crystal Ball": {
+    "id": "name:Crystal Ball",
+    "name": "Crystal Ball",
+    "wiki_url": "https://stardewvalleywiki.com/Crystal_Ball"
+  },
+  "name:Crystal Chair": {
+    "id": "name:Crystal Chair",
+    "name": "Crystal Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Crystal_Chair"
+  },
+  "name:Crystal Dagger": {
+    "id": "name:Crystal Dagger",
+    "name": "Crystal Dagger",
+    "sell_price": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Crystal_Dagger"
+  },
+  "name:Crystal Shoes": {
+    "id": "name:Crystal Shoes",
+    "name": "Crystal Shoes",
+    "sell_price": 400,
+    "wiki_url": "https://stardewvalleywiki.com/Crystal_Shoes"
+  },
+  "name:Curly Tree": {
+    "id": "name:Curly Tree",
+    "name": "Curly Tree",
+    "wiki_url": "https://stardewvalleywiki.com/Curly_Tree"
+  },
+  "name:Cursed Mannequins": {
+    "id": "name:Cursed Mannequins",
+    "name": "Cursed Mannequins",
+    "wiki_url": "https://stardewvalleywiki.com/Cursed_Mannequins"
+  },
+  "name:Cute Chair": {
+    "id": "name:Cute Chair",
+    "name": "Cute Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Cute_Chair"
+  },
+  "name:Cutlass": {
+    "id": "name:Cutlass",
+    "name": "Cutlass",
+    "sell_price": 150,
+    "wiki_url": "https://stardewvalleywiki.com/Cutlass"
+  },
+  "name:Dark Bookcase": {
+    "id": "name:Dark Bookcase",
+    "name": "Dark Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Bookcase"
+  },
+  "name:Dark Boots": {
+    "id": "name:Dark Boots",
+    "name": "Dark Boots",
+    "sell_price": 300,
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Boots"
+  },
+  "name:Dark Cat Tree": {
+    "id": "name:Dark Cat Tree",
+    "name": "Dark Cat Tree",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Cat_Tree"
+  },
+  "name:Dark Couch": {
+    "id": "name:Dark Couch",
+    "name": "Dark Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Couch"
+  },
+  "name:Dark Doghouse": {
+    "id": "name:Dark Doghouse",
+    "name": "Dark Doghouse",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Doghouse"
+  },
+  "name:Dark Junimo Cushion": {
+    "id": "name:Dark Junimo Cushion",
+    "name": "Dark Junimo Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Junimo_Cushion"
+  },
+  "name:Dark Leafy Wall Panel": {
+    "id": "name:Dark Leafy Wall Panel",
+    "name": "Dark Leafy Wall Panel",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Leafy_Wall_Panel"
+  },
+  "name:Dark Piano": {
+    "id": "name:Dark Piano",
+    "name": "Dark Piano",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Piano"
+  },
+  "name:Dark Retro Cushion": {
+    "id": "name:Dark Retro Cushion",
+    "name": "Dark Retro Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Retro_Cushion"
+  },
+  "name:Dark Rug": {
+    "id": "name:Dark Rug",
+    "name": "Dark Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Rug"
+  },
+  "name:Dark Sword": {
+    "id": "name:Dark Sword",
+    "name": "Dark Sword",
+    "sell_price": 450,
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Sword"
+  },
+  "name:Dark Table": {
+    "id": "name:Dark Table",
+    "name": "Dark Table",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Table"
+  },
+  "name:Dark Throne": {
+    "id": "name:Dark Throne",
+    "name": "Dark Throne",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Throne"
+  },
+  "name:Dark Wizard Cushion": {
+    "id": "name:Dark Wizard Cushion",
+    "name": "Dark Wizard Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Dark_Wizard_Cushion"
+  },
+  "name:Decorative Axe": {
+    "id": "name:Decorative Axe",
+    "name": "Decorative Axe",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Axe"
+  },
+  "name:Decorative Barrel": {
+    "id": "name:Decorative Barrel",
+    "name": "Decorative Barrel",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Barrel"
+  },
+  "name:Decorative Bowl": {
+    "id": "name:Decorative Bowl",
+    "name": "Decorative Bowl",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Bowl"
+  },
+  "name:Decorative Door": {
+    "id": "name:Decorative Door",
+    "name": "Decorative Door",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Door"
+  },
+  "name:Decorative Hatch": {
+    "id": "name:Decorative Hatch",
+    "name": "Decorative Hatch",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Hatch"
+  },
+  "name:Decorative Joja Door": {
+    "id": "name:Decorative Joja Door",
+    "name": "Decorative Joja Door",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Joja_Door"
+  },
+  "name:Decorative Junimo Door": {
+    "id": "name:Decorative Junimo Door",
+    "name": "Decorative Junimo Door",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Junimo_Door"
+  },
+  "name:Decorative Lantern": {
+    "id": "name:Decorative Lantern",
+    "name": "Decorative Lantern",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Lantern"
+  },
+  "name:Decorative Oak Ladder": {
+    "id": "name:Decorative Oak Ladder",
+    "name": "Decorative Oak Ladder",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Oak_Ladder"
+  },
+  "name:Decorative Pitchfork": {
+    "id": "name:Decorative Pitchfork",
+    "name": "Decorative Pitchfork",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Pitchfork"
+  },
+  "name:Decorative Retro Door": {
+    "id": "name:Decorative Retro Door",
+    "name": "Decorative Retro Door",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Retro_Door"
+  },
+  "name:Decorative Shovel": {
+    "id": "name:Decorative Shovel",
+    "name": "Decorative Shovel",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Shovel"
+  },
+  "name:Decorative Sword": {
+    "id": "name:Decorative Sword",
+    "name": "Decorative Sword",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Sword"
+  },
+  "name:Decorative Trash Can": {
+    "id": "name:Decorative Trash Can",
+    "name": "Decorative Trash Can",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Trash_Can"
+  },
+  "name:Decorative Walnut Ladder": {
+    "id": "name:Decorative Walnut Ladder",
+    "name": "Decorative Walnut Ladder",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Walnut_Ladder"
+  },
+  "name:Decorative Wizard Door": {
+    "id": "name:Decorative Wizard Door",
+    "name": "Decorative Wizard Door",
+    "wiki_url": "https://stardewvalleywiki.com/Decorative_Wizard_Door"
+  },
+  "name:Deluxe Fish Tank": {
+    "id": "name:Deluxe Fish Tank",
+    "name": "Deluxe Fish Tank",
+    "wiki_url": "https://stardewvalleywiki.com/Deluxe_Fish_Tank"
+  },
+  "name:Deluxe Red Double Bed": {
+    "id": "name:Deluxe Red Double Bed",
+    "name": "Deluxe Red Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Deluxe_Red_Double_Bed"
+  },
+  "name:Deluxe Tree": {
+    "id": "name:Deluxe Tree",
+    "name": "Deluxe Tree",
+    "wiki_url": "https://stardewvalleywiki.com/Deluxe_Tree"
+  },
+  "name:Desert Chair": {
+    "id": "name:Desert Chair",
+    "name": "Desert Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Desert_Chair"
+  },
+  "name:Desert End Table": {
+    "id": "name:Desert End Table",
+    "name": "Desert End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Desert_End_Table"
+  },
+  "name:Desert Fireplace": {
+    "id": "name:Desert Fireplace",
+    "name": "Desert Fireplace",
+    "wiki_url": "https://stardewvalleywiki.com/Desert_Fireplace"
+  },
+  "name:Desert Flags": {
+    "id": "name:Desert Flags",
+    "name": "Desert Flags",
+    "wiki_url": "https://stardewvalleywiki.com/Desert_Flags"
+  },
+  "name:Desert Rug": {
+    "id": "name:Desert Rug",
+    "name": "Desert Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Desert_Rug"
+  },
+  "name:Desert Table": {
+    "id": "name:Desert Table",
+    "name": "Desert Table",
+    "wiki_url": "https://stardewvalleywiki.com/Desert_Table"
+  },
+  "name:Dining Chair (red)": {
+    "id": "name:Dining Chair (red)",
+    "name": "Dining Chair (red)",
+    "wiki_url": "https://stardewvalleywiki.com/Dining_Chair_(red)"
+  },
+  "name:Dining Chair (yellow)": {
+    "id": "name:Dining Chair (yellow)",
+    "name": "Dining Chair (yellow)",
+    "wiki_url": "https://stardewvalleywiki.com/Dining_Chair_(yellow)"
+  },
+  "name:Diviner Table": {
+    "id": "name:Diviner Table",
+    "name": "Diviner Table",
+    "wiki_url": "https://stardewvalleywiki.com/Diviner_Table"
+  },
+  "name:Doghouse": {
+    "id": "name:Doghouse",
+    "name": "Doghouse",
+    "wiki_url": "https://stardewvalleywiki.com/Doghouse"
+  },
+  "name:Dorado": {
+    "id": "name:Dorado",
+    "name": "Dorado",
+    "sell_price": 100,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Dorado"
+  },
+  "name:Double Bed": {
+    "id": "name:Double Bed",
+    "name": "Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Double_Bed"
+  },
+  "name:Dragonscale Boots": {
+    "id": "name:Dragonscale Boots",
+    "name": "Dragonscale Boots",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Dragonscale_Boots"
+  },
+  "name:Dragontooth Club": {
+    "id": "name:Dragontooth Club",
+    "name": "Dragontooth Club",
+    "sell_price": 700,
+    "wiki_url": "https://stardewvalleywiki.com/Dragontooth_Club"
+  },
+  "name:Dragontooth Cutlass": {
+    "id": "name:Dragontooth Cutlass",
+    "name": "Dragontooth Cutlass",
+    "sell_price": 650,
+    "wiki_url": "https://stardewvalleywiki.com/Dragontooth_Cutlass"
+  },
+  "name:Dragontooth Shiv": {
+    "id": "name:Dragontooth Shiv",
+    "name": "Dragontooth Shiv",
+    "sell_price": 600,
+    "wiki_url": "https://stardewvalleywiki.com/Dragontooth_Shiv"
+  },
+  "name:Dried Sunflowers": {
+    "id": "name:Dried Sunflowers",
+    "name": "Dried Sunflowers",
+    "wiki_url": "https://stardewvalleywiki.com/Dried_Sunflowers"
+  },
+  "name:Dusty Skull": {
+    "id": "name:Dusty Skull",
+    "name": "Dusty Skull",
+    "wiki_url": "https://stardewvalleywiki.com/Dusty_Skull"
+  },
+  "name:Dwarf Dagger": {
+    "id": "name:Dwarf Dagger",
+    "name": "Dwarf Dagger",
+    "sell_price": 550,
+    "wiki_url": "https://stardewvalleywiki.com/Dwarf_Dagger"
+  },
+  "name:Dwarf Hammer": {
+    "id": "name:Dwarf Hammer",
+    "name": "Dwarf Hammer",
+    "sell_price": 650,
+    "wiki_url": "https://stardewvalleywiki.com/Dwarf_Hammer"
+  },
+  "name:Dwarf Sword": {
+    "id": "name:Dwarf Sword",
+    "name": "Dwarf Sword",
+    "sell_price": 650,
+    "wiki_url": "https://stardewvalleywiki.com/Dwarf_Sword"
+  },
+  "name:Eel": {
+    "id": "name:Eel",
+    "name": "Eel",
+    "sell_price": 85,
+    "edibility": 12,
+    "wiki_url": "https://stardewvalleywiki.com/Eel"
+  },
+  "name:Elegant Fireplace": {
+    "id": "name:Elegant Fireplace",
+    "name": "Elegant Fireplace",
+    "wiki_url": "https://stardewvalleywiki.com/Elegant_Fireplace"
+  },
+  "name:Elegant Vase": {
+    "id": "name:Elegant Vase",
+    "name": "Elegant Vase",
+    "wiki_url": "https://stardewvalleywiki.com/Elegant_Vase"
+  },
+  "name:Elf Blade": {
+    "id": "name:Elf Blade",
+    "name": "Elf Blade",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Elf_Blade"
+  },
+  "name:Elixir Bundle": {
+    "id": "name:Elixir Bundle",
+    "name": "Elixir Bundle",
+    "wiki_url": "https://stardewvalleywiki.com/Elixir_Bundle"
+  },
+  "name:Elixir Shelf": {
+    "id": "name:Elixir Shelf",
+    "name": "Elixir Shelf",
+    "wiki_url": "https://stardewvalleywiki.com/Elixir_Shelf"
+  },
+  "name:Elixir Table": {
+    "id": "name:Elixir Table",
+    "name": "Elixir Table",
+    "wiki_url": "https://stardewvalleywiki.com/Elixir_Table"
+  },
+  "name:Elliott Portrait": {
+    "id": "name:Elliott Portrait",
+    "name": "Elliott Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Elliott_Portrait"
+  },
+  "name:Elliott's Pencil": {
+    "id": "name:Elliott's Pencil",
+    "name": "Elliott's Pencil",
+    "sell_price": 400,
+    "wiki_url": "https://stardewvalleywiki.com/Elliott's_Pencil"
+  },
+  "name:Emerald Crystal Ball": {
+    "id": "name:Emerald Crystal Ball",
+    "name": "Emerald Crystal Ball",
+    "wiki_url": "https://stardewvalleywiki.com/Emerald_Crystal_Ball"
+  },
+  "name:Emerald Ring": {
+    "id": "name:Emerald Ring",
+    "name": "Emerald Ring",
+    "sell_price": 300,
+    "wiki_url": "https://stardewvalleywiki.com/Emerald_Ring"
+  },
+  "name:Emily Portrait": {
+    "id": "name:Emily Portrait",
+    "name": "Emily Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Emily_Portrait"
+  },
+  "name:Emily's Magic Boots": {
+    "id": "name:Emily's Magic Boots",
+    "name": "Emily's Magic Boots",
+    "sell_price": 400,
+    "wiki_url": "https://stardewvalleywiki.com/Emily's_Magic_Boots"
+  },
+  "name:Exotic Double Bed": {
+    "id": "name:Exotic Double Bed",
+    "name": "Exotic Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Exotic_Double_Bed"
+  },
+  "name:Exotic Palace": {
+    "id": "name:Exotic Palace",
+    "name": "Exotic Palace",
+    "wiki_url": "https://stardewvalleywiki.com/Exotic_Palace"
+  },
+  "name:Exotic Tree": {
+    "id": "name:Exotic Tree",
+    "name": "Exotic Tree",
+    "wiki_url": "https://stardewvalleywiki.com/Exotic_Tree"
+  },
+  "name:Fairy Box": {
+    "id": "name:Fairy Box",
+    "name": "Fairy Box",
+    "sell_price": 1000,
+    "wiki_url": "https://stardewvalleywiki.com/Fairy_Box"
+  },
+  "name:Fallen Blue Book": {
+    "id": "name:Fallen Blue Book",
+    "name": "Fallen Blue Book",
+    "wiki_url": "https://stardewvalleywiki.com/Fallen_Blue_Book"
+  },
+  "name:Fallen Brown Book": {
+    "id": "name:Fallen Brown Book",
+    "name": "Fallen Brown Book",
+    "wiki_url": "https://stardewvalleywiki.com/Fallen_Brown_Book"
+  },
+  "name:Fallen Green Book": {
+    "id": "name:Fallen Green Book",
+    "name": "Fallen Green Book",
+    "wiki_url": "https://stardewvalleywiki.com/Fallen_Green_Book"
+  },
+  "name:Fallen Purple Book": {
+    "id": "name:Fallen Purple Book",
+    "name": "Fallen Purple Book",
+    "wiki_url": "https://stardewvalleywiki.com/Fallen_Purple_Book"
+  },
+  "name:Fallen Red Book": {
+    "id": "name:Fallen Red Book",
+    "name": "Fallen Red Book",
+    "wiki_url": "https://stardewvalleywiki.com/Fallen_Red_Book"
+  },
+  "name:Fallen Yellow Book": {
+    "id": "name:Fallen Yellow Book",
+    "name": "Fallen Yellow Book",
+    "wiki_url": "https://stardewvalleywiki.com/Fallen_Yellow_Book"
+  },
+  "name:Fancy House Plant": {
+    "id": "name:Fancy House Plant",
+    "name": "Fancy House Plant",
+    "wiki_url": "https://stardewvalleywiki.com/Fancy_House_Plant"
+  },
+  "name:Femur": {
+    "id": "name:Femur",
+    "name": "Femur",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Femur"
+  },
+  "name:Festive Dining Table": {
+    "id": "name:Festive Dining Table",
+    "name": "Festive Dining Table",
+    "wiki_url": "https://stardewvalleywiki.com/Festive_Dining_Table"
+  },
+  "name:Fiberglass Rod": {
+    "id": "name:Fiberglass Rod",
+    "name": "Fiberglass Rod",
+    "wiki_url": "https://stardewvalleywiki.com/Fiberglass_Rod"
+  },
+  "name:Firewalker Boots": {
+    "id": "name:Firewalker Boots",
+    "name": "Firewalker Boots",
+    "sell_price": 300,
+    "wiki_url": "https://stardewvalleywiki.com/Firewalker_Boots"
+  },
+  "name:Fisher Double Bed": {
+    "id": "name:Fisher Double Bed",
+    "name": "Fisher Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Fisher_Double_Bed"
+  },
+  "name:Floor Divider": {
+    "id": "name:Floor Divider",
+    "name": "Floor Divider",
+    "wiki_url": "https://stardewvalleywiki.com/Floor_Divider"
+  },
+  "name:Floor TV": {
+    "id": "name:Floor TV",
+    "name": "Floor TV",
+    "wiki_url": "https://stardewvalleywiki.com/Floor_TV"
+  },
+  "name:Foliage Print": {
+    "id": "name:Foliage Print",
+    "name": "Foliage Print",
+    "wiki_url": "https://stardewvalleywiki.com/Foliage_Print"
+  },
+  "name:Forest Sword": {
+    "id": "name:Forest Sword",
+    "name": "Forest Sword",
+    "sell_price": 150,
+    "wiki_url": "https://stardewvalleywiki.com/Forest_Sword"
+  },
+  "name:Frog Egg": {
+    "id": "name:Frog Egg",
+    "name": "Frog Egg",
+    "sell_price": 1000,
+    "wiki_url": "https://stardewvalleywiki.com/Frog_Egg"
+  },
+  "name:Fruit Salad Rug": {
+    "id": "name:Fruit Salad Rug",
+    "name": "Fruit Salad Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Fruit_Salad_Rug"
+  },
+  "name:Funky Rug": {
+    "id": "name:Funky Rug",
+    "name": "Funky Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Funky_Rug"
+  },
+  "name:Furniture Catalogue": {
+    "id": "name:Furniture Catalogue",
+    "name": "Furniture Catalogue",
+    "wiki_url": "https://stardewvalleywiki.com/Furniture_Catalogue"
+  },
+  "name:Futan Bear": {
+    "id": "name:Futan Bear",
+    "name": "Futan Bear",
+    "wiki_url": "https://stardewvalleywiki.com/Futan_Bear"
+  },
+  "name:Futan Rabbit": {
+    "id": "name:Futan Rabbit",
+    "name": "Futan Rabbit",
+    "wiki_url": "https://stardewvalleywiki.com/Futan_Rabbit"
+  },
+  "name:Galaxy Dagger": {
+    "id": "name:Galaxy Dagger",
+    "name": "Galaxy Dagger",
+    "sell_price": 400,
+    "wiki_url": "https://stardewvalleywiki.com/Galaxy_Dagger"
+  },
+  "name:Galaxy Hammer": {
+    "id": "name:Galaxy Hammer",
+    "name": "Galaxy Hammer",
+    "sell_price": 600,
+    "wiki_url": "https://stardewvalleywiki.com/Galaxy_Hammer"
+  },
+  "name:Galaxy Slingshot": {
+    "id": "name:Galaxy Slingshot",
+    "name": "Galaxy Slingshot",
+    "sell_price_note": "Cannot be sold",
+    "wiki_url": "https://stardewvalleywiki.com/Galaxy_Slingshot"
+  },
+  "name:Galaxy Sword": {
+    "id": "name:Galaxy Sword",
+    "name": "Galaxy Sword",
+    "sell_price": 650,
+    "wiki_url": "https://stardewvalleywiki.com/Galaxy_Sword"
+  },
+  "name:Genie Shoes": {
+    "id": "name:Genie Shoes",
+    "name": "Genie Shoes",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Genie_Shoes"
+  },
+  "name:Ghostfish": {
+    "id": "name:Ghostfish",
+    "name": "Ghostfish",
+    "sell_price": 45,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Ghostfish"
+  },
+  "name:Glacierfish": {
+    "id": "name:Glacierfish",
+    "name": "Glacierfish",
+    "sell_price": 1000,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Glacierfish"
+  },
+  "name:Glacierfish Jr.": {
+    "id": "name:Glacierfish Jr.",
+    "name": "Glacierfish Jr.",
+    "sell_price": 1000,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Glacierfish_Jr."
+  },
+  "name:Globe": {
+    "id": "name:Globe",
+    "name": "Globe",
+    "wiki_url": "https://stardewvalleywiki.com/Globe"
+  },
+  "name:Glow Ring": {
+    "id": "name:Glow Ring",
+    "name": "Glow Ring",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Glow_Ring"
+  },
+  "name:Glyph": {
+    "id": "name:Glyph",
+    "name": "Glyph",
+    "wiki_url": "https://stardewvalleywiki.com/Glyph"
+  },
+  "name:Goby": {
+    "id": "name:Goby",
+    "name": "Goby",
+    "sell_price": 150,
+    "edibility": -25,
+    "wiki_url": "https://stardewvalleywiki.com/Goby"
+  },
+  "name:Gold Pillar": {
+    "id": "name:Gold Pillar",
+    "name": "Gold Pillar",
+    "wiki_url": "https://stardewvalleywiki.com/Gold_Pillar"
+  },
+  "name:Golden Scythe": {
+    "id": "name:Golden Scythe",
+    "name": "Golden Scythe",
+    "wiki_url": "https://stardewvalleywiki.com/Golden_Scythe"
+  },
+  "name:Golden Spur": {
+    "id": "name:Golden Spur",
+    "name": "Golden Spur",
+    "sell_price": 1000,
+    "wiki_url": "https://stardewvalleywiki.com/Golden_Spur"
+  },
+  "name:Gourmand Statue": {
+    "id": "name:Gourmand Statue",
+    "name": "Gourmand Statue",
+    "wiki_url": "https://stardewvalleywiki.com/Gourmand_Statue"
+  },
+  "name:Grandmother End Table": {
+    "id": "name:Grandmother End Table",
+    "name": "Grandmother End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Grandmother_End_Table"
+  },
+  "name:Grave Stone": {
+    "id": "name:Grave Stone",
+    "name": "Grave Stone",
+    "wiki_url": "https://stardewvalleywiki.com/Grave_Stone"
+  },
+  "name:Gray Joja Bookcase": {
+    "id": "name:Gray Joja Bookcase",
+    "name": "Gray Joja Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Gray_Joja_Bookcase"
+  },
+  "name:Gray Joja Coffee Table": {
+    "id": "name:Gray Joja Coffee Table",
+    "name": "Gray Joja Coffee Table",
+    "wiki_url": "https://stardewvalleywiki.com/Gray_Joja_Coffee_Table"
+  },
+  "name:Gray Joja Cushion": {
+    "id": "name:Gray Joja Cushion",
+    "name": "Gray Joja Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Gray_Joja_Cushion"
+  },
+  "name:Gray Joja Dresser": {
+    "id": "name:Gray Joja Dresser",
+    "name": "Gray Joja Dresser",
+    "wiki_url": "https://stardewvalleywiki.com/Gray_Joja_Dresser"
+  },
+  "name:Gray Joja End Table": {
+    "id": "name:Gray Joja End Table",
+    "name": "Gray Joja End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Gray_Joja_End_Table"
+  },
+  "name:Gray Sleeping Junimo": {
+    "id": "name:Gray Sleeping Junimo",
+    "name": "Gray Sleeping Junimo",
+    "wiki_url": "https://stardewvalleywiki.com/Gray_Sleeping_Junimo"
+  },
+  "name:Green Algae": {
+    "id": "name:Green Algae",
+    "name": "Green Algae",
+    "sell_price": 15,
+    "edibility": 5,
+    "wiki_url": "https://stardewvalleywiki.com/Green_Algae"
+  },
+  "name:Green Armchair": {
+    "id": "name:Green Armchair",
+    "name": "Green Armchair",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Armchair"
+  },
+  "name:Green Book": {
+    "id": "name:Green Book",
+    "name": "Green Book",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Book"
+  },
+  "name:Green Bottle": {
+    "id": "name:Green Bottle",
+    "name": "Green Bottle",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Bottle"
+  },
+  "name:Green Canes": {
+    "id": "name:Green Canes",
+    "name": "Green Canes",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Canes"
+  },
+  "name:Green Cottage Rug": {
+    "id": "name:Green Cottage Rug",
+    "name": "Green Cottage Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Cottage_Rug"
+  },
+  "name:Green Couch": {
+    "id": "name:Green Couch",
+    "name": "Green Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Couch"
+  },
+  "name:Green Cushion": {
+    "id": "name:Green Cushion",
+    "name": "Green Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Cushion"
+  },
+  "name:Green Office Stool": {
+    "id": "name:Green Office Stool",
+    "name": "Green Office Stool",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Office_Stool"
+  },
+  "name:Green Plush Seat": {
+    "id": "name:Green Plush Seat",
+    "name": "Green Plush Seat",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Plush_Seat"
+  },
+  "name:Green Serpent Statue": {
+    "id": "name:Green Serpent Statue",
+    "name": "Green Serpent Statue",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Serpent_Statue"
+  },
+  "name:Green Sleeping Junimo": {
+    "id": "name:Green Sleeping Junimo",
+    "name": "Green Sleeping Junimo",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Sleeping_Junimo"
+  },
+  "name:Green Stool": {
+    "id": "name:Green Stool",
+    "name": "Green Stool",
+    "wiki_url": "https://stardewvalleywiki.com/Green_Stool"
+  },
+  "name:Groovy Chair": {
+    "id": "name:Groovy Chair",
+    "name": "Groovy Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Groovy_Chair"
+  },
+  "name:Haley Portrait": {
+    "id": "name:Haley Portrait",
+    "name": "Haley Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Haley_Portrait"
+  },
+  "name:Haley's Iron": {
+    "id": "name:Haley's Iron",
+    "name": "Haley's Iron",
+    "sell_price": 300,
+    "wiki_url": "https://stardewvalleywiki.com/Haley's_Iron"
+  },
+  "name:Halibut": {
+    "id": "name:Halibut",
+    "name": "Halibut",
+    "sell_price": 80,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Halibut"
+  },
+  "name:Hanging Fish": {
+    "id": "name:Hanging Fish",
+    "name": "Hanging Fish",
+    "wiki_url": "https://stardewvalleywiki.com/Hanging_Fish"
+  },
+  "name:Hanging Shield": {
+    "id": "name:Hanging Shield",
+    "name": "Hanging Shield",
+    "wiki_url": "https://stardewvalleywiki.com/Hanging_Shield"
+  },
+  "name:Hard Hat": {
+    "id": "name:Hard Hat",
+    "name": "Hard Hat",
+    "sell_price_note": "Cannot be sold",
+    "wiki_url": "https://stardewvalleywiki.com/Hard_Hat"
+  },
+  "name:Harvey Portrait": {
+    "id": "name:Harvey Portrait",
+    "name": "Harvey Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Harvey_Portrait"
+  },
+  "name:Harvey's Mallet": {
+    "id": "name:Harvey's Mallet",
+    "name": "Harvey's Mallet",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Harvey's_Mallet"
+  },
+  "name:Hay Hopper": {
+    "id": "name:Hay Hopper",
+    "name": "Hay Hopper",
+    "wiki_url": "https://stardewvalleywiki.com/Hay_Hopper"
+  },
+  "name:Heater": {
+    "id": "name:Heater",
+    "name": "Heater",
+    "wiki_url": "https://stardewvalleywiki.com/Heater"
+  },
+  "name:Herring": {
+    "id": "name:Herring",
+    "name": "Herring",
+    "sell_price": 30,
+    "edibility": 5,
+    "wiki_url": "https://stardewvalleywiki.com/Herring"
+  },
+  "name:Holy Blade": {
+    "id": "name:Holy Blade",
+    "name": "Holy Blade",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Holy_Blade"
+  },
+  "name:Hot Java Ring": {
+    "id": "name:Hot Java Ring",
+    "name": "Hot Java Ring",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Hot_Java_Ring"
+  },
+  "name:House Plant": {
+    "id": "name:House Plant",
+    "name": "House Plant",
+    "wiki_url": "https://stardewvalleywiki.com/House_Plant"
+  },
+  "name:Ice Pip": {
+    "id": "name:Ice Pip",
+    "name": "Ice Pip",
+    "sell_price": 500,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Ice_Pip"
+  },
+  "name:Ice Rod": {
+    "id": "name:Ice Rod",
+    "name": "Ice Rod",
+    "sell_price": 1000,
+    "wiki_url": "https://stardewvalleywiki.com/Ice_Rod"
+  },
+  "name:Icy Banner": {
+    "id": "name:Icy Banner",
+    "name": "Icy Banner",
+    "wiki_url": "https://stardewvalleywiki.com/Icy_Banner"
+  },
+  "name:Icy Rug": {
+    "id": "name:Icy Rug",
+    "name": "Icy Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Icy_Rug"
+  },
+  "name:Immunity Band": {
+    "id": "name:Immunity Band",
+    "name": "Immunity Band",
+    "sell_price": 250,
+    "wiki_url": "https://stardewvalleywiki.com/Immunity_Band"
+  },
+  "name:Incubator": {
+    "id": "name:Incubator",
+    "name": "Incubator",
+    "wiki_url": "https://stardewvalleywiki.com/Incubator"
+  },
+  "name:Indoor Hanging Basket": {
+    "id": "name:Indoor Hanging Basket",
+    "name": "Indoor Hanging Basket",
+    "wiki_url": "https://stardewvalleywiki.com/Indoor_Hanging_Basket"
+  },
+  "name:Indoor Palm": {
+    "id": "name:Indoor Palm",
+    "name": "Indoor Palm",
+    "wiki_url": "https://stardewvalleywiki.com/Indoor_Palm"
+  },
+  "name:Industrial Pipe": {
+    "id": "name:Industrial Pipe",
+    "name": "Industrial Pipe",
+    "wiki_url": "https://stardewvalleywiki.com/Industrial_Pipe"
+  },
+  "name:Infinity Blade": {
+    "id": "name:Infinity Blade",
+    "name": "Infinity Blade",
+    "sell_price": 850,
+    "wiki_url": "https://stardewvalleywiki.com/Infinity_Blade"
+  },
+  "name:Infinity Dagger": {
+    "id": "name:Infinity Dagger",
+    "name": "Infinity Dagger",
+    "sell_price": 800,
+    "wiki_url": "https://stardewvalleywiki.com/Infinity_Dagger"
+  },
+  "name:Infinity Gavel": {
+    "id": "name:Infinity Gavel",
+    "name": "Infinity Gavel",
+    "sell_price": 850,
+    "wiki_url": "https://stardewvalleywiki.com/Infinity_Gavel"
+  },
+  "name:Insect Head": {
+    "id": "name:Insect Head",
+    "name": "Insect Head",
+    "sell_price": 300,
+    "wiki_url": "https://stardewvalleywiki.com/Insect_Head"
+  },
+  "name:Iridium Fireplace": {
+    "id": "name:Iridium Fireplace",
+    "name": "Iridium Fireplace",
+    "wiki_url": "https://stardewvalleywiki.com/Iridium_Fireplace"
+  },
+  "name:Iridium Krobus": {
+    "id": "name:Iridium Krobus",
+    "name": "Iridium Krobus",
+    "wiki_url": "https://stardewvalleywiki.com/Iridium_Krobus"
+  },
+  "name:Iridium Needle": {
+    "id": "name:Iridium Needle",
+    "name": "Iridium Needle",
+    "sell_price": 600,
+    "wiki_url": "https://stardewvalleywiki.com/Iridium_Needle"
+  },
+  "name:Iridium Rod": {
+    "id": "name:Iridium Rod",
+    "name": "Iridium Rod",
+    "wiki_url": "https://stardewvalleywiki.com/Iridium_Rod"
+  },
+  "name:Iridium Scythe": {
+    "id": "name:Iridium Scythe",
+    "name": "Iridium Scythe",
+    "wiki_url": "https://stardewvalleywiki.com/Iridium_Scythe"
+  },
+  "name:Iron Dirk": {
+    "id": "name:Iron Dirk",
+    "name": "Iron Dirk",
+    "sell_price": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Iron_Dirk"
+  },
+  "name:Iron Edge": {
+    "id": "name:Iron Edge",
+    "name": "Iron Edge",
+    "sell_price": 150,
+    "wiki_url": "https://stardewvalleywiki.com/Iron_Edge"
+  },
+  "name:J (sign)": {
+    "id": "name:J (sign)",
+    "name": "J (sign)",
+    "wiki_url": "https://stardewvalleywiki.com/J_(sign)"
+  },
+  "name:J. Cola Light": {
+    "id": "name:J. Cola Light",
+    "name": "J. Cola Light",
+    "wiki_url": "https://stardewvalleywiki.com/J._Cola_Light"
+  },
+  "name:J. Light": {
+    "id": "name:J. Light",
+    "name": "J. Light",
+    "wiki_url": "https://stardewvalleywiki.com/J._Light"
+  },
+  "name:J. Painting": {
+    "id": "name:J. Painting",
+    "name": "J. Painting",
+    "wiki_url": "https://stardewvalleywiki.com/J._Painting"
+  },
+  "name:Jade Ring": {
+    "id": "name:Jade Ring",
+    "name": "Jade Ring",
+    "sell_price": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Jade_Ring"
+  },
+  "name:Joja Bed": {
+    "id": "name:Joja Bed",
+    "name": "Joja Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Bed"
+  },
+  "name:Joja Bookcase": {
+    "id": "name:Joja Bookcase",
+    "name": "Joja Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Bookcase"
+  },
+  "name:Joja Chair": {
+    "id": "name:Joja Chair",
+    "name": "Joja Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Chair"
+  },
+  "name:Joja Coffee Table": {
+    "id": "name:Joja Coffee Table",
+    "name": "Joja Coffee Table",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Coffee_Table"
+  },
+  "name:Joja Cola Cans": {
+    "id": "name:Joja Cola Cans",
+    "name": "Joja Cola Cans",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Cola_Cans"
+  },
+  "name:Joja Cola Fridge": {
+    "id": "name:Joja Cola Fridge",
+    "name": "Joja Cola Fridge",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Cola_Fridge"
+  },
+  "name:Joja Cola Ornament": {
+    "id": "name:Joja Cola Ornament",
+    "name": "Joja Cola Ornament",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Cola_Ornament"
+  },
+  "name:Joja Cola Painting": {
+    "id": "name:Joja Cola Painting",
+    "name": "Joja Cola Painting",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Cola_Painting"
+  },
+  "name:Joja Cola Tea Table": {
+    "id": "name:Joja Cola Tea Table",
+    "name": "Joja Cola Tea Table",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Cola_Tea_Table"
+  },
+  "name:Joja Couch": {
+    "id": "name:Joja Couch",
+    "name": "Joja Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Couch"
+  },
+  "name:Joja Crate": {
+    "id": "name:Joja Crate",
+    "name": "Joja Crate",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Crate"
+  },
+  "name:Joja Cushion": {
+    "id": "name:Joja Cushion",
+    "name": "Joja Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Cushion"
+  },
+  "name:Joja Dresser": {
+    "id": "name:Joja Dresser",
+    "name": "Joja Dresser",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Dresser"
+  },
+  "name:Joja End Table": {
+    "id": "name:Joja End Table",
+    "name": "Joja End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_End_Table"
+  },
+  "name:Joja Fireplace": {
+    "id": "name:Joja Fireplace",
+    "name": "Joja Fireplace",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Fireplace"
+  },
+  "name:Joja Furniture Catalogue": {
+    "id": "name:Joja Furniture Catalogue",
+    "name": "Joja Furniture Catalogue",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Furniture_Catalogue"
+  },
+  "name:Joja HQ Painting": {
+    "id": "name:Joja HQ Painting",
+    "name": "Joja HQ Painting",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_HQ_Painting"
+  },
+  "name:Joja Lamp": {
+    "id": "name:Joja Lamp",
+    "name": "Joja Lamp",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Lamp"
+  },
+  "name:Joja Rug": {
+    "id": "name:Joja Rug",
+    "name": "Joja Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Rug"
+  },
+  "name:Joja Shopping Cart": {
+    "id": "name:Joja Shopping Cart",
+    "name": "Joja Shopping Cart",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Shopping_Cart"
+  },
+  "name:Joja Stool": {
+    "id": "name:Joja Stool",
+    "name": "Joja Stool",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Stool"
+  },
+  "name:Joja Table": {
+    "id": "name:Joja Table",
+    "name": "Joja Table",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Table"
+  },
+  "name:Joja Vault": {
+    "id": "name:Joja Vault",
+    "name": "Joja Vault",
+    "wiki_url": "https://stardewvalleywiki.com/Joja_Vault"
+  },
+  "name:Jukebox Ring": {
+    "id": "name:Jukebox Ring",
+    "name": "Jukebox Ring",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Jukebox_Ring"
+  },
+  "name:Jungle Decal": {
+    "id": "name:Jungle Decal",
+    "name": "Jungle Decal",
+    "wiki_url": "https://stardewvalleywiki.com/Jungle_Decal"
+  },
+  "name:Jungle Tank": {
+    "id": "name:Jungle Tank",
+    "name": "Jungle Tank",
+    "wiki_url": "https://stardewvalleywiki.com/Jungle_Tank"
+  },
+  "name:Jungle Torch": {
+    "id": "name:Jungle Torch",
+    "name": "Jungle Torch",
+    "wiki_url": "https://stardewvalleywiki.com/Jungle_Torch"
+  },
+  "name:Junimo Bag": {
+    "id": "name:Junimo Bag",
+    "name": "Junimo Bag",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Bag"
+  },
+  "name:Junimo Bed": {
+    "id": "name:Junimo Bed",
+    "name": "Junimo Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Bed"
+  },
+  "name:Junimo Bookcase": {
+    "id": "name:Junimo Bookcase",
+    "name": "Junimo Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Bookcase"
+  },
+  "name:Junimo Bundle": {
+    "id": "name:Junimo Bundle",
+    "name": "Junimo Bundle",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Bundle"
+  },
+  "name:Junimo Catalogue": {
+    "id": "name:Junimo Catalogue",
+    "name": "Junimo Catalogue",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Catalogue"
+  },
+  "name:Junimo Chair": {
+    "id": "name:Junimo Chair",
+    "name": "Junimo Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Chair"
+  },
+  "name:Junimo Couch": {
+    "id": "name:Junimo Couch",
+    "name": "Junimo Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Couch"
+  },
+  "name:Junimo Cushion": {
+    "id": "name:Junimo Cushion",
+    "name": "Junimo Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Cushion"
+  },
+  "name:Junimo Dresser": {
+    "id": "name:Junimo Dresser",
+    "name": "Junimo Dresser",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Dresser"
+  },
+  "name:Junimo End Table": {
+    "id": "name:Junimo End Table",
+    "name": "Junimo End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_End_Table"
+  },
+  "name:Junimo Fireplace": {
+    "id": "name:Junimo Fireplace",
+    "name": "Junimo Fireplace",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Fireplace"
+  },
+  "name:Junimo Flower": {
+    "id": "name:Junimo Flower",
+    "name": "Junimo Flower",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Flower"
+  },
+  "name:Junimo Hut (furniture)": {
+    "id": "name:Junimo Hut (furniture)",
+    "name": "Junimo Hut (furniture)",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Hut_(furniture)"
+  },
+  "name:Junimo Kart Arcade System": {
+    "id": "name:Junimo Kart Arcade System",
+    "name": "Junimo Kart Arcade System",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Kart_Arcade_System"
+  },
+  "name:Junimo Lamp": {
+    "id": "name:Junimo Lamp",
+    "name": "Junimo Lamp",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Lamp"
+  },
+  "name:Junimo Mat": {
+    "id": "name:Junimo Mat",
+    "name": "Junimo Mat",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Mat"
+  },
+  "name:Junimo Plant": {
+    "id": "name:Junimo Plant",
+    "name": "Junimo Plant",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Plant"
+  },
+  "name:Junimo Plaque": {
+    "id": "name:Junimo Plaque",
+    "name": "Junimo Plaque",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Plaque"
+  },
+  "name:Junimo Plush": {
+    "id": "name:Junimo Plush",
+    "name": "Junimo Plush",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Plush"
+  },
+  "name:Junimo Pot": {
+    "id": "name:Junimo Pot",
+    "name": "Junimo Pot",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Pot"
+  },
+  "name:Junimo Rug": {
+    "id": "name:Junimo Rug",
+    "name": "Junimo Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Rug"
+  },
+  "name:Junimo Star": {
+    "id": "name:Junimo Star",
+    "name": "Junimo Star",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Star"
+  },
+  "name:Junimo Stool": {
+    "id": "name:Junimo Stool",
+    "name": "Junimo Stool",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Stool"
+  },
+  "name:Junimo Table": {
+    "id": "name:Junimo Table",
+    "name": "Junimo Table",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Table"
+  },
+  "name:Junimo Tea Table": {
+    "id": "name:Junimo Tea Table",
+    "name": "Junimo Tea Table",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Tea_Table"
+  },
+  "name:Junimo Tree": {
+    "id": "name:Junimo Tree",
+    "name": "Junimo Tree",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Tree"
+  },
+  "name:Junimo Wall Plaque": {
+    "id": "name:Junimo Wall Plaque",
+    "name": "Junimo Wall Plaque",
+    "wiki_url": "https://stardewvalleywiki.com/Junimo_Wall_Plaque"
+  },
+  "name:King Chair": {
+    "id": "name:King Chair",
+    "name": "King Chair",
+    "wiki_url": "https://stardewvalleywiki.com/King_Chair"
+  },
+  "name:Knight's Helmet": {
+    "id": "name:Knight's Helmet",
+    "name": "Knight's Helmet",
+    "sell_price_note": "Cannot be sold",
+    "wiki_url": "https://stardewvalleywiki.com/Knight's_Helmet"
+  },
+  "name:Krobus Portrait": {
+    "id": "name:Krobus Portrait",
+    "name": "Krobus Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Krobus_Portrait"
+  },
+  "name:Kudgel": {
+    "id": "name:Kudgel",
+    "name": "Kudgel",
+    "sell_price": 250,
+    "wiki_url": "https://stardewvalleywiki.com/Kudgel"
+  },
+  "name:L. Light String": {
+    "id": "name:L. Light String",
+    "name": "L. Light String",
+    "wiki_url": "https://stardewvalleywiki.com/L._Light_String"
+  },
+  "name:Large Book Pile": {
+    "id": "name:Large Book Pile",
+    "name": "Large Book Pile",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Book_Pile"
+  },
+  "name:Large Book Stack": {
+    "id": "name:Large Book Stack",
+    "name": "Large Book Stack",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Book_Stack"
+  },
+  "name:Large Brown Couch": {
+    "id": "name:Large Brown Couch",
+    "name": "Large Brown Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Brown_Couch"
+  },
+  "name:Large Cottage Rug": {
+    "id": "name:Large Cottage Rug",
+    "name": "Large Cottage Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Cottage_Rug"
+  },
+  "name:Large Fish Tank": {
+    "id": "name:Large Fish Tank",
+    "name": "Large Fish Tank",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Fish_Tank"
+  },
+  "name:Large Green Rug": {
+    "id": "name:Large Green Rug",
+    "name": "Large Green Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Green_Rug"
+  },
+  "name:Large Joja Crate": {
+    "id": "name:Large Joja Crate",
+    "name": "Large Joja Crate",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Joja_Crate"
+  },
+  "name:Large Joja Rug": {
+    "id": "name:Large Joja Rug",
+    "name": "Large Joja Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Joja_Rug"
+  },
+  "name:Large Junimo Hut": {
+    "id": "name:Large Junimo Hut",
+    "name": "Large Junimo Hut",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Junimo_Hut"
+  },
+  "name:Large Red Rug": {
+    "id": "name:Large Red Rug",
+    "name": "Large Red Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Red_Rug"
+  },
+  "name:Large Retro Rug": {
+    "id": "name:Large Retro Rug",
+    "name": "Large Retro Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Retro_Rug"
+  },
+  "name:Large Wizard Bookcase": {
+    "id": "name:Large Wizard Bookcase",
+    "name": "Large Wizard Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Large_Wizard_Bookcase"
+  },
+  "name:Lava Eel": {
+    "id": "name:Lava Eel",
+    "name": "Lava Eel",
+    "sell_price": 700,
+    "edibility": 20,
+    "wiki_url": "https://stardewvalleywiki.com/Lava_Eel"
+  },
+  "name:Lava Katana": {
+    "id": "name:Lava Katana",
+    "name": "Lava Katana",
+    "sell_price": 500,
+    "wiki_url": "https://stardewvalleywiki.com/Lava_Katana"
+  },
+  "name:Lawn Flamingo": {
+    "id": "name:Lawn Flamingo",
+    "name": "Lawn Flamingo",
+    "wiki_url": "https://stardewvalleywiki.com/Lawn_Flamingo"
+  },
+  "name:Lead Rod": {
+    "id": "name:Lead Rod",
+    "name": "Lead Rod",
+    "sell_price": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Lead_Rod"
+  },
+  "name:Leafy Wall Panel": {
+    "id": "name:Leafy Wall Panel",
+    "name": "Leafy Wall Panel",
+    "wiki_url": "https://stardewvalleywiki.com/Leafy_Wall_Panel"
+  },
+  "name:Leah Portrait": {
+    "id": "name:Leah Portrait",
+    "name": "Leah Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Leah_Portrait"
+  },
+  "name:Leah's Sculpture": {
+    "id": "name:Leah's Sculpture",
+    "name": "Leah's Sculpture",
+    "wiki_url": "https://stardewvalleywiki.com/Leah's_Sculpture"
+  },
+  "name:Leah's Whittler": {
+    "id": "name:Leah's Whittler",
+    "name": "Leah's Whittler",
+    "sell_price": 300,
+    "wiki_url": "https://stardewvalleywiki.com/Leah's_Whittler"
+  },
+  "name:Leather Boots": {
+    "id": "name:Leather Boots",
+    "name": "Leather Boots",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Leather_Boots"
+  },
+  "name:Legend": {
+    "id": "name:Legend",
+    "name": "Legend",
+    "sell_price": 5000,
+    "edibility": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Legend"
+  },
+  "name:Legend II": {
+    "id": "name:Legend II",
+    "name": "Legend II",
+    "sell_price": 5000,
+    "edibility": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Legend_II"
+  },
+  "name:Leprechaun Shoes": {
+    "id": "name:Leprechaun Shoes",
+    "name": "Leprechaun Shoes",
+    "sell_price": 150,
+    "wiki_url": "https://stardewvalleywiki.com/Leprechaun_Shoes"
+  },
+  "name:Lg. Futan Bear": {
+    "id": "name:Lg. Futan Bear",
+    "name": "Lg. Futan Bear",
+    "wiki_url": "https://stardewvalleywiki.com/Lg._Futan_Bear"
+  },
+  "name:Lifesaver": {
+    "id": "name:Lifesaver",
+    "name": "Lifesaver",
+    "wiki_url": "https://stardewvalleywiki.com/Lifesaver"
+  },
+  "name:Light Green Rug": {
+    "id": "name:Light Green Rug",
+    "name": "Light Green Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Light_Green_Rug"
+  },
+  "name:Light Leafy Wall Panel": {
+    "id": "name:Light Leafy Wall Panel",
+    "name": "Light Leafy Wall Panel",
+    "wiki_url": "https://stardewvalleywiki.com/Light_Leafy_Wall_Panel"
+  },
+  "name:Light Switch": {
+    "id": "name:Light Switch",
+    "name": "Light Switch",
+    "wiki_url": "https://stardewvalleywiki.com/Light_Switch"
+  },
+  "name:Lingcod": {
+    "id": "name:Lingcod",
+    "name": "Lingcod",
+    "sell_price": 120,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Lingcod"
+  },
+  "name:Lionfish": {
+    "id": "name:Lionfish",
+    "name": "Lionfish",
+    "sell_price": 100,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Lionfish"
+  },
+  "name:Little Photos": {
+    "id": "name:Little Photos",
+    "name": "Little Photos",
+    "wiki_url": "https://stardewvalleywiki.com/Little_Photos"
+  },
+  "name:Log Panel": {
+    "id": "name:Log Panel",
+    "name": "Log Panel",
+    "wiki_url": "https://stardewvalleywiki.com/Log_Panel"
+  },
+  "name:Log Section": {
+    "id": "name:Log Section",
+    "name": "Log Section",
+    "wiki_url": "https://stardewvalleywiki.com/Log_Section"
+  },
+  "name:Long Cactus": {
+    "id": "name:Long Cactus",
+    "name": "Long Cactus",
+    "wiki_url": "https://stardewvalleywiki.com/Long_Cactus"
+  },
+  "name:Long Elixir Table": {
+    "id": "name:Long Elixir Table",
+    "name": "Long Elixir Table",
+    "wiki_url": "https://stardewvalleywiki.com/Long_Elixir_Table"
+  },
+  "name:Long Palm": {
+    "id": "name:Long Palm",
+    "name": "Long Palm",
+    "wiki_url": "https://stardewvalleywiki.com/Long_Palm"
+  },
+  "name:Luau Table": {
+    "id": "name:Luau Table",
+    "name": "Luau Table",
+    "wiki_url": "https://stardewvalleywiki.com/Luau_Table"
+  },
+  "name:Lucky Ring": {
+    "id": "name:Lucky Ring",
+    "name": "Lucky Ring",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Lucky_Ring"
+  },
+  "name:Luxury Bookcase": {
+    "id": "name:Luxury Bookcase",
+    "name": "Luxury Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Luxury_Bookcase"
+  },
+  "name:Luxury Table": {
+    "id": "name:Luxury Table",
+    "name": "Luxury Table",
+    "wiki_url": "https://stardewvalleywiki.com/Luxury_Table"
+  },
+  "name:Magic Hair Gel": {
+    "id": "name:Magic Hair Gel",
+    "name": "Magic Hair Gel",
+    "sell_price": 1000,
+    "wiki_url": "https://stardewvalleywiki.com/Magic_Hair_Gel"
+  },
+  "name:Magic Quiver": {
+    "id": "name:Magic Quiver",
+    "name": "Magic Quiver",
+    "sell_price": 1000,
+    "wiki_url": "https://stardewvalleywiki.com/Magic_Quiver"
+  },
+  "name:Magnet Ring": {
+    "id": "name:Magnet Ring",
+    "name": "Magnet Ring",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Magnet_Ring"
+  },
+  "name:Mahogany Bench": {
+    "id": "name:Mahogany Bench",
+    "name": "Mahogany Bench",
+    "wiki_url": "https://stardewvalleywiki.com/Mahogany_Bench"
+  },
+  "name:Mahogany Chair": {
+    "id": "name:Mahogany Chair",
+    "name": "Mahogany Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Mahogany_Chair"
+  },
+  "name:Mahogany Dining Table": {
+    "id": "name:Mahogany Dining Table",
+    "name": "Mahogany Dining Table",
+    "wiki_url": "https://stardewvalleywiki.com/Mahogany_Dining_Table"
+  },
+  "name:Mahogany Dresser": {
+    "id": "name:Mahogany Dresser",
+    "name": "Mahogany Dresser",
+    "wiki_url": "https://stardewvalleywiki.com/Mahogany_Dresser"
+  },
+  "name:Mahogany End Table": {
+    "id": "name:Mahogany End Table",
+    "name": "Mahogany End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Mahogany_End_Table"
+  },
+  "name:Mahogany Lamp End Table": {
+    "id": "name:Mahogany Lamp End Table",
+    "name": "Mahogany Lamp End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Mahogany_Lamp_End_Table"
+  },
+  "name:Mahogany Table": {
+    "id": "name:Mahogany Table",
+    "name": "Mahogany Table",
+    "wiki_url": "https://stardewvalleywiki.com/Mahogany_Table"
+  },
+  "name:Mahogany Tea-Table": {
+    "id": "name:Mahogany Tea-Table",
+    "name": "Mahogany Tea-Table",
+    "wiki_url": "https://stardewvalleywiki.com/Mahogany_Tea-Table"
+  },
+  "name:Manager of the Year": {
+    "id": "name:Manager of the Year",
+    "name": "Manager of the Year",
+    "wiki_url": "https://stardewvalleywiki.com/Manager_of_the_Year"
+  },
+  "name:Manicured Pine": {
+    "id": "name:Manicured Pine",
+    "name": "Manicured Pine",
+    "wiki_url": "https://stardewvalleywiki.com/Manicured_Pine"
+  },
+  "name:Mannequins": {
+    "id": "name:Mannequins",
+    "name": "Mannequins",
+    "wiki_url": "https://stardewvalleywiki.com/Mannequins"
+  },
+  "name:Maru Portrait": {
+    "id": "name:Maru Portrait",
+    "name": "Maru Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Maru_Portrait"
+  },
+  "name:Maru's Wrench": {
+    "id": "name:Maru's Wrench",
+    "name": "Maru's Wrench",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Maru's_Wrench"
+  },
+  "name:Master Slingshot": {
+    "id": "name:Master Slingshot",
+    "name": "Master Slingshot",
+    "sell_price_note": "Cannot be sold",
+    "wiki_url": "https://stardewvalleywiki.com/Master_Slingshot"
+  },
+  "name:Meowmere": {
+    "id": "name:Meowmere",
+    "name": "Meowmere",
+    "sell_price": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Meowmere"
+  },
+  "name:Mermaid Boots": {
+    "id": "name:Mermaid Boots",
+    "name": "Mermaid Boots",
+    "sell_price": 650,
+    "wiki_url": "https://stardewvalleywiki.com/Mermaid_Boots"
+  },
+  "name:Messy Shirt": {
+    "id": "name:Messy Shirt",
+    "name": "Messy Shirt",
+    "wiki_url": "https://stardewvalleywiki.com/Messy_Shirt"
+  },
+  "name:Messy Shorts": {
+    "id": "name:Messy Shorts",
+    "name": "Messy Shorts",
+    "wiki_url": "https://stardewvalleywiki.com/Messy_Shorts"
+  },
+  "name:Metal Chair": {
+    "id": "name:Metal Chair",
+    "name": "Metal Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Metal_Chair"
+  },
+  "name:Metal Window": {
+    "id": "name:Metal Window",
+    "name": "Metal Window",
+    "wiki_url": "https://stardewvalleywiki.com/Metal_Window"
+  },
+  "name:Midnight Beach Bed": {
+    "id": "name:Midnight Beach Bed",
+    "name": "Midnight Beach Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Midnight_Beach_Bed"
+  },
+  "name:Midnight Beach Double Bed": {
+    "id": "name:Midnight Beach Double Bed",
+    "name": "Midnight Beach Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Midnight_Beach_Double_Bed"
+  },
+  "name:Midnight Squid": {
+    "id": "name:Midnight Squid",
+    "name": "Midnight Squid",
+    "sell_price": 100,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Midnight_Squid"
+  },
+  "name:Milk Pail": {
+    "id": "name:Milk Pail",
+    "name": "Milk Pail",
+    "wiki_url": "https://stardewvalleywiki.com/Milk_Pail"
+  },
+  "name:Miner's Crest": {
+    "id": "name:Miner's Crest",
+    "name": "Miner's Crest",
+    "wiki_url": "https://stardewvalleywiki.com/Miner's_Crest"
+  },
+  "name:Mini-Shipping Bin": {
+    "id": "name:Mini-Shipping Bin",
+    "name": "Mini-Shipping Bin",
+    "wiki_url": "https://stardewvalleywiki.com/Mini-Shipping_Bin"
+  },
+  "name:Mixed Cane": {
+    "id": "name:Mixed Cane",
+    "name": "Mixed Cane",
+    "wiki_url": "https://stardewvalleywiki.com/Mixed_Cane"
+  },
+  "name:Model Planes": {
+    "id": "name:Model Planes",
+    "name": "Model Planes",
+    "wiki_url": "https://stardewvalleywiki.com/Model_Planes"
+  },
+  "name:Model Ship": {
+    "id": "name:Model Ship",
+    "name": "Model Ship",
+    "wiki_url": "https://stardewvalleywiki.com/Model_Ship"
+  },
+  "name:Modern Bench": {
+    "id": "name:Modern Bench",
+    "name": "Modern Bench",
+    "wiki_url": "https://stardewvalleywiki.com/Modern_Bench"
+  },
+  "name:Modern Bookcase": {
+    "id": "name:Modern Bookcase",
+    "name": "Modern Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Modern_Bookcase"
+  },
+  "name:Modern Dining Table": {
+    "id": "name:Modern Dining Table",
+    "name": "Modern Dining Table",
+    "wiki_url": "https://stardewvalleywiki.com/Modern_Dining_Table"
+  },
+  "name:Modern Double Bed": {
+    "id": "name:Modern Double Bed",
+    "name": "Modern Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Modern_Double_Bed"
+  },
+  "name:Modern End Table": {
+    "id": "name:Modern End Table",
+    "name": "Modern End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Modern_End_Table"
+  },
+  "name:Modern Fish Tank": {
+    "id": "name:Modern Fish Tank",
+    "name": "Modern Fish Tank",
+    "wiki_url": "https://stardewvalleywiki.com/Modern_Fish_Tank"
+  },
+  "name:Modern Lamp": {
+    "id": "name:Modern Lamp",
+    "name": "Modern Lamp",
+    "wiki_url": "https://stardewvalleywiki.com/Modern_Lamp"
+  },
+  "name:Modern Rug": {
+    "id": "name:Modern Rug",
+    "name": "Modern Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Modern_Rug"
+  },
+  "name:Modern Table": {
+    "id": "name:Modern Table",
+    "name": "Modern Table",
+    "wiki_url": "https://stardewvalleywiki.com/Modern_Table"
+  },
+  "name:Modern Tea-Table": {
+    "id": "name:Modern Tea-Table",
+    "name": "Modern Tea-Table",
+    "wiki_url": "https://stardewvalleywiki.com/Modern_Tea-Table"
+  },
+  "name:Moldy Couch": {
+    "id": "name:Moldy Couch",
+    "name": "Moldy Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Moldy_Couch"
+  },
+  "name:Monster Danglers": {
+    "id": "name:Monster Danglers",
+    "name": "Monster Danglers",
+    "wiki_url": "https://stardewvalleywiki.com/Monster_Danglers"
+  },
+  "name:Monster Fireplace": {
+    "id": "name:Monster Fireplace",
+    "name": "Monster Fireplace",
+    "wiki_url": "https://stardewvalleywiki.com/Monster_Fireplace"
+  },
+  "name:Monster Rug": {
+    "id": "name:Monster Rug",
+    "name": "Monster Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Monster_Rug"
+  },
+  "name:Moon Table": {
+    "id": "name:Moon Table",
+    "name": "Moon Table",
+    "wiki_url": "https://stardewvalleywiki.com/Moon_Table"
+  },
+  "name:Moonlight Jellies Banner": {
+    "id": "name:Moonlight Jellies Banner",
+    "name": "Moonlight Jellies Banner",
+    "wiki_url": "https://stardewvalleywiki.com/Moonlight_Jellies_Banner"
+  },
+  "name:Mounted Trout": {
+    "id": "name:Mounted Trout",
+    "name": "Mounted Trout",
+    "wiki_url": "https://stardewvalleywiki.com/Mounted_Trout"
+  },
+  "name:Ms. Angler": {
+    "id": "name:Ms. Angler",
+    "name": "Ms. Angler",
+    "sell_price": 900,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Ms._Angler"
+  },
+  "name:Mutant Carp": {
+    "id": "name:Mutant Carp",
+    "name": "Mutant Carp",
+    "sell_price": 1000,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Mutant_Carp"
+  },
+  "name:My First Painting": {
+    "id": "name:My First Painting",
+    "name": "My First Painting",
+    "wiki_url": "https://stardewvalleywiki.com/My_First_Painting"
+  },
+  "name:Mystic Rug": {
+    "id": "name:Mystic Rug",
+    "name": "Mystic Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Mystic_Rug"
+  },
+  "name:Napalm Ring": {
+    "id": "name:Napalm Ring",
+    "name": "Napalm Ring",
+    "sell_price": 1000,
+    "wiki_url": "https://stardewvalleywiki.com/Napalm_Ring"
+  },
+  "name:Nautical Rug": {
+    "id": "name:Nautical Rug",
+    "name": "Nautical Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Nautical_Rug"
+  },
+  "name:Nautilus Shell": {
+    "id": "name:Nautilus Shell",
+    "name": "Nautilus Shell",
+    "sell_price": 120,
+    "edibility": -300,
+    "wiki_url": "https://stardewvalleywiki.com/Nautilus_Shell"
+  },
+  "name:Needlepoint Flower": {
+    "id": "name:Needlepoint Flower",
+    "name": "Needlepoint Flower",
+    "wiki_url": "https://stardewvalleywiki.com/Needlepoint_Flower"
+  },
+  "name:Neolithic Table": {
+    "id": "name:Neolithic Table",
+    "name": "Neolithic Table",
+    "wiki_url": "https://stardewvalleywiki.com/Neolithic_Table"
+  },
+  "name:Neptune's Glaive": {
+    "id": "name:Neptune's Glaive",
+    "name": "Neptune's Glaive",
+    "sell_price": 250,
+    "wiki_url": "https://stardewvalleywiki.com/Neptune's_Glaive"
+  },
+  "name:Night Sky Decal 1": {
+    "id": "name:Night Sky Decal 1",
+    "name": "Night Sky Decal 1",
+    "wiki_url": "https://stardewvalleywiki.com/Night_Sky_Decal_1"
+  },
+  "name:Night Sky Decal 2": {
+    "id": "name:Night Sky Decal 2",
+    "name": "Night Sky Decal 2",
+    "wiki_url": "https://stardewvalleywiki.com/Night_Sky_Decal_2"
+  },
+  "name:Night Sky Decal 3": {
+    "id": "name:Night Sky Decal 3",
+    "name": "Night Sky Decal 3",
+    "wiki_url": "https://stardewvalleywiki.com/Night_Sky_Decal_3"
+  },
+  "name:Oak Bench": {
+    "id": "name:Oak Bench",
+    "name": "Oak Bench",
+    "wiki_url": "https://stardewvalleywiki.com/Oak_Bench"
+  },
+  "name:Oak Chair": {
+    "id": "name:Oak Chair",
+    "name": "Oak Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Oak_Chair"
+  },
+  "name:Oak Dresser": {
+    "id": "name:Oak Dresser",
+    "name": "Oak Dresser",
+    "wiki_url": "https://stardewvalleywiki.com/Oak_Dresser"
+  },
+  "name:Oak End Table": {
+    "id": "name:Oak End Table",
+    "name": "Oak End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Oak_End_Table"
+  },
+  "name:Oak Lamp End Table": {
+    "id": "name:Oak Lamp End Table",
+    "name": "Oak Lamp End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Oak_Lamp_End_Table"
+  },
+  "name:Oak Table": {
+    "id": "name:Oak Table",
+    "name": "Oak Table",
+    "wiki_url": "https://stardewvalleywiki.com/Oak_Table"
+  },
+  "name:Oak Tea-Table": {
+    "id": "name:Oak Tea-Table",
+    "name": "Oak Tea-Table",
+    "wiki_url": "https://stardewvalleywiki.com/Oak_Tea-Table"
+  },
+  "name:Obsidian Edge": {
+    "id": "name:Obsidian Edge",
+    "name": "Obsidian Edge",
+    "sell_price": 300,
+    "wiki_url": "https://stardewvalleywiki.com/Obsidian_Edge"
+  },
+  "name:Obsidian Vase": {
+    "id": "name:Obsidian Vase",
+    "name": "Obsidian Vase",
+    "wiki_url": "https://stardewvalleywiki.com/Obsidian_Vase"
+  },
+  "name:Oceanic Rug": {
+    "id": "name:Oceanic Rug",
+    "name": "Oceanic Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Oceanic_Rug"
+  },
+  "name:Octopus": {
+    "id": "name:Octopus",
+    "name": "Octopus",
+    "sell_price": 150,
+    "edibility": -300,
+    "wiki_url": "https://stardewvalleywiki.com/Octopus"
+  },
+  "name:Old World Rug": {
+    "id": "name:Old World Rug",
+    "name": "Old World Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Old_World_Rug"
+  },
+  "name:Orange Office Stool": {
+    "id": "name:Orange Office Stool",
+    "name": "Orange Office Stool",
+    "wiki_url": "https://stardewvalleywiki.com/Orange_Office_Stool"
+  },
+  "name:Orange Sleeping Junimo": {
+    "id": "name:Orange Sleeping Junimo",
+    "name": "Orange Sleeping Junimo",
+    "wiki_url": "https://stardewvalleywiki.com/Orange_Sleeping_Junimo"
+  },
+  "name:Ornamental Hay Bale": {
+    "id": "name:Ornamental Hay Bale",
+    "name": "Ornamental Hay Bale",
+    "wiki_url": "https://stardewvalleywiki.com/Ornamental_Hay_Bale"
+  },
+  "name:Ornate Lamp": {
+    "id": "name:Ornate Lamp",
+    "name": "Ornate Lamp",
+    "wiki_url": "https://stardewvalleywiki.com/Ornate_Lamp"
+  },
+  "name:Ornate Window": {
+    "id": "name:Ornate Window",
+    "name": "Ornate Window",
+    "wiki_url": "https://stardewvalleywiki.com/Ornate_Window"
+  },
+  "name:Ossified Blade": {
+    "id": "name:Ossified Blade",
+    "name": "Ossified Blade",
+    "sell_price": 300,
+    "wiki_url": "https://stardewvalleywiki.com/Ossified_Blade"
+  },
+  "name:Outlet": {
+    "id": "name:Outlet",
+    "name": "Outlet",
+    "wiki_url": "https://stardewvalleywiki.com/Outlet"
+  },
+  "name:Oyster": {
+    "id": "name:Oyster",
+    "name": "Oyster",
+    "sell_price": 40,
+    "edibility": -300,
+    "wiki_url": "https://stardewvalleywiki.com/Oyster"
+  },
+  "name:Palm Wall Ornament": {
+    "id": "name:Palm Wall Ornament",
+    "name": "Palm Wall Ornament",
+    "wiki_url": "https://stardewvalleywiki.com/Palm_Wall_Ornament"
+  },
+  "name:Panda Hat": {
+    "id": "name:Panda Hat",
+    "name": "Panda Hat",
+    "wiki_url": "https://stardewvalleywiki.com/Panda_Hat"
+  },
+  "name:Parrot Egg": {
+    "id": "name:Parrot Egg",
+    "name": "Parrot Egg",
+    "sell_price": 1000,
+    "wiki_url": "https://stardewvalleywiki.com/Parrot_Egg"
+  },
+  "name:Pastel Banner": {
+    "id": "name:Pastel Banner",
+    "name": "Pastel Banner",
+    "wiki_url": "https://stardewvalleywiki.com/Pastel_Banner"
+  },
+  "name:Patchwork Rug": {
+    "id": "name:Patchwork Rug",
+    "name": "Patchwork Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Patchwork_Rug"
+  },
+  "name:Penny Portrait": {
+    "id": "name:Penny Portrait",
+    "name": "Penny Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Penny_Portrait"
+  },
+  "name:Penny's Fryer": {
+    "id": "name:Penny's Fryer",
+    "name": "Penny's Fryer",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Penny's_Fryer"
+  },
+  "name:Perch": {
+    "id": "name:Perch",
+    "name": "Perch",
+    "sell_price": 55,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Perch"
+  },
+  "name:Periodic Table": {
+    "id": "name:Periodic Table",
+    "name": "Periodic Table",
+    "wiki_url": "https://stardewvalleywiki.com/Periodic_Table"
+  },
+  "name:Phoenix Ring": {
+    "id": "name:Phoenix Ring",
+    "name": "Phoenix Ring",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Phoenix_Ring"
+  },
+  "name:Pierre's Sign": {
+    "id": "name:Pierre's Sign",
+    "name": "Pierre's Sign",
+    "wiki_url": "https://stardewvalleywiki.com/Pierre's_Sign"
+  },
+  "name:Pig Painting": {
+    "id": "name:Pig Painting",
+    "name": "Pig Painting",
+    "wiki_url": "https://stardewvalleywiki.com/Pig_Painting"
+  },
+  "name:Pike": {
+    "id": "name:Pike",
+    "name": "Pike",
+    "sell_price": 100,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Pike"
+  },
+  "name:Pink Office Chair": {
+    "id": "name:Pink Office Chair",
+    "name": "Pink Office Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Pink_Office_Chair"
+  },
+  "name:Pink Plush Seat": {
+    "id": "name:Pink Plush Seat",
+    "name": "Pink Plush Seat",
+    "wiki_url": "https://stardewvalleywiki.com/Pink_Plush_Seat"
+  },
+  "name:Pirate Double Bed": {
+    "id": "name:Pirate Double Bed",
+    "name": "Pirate Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Pirate_Double_Bed"
+  },
+  "name:Pirate Flag": {
+    "id": "name:Pirate Flag",
+    "name": "Pirate Flag",
+    "wiki_url": "https://stardewvalleywiki.com/Pirate_Flag"
+  },
+  "name:Pirate Rug": {
+    "id": "name:Pirate Rug",
+    "name": "Pirate Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Pirate_Rug"
+  },
+  "name:Pirate's Sword": {
+    "id": "name:Pirate's Sword",
+    "name": "Pirate's Sword",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Pirate's_Sword"
+  },
+  "name:Plain Torch": {
+    "id": "name:Plain Torch",
+    "name": "Plain Torch",
+    "wiki_url": "https://stardewvalleywiki.com/Plain_Torch"
+  },
+  "name:Plasma TV": {
+    "id": "name:Plasma TV",
+    "name": "Plasma TV",
+    "wiki_url": "https://stardewvalleywiki.com/Plasma_TV"
+  },
+  "name:Plastic Bag": {
+    "id": "name:Plastic Bag",
+    "name": "Plastic Bag",
+    "wiki_url": "https://stardewvalleywiki.com/Plastic_Bag"
+  },
+  "name:Plastic Lawn Chair": {
+    "id": "name:Plastic Lawn Chair",
+    "name": "Plastic Lawn Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Plastic_Lawn_Chair"
+  },
+  "name:Plastic Lawn End Table": {
+    "id": "name:Plastic Lawn End Table",
+    "name": "Plastic Lawn End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Plastic_Lawn_End_Table"
+  },
+  "name:Plastic Plant": {
+    "id": "name:Plastic Plant",
+    "name": "Plastic Plant",
+    "wiki_url": "https://stardewvalleywiki.com/Plastic_Plant"
+  },
+  "name:Plastic Sapling": {
+    "id": "name:Plastic Sapling",
+    "name": "Plastic Sapling",
+    "wiki_url": "https://stardewvalleywiki.com/Plastic_Sapling"
+  },
+  "name:Plush Bunny": {
+    "id": "name:Plush Bunny",
+    "name": "Plush Bunny",
+    "wiki_url": "https://stardewvalleywiki.com/Plush_Bunny"
+  },
+  "name:Porthole": {
+    "id": "name:Porthole",
+    "name": "Porthole",
+    "wiki_url": "https://stardewvalleywiki.com/Porthole"
+  },
+  "name:Potted Red Mushroom": {
+    "id": "name:Potted Red Mushroom",
+    "name": "Potted Red Mushroom",
+    "wiki_url": "https://stardewvalleywiki.com/Potted_Red_Mushroom"
+  },
+  "name:Prairie King Arcade System": {
+    "id": "name:Prairie King Arcade System",
+    "name": "Prairie King Arcade System",
+    "wiki_url": "https://stardewvalleywiki.com/Prairie_King_Arcade_System"
+  },
+  "name:Protection Ring": {
+    "id": "name:Protection Ring",
+    "name": "Protection Ring",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Protection_Ring"
+  },
+  "name:Pub Table": {
+    "id": "name:Pub Table",
+    "name": "Pub Table",
+    "wiki_url": "https://stardewvalleywiki.com/Pub_Table"
+  },
+  "name:Pufferfish": {
+    "id": "name:Pufferfish",
+    "name": "Pufferfish",
+    "sell_price": 200,
+    "edibility": -40,
+    "wiki_url": "https://stardewvalleywiki.com/Pufferfish"
+  },
+  "name:Purple Book": {
+    "id": "name:Purple Book",
+    "name": "Purple Book",
+    "wiki_url": "https://stardewvalleywiki.com/Purple_Book"
+  },
+  "name:Purple Office Chair": {
+    "id": "name:Purple Office Chair",
+    "name": "Purple Office Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Purple_Office_Chair"
+  },
+  "name:Purple Serpent Statue": {
+    "id": "name:Purple Serpent Statue",
+    "name": "Purple Serpent Statue",
+    "wiki_url": "https://stardewvalleywiki.com/Purple_Serpent_Statue"
+  },
+  "name:Purple Sleeping Junimo": {
+    "id": "name:Purple Sleeping Junimo",
+    "name": "Purple Sleeping Junimo",
+    "wiki_url": "https://stardewvalleywiki.com/Purple_Sleeping_Junimo"
+  },
+  "name:Puzzle Table": {
+    "id": "name:Puzzle Table",
+    "name": "Puzzle Table",
+    "wiki_url": "https://stardewvalleywiki.com/Puzzle_Table"
+  },
+  "name:Pyramid Decal": {
+    "id": "name:Pyramid Decal",
+    "name": "Pyramid Decal",
+    "wiki_url": "https://stardewvalleywiki.com/Pyramid_Decal"
+  },
+  "name:Radio Desk": {
+    "id": "name:Radio Desk",
+    "name": "Radio Desk",
+    "wiki_url": "https://stardewvalleywiki.com/Radio_Desk"
+  },
+  "name:Radioactive Carp": {
+    "id": "name:Radioactive Carp",
+    "name": "Radioactive Carp",
+    "sell_price": 1000,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Radioactive_Carp"
+  },
+  "name:Rainbow Shell": {
+    "id": "name:Rainbow Shell",
+    "name": "Rainbow Shell",
+    "sell_price": 300,
+    "edibility": -300,
+    "wiki_url": "https://stardewvalleywiki.com/Rainbow_Shell"
+  },
+  "name:Rapier": {
+    "id": "name:Rapier",
+    "name": "Rapier",
+    "sell_price": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Rapier"
+  },
+  "name:Red Armchair": {
+    "id": "name:Red Armchair",
+    "name": "Red Armchair",
+    "wiki_url": "https://stardewvalleywiki.com/Red_Armchair"
+  },
+  "name:Red Book": {
+    "id": "name:Red Book",
+    "name": "Red Book",
+    "wiki_url": "https://stardewvalleywiki.com/Red_Book"
+  },
+  "name:Red Canes": {
+    "id": "name:Red Canes",
+    "name": "Red Canes",
+    "wiki_url": "https://stardewvalleywiki.com/Red_Canes"
+  },
+  "name:Red Cottage Rug": {
+    "id": "name:Red Cottage Rug",
+    "name": "Red Cottage Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Red_Cottage_Rug"
+  },
+  "name:Red Couch": {
+    "id": "name:Red Couch",
+    "name": "Red Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Red_Couch"
+  },
+  "name:Red Cushion": {
+    "id": "name:Red Cushion",
+    "name": "Red Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Red_Cushion"
+  },
+  "name:Red Diner Chair": {
+    "id": "name:Red Diner Chair",
+    "name": "Red Diner Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Red_Diner_Chair"
+  },
+  "name:Red Mullet": {
+    "id": "name:Red Mullet",
+    "name": "Red Mullet",
+    "sell_price": 75,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Red_Mullet"
+  },
+  "name:Red Rug": {
+    "id": "name:Red Rug",
+    "name": "Red Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Red_Rug"
+  },
+  "name:Red Sleeping Junimo": {
+    "id": "name:Red Sleeping Junimo",
+    "name": "Red Sleeping Junimo",
+    "wiki_url": "https://stardewvalleywiki.com/Red_Sleeping_Junimo"
+  },
+  "name:Red Snapper": {
+    "id": "name:Red Snapper",
+    "name": "Red Snapper",
+    "sell_price": 50,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Red_Snapper"
+  },
+  "name:Retro Banner": {
+    "id": "name:Retro Banner",
+    "name": "Retro Banner",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Banner"
+  },
+  "name:Retro Bed": {
+    "id": "name:Retro Bed",
+    "name": "Retro Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Bed"
+  },
+  "name:Retro Bookcase": {
+    "id": "name:Retro Bookcase",
+    "name": "Retro Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Bookcase"
+  },
+  "name:Retro Cabinet": {
+    "id": "name:Retro Cabinet",
+    "name": "Retro Cabinet",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Cabinet"
+  },
+  "name:Retro Catalogue": {
+    "id": "name:Retro Catalogue",
+    "name": "Retro Catalogue",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Catalogue"
+  },
+  "name:Retro Chair": {
+    "id": "name:Retro Chair",
+    "name": "Retro Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Chair"
+  },
+  "name:Retro Couch": {
+    "id": "name:Retro Couch",
+    "name": "Retro Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Couch"
+  },
+  "name:Retro Cushion": {
+    "id": "name:Retro Cushion",
+    "name": "Retro Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Cushion"
+  },
+  "name:Retro Dresser": {
+    "id": "name:Retro Dresser",
+    "name": "Retro Dresser",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Dresser"
+  },
+  "name:Retro End Table": {
+    "id": "name:Retro End Table",
+    "name": "Retro End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_End_Table"
+  },
+  "name:Retro Fireplace": {
+    "id": "name:Retro Fireplace",
+    "name": "Retro Fireplace",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Fireplace"
+  },
+  "name:Retro Flower": {
+    "id": "name:Retro Flower",
+    "name": "Retro Flower",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Flower"
+  },
+  "name:Retro Lamp": {
+    "id": "name:Retro Lamp",
+    "name": "Retro Lamp",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Lamp"
+  },
+  "name:Retro Mat": {
+    "id": "name:Retro Mat",
+    "name": "Retro Mat",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Mat"
+  },
+  "name:Retro Plant": {
+    "id": "name:Retro Plant",
+    "name": "Retro Plant",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Plant"
+  },
+  "name:Retro Radio": {
+    "id": "name:Retro Radio",
+    "name": "Retro Radio",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Radio"
+  },
+  "name:Retro Rug": {
+    "id": "name:Retro Rug",
+    "name": "Retro Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Rug"
+  },
+  "name:Retro Square Rug": {
+    "id": "name:Retro Square Rug",
+    "name": "Retro Square Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Square_Rug"
+  },
+  "name:Retro Stool": {
+    "id": "name:Retro Stool",
+    "name": "Retro Stool",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Stool"
+  },
+  "name:Retro TV": {
+    "id": "name:Retro TV",
+    "name": "Retro TV",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_TV"
+  },
+  "name:Retro Table": {
+    "id": "name:Retro Table",
+    "name": "Retro Table",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Table"
+  },
+  "name:Retro Tea Table": {
+    "id": "name:Retro Tea Table",
+    "name": "Retro Tea Table",
+    "wiki_url": "https://stardewvalleywiki.com/Retro_Tea_Table"
+  },
+  "name:Rubber Boots": {
+    "id": "name:Rubber Boots",
+    "name": "Rubber Boots",
+    "sell_price": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Rubber_Boots"
+  },
+  "name:Ruby Crystal Ball": {
+    "id": "name:Ruby Crystal Ball",
+    "name": "Ruby Crystal Ball",
+    "wiki_url": "https://stardewvalleywiki.com/Ruby_Crystal_Ball"
+  },
+  "name:Ruby Ring": {
+    "id": "name:Ruby Ring",
+    "name": "Ruby Ring",
+    "sell_price": 300,
+    "wiki_url": "https://stardewvalleywiki.com/Ruby_Ring"
+  },
+  "name:Rune Rug": {
+    "id": "name:Rune Rug",
+    "name": "Rune Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Rune_Rug"
+  },
+  "name:Rusty Sword": {
+    "id": "name:Rusty Sword",
+    "name": "Rusty Sword",
+    "sell_price": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Rusty_Sword"
+  },
+  "name:S. Pine": {
+    "id": "name:S. Pine",
+    "name": "S. Pine",
+    "wiki_url": "https://stardewvalleywiki.com/S._Pine"
+  },
+  "name:S. Wall Flower": {
+    "id": "name:S. Wall Flower",
+    "name": "S. Wall Flower",
+    "wiki_url": "https://stardewvalleywiki.com/S._Wall_Flower"
+  },
+  "name:Sam Portrait": {
+    "id": "name:Sam Portrait",
+    "name": "Sam Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Sam_Portrait"
+  },
+  "name:Sam's Boombox": {
+    "id": "name:Sam's Boombox",
+    "name": "Sam's Boombox",
+    "wiki_url": "https://stardewvalleywiki.com/Sam's_Boombox"
+  },
+  "name:Sam's Old Guitar": {
+    "id": "name:Sam's Old Guitar",
+    "name": "Sam's Old Guitar",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Sam's_Old_Guitar"
+  },
+  "name:Sam's Skateboard": {
+    "id": "name:Sam's Skateboard",
+    "name": "Sam's Skateboard",
+    "wiki_url": "https://stardewvalleywiki.com/Sam's_Skateboard"
+  },
+  "name:Sandfish": {
+    "id": "name:Sandfish",
+    "name": "Sandfish",
+    "sell_price": 75,
+    "edibility": 5,
+    "wiki_url": "https://stardewvalleywiki.com/Sandfish"
+  },
+  "name:Sandy Rug": {
+    "id": "name:Sandy Rug",
+    "name": "Sandy Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Sandy_Rug"
+  },
+  "name:Savage Ring": {
+    "id": "name:Savage Ring",
+    "name": "Savage Ring",
+    "sell_price": 750,
+    "wiki_url": "https://stardewvalleywiki.com/Savage_Ring"
+  },
+  "name:Scorpion Carp": {
+    "id": "name:Scorpion Carp",
+    "name": "Scorpion Carp",
+    "sell_price": 150,
+    "edibility": -50,
+    "wiki_url": "https://stardewvalleywiki.com/Scorpion_Carp"
+  },
+  "name:Scythe": {
+    "id": "name:Scythe",
+    "name": "Scythe",
+    "wiki_url": "https://stardewvalleywiki.com/Scythe"
+  },
+  "name:Sea Cucumber": {
+    "id": "name:Sea Cucumber",
+    "name": "Sea Cucumber",
+    "sell_price": 75,
+    "edibility": -10,
+    "wiki_url": "https://stardewvalleywiki.com/Sea_Cucumber"
+  },
+  "name:Seasonal Decor": {
+    "id": "name:Seasonal Decor",
+    "name": "Seasonal Decor",
+    "wiki_url": "https://stardewvalleywiki.com/Seasonal_Decor"
+  },
+  "name:Seasonal Plant": {
+    "id": "name:Seasonal Plant",
+    "name": "Seasonal Plant",
+    "wiki_url": "https://stardewvalleywiki.com/Seasonal_Plant"
+  },
+  "name:Seb's Lost Mace": {
+    "id": "name:Seb's Lost Mace",
+    "name": "Seb's Lost Mace",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Seb's_Lost_Mace"
+  },
+  "name:Sebastian Portrait": {
+    "id": "name:Sebastian Portrait",
+    "name": "Sebastian Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Sebastian_Portrait"
+  },
+  "name:Shad": {
+    "id": "name:Shad",
+    "name": "Shad",
+    "sell_price": 60,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Shad"
+  },
+  "name:Shadow Dagger": {
+    "id": "name:Shadow Dagger",
+    "name": "Shadow Dagger",
+    "sell_price": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Shadow_Dagger"
+  },
+  "name:Shane Portrait": {
+    "id": "name:Shane Portrait",
+    "name": "Shane Portrait",
+    "wiki_url": "https://stardewvalleywiki.com/Shane_Portrait"
+  },
+  "name:Shears": {
+    "id": "name:Shears",
+    "name": "Shears",
+    "wiki_url": "https://stardewvalleywiki.com/Shears"
+  },
+  "name:Short Bookcase": {
+    "id": "name:Short Bookcase",
+    "name": "Short Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Short_Bookcase"
+  },
+  "name:Short Wizard Bookcase": {
+    "id": "name:Short Wizard Bookcase",
+    "name": "Short Wizard Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Short_Wizard_Bookcase"
+  },
+  "name:Sign Of The Vessel": {
+    "id": "name:Sign Of The Vessel",
+    "name": "Sign Of The Vessel",
+    "wiki_url": "https://stardewvalleywiki.com/Sign_Of_The_Vessel"
+  },
+  "name:Silver Saber": {
+    "id": "name:Silver Saber",
+    "name": "Silver Saber",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Silver_Saber"
+  },
+  "name:Singing Stone": {
+    "id": "name:Singing Stone",
+    "name": "Singing Stone",
+    "wiki_url": "https://stardewvalleywiki.com/Singing_Stone"
+  },
+  "name:Single Bed": {
+    "id": "name:Single Bed",
+    "name": "Single Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Single_Bed"
+  },
+  "name:Six-Pack Rings": {
+    "id": "name:Six-Pack Rings",
+    "name": "Six-Pack Rings",
+    "wiki_url": "https://stardewvalleywiki.com/Six-Pack_Rings"
+  },
+  "name:Skeleton Mask": {
+    "id": "name:Skeleton Mask",
+    "name": "Skeleton Mask",
+    "sell_price_note": "Cannot be sold",
+    "wiki_url": "https://stardewvalleywiki.com/Skeleton_Mask"
+  },
+  "name:Skeleton Statue": {
+    "id": "name:Skeleton Statue",
+    "name": "Skeleton Statue",
+    "wiki_url": "https://stardewvalleywiki.com/Skeleton_Statue"
+  },
+  "name:Skull Poster": {
+    "id": "name:Skull Poster",
+    "name": "Skull Poster",
+    "wiki_url": "https://stardewvalleywiki.com/Skull_Poster"
+  },
+  "name:Slime Charmer Ring": {
+    "id": "name:Slime Charmer Ring",
+    "name": "Slime Charmer Ring",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Slime_Charmer_Ring"
+  },
+  "name:Slimejack": {
+    "id": "name:Slimejack",
+    "name": "Slimejack",
+    "sell_price": 100,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Slimejack"
+  },
+  "name:Slingshot": {
+    "id": "name:Slingshot",
+    "name": "Slingshot",
+    "sell_price_note": "Cannot be sold",
+    "wiki_url": "https://stardewvalleywiki.com/Slingshot"
+  },
+  "name:Sloth Skeleton": {
+    "id": "name:Sloth Skeleton",
+    "name": "Sloth Skeleton",
+    "wiki_url": "https://stardewvalleywiki.com/Sloth_Skeleton"
+  },
+  "name:Small Book Pile": {
+    "id": "name:Small Book Pile",
+    "name": "Small Book Pile",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Book_Pile"
+  },
+  "name:Small Book Stack": {
+    "id": "name:Small Book Stack",
+    "name": "Small Book Stack",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Book_Stack"
+  },
+  "name:Small Crystal": {
+    "id": "name:Small Crystal",
+    "name": "Small Crystal",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Crystal"
+  },
+  "name:Small Elixir Shelf": {
+    "id": "name:Small Elixir Shelf",
+    "name": "Small Elixir Shelf",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Elixir_Shelf"
+  },
+  "name:Small Fish Tank": {
+    "id": "name:Small Fish Tank",
+    "name": "Small Fish Tank",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Fish_Tank"
+  },
+  "name:Small Glow Ring": {
+    "id": "name:Small Glow Ring",
+    "name": "Small Glow Ring",
+    "sell_price": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Small_Glow_Ring"
+  },
+  "name:Small Joja Rug": {
+    "id": "name:Small Joja Rug",
+    "name": "Small Joja Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Joja_Rug"
+  },
+  "name:Small Junimo Hut": {
+    "id": "name:Small Junimo Hut",
+    "name": "Small Junimo Hut",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Junimo_Hut"
+  },
+  "name:Small Junimo Mat": {
+    "id": "name:Small Junimo Mat",
+    "name": "Small Junimo Mat",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Junimo_Mat"
+  },
+  "name:Small Junimo Plush": {
+    "id": "name:Small Junimo Plush",
+    "name": "Small Junimo Plush",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Junimo_Plush"
+  },
+  "name:Small Junimo Pot": {
+    "id": "name:Small Junimo Pot",
+    "name": "Small Junimo Pot",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Junimo_Pot"
+  },
+  "name:Small Magnet Ring": {
+    "id": "name:Small Magnet Ring",
+    "name": "Small Magnet Ring",
+    "sell_price": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Small_Magnet_Ring"
+  },
+  "name:Small Plant": {
+    "id": "name:Small Plant",
+    "name": "Small Plant",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Plant"
+  },
+  "name:Small Stacked Elixir Shelf": {
+    "id": "name:Small Stacked Elixir Shelf",
+    "name": "Small Stacked Elixir Shelf",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Stacked_Elixir_Shelf"
+  },
+  "name:Small Wall Pumpkin": {
+    "id": "name:Small Wall Pumpkin",
+    "name": "Small Wall Pumpkin",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Wall_Pumpkin"
+  },
+  "name:Small Window": {
+    "id": "name:Small Window",
+    "name": "Small Window",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Window"
+  },
+  "name:Small Wizard Bookcase": {
+    "id": "name:Small Wizard Bookcase",
+    "name": "Small Wizard Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Small_Wizard_Bookcase"
+  },
+  "name:Smallmouth Bass": {
+    "id": "name:Smallmouth Bass",
+    "name": "Smallmouth Bass",
+    "sell_price": 50,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Smallmouth_Bass"
+  },
+  "name:Sneakers": {
+    "id": "name:Sneakers",
+    "name": "Sneakers",
+    "sell_price": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Sneakers"
+  },
+  "name:Snowy Rug": {
+    "id": "name:Snowy Rug",
+    "name": "Snowy Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Snowy_Rug"
+  },
+  "name:Soda Machine": {
+    "id": "name:Soda Machine",
+    "name": "Soda Machine",
+    "wiki_url": "https://stardewvalleywiki.com/Soda_Machine"
+  },
+  "name:Solid Gold Lewis": {
+    "id": "name:Solid Gold Lewis",
+    "name": "Solid Gold Lewis",
+    "wiki_url": "https://stardewvalleywiki.com/Solid_Gold_Lewis"
+  },
+  "name:Son of Crimsonfish": {
+    "id": "name:Son of Crimsonfish",
+    "name": "Son of Crimsonfish",
+    "sell_price": 1500,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Son_of_Crimsonfish"
+  },
+  "name:Soul Sapper Ring": {
+    "id": "name:Soul Sapper Ring",
+    "name": "Soul Sapper Ring",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Soul_Sapper_Ring"
+  },
+  "name:Space Boots": {
+    "id": "name:Space Boots",
+    "name": "Space Boots",
+    "sell_price": 400,
+    "wiki_url": "https://stardewvalleywiki.com/Space_Boots"
+  },
+  "name:Spilled Beverage": {
+    "id": "name:Spilled Beverage",
+    "name": "Spilled Beverage",
+    "wiki_url": "https://stardewvalleywiki.com/Spilled_Beverage"
+  },
+  "name:Spirits Table": {
+    "id": "name:Spirits Table",
+    "name": "Spirits Table",
+    "wiki_url": "https://stardewvalleywiki.com/Spirits_Table"
+  },
+  "name:Spook Fish": {
+    "id": "name:Spook Fish",
+    "name": "Spook Fish",
+    "sell_price": 220,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Spook_Fish"
+  },
+  "name:Square Joja Rug": {
+    "id": "name:Square Joja Rug",
+    "name": "Square Joja Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Square_Joja_Rug"
+  },
+  "name:Square Junimo Rug": {
+    "id": "name:Square Junimo Rug",
+    "name": "Square Junimo Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Square_Junimo_Rug"
+  },
+  "name:Squid": {
+    "id": "name:Squid",
+    "name": "Squid",
+    "sell_price": 80,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Squid"
+  },
+  "name:Squirrel Figurine": {
+    "id": "name:Squirrel Figurine",
+    "name": "Squirrel Figurine",
+    "wiki_url": "https://stardewvalleywiki.com/Squirrel_Figurine"
+  },
+  "name:Stacked Elixir Shelf": {
+    "id": "name:Stacked Elixir Shelf",
+    "name": "Stacked Elixir Shelf",
+    "wiki_url": "https://stardewvalleywiki.com/Stacked_Elixir_Shelf"
+  },
+  "name:Stacked Joja Boxes": {
+    "id": "name:Stacked Joja Boxes",
+    "name": "Stacked Joja Boxes",
+    "wiki_url": "https://stardewvalleywiki.com/Stacked_Joja_Boxes"
+  },
+  "name:Standing Geode": {
+    "id": "name:Standing Geode",
+    "name": "Standing Geode",
+    "wiki_url": "https://stardewvalleywiki.com/Standing_Geode"
+  },
+  "name:Stardew Hero Trophy": {
+    "id": "name:Stardew Hero Trophy",
+    "name": "Stardew Hero Trophy",
+    "wiki_url": "https://stardewvalleywiki.com/Stardew_Hero_Trophy"
+  },
+  "name:Starport Decal": {
+    "id": "name:Starport Decal",
+    "name": "Starport Decal",
+    "wiki_url": "https://stardewvalleywiki.com/Starport_Decal"
+  },
+  "name:Starry Double Bed": {
+    "id": "name:Starry Double Bed",
+    "name": "Starry Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Starry_Double_Bed"
+  },
+  "name:Starry Moon Rug": {
+    "id": "name:Starry Moon Rug",
+    "name": "Starry Moon Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Starry_Moon_Rug"
+  },
+  "name:Statue Of Endless Fortune": {
+    "id": "name:Statue Of Endless Fortune",
+    "name": "Statue Of Endless Fortune",
+    "wiki_url": "https://stardewvalleywiki.com/Statue_Of_Endless_Fortune"
+  },
+  "name:Statue Of Perfection": {
+    "id": "name:Statue Of Perfection",
+    "name": "Statue Of Perfection",
+    "wiki_url": "https://stardewvalleywiki.com/Statue_Of_Perfection"
+  },
+  "name:Statue Of True Perfection": {
+    "id": "name:Statue Of True Perfection",
+    "name": "Statue Of True Perfection",
+    "wiki_url": "https://stardewvalleywiki.com/Statue_Of_True_Perfection"
+  },
+  "name:Steel Falchion": {
+    "id": "name:Steel Falchion",
+    "name": "Steel Falchion",
+    "sell_price": 400,
+    "wiki_url": "https://stardewvalleywiki.com/Steel_Falchion"
+  },
+  "name:Steel Smallsword": {
+    "id": "name:Steel Smallsword",
+    "name": "Steel Smallsword",
+    "sell_price": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Steel_Smallsword"
+  },
+  "name:Stingray": {
+    "id": "name:Stingray",
+    "name": "Stingray",
+    "sell_price": 180,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Stingray"
+  },
+  "name:Stone Cairn": {
+    "id": "name:Stone Cairn",
+    "name": "Stone Cairn",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Cairn"
+  },
+  "name:Stone Fireplace": {
+    "id": "name:Stone Fireplace",
+    "name": "Stone Fireplace",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Fireplace"
+  },
+  "name:Stone Flooring": {
+    "id": "name:Stone Flooring",
+    "name": "Stone Flooring",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Flooring"
+  },
+  "name:Stone Frog": {
+    "id": "name:Stone Frog",
+    "name": "Stone Frog",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Frog"
+  },
+  "name:Stone Junimo": {
+    "id": "name:Stone Junimo",
+    "name": "Stone Junimo",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Junimo"
+  },
+  "name:Stone Owl": {
+    "id": "name:Stone Owl",
+    "name": "Stone Owl",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Owl"
+  },
+  "name:Stone Parrot": {
+    "id": "name:Stone Parrot",
+    "name": "Stone Parrot",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Parrot"
+  },
+  "name:Stone Slab": {
+    "id": "name:Stone Slab",
+    "name": "Stone Slab",
+    "wiki_url": "https://stardewvalleywiki.com/Stone_Slab"
+  },
+  "name:Stonefish": {
+    "id": "name:Stonefish",
+    "name": "Stonefish",
+    "sell_price": 300,
+    "edibility": -300,
+    "wiki_url": "https://stardewvalleywiki.com/Stonefish"
+  },
+  "name:Stove Fireplace": {
+    "id": "name:Stove Fireplace",
+    "name": "Stove Fireplace",
+    "wiki_url": "https://stardewvalleywiki.com/Stove_Fireplace"
+  },
+  "name:Strawberry Decal": {
+    "id": "name:Strawberry Decal",
+    "name": "Strawberry Decal",
+    "wiki_url": "https://stardewvalleywiki.com/Strawberry_Decal"
+  },
+  "name:Strawberry Double Bed": {
+    "id": "name:Strawberry Double Bed",
+    "name": "Strawberry Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Strawberry_Double_Bed"
+  },
+  "name:Stump Seat": {
+    "id": "name:Stump Seat",
+    "name": "Stump Seat",
+    "wiki_url": "https://stardewvalleywiki.com/Stump_Seat"
+  },
+  "name:Stump Torch": {
+    "id": "name:Stump Torch",
+    "name": "Stump Torch",
+    "wiki_url": "https://stardewvalleywiki.com/Stump_Torch"
+  },
+  "name:Sturgeon": {
+    "id": "name:Sturgeon",
+    "name": "Sturgeon",
+    "sell_price": 200,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Sturgeon"
+  },
+  "name:Suit Of Armor": {
+    "id": "name:Suit Of Armor",
+    "name": "Suit Of Armor",
+    "wiki_url": "https://stardewvalleywiki.com/Suit_Of_Armor"
+  },
+  "name:Sun Dunes": {
+    "id": "name:Sun Dunes",
+    "name": "Sun Dunes",
+    "wiki_url": "https://stardewvalleywiki.com/Sun_Dunes"
+  },
+  "name:Sun Table": {
+    "id": "name:Sun Table",
+    "name": "Sun Table",
+    "wiki_url": "https://stardewvalleywiki.com/Sun_Table"
+  },
+  "name:Sunfish": {
+    "id": "name:Sunfish",
+    "name": "Sunfish",
+    "sell_price": 30,
+    "edibility": 5,
+    "wiki_url": "https://stardewvalleywiki.com/Sunfish"
+  },
+  "name:Super Cucumber": {
+    "id": "name:Super Cucumber",
+    "name": "Super Cucumber",
+    "sell_price": 250,
+    "edibility": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Super_Cucumber"
+  },
+  "name:Swamp Plant": {
+    "id": "name:Swamp Plant",
+    "name": "Swamp Plant",
+    "wiki_url": "https://stardewvalleywiki.com/Swamp_Plant"
+  },
+  "name:Swirl Rug": {
+    "id": "name:Swirl Rug",
+    "name": "Swirl Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Swirl_Rug"
+  },
+  "name:Table Plant": {
+    "id": "name:Table Plant",
+    "name": "Table Plant",
+    "wiki_url": "https://stardewvalleywiki.com/Table_Plant"
+  },
+  "name:Tall House Plant": {
+    "id": "name:Tall House Plant",
+    "name": "Tall House Plant",
+    "wiki_url": "https://stardewvalleywiki.com/Tall_House_Plant"
+  },
+  "name:Tea Set": {
+    "id": "name:Tea Set",
+    "name": "Tea Set",
+    "sell_price": 200,
+    "wiki_url": "https://stardewvalleywiki.com/Tea_Set"
+  },
+  "name:Tempered Broadsword": {
+    "id": "name:Tempered Broadsword",
+    "name": "Tempered Broadsword",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Tempered_Broadsword"
+  },
+  "name:Templar's Blade": {
+    "id": "name:Templar's Blade",
+    "name": "Templar's Blade",
+    "sell_price": 250,
+    "wiki_url": "https://stardewvalleywiki.com/Templar's_Blade"
+  },
+  "name:The Slammer": {
+    "id": "name:The Slammer",
+    "name": "The Slammer",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/The_Slammer"
+  },
+  "name:Thermal Boots": {
+    "id": "name:Thermal Boots",
+    "name": "Thermal Boots",
+    "sell_price": 150,
+    "wiki_url": "https://stardewvalleywiki.com/Thermal_Boots"
+  },
+  "name:Tiger Trout": {
+    "id": "name:Tiger Trout",
+    "name": "Tiger Trout",
+    "sell_price": 150,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Tiger_Trout"
+  },
+  "name:Tilapia": {
+    "id": "name:Tilapia",
+    "name": "Tilapia",
+    "sell_price": 75,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Tilapia"
+  },
+  "name:Tire": {
+    "id": "name:Tire",
+    "name": "Tire",
+    "wiki_url": "https://stardewvalleywiki.com/Tire"
+  },
+  "name:Topaz Crystal Ball": {
+    "id": "name:Topaz Crystal Ball",
+    "name": "Topaz Crystal Ball",
+    "wiki_url": "https://stardewvalleywiki.com/Topaz_Crystal_Ball"
+  },
+  "name:Topaz Ring": {
+    "id": "name:Topaz Ring",
+    "name": "Topaz Ring",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Topaz_Ring"
+  },
+  "name:Topiary Tree": {
+    "id": "name:Topiary Tree",
+    "name": "Topiary Tree",
+    "wiki_url": "https://stardewvalleywiki.com/Topiary_Tree"
+  },
+  "name:Totem Pole": {
+    "id": "name:Totem Pole",
+    "name": "Totem Pole",
+    "wiki_url": "https://stardewvalleywiki.com/Totem_Pole"
+  },
+  "name:Training Rod": {
+    "id": "name:Training Rod",
+    "name": "Training Rod",
+    "wiki_url": "https://stardewvalleywiki.com/Training_Rod"
+  },
+  "name:Trash Catalogue": {
+    "id": "name:Trash Catalogue",
+    "name": "Trash Catalogue",
+    "wiki_url": "https://stardewvalleywiki.com/Trash_Catalogue"
+  },
+  "name:Tree Column": {
+    "id": "name:Tree Column",
+    "name": "Tree Column",
+    "wiki_url": "https://stardewvalleywiki.com/Tree_Column"
+  },
+  "name:Tree of the Winter Star": {
+    "id": "name:Tree of the Winter Star",
+    "name": "Tree of the Winter Star",
+    "wiki_url": "https://stardewvalleywiki.com/Tree_of_the_Winter_Star"
+  },
+  "name:Triangle Window": {
+    "id": "name:Triangle Window",
+    "name": "Triangle Window",
+    "wiki_url": "https://stardewvalleywiki.com/Triangle_Window"
+  },
+  "name:Tropical Bed": {
+    "id": "name:Tropical Bed",
+    "name": "Tropical Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Tropical_Bed"
+  },
+  "name:Tropical Chair": {
+    "id": "name:Tropical Chair",
+    "name": "Tropical Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Tropical_Chair"
+  },
+  "name:Tropical Double Bed": {
+    "id": "name:Tropical Double Bed",
+    "name": "Tropical Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Tropical_Double_Bed"
+  },
+  "name:Tropical TV": {
+    "id": "name:Tropical TV",
+    "name": "Tropical TV",
+    "wiki_url": "https://stardewvalleywiki.com/Tropical_TV"
+  },
+  "name:Tuna": {
+    "id": "name:Tuna",
+    "name": "Tuna",
+    "sell_price": 100,
+    "edibility": 15,
+    "wiki_url": "https://stardewvalleywiki.com/Tuna"
+  },
+  "name:Tundra Boots": {
+    "id": "name:Tundra Boots",
+    "name": "Tundra Boots",
+    "sell_price": 150,
+    "wiki_url": "https://stardewvalleywiki.com/Tundra_Boots"
+  },
+  "name:Two Elixirs": {
+    "id": "name:Two Elixirs",
+    "name": "Two Elixirs",
+    "wiki_url": "https://stardewvalleywiki.com/Two_Elixirs"
+  },
+  "name:Upright Piano": {
+    "id": "name:Upright Piano",
+    "name": "Upright Piano",
+    "wiki_url": "https://stardewvalleywiki.com/Upright_Piano"
+  },
+  "name:Vampire Ring": {
+    "id": "name:Vampire Ring",
+    "name": "Vampire Ring",
+    "sell_price": 750,
+    "wiki_url": "https://stardewvalleywiki.com/Vampire_Ring"
+  },
+  "name:Void Salmon": {
+    "id": "name:Void Salmon",
+    "name": "Void Salmon",
+    "sell_price": 150,
+    "edibility": 25,
+    "wiki_url": "https://stardewvalleywiki.com/Void_Salmon"
+  },
+  "name:Wall Basket": {
+    "id": "name:Wall Basket",
+    "name": "Wall Basket",
+    "wiki_url": "https://stardewvalleywiki.com/Wall_Basket"
+  },
+  "name:Wall Cactus": {
+    "id": "name:Wall Cactus",
+    "name": "Wall Cactus",
+    "wiki_url": "https://stardewvalleywiki.com/Wall_Cactus"
+  },
+  "name:Wall Clock": {
+    "id": "name:Wall Clock",
+    "name": "Wall Clock",
+    "wiki_url": "https://stardewvalleywiki.com/Wall_Clock"
+  },
+  "name:Wall Flower": {
+    "id": "name:Wall Flower",
+    "name": "Wall Flower",
+    "wiki_url": "https://stardewvalleywiki.com/Wall_Flower"
+  },
+  "name:Wall Palm": {
+    "id": "name:Wall Palm",
+    "name": "Wall Palm",
+    "wiki_url": "https://stardewvalleywiki.com/Wall_Palm"
+  },
+  "name:Wall Pumpkin": {
+    "id": "name:Wall Pumpkin",
+    "name": "Wall Pumpkin",
+    "wiki_url": "https://stardewvalleywiki.com/Wall_Pumpkin"
+  },
+  "name:Wall Sconce": {
+    "id": "name:Wall Sconce",
+    "name": "Wall Sconce",
+    "wiki_url": "https://stardewvalleywiki.com/Wall_Sconce"
+  },
+  "name:Wall Sword": {
+    "id": "name:Wall Sword",
+    "name": "Wall Sword",
+    "wiki_url": "https://stardewvalleywiki.com/Wall_Sword"
+  },
+  "name:Walleye": {
+    "id": "name:Walleye",
+    "name": "Walleye",
+    "sell_price": 105,
+    "edibility": 12,
+    "wiki_url": "https://stardewvalleywiki.com/Walleye"
+  },
+  "name:Wallflower Pal": {
+    "id": "name:Wallflower Pal",
+    "name": "Wallflower Pal",
+    "wiki_url": "https://stardewvalleywiki.com/Wallflower_Pal"
+  },
+  "name:Walnut Bench": {
+    "id": "name:Walnut Bench",
+    "name": "Walnut Bench",
+    "wiki_url": "https://stardewvalleywiki.com/Walnut_Bench"
+  },
+  "name:Walnut Chair": {
+    "id": "name:Walnut Chair",
+    "name": "Walnut Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Walnut_Chair"
+  },
+  "name:Walnut Dresser": {
+    "id": "name:Walnut Dresser",
+    "name": "Walnut Dresser",
+    "wiki_url": "https://stardewvalleywiki.com/Walnut_Dresser"
+  },
+  "name:Walnut End Table": {
+    "id": "name:Walnut End Table",
+    "name": "Walnut End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Walnut_End_Table"
+  },
+  "name:Walnut Lamp End Table": {
+    "id": "name:Walnut Lamp End Table",
+    "name": "Walnut Lamp End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Walnut_Lamp_End_Table"
+  },
+  "name:Walnut Table": {
+    "id": "name:Walnut Table",
+    "name": "Walnut Table",
+    "wiki_url": "https://stardewvalleywiki.com/Walnut_Table"
+  },
+  "name:Walnut Tea-Table": {
+    "id": "name:Walnut Tea-Table",
+    "name": "Walnut Tea-Table",
+    "wiki_url": "https://stardewvalleywiki.com/Walnut_Tea-Table"
+  },
+  "name:Wicked Kris": {
+    "id": "name:Wicked Kris",
+    "name": "Wicked Kris",
+    "sell_price": 400,
+    "wiki_url": "https://stardewvalleywiki.com/Wicked_Kris"
+  },
+  "name:Wild Double Bed": {
+    "id": "name:Wild Double Bed",
+    "name": "Wild Double Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Wild_Double_Bed"
+  },
+  "name:Wind Spire": {
+    "id": "name:Wind Spire",
+    "name": "Wind Spire",
+    "sell_price": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Wind_Spire"
+  },
+  "name:Wine Table": {
+    "id": "name:Wine Table",
+    "name": "Wine Table",
+    "wiki_url": "https://stardewvalleywiki.com/Wine_Table"
+  },
+  "name:Winter Banner": {
+    "id": "name:Winter Banner",
+    "name": "Winter Banner",
+    "wiki_url": "https://stardewvalleywiki.com/Winter_Banner"
+  },
+  "name:Winter Chair": {
+    "id": "name:Winter Chair",
+    "name": "Winter Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Winter_Chair"
+  },
+  "name:Winter Dining Table": {
+    "id": "name:Winter Dining Table",
+    "name": "Winter Dining Table",
+    "wiki_url": "https://stardewvalleywiki.com/Winter_Dining_Table"
+  },
+  "name:Winter End Table": {
+    "id": "name:Winter End Table",
+    "name": "Winter End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Winter_End_Table"
+  },
+  "name:Winter Table": {
+    "id": "name:Winter Table",
+    "name": "Winter Table",
+    "wiki_url": "https://stardewvalleywiki.com/Winter_Table"
+  },
+  "name:Winter Tree Decal": {
+    "id": "name:Winter Tree Decal",
+    "name": "Winter Tree Decal",
+    "wiki_url": "https://stardewvalleywiki.com/Winter_Tree_Decal"
+  },
+  "name:Witch's Broom": {
+    "id": "name:Witch's Broom",
+    "name": "Witch's Broom",
+    "wiki_url": "https://stardewvalleywiki.com/Witch's_Broom"
+  },
+  "name:Wizard Bed": {
+    "id": "name:Wizard Bed",
+    "name": "Wizard Bed",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Bed"
+  },
+  "name:Wizard Bookcase": {
+    "id": "name:Wizard Bookcase",
+    "name": "Wizard Bookcase",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Bookcase"
+  },
+  "name:Wizard Bookshelf": {
+    "id": "name:Wizard Bookshelf",
+    "name": "Wizard Bookshelf",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Bookshelf"
+  },
+  "name:Wizard Catalogue": {
+    "id": "name:Wizard Catalogue",
+    "name": "Wizard Catalogue",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Catalogue"
+  },
+  "name:Wizard Chair": {
+    "id": "name:Wizard Chair",
+    "name": "Wizard Chair",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Chair"
+  },
+  "name:Wizard Couch": {
+    "id": "name:Wizard Couch",
+    "name": "Wizard Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Couch"
+  },
+  "name:Wizard Cushion": {
+    "id": "name:Wizard Cushion",
+    "name": "Wizard Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Cushion"
+  },
+  "name:Wizard Dresser": {
+    "id": "name:Wizard Dresser",
+    "name": "Wizard Dresser",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Dresser"
+  },
+  "name:Wizard End Table": {
+    "id": "name:Wizard End Table",
+    "name": "Wizard End Table",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_End_Table"
+  },
+  "name:Wizard Fireplace": {
+    "id": "name:Wizard Fireplace",
+    "name": "Wizard Fireplace",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Fireplace"
+  },
+  "name:Wizard Lamp": {
+    "id": "name:Wizard Lamp",
+    "name": "Wizard Lamp",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Lamp"
+  },
+  "name:Wizard Stool": {
+    "id": "name:Wizard Stool",
+    "name": "Wizard Stool",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Stool"
+  },
+  "name:Wizard Study": {
+    "id": "name:Wizard Study",
+    "name": "Wizard Study",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Study"
+  },
+  "name:Wizard Table": {
+    "id": "name:Wizard Table",
+    "name": "Wizard Table",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Table"
+  },
+  "name:Wizard Tea Table": {
+    "id": "name:Wizard Tea Table",
+    "name": "Wizard Tea Table",
+    "wiki_url": "https://stardewvalleywiki.com/Wizard_Tea_Table"
+  },
+  "name:Wood Club": {
+    "id": "name:Wood Club",
+    "name": "Wood Club",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Wood_Club"
+  },
+  "name:Wood Mallet": {
+    "id": "name:Wood Mallet",
+    "name": "Wood Mallet",
+    "sell_price": 150,
+    "wiki_url": "https://stardewvalleywiki.com/Wood_Mallet"
+  },
+  "name:Wood Panel": {
+    "id": "name:Wood Panel",
+    "name": "Wood Panel",
+    "wiki_url": "https://stardewvalleywiki.com/Wood_Panel"
+  },
+  "name:Woodcut Rug": {
+    "id": "name:Woodcut Rug",
+    "name": "Woodcut Rug",
+    "wiki_url": "https://stardewvalleywiki.com/Woodcut_Rug"
+  },
+  "name:Wooden Blade": {
+    "id": "name:Wooden Blade",
+    "name": "Wooden Blade",
+    "sell_price": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Wooden_Blade"
+  },
+  "name:Woodskip": {
+    "id": "name:Woodskip",
+    "name": "Woodskip",
+    "sell_price": 75,
+    "edibility": 10,
+    "wiki_url": "https://stardewvalleywiki.com/Woodskip"
+  },
+  "name:Woodsy Couch": {
+    "id": "name:Woodsy Couch",
+    "name": "Woodsy Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Woodsy_Couch"
+  },
+  "name:Work Boots": {
+    "id": "name:Work Boots",
+    "name": "Work Boots",
+    "sell_price": 100,
+    "wiki_url": "https://stardewvalleywiki.com/Work_Boots"
+  },
+  "name:World Map": {
+    "id": "name:World Map",
+    "name": "World Map",
+    "wiki_url": "https://stardewvalleywiki.com/World_Map"
+  },
+  "name:Wrapper": {
+    "id": "name:Wrapper",
+    "name": "Wrapper",
+    "wiki_url": "https://stardewvalleywiki.com/Wrapper"
+  },
+  "name:Wumbus Statue": {
+    "id": "name:Wumbus Statue",
+    "name": "Wumbus Statue",
+    "wiki_url": "https://stardewvalleywiki.com/Wumbus_Statue"
+  },
+  "name:Yellow Armchair": {
+    "id": "name:Yellow Armchair",
+    "name": "Yellow Armchair",
+    "wiki_url": "https://stardewvalleywiki.com/Yellow_Armchair"
+  },
+  "name:Yellow Book": {
+    "id": "name:Yellow Book",
+    "name": "Yellow Book",
+    "wiki_url": "https://stardewvalleywiki.com/Yellow_Book"
+  },
+  "name:Yellow Couch": {
+    "id": "name:Yellow Couch",
+    "name": "Yellow Couch",
+    "wiki_url": "https://stardewvalleywiki.com/Yellow_Couch"
+  },
+  "name:Yellow Cushion": {
+    "id": "name:Yellow Cushion",
+    "name": "Yellow Cushion",
+    "wiki_url": "https://stardewvalleywiki.com/Yellow_Cushion"
+  },
+  "name:Yellow Sleeping Junimo": {
+    "id": "name:Yellow Sleeping Junimo",
+    "name": "Yellow Sleeping Junimo",
+    "wiki_url": "https://stardewvalleywiki.com/Yellow_Sleeping_Junimo"
+  },
+  "name:Yeti Tooth": {
+    "id": "name:Yeti Tooth",
+    "name": "Yeti Tooth",
+    "sell_price": 350,
+    "wiki_url": "https://stardewvalleywiki.com/Yeti_Tooth"
   }
 }
