@@ -40,3 +40,14 @@ func TestValidateItems(t *testing.T) {
 		t.Errorf("expected four item problems, got %v", p)
 	}
 }
+
+func TestVariableMachineInputsUseGameCategoryIDs(t *testing.T) {
+	want := map[string]string{"Flower (Any)": "-80", "Fruit (Any)": "-79", "Vegetable (Any)": "-75"}
+	for _, machine := range machineConversions() {
+		for _, input := range machine.Inputs {
+			if id, ok := want[input.Name]; ok && input.ID != id {
+				t.Errorf("%s input %s has ID %q, want %q", machine.Machine, input.Name, input.ID, id)
+			}
+		}
+	}
+}

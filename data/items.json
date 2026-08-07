@@ -32,11 +32,11 @@
     "name": "Adventurer's Guild",
     "wiki_url": "https://stardewvalleywiki.com/Adventurer's_Guild"
   },
-  "(BC)154": {
-    "id": "(BC)154",
-    "name": "Worm Bin",
+  "(BC)13": {
+    "id": "(BC)13",
+    "name": "Furnace",
     "sell_price_note": "Cannot be sold",
-    "wiki_url": "https://stardewvalleywiki.com/Worm_Bin"
+    "wiki_url": "https://stardewvalleywiki.com/Furnace"
   },
   "10": {
     "id": "10",
@@ -73,12 +73,6 @@
     "name": "Dwarf Gadget",
     "sell_price": 200,
     "wiki_url": "https://stardewvalleywiki.com/Dwarf_Gadget"
-  },
-  "13": {
-    "id": "13",
-    "name": "Furnace",
-    "sell_price_note": "Cannot be sold",
-    "wiki_url": "https://stardewvalleywiki.com/Furnace"
   },
   "130": {
     "id": "130",
@@ -193,6 +187,12 @@
     "name": "Iron Lamp-post",
     "sell_price_note": "Cannot be sold",
     "wiki_url": "https://stardewvalleywiki.com/Iron_Lamp-post"
+  },
+  "154": {
+    "id": "154",
+    "name": "Worm Bin",
+    "sell_price_note": "Cannot be sold",
+    "wiki_url": "https://stardewvalleywiki.com/Worm_Bin"
   },
   "156": {
     "id": "156",
@@ -2152,11 +2152,21 @@
   },
   "733": {
     "id": "733",
-    "name": "Raisins",
-    "sell_price": 600,
-    "edibility": 50,
-    "processing_minutes": 1750,
-    "wiki_url": "https://stardewvalleywiki.com/Raisins"
+    "name": "Shrimp Cocktail",
+    "sell_price": 160,
+    "edibility": 90,
+    "buffs": [
+      {
+        "name": "Fishing",
+        "value": "+1"
+      },
+      {
+        "name": "Luck",
+        "value": "+1"
+      }
+    ],
+    "buff_duration": "10m 2s",
+    "wiki_url": "https://stardewvalleywiki.com/Shrimp_Cocktail"
   },
   "74": {
     "id": "74",

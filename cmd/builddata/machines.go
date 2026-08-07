@@ -32,8 +32,8 @@ func machineConversions() []Machine {
 		{"Recycling Machine", []Ingredient{{ID: "168", Name: "Trash", Qty: 1}}, Ingredient{ID: "338", Name: "Refined Quartz", Qty: 1}, 60},
 		// The wiki describes these inputs as variable prose rather than {{Name}}
 		// templates, so they are represented as category inputs for the planner.
-		{"Bee House", []Ingredient{{Name: "Flower (Any)", Qty: 1, Category: true}}, Ingredient{ID: "340", Name: "Honey", Qty: 1}, 6100},
-		{"Preserves Jar", []Ingredient{{Name: "Fruit (Any)", Qty: 1, Category: true}}, Ingredient{ID: "344", Name: "Jelly", Qty: 1}, 4000},
-		{"Preserves Jar", []Ingredient{{Name: "Vegetable (Any)", Qty: 1, Category: true}}, Ingredient{ID: "342", Name: "Pickles", Qty: 1}, 4000},
+		{"Bee House", []Ingredient{{ID: "-80", Name: "Flower (Any)", Qty: 1, Category: true}}, Ingredient{ID: "340", Name: "Honey", Qty: 1}, 6100},
+		{"Preserves Jar", []Ingredient{{ID: "-79", Name: "Fruit (Any)", Qty: 1, Category: true}}, Ingredient{ID: "344", Name: "Jelly", Qty: 1}, 4000},
+		{"Preserves Jar", []Ingredient{{ID: "-75", Name: "Vegetable (Any)", Qty: 1, Category: true}}, Ingredient{ID: "342", Name: "Pickles", Qty: 1}, 4000},
 	}
 }

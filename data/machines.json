@@ -3,7 +3,7 @@
     "machine": "Bee House",
     "inputs": [
       {
-        "id": "",
+        "id": "-80",
         "name": "Flower (Any)",
         "qty": 1,
         "category": true
@@ -770,24 +770,7 @@
     "machine": "Preserves Jar",
     "inputs": [
       {
-        "id": "",
-        "name": "Fruit (Any)",
-        "qty": 1,
-        "category": true
-      }
-    ],
-    "output": {
-      "id": "344",
-      "name": "Jelly",
-      "qty": 1
-    },
-    "minutes": 4000
-  },
-  {
-    "machine": "Preserves Jar",
-    "inputs": [
-      {
-        "id": "",
+        "id": "-75",
         "name": "Vegetable (Any)",
         "qty": 1,
         "category": true
@@ -796,6 +779,23 @@
     "output": {
       "id": "342",
       "name": "Pickles",
+      "qty": 1
+    },
+    "minutes": 4000
+  },
+  {
+    "machine": "Preserves Jar",
+    "inputs": [
+      {
+        "id": "-79",
+        "name": "Fruit (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output": {
+      "id": "344",
+      "name": "Jelly",
       "qty": 1
     },
     "minutes": 4000
