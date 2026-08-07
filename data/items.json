@@ -2152,21 +2152,11 @@
   },
   "733": {
     "id": "733",
-    "name": "Shrimp Cocktail",
-    "sell_price": 160,
-    "edibility": 90,
-    "buffs": [
-      {
-        "name": "Fishing",
-        "value": "+1"
-      },
-      {
-        "name": "Luck",
-        "value": "+1"
-      }
-    ],
-    "buff_duration": "10m 2s",
-    "wiki_url": "https://stardewvalleywiki.com/Shrimp_Cocktail"
+    "name": "Raisins",
+    "sell_price": 600,
+    "edibility": 50,
+    "processing_minutes": 1750,
+    "wiki_url": "https://stardewvalleywiki.com/Raisins"
   },
   "74": {
     "id": "74",
