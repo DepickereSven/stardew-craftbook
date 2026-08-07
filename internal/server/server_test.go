@@ -56,8 +56,32 @@ func TestStateEndpoint(t *testing.T) {
 	if code != 200 {
 		t.Errorf("code=%d", code)
 	}
-	if _, ok := body["recipes"].([]any); !ok {
-		t.Errorf("no recipes array: %v", body)
+	recipes, ok := body["recipes"].([]any)
+	if !ok {
+		t.Fatalf("no recipes array: %v", body)
+	}
+	// Every recipe entry carries its sale economics, and a delta is only ever
+	// served next to the input cost behind it.
+	for _, r := range recipes {
+		ec, ok := r.(map[string]any)["economics"].(map[string]any)
+		if !ok {
+			t.Fatalf("recipe entry without economics: %v", r)
+		}
+		switch ec["verdict"] {
+		case "profit", "loss", "not_for_sale", "unknown":
+		default:
+			t.Errorf("bad verdict %q", ec["verdict"])
+		}
+		if _, hasDelta := ec["delta"]; hasDelta {
+			if _, hasCost := ec["input_cost"]; !hasCost {
+				t.Errorf("%v: delta without an input cost", r.(map[string]any)["recipe"])
+			}
+		}
+		if ec["verdict"] == "unknown" {
+			if _, hasDelta := ec["delta"]; hasDelta {
+				t.Errorf("%v: unknown verdict still carries a delta", r.(map[string]any)["recipe"])
+			}
+		}
 	}
 }
 

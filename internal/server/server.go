@@ -174,6 +174,14 @@ func (s *Server) handleItems(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, 200, s.items)
 }
 
+// stateRecipe is one /api/state entry: availability plus the sale economics
+// of one crafting, so the recipe view can answer "is making this worth it"
+// without a second request.
+type stateRecipe struct {
+	engine.Availability
+	Economics engine.Economics `json:"economics"`
+}
+
 func (s *Server) handleState(w http.ResponseWriter, r *http.Request) {
 	s.mu.RLock()
 	snap, version, parseErr := s.snap, s.version, s.parseErr
@@ -185,7 +193,11 @@ func (s *Server) handleState(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	avs := engine.EvaluateWithPlanner(snap, s.recipes, s.machines)
-	body := map[string]any{"version": version, "save_path": s.savePath, "recipes": avs}
+	recipes := make([]stateRecipe, len(avs))
+	for i, av := range avs {
+		recipes[i] = stateRecipe{av, engine.RecipeEconomics(s.itemIdx, av.Recipe)}
+	}
+	body := map[string]any{"version": version, "save_path": s.savePath, "recipes": recipes}
 	if parseErr != "" {
 		// Serving the last good snapshot, but the newest read failed.
 		body["error"] = parseErr

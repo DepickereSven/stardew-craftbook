@@ -40,22 +40,30 @@ const (
 	VerdictUnknown Verdict = "unknown"
 )
 
-// UsedIn is one recipe that consumes a given item, with the economics of
-// making it once.
-type UsedIn struct {
-	RecipeKey   string  `json:"recipe_key"`
-	Name        string  `json:"name"`
-	Type        string  `json:"type"`
-	State       State   `json:"state"`
-	Learned     bool    `json:"learned"`
-	QtyHere     int     `json:"qty_here"`
-	MaxMakeable int     `json:"max_makeable"`
-	OutputQty   int     `json:"output_qty"`
+// Economics is the sale arithmetic of one crafting of a recipe: what the
+// output fetches against what the ingredients would have sold for raw. The
+// pointer fields stay absent when a price is unknown — an absent price and a
+// zero price are different facts, and only the verdict may paper over it.
+type Economics struct {
 	OutputValue *int    `json:"output_value,omitempty"`
 	InputCost   *int    `json:"input_cost,omitempty"`
 	Delta       *int    `json:"delta,omitempty"`
 	Verdict     Verdict `json:"verdict"`
-	WikiURL     string  `json:"wiki_url,omitempty"`
+}
+
+// UsedIn is one recipe that consumes a given item, with the economics of
+// making it once.
+type UsedIn struct {
+	RecipeKey   string `json:"recipe_key"`
+	Name        string `json:"name"`
+	Type        string `json:"type"`
+	State       State  `json:"state"`
+	Learned     bool   `json:"learned"`
+	QtyHere     int    `json:"qty_here"`
+	MaxMakeable int    `json:"max_makeable"`
+	OutputQty   int    `json:"output_qty"`
+	Economics
+	WikiURL string `json:"wiki_url,omitempty"`
 }
 
 // ItemDetail is the payload behind GET /api/item/{id}.
@@ -249,6 +257,39 @@ func inputCost(idx *ItemIndex, r Recipe) (int, bool) {
 	return total, true
 }
 
+// RecipeEconomics prices one crafting of a recipe. Where no honest number
+// exists — an unsellable output, or a missing price somewhere — the verdict
+// carries the answer and the number fields stay empty.
+func RecipeEconomics(idx *ItemIndex, r Recipe) Economics {
+	ec := Economics{Verdict: VerdictUnknown}
+	cost, costKnown := inputCost(idx, r)
+	if costKnown {
+		ec.InputCost = &cost
+	}
+	out, outKnown := idx.ByName(r.Name)
+	switch {
+	case outKnown && notForSale(out):
+		ec.Verdict = VerdictNotForSale
+		// An input cost is real but meaningless next to an unsellable
+		// output; leaving it visible invites a subtraction that has no
+		// answer.
+		ec.InputCost = nil
+	case outKnown && out.SellPrice != nil:
+		v := *out.SellPrice
+		ec.OutputValue = &v
+		if costKnown {
+			d := v*r.OutputQty - cost
+			ec.Delta = &d
+			if d >= 0 {
+				ec.Verdict = VerdictProfit
+			} else {
+				ec.Verdict = VerdictLoss
+			}
+		}
+	}
+	return ec
+}
+
 // BuildItemDetail answers GET /api/item/{id}. avail supplies each recipe's
 // state and learned flag so this view never recomputes them.
 func BuildItemDetail(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe, avail []Availability, id string) (ItemDetail, bool) {
@@ -294,38 +335,11 @@ func BuildItemDetail(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe, av
 			QtyHere:     qty,
 			MaxMakeable: maxMakeable(snap, r),
 			OutputQty:   r.OutputQty,
+			Economics:   RecipeEconomics(idx, r),
 			WikiURL:     r.WikiURL,
-			Verdict:     VerdictUnknown,
 		}
 		if av, ok := byKey[r.Key]; ok {
 			u.State, u.Learned = av.State, av.Learned
-		}
-
-		out, outKnown := idx.ByName(r.Name)
-		cost, costKnown := inputCost(idx, r)
-		if costKnown {
-			c := cost
-			u.InputCost = &c
-		}
-		switch {
-		case outKnown && notForSale(out):
-			u.Verdict = VerdictNotForSale
-			// An input cost is real but meaningless next to an unsellable
-			// output; leaving it visible invites a subtraction that has no
-			// answer.
-			u.InputCost = nil
-		case outKnown && out.SellPrice != nil:
-			v := *out.SellPrice
-			u.OutputValue = &v
-			if costKnown {
-				d := v*r.OutputQty - cost
-				u.Delta = &d
-				if d >= 0 {
-					u.Verdict = VerdictProfit
-				} else {
-					u.Verdict = VerdictLoss
-				}
-			}
 		}
 		detail.UsedIn = append(detail.UsedIn, u)
 	}
