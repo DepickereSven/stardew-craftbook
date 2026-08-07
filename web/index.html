@@ -67,6 +67,13 @@ a { color: var(--accent-ink); }
   border-radius: 6px;
 }
 svg.ic { width: 16px; height: 16px; flex: none; }
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
 
 /* ---------- header ---------- */
 .site {
@@ -105,6 +112,12 @@ svg.ic { width: 16px; height: 16px; flex: none; }
   display: grid;
   gap: 8px;
 }
+.vswitch-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.vswitch-row .seg { flex: 1; }
 .search { position: relative; }
 .search > svg {
   position: absolute;
@@ -141,7 +154,6 @@ svg.ic { width: 16px; height: 16px; flex: none; }
   color: var(--muted);
   cursor: pointer;
 }
-/* ---------- sticky controls ---------- */
 .seg {
   display: flex;
   gap: 3px;
@@ -193,10 +205,10 @@ svg.ic { width: 16px; height: 16px; flex: none; }
 .controls-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 32px;
+  gap: 8px;
+  min-height: 44px;
 }
+.controls-row .spacer { flex: 1; }
 .switch {
   display: inline-flex;
   align-items: center;
@@ -240,6 +252,27 @@ svg.ic { width: 16px; height: 16px; flex: none; }
   outline-offset: 2px;
 }
 .switch-label { font-size: 14px; color: var(--muted); }
+.chipbtn {
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  -webkit-tap-highlight-color: transparent;
+}
+.chipbtn svg { width: 13px; height: 13px; }
+.chipbtn[aria-pressed="true"] {
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+}
 .refresh-note {
   font-size: 12px;
   color: var(--accent-ink);
@@ -405,6 +438,94 @@ main { max-width: 640px; margin: 0 auto; padding: 12px 14px 24px; }
   background: var(--accent);
   border-color: var(--accent);
 }
+
+/* ---------- items list ---------- */
+.items-total {
+  margin: 10px 2px 0;
+  font-size: 12.5px;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+.icount { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.uses { color: var(--faint); }
+.ival {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  font-size: 14px;
+  text-align: right;
+  white-space: nowrap;
+}
+.ival .g { color: var(--faint); font-size: 11px; font-weight: 500; }
+.ival .noprice { color: var(--faint); font-weight: 400; }
+
+/* ---------- item detail ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0 0;
+}
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  min-width: 0;
+}
+.stat b {
+  display: block;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 16px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.stat b .g { color: var(--faint); font-size: 11px; font-weight: 500; }
+.stat span {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+}
+.price-note {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.use-econ {
+  display: grid;
+  justify-items: end;
+  gap: 3px;
+  flex: none;
+}
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  font-weight: 650;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.verdict svg { width: 11px; height: 11px; }
+.verdict.profit { color: var(--accent-ink); background: var(--accent-soft); }
+.verdict.loss { color: var(--warn); background: var(--warn-soft); }
+.verdict.use { color: var(--muted); border: 1px solid var(--line); }
+.verdict.unknown { color: var(--faint); border: 1px dashed var(--faint); }
+.verdict-stack {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 11.5px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.make { color: var(--accent-ink); font-weight: 650; }
+.unmake { color: var(--faint); }
+.row.use { grid-template-columns: minmax(0, 1fr) auto; }
 
 /* ---------- detail view ---------- */
 .back {
@@ -680,34 +801,54 @@ footer {
 
 <div class="controls" id="controls">
   <div class="controls-inner">
+    <div class="vswitch-row">
+      <div class="seg" id="view-seg" role="radiogroup" aria-label="View">
+        <label class="seg-opt">
+          <input type="radio" name="view" value="items" checked>
+          <span>Items</span>
+        </label>
+        <label class="seg-opt">
+          <input type="radio" name="view" value="recipes">
+          <span>Recipes</span>
+        </label>
+      </div>
+      <span class="refresh-note" id="refresh-note" role="status" aria-live="polite"></span>
+    </div>
     <div class="search">
       <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="search" type="search" placeholder="Search all recipes…" autocomplete="off" enterkeyhint="search" aria-label="Search recipes">
+      <input id="search" type="search" placeholder="Search…" autocomplete="off" enterkeyhint="search" aria-label="Search items and recipes">
       <button class="search-clear" id="search-clear" hidden aria-label="Clear search">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
       </button>
     </div>
-    <div class="seg" role="radiogroup" aria-label="Recipe type">
-      <label class="seg-opt" data-t="all">
-        <input type="radio" name="type" value="all" checked>
-        <span>All types</span>
-      </label>
-      <label class="seg-opt" data-t="crafting">
-        <input type="radio" name="type" value="crafting">
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 5.5 4.5 13.5l2.5 2.5 8-8"/><path d="M11 4h6a2 2 0 0 1 2 2v3l-4 2-5-5z"/></svg>Crafting</span>
-      </label>
-      <label class="seg-opt" data-t="cooking">
-        <input type="radio" name="type" value="cooking">
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16v2.5a8 8 0 0 1-16 0z"/><path d="M2 11h20"/><path d="M9 8c0-1.4 1-1.6 1-3M14 8c0-1.4 1-1.6 1-3"/></svg>Cooking</span>
-      </label>
+    <div id="controls-items">
+      <div class="controls-row">
+        <button class="chipbtn" id="feeds-filter" aria-pressed="false">Feeds recipes</button>
+        <button class="chipbtn" id="sort-toggle" aria-label="Change sort order">Value ↓</button>
+      </div>
     </div>
-    <div class="controls-row">
-      <label class="switch">
-        <input type="checkbox" id="show-all">
-        <span class="track" aria-hidden="true"></span>
-        <span class="switch-label">Show all recipes</span>
-      </label>
-      <span class="refresh-note" id="refresh-note" role="status" aria-live="polite"></span>
+    <div id="controls-recipes" hidden>
+      <div class="seg" id="type-seg" role="radiogroup" aria-label="Recipe type">
+        <label class="seg-opt" data-t="all">
+          <input type="radio" name="type" value="all" checked>
+          <span>All types</span>
+        </label>
+        <label class="seg-opt" data-t="crafting">
+          <input type="radio" name="type" value="crafting">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 5.5 4.5 13.5l2.5 2.5 8-8"/><path d="M11 4h6a2 2 0 0 1 2 2v3l-4 2-5-5z"/></svg>Crafting</span>
+        </label>
+        <label class="seg-opt" data-t="cooking">
+          <input type="radio" name="type" value="cooking">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16v2.5a8 8 0 0 1-16 0z"/><path d="M2 11h20"/><path d="M9 8c0-1.4 1-1.6 1-3M14 8c0-1.4 1-1.6 1-3"/></svg>Cooking</span>
+        </label>
+      </div>
+      <div class="controls-row">
+        <label class="switch">
+          <input type="checkbox" id="show-all">
+          <span class="track" aria-hidden="true"></span>
+          <span class="switch-label">Show all recipes</span>
+        </label>
+      </div>
     </div>
   </div>
 </div>
@@ -715,7 +856,13 @@ footer {
 <div class="wrap"><div class="banner" id="banner" hidden></div></div>
 
 <main id="main">
-  <div id="overview"></div>
+  <div id="view-items">
+    <p class="items-total" id="items-total"></p>
+    <div id="items-list"></div>
+  </div>
+  <div id="view-recipes" hidden>
+    <div id="overview"></div>
+  </div>
   <div id="detail" class="detail" hidden></div>
 </main>
 
@@ -729,6 +876,7 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[c]));
+const fmtNum = n => Number(n).toLocaleString('en-US');
 const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const ICONS = {
@@ -741,21 +889,31 @@ const ICONS = {
   chevR: '<svg class="ic chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>',
   chevL: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>',
   ext: '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M19 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h6"/></svg>',
-  warn: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 2.5 20h19z"/><path d="M12 9.5V14"/><path d="M12 17h.01"/></svg>'
+  warn: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 2.5 20h19z"/><path d="M12 9.5V14"/><path d="M12 17h.01"/></svg>',
+  up: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 5.5 19 17H5z"/></svg>',
+  down: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 18.5 5 7h14z"/></svg>',
+  wrench: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6.5a4.2 4.2 0 0 0-5.7 5L4 16.3 7.7 20l4.8-4.8a4.2 4.2 0 0 0 5-5.7l-2.8 2.8-2.6-.7-.7-2.6z"/></svg>',
+  question: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.5 2.3c-.8.35-1.1.8-1.1 1.8"/><path d="M12 17h.01"/></svg>'
 };
 
 /* ---------- state ---------- */
 const ui = {
   data: null,          // last /api/state payload
+  inv: null,           // last /api/inventory payload
   version: null,
   search: '',
+  view: 'items',
+  views: {
+    items:   { scroll: 0, detailId: null },   // item id string
+    recipes: { scroll: 0, detailKey: null }   // recipe key
+  },
   showAll: false,
   typeFilter: 'all',
+  onlyUseful: false,   // items: only items feeding recipes
+  itemsSort: 'value',  // 'value' | 'count'
   open: { craftable: true, partial: true, far_off: false },
-  detailKey: null,
-  detailPushed: false,
-  overviewScroll: 0,
-  plan: null,          // { key, status: 'loading'|'ready'|'error', result }
+  plan: null,          // { key, status, result }
+  itemDetail: null,    // { id, version, status: 'loading'|'ready'|'gone'|'error', data }
   netDown: false
 };
 
@@ -772,8 +930,10 @@ async function fetchJSON(url) {
 }
 const api = {
   state: () => fetchJSON('/api/state'),
+  inventory: () => fetchJSON('/api/inventory'),
   version: () => fetchJSON('/api/version'),
-  plan: key => fetchJSON('/api/plan/' + encodeURIComponent(key))
+  plan: key => fetchJSON('/api/plan/' + encodeURIComponent(key)),
+  item: id => fetchJSON('/api/item/' + encodeURIComponent(id))
 };
 
 /* ---------- shared bits ---------- */
@@ -810,7 +970,174 @@ function recipeByKey(key) {
   return ui.data && ui.data.recipes.find(r => r.recipe.key === key);
 }
 
-/* ---------- overview ---------- */
+/* ================================================================
+   Items view
+   ================================================================ */
+function sortItems(items) {
+  const arr = [...items];
+  if (ui.itemsSort === 'count') {
+    arr.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+  } else {
+    const val = i => i.stack_value === undefined ? -1 : i.stack_value;
+    arr.sort((a, b) => val(b) - val(a) || b.count - a.count || a.name.localeCompare(b.name));
+  }
+  return arr;
+}
+
+function itemRowHTML(it) {
+  const priced = it.stack_value !== undefined;
+  const uses = it.recipe_count > 0
+    ? `<span class="uses">${it.recipe_count} recipe${it.recipe_count === 1 ? '' : 's'}</span>` : '';
+  return `<li><button class="row" data-id="${esc(it.id)}">
+    <span class="row-text">
+      <span class="row-name">${esc(it.name)}</span>
+      <span class="row-meta"><span class="icount">×${fmtNum(it.count)}</span>${uses}</span>
+    </span>
+    <span class="ival">${priced
+      ? `${fmtNum(it.stack_value)}<span class="g"> g</span>`
+      : '<span class="noprice">—<span class="sr-only">no price on record</span></span>'}</span>
+    ${ICONS.chevR}
+  </button></li>`;
+}
+
+function renderItemsTotal() {
+  const el = $('#items-total');
+  if (!ui.inv || !ui.inv.items) { el.textContent = ''; return; }
+  const priced = ui.inv.items.filter(i => i.stack_value !== undefined);
+  if (!priced.length) { el.textContent = ''; return; }
+  const total = priced.reduce((s, i) => s + i.stack_value, 0);
+  el.textContent = `${fmtNum(total)} g across ${priced.length} priced items · base quality`;
+}
+
+function renderItems() {
+  const el = $('#items-list');
+  renderItemsTotal();
+  const q = ui.search.trim().toLowerCase();
+  let items = ui.inv.items || [];
+  if (q) items = items.filter(i => i.name.toLowerCase().includes(q));
+  if (ui.onlyUseful) items = items.filter(i => (i.recipe_count || 0) > 0);
+  items = sortItems(items);
+
+  if (items.length === 0) {
+    const actions = [
+      q ? '<button class="btn ghost" data-action="clear-search">Clear search</button>' : '',
+      q ? `<button class="btn ghost" data-action="goto-recipes">Search recipes for “${esc(ui.search.trim())}”</button>` : '',
+      ui.onlyUseful ? '<button class="btn ghost" data-action="clear-useful">Show everything</button>' : ''
+    ].join('');
+    el.innerHTML = `<div class="empty">
+      <h2>${q ? `No items match “${esc(ui.search.trim())}”` : ui.onlyUseful ? 'Nothing you own feeds a recipe' : 'Nothing owned'}</h2>
+      <p>${q ? 'The same search term stays typed if you switch to Recipes.' : 'Collect ingredients and they will show up here.'}</p>
+      <div class="actions">${actions}</div>
+    </div>`;
+    return;
+  }
+  el.innerHTML = `<ul class="rows">${items.map(itemRowHTML).join('')}</ul>`;
+}
+
+/* ---------- item detail ---------- */
+async function loadItem(id, { quiet = false } = {}) {
+  const have = ui.itemDetail && ui.itemDetail.id === id && ui.itemDetail.status === 'ready';
+  if (!(quiet && have)) {
+    ui.itemDetail = { id, version: ui.version, status: 'loading' };
+    if (ui.view === 'items' && ui.views.items.detailId === id) renderDetail();
+  }
+  try {
+    const d = await api.item(id);
+    if (ui.views.items.detailId !== id) return;
+    ui.itemDetail = { id, version: ui.version, status: 'ready', data: d };
+  } catch (e) {
+    if (ui.views.items.detailId !== id) return;
+    ui.itemDetail = { id, version: ui.version, status: e && e.status === 404 ? 'gone' : 'error' };
+  }
+  if (ui.view === 'items' && ui.views.items.detailId === id) renderDetail();
+}
+
+function verdictHTML(u) {
+  const each = u.delta !== undefined && u.delta !== null;
+  const scaled = each && u.max_makeable > 1
+    ? `<span class="verdict-stack">×${u.max_makeable} → ${u.delta > 0 ? '+' : '−'}${fmtNum(Math.abs(u.delta * u.max_makeable))} g</span>` : '';
+  switch (u.verdict) {
+    case 'profit':
+      return `<span class="verdict profit">${ICONS.up}+${fmtNum(u.delta)} g each</span>${scaled}`;
+    case 'loss':
+      return `<span class="verdict loss">${ICONS.down}−${fmtNum(Math.abs(u.delta))} g each</span>${scaled}`;
+    case 'not_for_sale':
+      return `<span class="verdict use">${ICONS.wrench}for use</span>`;
+    default:
+      return `<span class="verdict unknown">${ICONS.question}price unknown</span>`;
+  }
+}
+
+function usedInRowHTML(u) {
+  const actionable = u.max_makeable > 0;
+  const make = actionable
+    ? `<span class="make">make ×${fmtNum(u.max_makeable)}</span>`
+    : `<span class="unmake">missing ingredients</span>`;
+  const learned = u.learned ? '' : '<span class="unmake">· not learned</span>';
+  return `<li><button class="row use" data-key="${esc(u.recipe_key)}">
+    <span class="row-text">
+      <span class="row-name">${esc(u.name)}</span>
+      <span class="row-meta">${badge(u.type)}<span>takes ${u.qty_here}</span>${make}${learned}</span>
+    </span>
+    <span class="use-econ">${verdictHTML(u)}</span>
+  </button></li>`;
+}
+
+function renderItemDetail() {
+  const id = ui.views.items.detailId;
+  const det = ui.itemDetail;
+  const el = $('#detail');
+
+  if (!det || det.id !== id || det.status === 'loading') {
+    el.innerHTML = `<button class="back" data-action="back">${ICONS.chevL}All items</button>
+      <p class="loading">Counting stacks…</p>`;
+    return;
+  }
+  if (det.status === 'gone') {
+    el.innerHTML = `<button class="back" data-action="back">${ICONS.chevL}All items</button>
+      <div class="empty"><h2>None left</h2><p>You no longer own any of this — the list has the current picture.</p></div>`;
+    return;
+  }
+  if (det.status === 'error') {
+    el.innerHTML = `<button class="back" data-action="back">${ICONS.chevL}All items</button>
+      <div class="empty"><h2>Couldn't load this item</h2>
+      <div class="actions"><button class="btn ghost" data-action="retry-item">Try again</button></div></div>`;
+    return;
+  }
+
+  const it = det.data;
+  const priced = it.sell_price !== undefined;
+  const stats = `<div class="stats">
+    <div class="stat"><b>${fmtNum(it.count)}</b><span>owned</span></div>
+    <div class="stat"><b>${priced ? `${fmtNum(it.sell_price)}<span class="g"> g</span>` : '—'}</b><span>each</span></div>
+    <div class="stat"><b>${priced ? `${fmtNum(it.stack_value)}<span class="g"> g</span>` : '—'}</b><span>stack value</span></div>
+  </div>`;
+  const priceNote = priced ? '' : `<p class="price-note">${it.wiki_url
+    ? 'No sell price on record.'
+    : 'Not in the item dataset — no sell price on record.'}</p>`;
+  const wiki = it.wiki_url
+    ? `<p class="unlock"><a class="wiki" href="${esc(it.wiki_url)}" target="_blank" rel="noopener">wiki ${ICONS.ext}</a></p>` : '';
+
+  const used = it.used_in || [];
+  const usedSection = used.length === 0
+    ? '<p class="plan-plain">Not used in any recipe.</p>'
+    : `<ul class="rows">${used.map(usedInRowHTML).join('')}</ul>`;
+
+  el.innerHTML = `
+    <button class="back" data-action="back">${ICONS.chevL}All items</button>
+    <div class="detail-head">
+      <h2 tabindex="-1">${esc(it.name)}</h2>
+      ${stats}
+      ${priceNote}
+      ${wiki}
+    </div>
+    <h3>Used in · ${used.length}</h3>
+    ${usedSection}`;
+}
+
+/* ================================================================
+   Recipes view
+   ================================================================ */
 function rowHTML(entry) {
   const r = entry.recipe;
   let meta = badge(r.type);
@@ -875,7 +1202,7 @@ function renderOverview() {
   }).join('');
 }
 
-/* ---------- detail ---------- */
+/* ---------- recipe detail ---------- */
 function ingLine(ing, miss) {
   const cat = ing.category ? '<span class="ing-cat">any item of this type works</span>' : '';
   if (miss) {
@@ -894,8 +1221,8 @@ function ingLine(ing, miss) {
   </li>`;
 }
 
-function renderDetail() {
-  const entry = recipeByKey(ui.detailKey);
+function renderRecipeDetail() {
+  const entry = recipeByKey(ui.views.recipes.detailKey);
   if (!entry) return;
   const r = entry.recipe;
   const missingById = new Map((entry.missing || []).map(m => [m.id, m]));
@@ -929,7 +1256,7 @@ function renderDetail() {
     <ul class="ings">${ings}</ul>
     ${planSection}`;
 
-  if (ui.plan && ui.plan.key === ui.detailKey) loadPlan(ui.detailKey);
+  if (ui.plan && ui.plan.key === ui.views.recipes.detailKey) loadPlan(ui.views.recipes.detailKey);
 }
 
 function fmtMinutes(m) {
@@ -951,11 +1278,11 @@ async function loadPlan(key) {
   body.innerHTML = '<p class="plan-plain">Working it out…</p>';
   try {
     const p = await api.plan(key);
-    if (ui.detailKey !== key) return; // user moved on
+    if (ui.views.recipes.detailKey !== key) return; // user moved on
     ui.plan = { key, status: 'ready', result: p };
     renderPlan(body, p);
   } catch (e) {
-    if (ui.detailKey !== key) return;
+    if (ui.views.recipes.detailKey !== key) return;
     ui.plan = { key, status: 'error' };
     body.innerHTML = `<p class="plan-plain">Couldn't work out a plan${e && e.status === 503 ? ' — no save is loaded' : ''}.</p>
       <button class="btn ghost" data-action="plan" data-key="${esc(key)}">Try again</button>`;
@@ -998,69 +1325,128 @@ function renderPlan(body, p) {
   body.innerHTML = html;
 }
 
-/* ---------- view switching ---------- */
-function swapViews(showDetail) {
-  const apply = () => {
-    $('#overview').hidden = showDetail;
-    $('#controls').hidden = showDetail;
-    $('#banner').hidden = showDetail || $('#banner').dataset.empty === 'true';
-    $('#footer').hidden = showDetail;
-    $('#detail').hidden = !showDetail;
+/* ================================================================
+   Navigation
+   ================================================================ */
+function activeDetail() {
+  return ui.view === 'items' ? ui.views.items.detailId : ui.views.recipes.detailKey;
+}
+
+function renderDetail() {
+  if (ui.view === 'items') renderItemDetail();
+  else renderRecipeDetail();
+}
+
+function renderActiveList() {
+  if (!ui.data) return;
+  if (ui.data.error && ui.data.recipes.length === 0) return; // empty-save state handled in renderAll
+  if (ui.view === 'items') renderItems();
+  else renderOverview();
+}
+
+let viewTransitionDepth = 0;
+function withViewTransition(run) {
+  if (viewTransitionDepth > 0 || reducedMotion() || !document.startViewTransition
+      || location.search.includes('notransition')) { run(); return; }
+  viewTransitionDepth++;
+  const t = document.startViewTransition(run);
+  const done = () => { viewTransitionDepth--; };
+  t.finished.then(done, done);
+}
+
+function applyNav(restoreScroll = true) {
+  const det = activeDetail();
+  const isItems = ui.view === 'items';
+  const run = () => {
+    $('#view-items').hidden = !isItems || !!det;
+    $('#view-recipes').hidden = isItems || !!det;
+    $('#detail').hidden = !det;
+    $('#controls-items').hidden = !isItems || !!det;
+    $('#controls-recipes').hidden = isItems || !!det;
+    $('.search').hidden = !!det;
+    $('#banner').hidden = !!det || $('#banner').dataset.empty === 'true';
+    $('#footer').hidden = !!det;
+    $(`#view-seg input[value="${ui.view}"]`).checked = true;
+    if (det) renderDetail();
   };
-  if (!reducedMotion() && document.startViewTransition) document.startViewTransition(apply);
-  else apply();
+  withViewTransition(run);
+  if (restoreScroll) requestAnimationFrame(() => window.scrollTo(0, det ? 0 : ui.views[ui.view].scroll));
 }
 
-function openDetail(key, push = true) {
-  ui.overviewScroll = window.scrollY;
-  ui.detailKey = key;
-  ui.plan = null;
-  renderDetail();
-  swapViews(true);
-  window.scrollTo(0, 0);
-  const h = $('#detail h2');
-  if (h) h.focus({ preventScroll: true });
-  if (push) { history.pushState({ detail: key }, ''); ui.detailPushed = true; }
+function switchView(v) {
+  if (v === ui.view || !ui.data) return;
+  ui.views[ui.view].scroll = window.scrollY;
+  ui.view = v;
+  history.replaceState({ v, d: activeDetail() }, '');
+  const det = activeDetail();
+  if (!det) renderActiveList();
+  applyNav();
+  if (v === 'items' && ui.views.items.detailId) ensureItemFresh();
 }
 
-function closeDetail(viaHistory = false) {
-  const key = ui.detailKey;
-  ui.detailKey = null;
+function openRecipeDetail(key, { push = true, focus = true } = {}) {
+  if (ui.view !== 'recipes') ui.views[ui.view].scroll = window.scrollY;
+  ui.view = 'recipes';
+  ui.views.recipes.detailKey = key;
   ui.plan = null;
-  swapViews(false);
-  window.scrollTo(0, ui.overviewScroll);
-  const row = $('#overview .row[data-key="' + CSS.escape(key) + '"]');
-  if (row) row.focus({ preventScroll: true });
-  if (!viaHistory && ui.detailPushed) { ui.detailPushed = false; history.back(); }
+  if (push) history.pushState({ v: 'recipes', d: key }, '');
+  applyNav();
+  if (focus) { const h = $('#detail h2'); if (h) h.focus({ preventScroll: true }); }
+}
+
+function openItemDetail(id) {
+  ui.views.items.detailId = id;
+  history.pushState({ v: 'items', d: id }, '');
+  applyNav();
+  loadItem(id);
+  const h = $('#detail h2'); if (h) h.focus({ preventScroll: true });
+}
+
+function closeDetail() {
+  history.back();
+}
+
+function ensureItemFresh() {
+  const id = ui.views.items.detailId;
+  if (!id) return;
+  if (ui.itemDetail && ui.itemDetail.id === id && ui.itemDetail.version === ui.version && ui.itemDetail.status === 'ready') return;
+  loadItem(id, { quiet: true });
 }
 
 window.addEventListener('popstate', e => {
-  if (e.state && e.state.detail) {
-    ui.detailPushed = true;
-    ui.overviewScroll = ui.overviewScroll || 0;
-    ui.detailKey = e.state.detail;
+  const s = e.state;
+  if (!s || !s.v || !ui.data) return;
+  ui.views[ui.view].scroll = window.scrollY;
+  const leaving = ui.view;
+  ui.view = s.v;
+  if (leaving !== s.v) {
+    // back/forward popped the detail we were showing — forget it, so a later
+    // tab switch lands on that view's list, not on a screen we already left
+    if (leaving === 'items') ui.views.items.detailId = null;
+    else ui.views.recipes.detailKey = null;
     ui.plan = null;
-    renderDetail();
-    swapViews(true);
-    window.scrollTo(0, 0);
-  } else if (ui.detailKey) {
-    ui.detailPushed = false;
-    closeDetail(true);
   }
+  if (s.v === 'items') ui.views.items.detailId = s.d || null;
+  else { ui.views.recipes.detailKey = s.d || null; ui.plan = null; }
+  if (!activeDetail()) renderActiveList();
+  applyNav();
+  if (s.v === 'items' && s.d) ensureItemFresh();
 });
 
 /* ---------- banner / footer ---------- */
 function renderBanner() {
   const el = $('#banner');
   const d = ui.data;
+  const stale = (d && d.error && d.recipes.length) || (ui.inv && ui.inv.error && ui.inv.items && ui.inv.items.length);
+  const msg = (d && d.error) || (ui.inv && ui.inv.error) || '';
   if (ui.netDown) {
     el.dataset.empty = 'false';
     el.hidden = false;
     el.innerHTML = `${ICONS.warn}<span>Can't reach the server — retrying every few seconds. The data below is the last good snapshot.</span>`;
-  } else if (d && d.error && d.recipes.length) {
+  } else if (stale) {
     el.dataset.empty = 'false';
     el.hidden = false;
-    el.innerHTML = `${ICONS.warn}<span>The save couldn't be re-read just now — showing the last good snapshot. <span style="color:var(--muted)">${esc(d.error)}</span></span>`;
+    el.innerHTML = `${ICONS.warn}<span>The save couldn't be re-read just now — showing the last good snapshot. <span style="color:var(--muted)">${esc(msg)}</span></span>`;
   } else {
     el.dataset.empty = 'true';
     el.hidden = true;
@@ -1070,27 +1456,34 @@ function renderBanner() {
 
 function renderFooter() {
   const d = ui.data;
+  const n = ui.inv && ui.inv.items ? ` · ${ui.inv.items.length} items` : '';
   $('#footer').textContent = d && d.save_path
-    ? `save: ${d.save_path} · snapshot v${d.version} · ${d.recipes.length} recipes`
+    ? `save: ${d.save_path} · snapshot v${d.version} · ${d.recipes.length} recipes${n}`
     : '';
 }
 
 /* ---------- full render ---------- */
+function emptySaveHTML(error) {
+  return `<div class="empty">
+    <h2>No save found</h2>
+    <p>The server is running, but it couldn't find a Stardew Valley save to read.</p>
+    <code>${esc(error)}</code>
+    <p>Point it at a save file, e.g. <code>--save-path &lt;path-to-save-file&gt;</code>, then wait a moment — this page checks for changes on its own.</p>
+  </div>`;
+}
+
 function renderAll() {
   const d = ui.data;
   renderBanner();
   renderFooter();
   if (!d) return;
   if (d.error && d.recipes.length === 0) {
-    $('#overview').innerHTML = `<div class="empty">
-      <h2>No save found</h2>
-      <p>The server is running, but it couldn't find a Stardew Valley save to read.</p>
-      <code>${esc(d.error)}</code>
-      <p>Point it at a save file, e.g. <code>--save-path &lt;path-to-save-file&gt;</code>, then wait a moment — this page checks for changes on its own.</p>
-    </div>`;
+    $('#items-total').textContent = '';
+    $('#items-list').innerHTML = emptySaveHTML(d.error);
+    $('#overview').innerHTML = emptySaveHTML(d.error);
     return;
   }
-  renderOverview();
+  renderActiveList();
 }
 
 /* ---------- refresh ---------- */
@@ -1105,22 +1498,29 @@ function flashUpdated() {
 
 async function refresh(initial = false) {
   const y = window.scrollY;
-  const detailOpen = ui.detailKey != null;
-  let d;
+  const det = activeDetail();
+  let state, inv;
   try {
-    d = await api.state();
+    [state, inv] = await Promise.all([api.state(), api.inventory()]);
   } catch (e) {
     ui.netDown = true;
     renderBanner();
     return;
   }
   ui.netDown = false;
-  ui.data = d;
-  ui.version = d.version;
+  ui.data = state;
+  ui.inv = inv;
+  ui.version = state.version;
   renderAll();
-  if (detailOpen) {
-    if (recipeByKey(ui.detailKey)) renderDetail();
-    else closeDetail(true);
+  if (det) {
+    if (ui.view === 'items') {
+      loadItem(det, { quiet: true });
+    } else if (recipeByKey(det)) {
+      renderRecipeDetail();
+    } else {
+      ui.views.recipes.detailKey = null;
+      applyNav();
+    }
   } else {
     requestAnimationFrame(() => window.scrollTo(0, y));
   }
@@ -1145,34 +1545,56 @@ async function poll() {
 $('#search').addEventListener('input', e => {
   ui.search = e.target.value;
   $('#search-clear').hidden = !ui.search;
-  if (ui.data) renderOverview();
+  if (ui.data) renderActiveList();
 });
 $('#search-clear').addEventListener('click', () => {
   ui.search = '';
   $('#search').value = '';
   $('#search-clear').hidden = true;
-  renderOverview();
+  renderActiveList();
   $('#search').focus();
 });
 $('#show-all').addEventListener('change', e => {
   ui.showAll = e.target.checked;
   if (ui.data) renderOverview();
 });
-$('.seg').addEventListener('change', e => {
+$('#type-seg').addEventListener('change', e => {
   ui.typeFilter = e.target.value;
   if (ui.data) renderOverview();
 });
+$('#view-seg').addEventListener('change', e => switchView(e.target.value));
+
+$('#feeds-filter').addEventListener('click', () => {
+  ui.onlyUseful = !ui.onlyUseful;
+  $('#feeds-filter').setAttribute('aria-pressed', String(ui.onlyUseful));
+  if (ui.inv) renderItems();
+});
+$('#sort-toggle').addEventListener('click', () => {
+  ui.itemsSort = ui.itemsSort === 'value' ? 'count' : 'value';
+  $('#sort-toggle').textContent = ui.itemsSort === 'value' ? 'Value ↓' : 'Count ↓';
+  if (ui.inv) renderItems();
+});
+
+/* shared action buttons (empty states) */
+$('#main').addEventListener('click', e => {
+  const action = e.target.closest('[data-action]');
+  if (!action) return;
+  const a = action.dataset.action;
+  if (a === 'clear-search') { ui.search = ''; $('#search').value = ''; $('#search-clear').hidden = true; renderActiveList(); }
+  if (a === 'show-all') { ui.showAll = true; $('#show-all').checked = true; renderOverview(); }
+  if (a === 'clear-type') { ui.typeFilter = 'all'; $('#type-seg input[value="all"]').checked = true; renderOverview(); }
+  if (a === 'clear-useful') { ui.onlyUseful = false; $('#feeds-filter').setAttribute('aria-pressed', 'false'); renderItems(); }
+  if (a === 'goto-recipes') switchView('recipes');
+});
+
+$('#items-list').addEventListener('click', e => {
+  const row = e.target.closest('.row[data-id]');
+  if (row) openItemDetail(row.dataset.id);
+});
 
 $('#overview').addEventListener('click', e => {
-  const action = e.target.closest('[data-action]');
-  if (action) {
-    if (action.dataset.action === 'clear-search') { ui.search = ''; $('#search').value = ''; $('#search-clear').hidden = true; renderOverview(); }
-    if (action.dataset.action === 'show-all') { ui.showAll = true; $('#show-all').checked = true; renderOverview(); }
-    if (action.dataset.action === 'clear-type') { ui.typeFilter = 'all'; $('.seg input[value="all"]').checked = true; renderOverview(); }
-    return;
-  }
-  const row = e.target.closest('.row');
-  if (row) openDetail(row.dataset.key);
+  const row = e.target.closest('.row[data-key]');
+  if (row) openRecipeDetail(row.dataset.key);
 });
 $('#overview').addEventListener('toggle', e => {
   const d = e.target;
@@ -1180,15 +1602,18 @@ $('#overview').addEventListener('toggle', e => {
 }, true);
 
 $('#detail').addEventListener('click', e => {
-  const el = e.target.closest('[data-action]');
+  const el = e.target.closest('[data-action], .row[data-key]');
   if (!el) return;
-  if (el.dataset.action === 'back') closeDetail(false);
+  if (el.dataset.action === 'back') closeDetail();
   if (el.dataset.action === 'plan') loadPlan(el.dataset.key);
+  if (el.dataset.action === 'retry-item') loadItem(ui.views.items.detailId);
+  if (el.dataset.key && el.classList.contains('row')) openRecipeDetail(el.dataset.key);
 });
 
 /* ---------- boot ---------- */
 $('#brand').innerHTML = `${ICONS.leaf}Stardew <span>Craftbook</span>`;
-$('#overview').innerHTML = '<p class="loading">Reading the save…</p>';
+$('#items-list').innerHTML = '<p class="loading">Reading the save…</p>';
+history.replaceState({ v: 'items', d: null }, '');
 refresh(true);
 setInterval(poll, 5000);
 </script>
