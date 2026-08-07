@@ -1,0 +1,12 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stardew Craftbook</title>
+<h1>Stardew Craftbook</h1>
+<p>API is running. UI not yet built — see <code>/api/state</code>.</p>
+<p id="v"></p>
+<script>
+fetch('/api/version').then(r => r.json()).then(d => {
+  document.getElementById('v').textContent = 'snapshot version: ' + d.version;
+});
+</script>
