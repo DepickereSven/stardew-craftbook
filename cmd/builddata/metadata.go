@@ -214,7 +214,7 @@ func parseMachineIngredients(raw string, idsByName map[string]string) []Ingredie
 	if len(out) > 0 {
 		return out
 	}
-	if strings.Contains(raw, "[[Fruit]]") {
+	if strings.Contains(strings.ToLower(raw), "fruit") {
 		match := trailingQuantityRe.FindStringSubmatch(raw)
 		if match != nil {
 			qty, _ := strconv.Atoi(match[1])
