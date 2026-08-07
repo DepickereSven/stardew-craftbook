@@ -125,6 +125,7 @@ The JSON API is stable and usable on its own:
 | `GET /api/version`    | Snapshot counter, for cheap change polling             |
 | `GET /api/state`      | Every recipe with its craftability and what's missing  |
 | `GET /api/plan/{key}` | Step chain to produce a recipe's missing intermediates |
+| `GET /api/items`      | Item reference: sell price, buffs, processing time     |
 
 ```sh
 curl -s localhost:8375/api/plan/Anvil

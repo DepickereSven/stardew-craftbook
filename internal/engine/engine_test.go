@@ -139,3 +139,65 @@ func TestLoadDataDecodesFieldsNotJustCounts(t *testing.T) {
 		}
 	}
 }
+
+func TestLoadItems(t *testing.T) {
+	items, err := LoadItems()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(items) < 300 {
+		t.Errorf("embedded items thin: %d", len(items))
+	}
+	for id, it := range items {
+		if it.ID != id || it.Name == "" || it.WikiURL == "" {
+			t.Fatalf("item %q decoded with empty fields: %+v", id, it)
+		}
+	}
+}
+
+// The metadata the API is meant to surface: processing time, sell price and
+// buffs. Green Tea carries all three.
+func TestLoadItemsDecodesMetadata(t *testing.T) {
+	items, err := LoadItems()
+	if err != nil {
+		t.Fatal(err)
+	}
+	tea, ok := items["614"]
+	if !ok {
+		t.Fatal("Green Tea (614) missing from items")
+	}
+	if tea.Name != "Green Tea" {
+		t.Errorf("name = %q", tea.Name)
+	}
+	if tea.SellPrice == nil || *tea.SellPrice != 100 {
+		t.Errorf("sell_price = %v, want 100", tea.SellPrice)
+	}
+	if tea.ProcessingMinutes == nil || *tea.ProcessingMinutes != 180 {
+		t.Errorf("processing_minutes = %v, want 180", tea.ProcessingMinutes)
+	}
+	if len(tea.Buffs) != 2 || tea.Buffs[0].Name != "Max Energy" || tea.Buffs[0].Value != "+30" {
+		t.Errorf("buffs = %+v", tea.Buffs)
+	}
+	if tea.BuffDuration != "4m 12s" {
+		t.Errorf("buff_duration = %q", tea.BuffDuration)
+	}
+}
+
+// Sell price is genuinely absent for some items and non-numeric for others, so
+// it must stay distinguishable from zero.
+func TestLoadItemsSellPriceIsOptional(t *testing.T) {
+	items, err := LoadItems()
+	if err != nil {
+		t.Fatal(err)
+	}
+	wine, ok := items["348"]
+	if !ok {
+		t.Fatal("Wine (348) missing")
+	}
+	if wine.SellPrice != nil {
+		t.Errorf("Wine has no fixed price, want nil, got %v", *wine.SellPrice)
+	}
+	if wine.SellPriceNote == "" {
+		t.Error("Wine should carry a sell_price_note explaining the variable price")
+	}
+}

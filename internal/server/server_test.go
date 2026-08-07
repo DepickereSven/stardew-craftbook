@@ -189,3 +189,52 @@ func TestUnknownItemIDsEmptyWhenAllKnown(t *testing.T) {
 		t.Errorf("unknown ids = %v, want none", got)
 	}
 }
+
+// Item metadata is static reference data, served on its own endpoint so the
+// already-large /api/state does not have to carry it.
+func TestItemsEndpoint(t *testing.T) {
+	req := httptest.NewRequest("GET", "/api/items", nil)
+	rec := httptest.NewRecorder()
+	testServer(t).Handler().ServeHTTP(rec, req)
+	if rec.Code != 200 {
+		t.Fatalf("code=%d", rec.Code)
+	}
+	if ct := rec.Header().Get("Content-Type"); ct != "application/json" {
+		t.Errorf("Content-Type = %q", ct)
+	}
+	var items map[string]engine.Item
+	if err := json.Unmarshal(rec.Body.Bytes(), &items); err != nil {
+		t.Fatalf("non-JSON body: %v", err)
+	}
+	if len(items) < 300 {
+		t.Errorf("only %d items served", len(items))
+	}
+	tea, ok := items["614"]
+	if !ok {
+		t.Fatal("Green Tea (614) not served")
+	}
+	if tea.ProcessingMinutes == nil || *tea.ProcessingMinutes != 180 {
+		t.Errorf("processing_minutes = %v", tea.ProcessingMinutes)
+	}
+	if tea.SellPrice == nil || *tea.SellPrice != 100 {
+		t.Errorf("sell_price = %v", tea.SellPrice)
+	}
+	if len(tea.Buffs) == 0 {
+		t.Error("buffs not served")
+	}
+}
+
+// Reference data does not depend on the save, so it must answer even when no
+// save was found.
+func TestItemsEndpointWorksWithoutSave(t *testing.T) {
+	s, err := New("", "no save")
+	if err != nil {
+		t.Fatal(err)
+	}
+	req := httptest.NewRequest("GET", "/api/items", nil)
+	rec := httptest.NewRecorder()
+	s.Handler().ServeHTTP(rec, req)
+	if rec.Code != 200 {
+		t.Errorf("code=%d, want 200", rec.Code)
+	}
+}

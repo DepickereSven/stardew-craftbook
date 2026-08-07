@@ -22,6 +22,7 @@ type Server struct {
 	savePath string
 	recipes  []engine.Recipe
 	machines []engine.Machine
+	items    map[string]engine.Item
 
 	logUnknown sync.Once
 
@@ -66,7 +67,11 @@ func New(savePath, detectErr string) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	s := &Server{savePath: savePath, recipes: recipes, machines: machines, parseErr: detectErr}
+	items, err := engine.LoadItems()
+	if err != nil {
+		return nil, err
+	}
+	s := &Server{savePath: savePath, recipes: recipes, machines: machines, items: items, parseErr: detectErr}
 	if savePath != "" {
 		s.refresh()
 	}
@@ -126,6 +131,7 @@ func (s *Server) Handler() http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /api/version", s.handleVersion)
 	mux.HandleFunc("GET /api/state", s.handleState)
+	mux.HandleFunc("GET /api/items", s.handleItems)
 	mux.HandleFunc("GET /api/plan/", s.handlePlan)
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" {
@@ -148,6 +154,14 @@ func (s *Server) handleVersion(w http.ResponseWriter, r *http.Request) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	writeJSON(w, 200, map[string]int{"version": s.version})
+}
+
+// handleItems serves the static item reference: sell price, edibility, buffs
+// and machine processing time, keyed by item id. It is baked into the binary
+// and never changes at runtime, so it is safe to fetch once and cache.
+func (s *Server) handleItems(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "public, max-age=86400")
+	writeJSON(w, 200, s.items)
 }
 
 func (s *Server) handleState(w http.ResponseWriter, r *http.Request) {

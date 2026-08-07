@@ -37,6 +37,30 @@ type Machine struct {
 	Minutes int          `json:"minutes"`
 }
 
+// Buff is one effect an item grants when eaten or drunk. Value is a signed
+// string as the wiki writes it ("+30", "-1") and may be empty for effects with
+// no magnitude, such as Tipsy.
+type Buff struct {
+	Name  string `json:"name"`
+	Value string `json:"value,omitempty"`
+}
+
+// Item is the per-item metadata: what it sells for, what it does when eaten,
+// and how long a machine takes to make it. Every numeric field is a pointer
+// because "unknown" and "zero" mean different things — an item with no
+// recorded price must not look free.
+type Item struct {
+	ID                string `json:"id"`
+	Name              string `json:"name"`
+	SellPrice         *int   `json:"sell_price,omitempty"`
+	SellPriceNote     string `json:"sell_price_note,omitempty"`
+	Edibility         *int   `json:"edibility,omitempty"`
+	Buffs             []Buff `json:"buffs,omitempty"`
+	BuffDuration      string `json:"buff_duration,omitempty"`
+	ProcessingMinutes *int   `json:"processing_minutes,omitempty"`
+	WikiURL           string `json:"wiki_url"`
+}
+
 type State string
 
 const (
@@ -70,6 +94,15 @@ func LoadData() ([]Recipe, []Machine, error) {
 		return nil, nil, err
 	}
 	return recipes, machines, nil
+}
+
+// LoadItems decodes the embedded item metadata, keyed by item id.
+func LoadItems() (map[string]Item, error) {
+	var items map[string]Item
+	if err := json.Unmarshal(data.ItemsJSON, &items); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 // countOf reports how much of an ingredient the save holds. A category
