@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"os"
 	"sort"
+	"strings"
 )
 
 const recipeDataPage = "Modding:Recipe data"
@@ -50,6 +51,11 @@ func main() {
 
 	names := resolveNames(all, pagesByKey)
 	fmt.Fprintf(os.Stderr, "item names resolved: %d\n", len(names))
+	machineNames := make(map[string]string, len(names))
+	for id, name := range names {
+		machineNames[id] = name
+	}
+	resolveOutputNames(machineNames, all)
 
 	var recipes []Recipe
 	for _, group := range []struct {
@@ -64,8 +70,13 @@ func main() {
 	}
 	sort.Slice(recipes, func(i, j int) bool { return recipes[i].Key < recipes[j].Key })
 
-	machines := machineConversions()
-	if problems := validate(recipes, machines); len(problems) > 0 {
+	itemPages, err := fetchItemPages()
+	must(err)
+	fmt.Fprintf(os.Stderr, "item infobox pages fetched: %d\n", len(itemPages))
+	machines, items, unresolved, err := collectMetadata(itemPages, machineNames)
+	must(err)
+	fmt.Fprintf(os.Stderr, "unresolved machine ingredient names: %d\n", unresolved)
+	if problems := validate(recipes, machines, items); len(problems) > 0 {
 		for _, p := range problems {
 			fmt.Fprintln(os.Stderr, "INVALID:", p)
 		}
@@ -73,7 +84,21 @@ func main() {
 	}
 	writeJSON(*out+"/recipes.json", recipes)
 	writeJSON(*out+"/machines.json", machines)
-	fmt.Printf("wrote %d recipes, %d machine conversions\n", len(recipes), len(machines))
+	writeJSON(*out+"/items.json", items)
+	fmt.Printf("wrote %d recipes, %d machine conversions, %d items\n", len(recipes), len(machines), len(items))
+}
+
+func resolveOutputNames(names map[string]string, entries []rawEntry) {
+	for _, entry := range entries {
+		fields := strings.Split(entry.Raw, "/")
+		if len(fields) < 3 {
+			continue
+		}
+		output := strings.Fields(fields[2])
+		if len(output) > 0 {
+			names[output[0]] = displayName(entry.Key)
+		}
+	}
 }
 
 func writeJSON(path string, v any) {

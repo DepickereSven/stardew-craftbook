@@ -68,6 +68,95 @@ type queryResp struct {
 	} `json:"query"`
 }
 
+type listResp struct {
+	Continue map[string]string `json:"continue"`
+	Query    struct {
+		Allpages []struct {
+			Title string `json:"title"`
+		} `json:"allpages"`
+		Embeddedin []struct {
+			Title string `json:"title"`
+		} `json:"embeddedin"`
+	} `json:"query"`
+}
+
+func fetchList(api string, params url.Values, key string) ([]string, error) {
+	var titles []string
+	for {
+		params.Set("action", "query")
+		params.Set("format", "json")
+		u := api + "?" + params.Encode()
+		resp, err := http.Get(u)
+		if err != nil {
+			return nil, err
+		}
+		body, err := io.ReadAll(resp.Body)
+		resp.Body.Close()
+		if err != nil {
+			return nil, err
+		}
+		var result listResp
+		if err := json.Unmarshal(body, &result); err != nil {
+			return nil, fmt.Errorf("parsing API response: %w", err)
+		}
+		if key == "allpages" {
+			for _, entry := range result.Query.Allpages {
+				titles = append(titles, entry.Title)
+			}
+		} else {
+			for _, entry := range result.Query.Embeddedin {
+				titles = append(titles, entry.Title)
+			}
+		}
+		if len(result.Continue) == 0 {
+			return titles, nil
+		}
+		for continuationKey, value := range result.Continue {
+			params.Set(continuationKey, value)
+		}
+	}
+}
+
+func fetchInfoboxTemplatesFrom(api string) ([]string, error) {
+	titles, err := fetchList(api, url.Values{"list": {"allpages"}, "apnamespace": {"10"}, "apprefix": {"Infobox"}, "aplimit": {"max"}}, "allpages")
+	if err != nil {
+		return nil, err
+	}
+	var templates []string
+	for _, title := range titles {
+		if strings.HasPrefix(strings.ToLower(title), "template:infobox") {
+			templates = append(templates, title)
+		}
+	}
+	return templates, nil
+}
+
+func fetchEmbeddedPagesFrom(api, template string) ([]string, error) {
+	return fetchList(api, url.Values{"list": {"embeddedin"}, "eititle": {template}, "einamespace": {"0"}, "eilimit": {"max"}}, "embeddedin")
+}
+
+func fetchItemPages() (map[string]string, error) {
+	templates, err := fetchInfoboxTemplatesFrom(wikiAPI)
+	if err != nil {
+		return nil, err
+	}
+	seen := map[string]bool{}
+	var titles []string
+	for _, template := range templates {
+		pages, err := fetchEmbeddedPagesFrom(wikiAPI, template)
+		if err != nil {
+			return nil, err
+		}
+		for _, title := range pages {
+			if !seen[title] {
+				seen[title] = true
+				titles = append(titles, title)
+			}
+		}
+	}
+	return fetchPages(titles)
+}
+
 // fetchPagesFrom returns the wikitext of each requested page, keyed by the
 // title as requested. The wiki may normalize ("omelet" → "Omelet") or redirect
 // ("Cookies" → "Cookie") a title on the way, so those hops are followed back

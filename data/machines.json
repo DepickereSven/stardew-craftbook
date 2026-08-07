@@ -1,5 +1,162 @@
 [
   {
+    "machine": "Bee House",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Flower (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output": {
+      "id": "340",
+      "name": "Honey",
+      "qty": 1
+    },
+    "minutes": 6100
+  },
+  {
+    "machine": "Charcoal Kiln",
+    "inputs": [
+      {
+        "id": "388",
+        "name": "Wood",
+        "qty": 10
+      }
+    ],
+    "output": {
+      "id": "382",
+      "name": "Coal",
+      "qty": 1
+    },
+    "minutes": 30
+  },
+  {
+    "machine": "Cheese Press",
+    "inputs": [
+      {
+        "id": "184",
+        "name": "Milk",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "424",
+      "name": "Cheese",
+      "qty": 1
+    },
+    "minutes": 200
+  },
+  {
+    "machine": "Cheese Press",
+    "inputs": [
+      {
+        "id": "436",
+        "name": "Goat Milk",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "426",
+      "name": "Goat Cheese",
+      "qty": 1
+    },
+    "minutes": 200
+  },
+  {
+    "machine": "Cheese Press",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Milk",
+        "qty": 1
+      },
+      {
+        "id": "",
+        "name": "Large Milk",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "424",
+      "name": "Cheese",
+      "qty": 1
+    },
+    "minutes": 200
+  },
+  {
+    "machine": "Dehydrator",
+    "inputs": [
+      {
+        "id": "398",
+        "name": "Grape",
+        "qty": 5
+      }
+    ],
+    "output": {
+      "id": "733",
+      "name": "Raisins",
+      "qty": 1
+    },
+    "minutes": 1750
+  },
+  {
+    "machine": "Dehydrator",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Fruit]] except [[Grape]]s (Any)",
+        "qty": 5,
+        "category": true
+      }
+    ],
+    "output": {
+      "id": "635",
+      "name": "Dried Fruit",
+      "qty": 1
+    },
+    "minutes": 1750
+  },
+  {
+    "machine": "Dehydrator",
+    "inputs": [
+      {
+        "id": "",
+        "name": "positive energy mushrooms (Any)",
+        "qty": 5,
+        "category": true
+      }
+    ],
+    "output": {
+      "id": "634",
+      "name": "Dried Mushrooms",
+      "qty": 1
+    },
+    "minutes": 1750
+  },
+  {
+    "machine": "Furnace",
+    "inputs": [
+      {
+        "id": "378",
+        "name": "Copper Ore",
+        "qty": 5
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "\"Silo\"|[[File:Silo.png|48px|center]]\n|[[Silo]]\n|{{Description|Silo}}<br />''Note: Holds up to 240 pieces of [[Hay]]''\n|{{Price|100}}{{Name|Stone|100}}{{Name|Clay|10}}{{Name|Copper Bar|5}}",
+      "name": "Copper Bar",
+      "qty": 1
+    },
+    "minutes": 30
+  },
+  {
     "machine": "Furnace",
     "inputs": [
       {
@@ -126,36 +283,281 @@
     "minutes": 90
   },
   {
-    "machine": "Cheese Press",
+    "machine": "Furnace",
     "inputs": [
       {
-        "id": "184",
-        "name": "Milk",
+        "id": "909",
+        "name": "Radioactive Ore",
+        "qty": 5
+      },
+      {
+        "id": "382",
+        "name": "Coal",
         "qty": 1
       }
     ],
     "output": {
-      "id": "424",
-      "name": "Cheese",
+      "id": "910",
+      "name": "Radioactive Bar",
       "qty": 1
     },
-    "minutes": 200
+    "minutes": 540
   },
   {
-    "machine": "Cheese Press",
+    "machine": "Furnace",
     "inputs": [
       {
-        "id": "436",
-        "name": "Goat Milk",
+        "id": "",
+        "name": "Quartz",
+        "qty": 1
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      },
+      {
+        "id": "82",
+        "name": "Fire Quartz",
+        "qty": 1
+      },
+      {
+        "id": "382",
+        "name": "Coal",
         "qty": 1
       }
     ],
     "output": {
-      "id": "426",
-      "name": "Goat Cheese",
+      "id": "338",
+      "name": "Refined Quartz",
       "qty": 1
     },
-    "minutes": 200
+    "minutes": 90
+  },
+  {
+    "machine": "Heavy Tapper",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Maple Tree",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "724",
+      "name": "Maple Syrup",
+      "qty": 1
+    },
+    "minutes": 12960
+  },
+  {
+    "machine": "Heavy Tapper",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Mystic Tree",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "MysticSyrup",
+      "name": "Mystic Syrup",
+      "qty": 1
+    },
+    "minutes": 10080
+  },
+  {
+    "machine": "Heavy Tapper",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Oak Tree",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "725",
+      "name": "Oak Resin",
+      "qty": 1
+    },
+    "minutes": 10080
+  },
+  {
+    "machine": "Heavy Tapper",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Pine Tree",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "726",
+      "name": "Pine Tar",
+      "qty": 1
+    },
+    "minutes": 7200
+  },
+  {
+    "machine": "Keg",
+    "inputs": [
+      {
+        "id": "304",
+        "name": "Hops",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "303",
+      "name": "Pale Ale",
+      "qty": 1
+    },
+    "minutes": 2250
+  },
+  {
+    "machine": "Keg",
+    "inputs": [
+      {
+        "id": "340",
+        "name": "Honey",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "459",
+      "name": "Mead",
+      "qty": 1
+    },
+    "minutes": 600
+  },
+  {
+    "machine": "Keg",
+    "inputs": [
+      {
+        "id": "423",
+        "name": "Rice",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "419",
+      "name": "Vinegar",
+      "qty": 1
+    },
+    "minutes": 600
+  },
+  {
+    "machine": "Keg",
+    "inputs": [
+      {
+        "id": "433",
+        "name": "Coffee Bean",
+        "qty": 5
+      }
+    ],
+    "output": {
+      "id": "395",
+      "name": "Coffee",
+      "qty": 1
+    },
+    "minutes": 120
+  },
+  {
+    "machine": "Keg",
+    "inputs": [
+      {
+        "id": "815",
+        "name": "Tea Leaves",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "614",
+      "name": "Green Tea",
+      "qty": 1
+    },
+    "minutes": 180
+  },
+  {
+    "machine": "Keg",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Coffee Bean",
+        "qty": 5
+      }
+    ],
+    "output": {
+      "id": "395",
+      "name": "Coffee",
+      "qty": 1
+    },
+    "minutes": 120
+  },
+  {
+    "machine": "Keg",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Fruit (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output": {
+      "id": "348",
+      "name": "Wine",
+      "qty": 1
+    },
+    "minutes": 10000
+  },
+  {
+    "machine": "Keg",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Wheat",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "346",
+      "name": "Beer",
+      "qty": 1
+    },
+    "minutes": 1750
+  },
+  {
+    "machine": "Loom",
+    "inputs": [
+      {
+        "id": "440",
+        "name": "Wool",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "428",
+      "name": "Cloth",
+      "qty": 1
+    },
+    "minutes": 240
+  },
+  {
+    "machine": "Loom",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Wool",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "428",
+      "name": "Cloth",
+      "qty": 1
+    },
+    "minutes": 240
   },
   {
     "machine": "Mayonnaise Machine",
@@ -190,20 +592,99 @@
     "minutes": 180
   },
   {
-    "machine": "Loom",
+    "machine": "Mayonnaise Machine",
     "inputs": [
       {
-        "id": "440",
-        "name": "Wool",
+        "id": "",
+        "name": "Egg",
+        "qty": 1
+      },
+      {
+        "id": "",
+        "name": "Large Egg",
+        "qty": 1
+      },
+      {
+        "id": "",
+        "name": "Golden Egg",
+        "qty": 1
+      },
+      {
+        "id": "",
+        "name": "Ostrich Egg",
         "qty": 1
       }
     ],
     "output": {
-      "id": "428",
-      "name": "Cloth",
+      "id": "306",
+      "name": "Mayonnaise",
       "qty": 1
     },
-    "minutes": 240
+    "minutes": 180
+  },
+  {
+    "machine": "Mayonnaise Machine",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Void Egg",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "308",
+      "name": "Void Mayonnaise",
+      "qty": 1
+    },
+    "minutes": 180
+  },
+  {
+    "machine": "Mill",
+    "inputs": [
+      {
+        "id": "284",
+        "name": "Beet",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "245",
+      "name": "Sugar",
+      "qty": 1
+    },
+    "minutes": 1440
+  },
+  {
+    "machine": "Mill",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Unmilled Rice",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "423",
+      "name": "Rice",
+      "qty": 1
+    },
+    "minutes": 1440
+  },
+  {
+    "machine": "Mill",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Wheat",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "246",
+      "name": "Wheat Flour",
+      "qty": 1
+    },
+    "minutes": 1440
   },
   {
     "machine": "Oil Maker",
@@ -241,6 +722,22 @@
     "machine": "Oil Maker",
     "inputs": [
       {
+        "id": "430",
+        "name": "Truffle",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "432",
+      "name": "Truffle Oil",
+      "qty": 1
+    },
+    "minutes": 360
+  },
+  {
+    "machine": "Oil Maker",
+    "inputs": [
+      {
         "id": "431",
         "name": "Sunflower Seeds",
         "qty": 1
@@ -257,7 +754,7 @@
     "machine": "Oil Maker",
     "inputs": [
       {
-        "id": "430",
+        "id": "",
         "name": "Truffle",
         "qty": 1
       }
@@ -270,36 +767,38 @@
     "minutes": 360
   },
   {
-    "machine": "Keg",
+    "machine": "Preserves Jar",
     "inputs": [
       {
-        "id": "433",
-        "name": "Coffee Bean",
-        "qty": 5
+        "id": "",
+        "name": "Fruit (Any)",
+        "qty": 1,
+        "category": true
       }
     ],
     "output": {
-      "id": "395",
-      "name": "Coffee",
+      "id": "344",
+      "name": "Jelly",
       "qty": 1
     },
-    "minutes": 120
+    "minutes": 4000
   },
   {
-    "machine": "Charcoal Kiln",
+    "machine": "Preserves Jar",
     "inputs": [
       {
-        "id": "388",
-        "name": "Wood",
-        "qty": 10
+        "id": "",
+        "name": "Vegetable (Any)",
+        "qty": 1,
+        "category": true
       }
     ],
     "output": {
-      "id": "382",
-      "name": "Coal",
+      "id": "342",
+      "name": "Pickles",
       "qty": 1
     },
-    "minutes": 30
+    "minutes": 4000
   },
   {
     "machine": "Recycling Machine",
@@ -316,5 +815,69 @@
       "qty": 1
     },
     "minutes": 60
+  },
+  {
+    "machine": "Tapper",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Maple Tree",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "724",
+      "name": "Maple Syrup",
+      "qty": 1
+    },
+    "minutes": 12960
+  },
+  {
+    "machine": "Tapper",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Mystic Tree",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "MysticSyrup",
+      "name": "Mystic Syrup",
+      "qty": 1
+    },
+    "minutes": 10080
+  },
+  {
+    "machine": "Tapper",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Oak Tree",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "725",
+      "name": "Oak Resin",
+      "qty": 1
+    },
+    "minutes": 10080
+  },
+  {
+    "machine": "Tapper",
+    "inputs": [
+      {
+        "id": "",
+        "name": "Pine Tree",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "726",
+      "name": "Pine Tar",
+      "qty": 1
+    },
+    "minutes": 7200
   }
 ]

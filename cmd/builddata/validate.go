@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func validate(recipes []Recipe, machines []Machine) []string {
+func validate(recipes []Recipe, machines []Machine, items map[string]Item) []string {
 	var problems []string
 	seen := map[string]bool{}
 	for _, r := range recipes {
@@ -31,6 +31,20 @@ func validate(recipes []Recipe, machines []Machine) []string {
 	for _, m := range machines {
 		if len(m.Inputs) == 0 || m.Output.ID == "" || m.Output.Qty < 1 || m.Minutes < 1 {
 			problems = append(problems, fmt.Sprintf("machine %s -> %s malformed", m.Machine, m.Output.Name))
+		}
+	}
+	for id, item := range items {
+		if id == "" || item.ID != id {
+			problems = append(problems, fmt.Sprintf("item %q has inconsistent id", id))
+		}
+		if !isNonEmptyName(item.Name) {
+			problems = append(problems, fmt.Sprintf("item %q: empty name", id))
+		}
+		if item.SellPrice != nil && *item.SellPrice < 0 {
+			problems = append(problems, fmt.Sprintf("item %q: sell price %d", id, *item.SellPrice))
+		}
+		if item.ProcessingMinutes != nil && *item.ProcessingMinutes < 1 {
+			problems = append(problems, fmt.Sprintf("item %q: processing minutes %d", id, *item.ProcessingMinutes))
 		}
 	}
 	return problems
