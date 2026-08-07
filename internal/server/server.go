@@ -23,6 +23,7 @@ type Server struct {
 	recipes  []engine.Recipe
 	machines []engine.Machine
 	items    map[string]engine.Item
+	itemIdx  *engine.ItemIndex
 
 	logUnknown sync.Once
 
@@ -71,7 +72,14 @@ func New(savePath, detectErr string) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	s := &Server{savePath: savePath, recipes: recipes, machines: machines, items: items, parseErr: detectErr}
+	s := &Server{
+		savePath: savePath,
+		recipes:  recipes,
+		machines: machines,
+		items:    items,
+		itemIdx:  engine.NewItemIndex(items),
+		parseErr: detectErr,
+	}
 	if savePath != "" {
 		s.refresh()
 	}
@@ -132,6 +140,8 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("GET /api/version", s.handleVersion)
 	mux.HandleFunc("GET /api/state", s.handleState)
 	mux.HandleFunc("GET /api/items", s.handleItems)
+	mux.HandleFunc("GET /api/inventory", s.handleInventory)
+	mux.HandleFunc("GET /api/item/", s.handleItemDetail)
 	mux.HandleFunc("GET /api/plan/", s.handlePlan)
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" {
@@ -181,6 +191,49 @@ func (s *Server) handleState(w http.ResponseWriter, r *http.Request) {
 		body["error"] = parseErr
 	}
 	writeJSON(w, 200, body)
+}
+
+// handleInventory serves everything the save holds, most valuable stack first.
+// It carries the same error semantics as /api/state: an error with an empty
+// list means no save, an error alongside a populated one means this is the last
+// good snapshot.
+func (s *Server) handleInventory(w http.ResponseWriter, r *http.Request) {
+	s.mu.RLock()
+	snap, version, parseErr := s.snap, s.version, s.parseErr
+	s.mu.RUnlock()
+	if snap == nil {
+		writeJSON(w, 200, map[string]any{"version": version, "error": parseErr, "items": []any{}})
+		return
+	}
+	body := map[string]any{"version": version, "items": engine.BuildInventory(snap, s.itemIdx, s.recipes)}
+	if parseErr != "" {
+		body["error"] = parseErr
+	}
+	writeJSON(w, 200, body)
+}
+
+// handleItemDetail serves one owned item and the recipes it feeds, with the
+// economics of each. Item ids can contain characters needing encoding
+// ("Dish o' The Sea" style keys do; ids such as MoreWalls:11 do too).
+func (s *Server) handleItemDetail(w http.ResponseWriter, r *http.Request) {
+	id := strings.TrimPrefix(r.URL.Path, "/api/item/")
+	if decoded, err := url.PathUnescape(id); err == nil {
+		id = decoded
+	}
+	s.mu.RLock()
+	snap := s.snap
+	s.mu.RUnlock()
+	if snap == nil {
+		writeJSON(w, 503, map[string]string{"error": "no save loaded"})
+		return
+	}
+	avail := engine.EvaluateWithPlanner(snap, s.recipes, s.machines)
+	detail, ok := engine.BuildItemDetail(snap, s.itemIdx, s.recipes, avail, id)
+	if !ok {
+		writeJSON(w, 404, map[string]string{"error": "unknown item"})
+		return
+	}
+	writeJSON(w, 200, detail)
 }
 
 func (s *Server) handlePlan(w http.ResponseWriter, r *http.Request) {

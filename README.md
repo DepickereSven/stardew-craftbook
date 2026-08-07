@@ -126,9 +126,13 @@ The JSON API is stable and usable on its own:
 | `GET /api/state`      | Every recipe with its craftability and what's missing  |
 | `GET /api/plan/{key}` | Step chain to produce a recipe's missing intermediates |
 | `GET /api/items`      | Item reference: sell price, buffs, processing time     |
+| `GET /api/inventory`  | Everything you own, most valuable stack first          |
+| `GET /api/item/{id}`  | One item, the recipes it feeds, and whether they pay   |
 
 ```sh
 curl -s localhost:8375/api/plan/Anvil
+curl -s localhost:8375/api/inventory
+curl -s localhost:8375/api/item/709          # Hardwood: what it makes, and the margins
 ```
 
 Not modelled, by design: growing, foraging, fishing and buying. When a plan needs a Banana, it says so and links to the wiki rather than trying to explain farming.
