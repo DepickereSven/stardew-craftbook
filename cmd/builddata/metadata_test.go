@@ -69,6 +69,33 @@ func TestParseMetadataParsesPriceTemplate(t *testing.T) {
 	}
 }
 
+func TestCollectMetadataKeepsIDlessItemInfoboxes(t *testing.T) {
+	pages := map[string]string{
+		"Herring": `{{Infobox fish
+|price = 30
+}}`,
+		"Leather Boots": `{{Infobox clothing
+|value = {{Price|100}}
+}}`,
+		"The Desert": `{{Infobox location
+|name = The Desert
+}}`,
+	}
+	_, items, _, err := collectMetadata(pages, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for key, wantPrice := range map[string]int{"name:Herring": 30, "name:Leather Boots": 100} {
+		item, ok := items[key]
+		if !ok || item.SellPrice == nil || *item.SellPrice != wantPrice {
+			t.Errorf("items[%q] = %+v, want sell price %d", key, item, wantPrice)
+		}
+	}
+	if _, ok := items["name:The Desert"]; ok {
+		t.Error("location without an item ID was included")
+	}
+}
+
 func TestMachineMergeKeepsBaselineIDs(t *testing.T) {
 	baseline := Machine{Machine: "Keg", Inputs: []Ingredient{{ID: "433", Name: "Coffee Bean", Qty: 5}}, Output: Ingredient{ID: "395", Name: "Coffee", Qty: 1}, Minutes: 120}
 	scraped := Machine{Machine: "Keg", Inputs: []Ingredient{{Name: "Coffee Bean", Qty: 5}}, Output: Ingredient{ID: "395", Name: "Coffee", Qty: 1}, Minutes: 120}

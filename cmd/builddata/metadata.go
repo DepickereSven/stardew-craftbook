@@ -31,6 +31,16 @@ var leadingNumberRe = regexp.MustCompile(`^\s*([0-9][0-9,]*(?:\.[0-9]+)?)\s*(min
 var trailingQuantityRe = regexp.MustCompile(`\s*\((\d+)\)\s*$`)
 var priceTemplateRe = regexp.MustCompile(`^\s*\{\{[Pp]rice\|([0-9][0-9,]*)\}\}\s*$`)
 
+var idlessItemInfoboxes = map[string]bool{
+	"big craftable": true,
+	"clothing":      true,
+	"fish":          true,
+	"furniture":     true,
+	"ring":          true,
+	"tool":          true,
+	"weapon":        true,
+}
+
 func infoboxField(page, want string) string {
 	matches := fieldStartRe.FindAllStringSubmatchIndex(page, -1)
 	for i, m := range matches {
@@ -100,6 +110,9 @@ func parseItemPage(title, page string) (Item, error) {
 	if priceField == "" {
 		priceField = infoboxField(page, "price")
 	}
+	if priceField == "" {
+		priceField = infoboxField(page, "value")
+	}
 	if raw := priceField; raw != "" {
 		price := strings.TrimSpace(raw)
 		if template := priceTemplateRe.FindStringSubmatch(price); template != nil {
@@ -128,6 +141,19 @@ func parseItemPage(title, page string) (Item, error) {
 		}
 	}
 	return item, nil
+}
+
+func idlessItemKey(title, page string) string {
+	trimmed := strings.TrimSpace(page)
+	if !strings.HasPrefix(trimmed, "{{Infobox ") {
+		return ""
+	}
+	name := strings.ToLower(strings.TrimSpace(strings.SplitN(strings.TrimPrefix(trimmed, "{{Infobox "), "\n", 2)[0]))
+	name = strings.TrimSpace(strings.SplitN(name, "|", 2)[0])
+	if !idlessItemInfoboxes[name] {
+		return ""
+	}
+	return "name:" + title
 }
 
 func parseBuffs(raw string) []Buff {
@@ -274,8 +300,13 @@ func collectMetadata(pages map[string]string, recipeNames map[string]string) ([]
 		if item.ID == "" {
 			item.ID = idsByName[item.Name]
 		}
+		if item.ID == "" {
+			item.ID = idlessItemKey(item.Name, page)
+		}
 		if item.ID != "" {
-			idsByName[item.Name] = item.ID
+			if !strings.HasPrefix(item.ID, "name:") {
+				idsByName[item.Name] = item.ID
+			}
 			items[item.ID] = item
 		}
 	}
