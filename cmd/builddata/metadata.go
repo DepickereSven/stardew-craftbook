@@ -29,6 +29,7 @@ type Item struct {
 var fieldStartRe = regexp.MustCompile(`(?m)^\|\s*([[:alnum:]_]+)\s*=`)
 var leadingNumberRe = regexp.MustCompile(`^\s*([0-9][0-9,]*(?:\.[0-9]+)?)\s*(min(?:ute)?s?|m|h(?:our)?s?|d(?:ay)?s?)\b`)
 var trailingQuantityRe = regexp.MustCompile(`\s*\((\d+)\)\s*$`)
+var priceTemplateRe = regexp.MustCompile(`^\s*\{\{[Pp]rice\|([0-9][0-9,]*)\}\}\s*$`)
 
 func infoboxField(page, want string) string {
 	matches := fieldStartRe.FindAllStringSubmatchIndex(page, -1)
@@ -95,8 +96,16 @@ func parseItemPage(title, page string) (Item, error) {
 		id = infoboxField(page, "objectid")
 	}
 	item := Item{ID: strings.TrimSpace(id), Name: title, WikiURL: wikiURL(title)}
-	if raw := infoboxField(page, "sellprice"); raw != "" {
-		if n, err := strconv.Atoi(strings.ReplaceAll(strings.TrimSpace(raw), ",", "")); err == nil {
+	priceField := infoboxField(page, "sellprice")
+	if priceField == "" {
+		priceField = infoboxField(page, "price")
+	}
+	if raw := priceField; raw != "" {
+		price := strings.TrimSpace(raw)
+		if template := priceTemplateRe.FindStringSubmatch(price); template != nil {
+			price = template[1]
+		}
+		if n, err := strconv.Atoi(strings.ReplaceAll(price, ",", "")); err == nil {
 			item.SellPrice = &n
 		} else {
 			item.SellPriceNote = raw
