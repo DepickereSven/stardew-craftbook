@@ -52,6 +52,23 @@ func TestParseMetadataHandlesVariablePriceCategoryAndNestedBuff(t *testing.T) {
 	}
 }
 
+func TestParseMetadataParsesPriceTemplate(t *testing.T) {
+	page := `{{Infobox
+|id = 131
+|price = {{Price|75}}
+}}`
+	item, err := parseItemPage("Sardine", page)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if item.SellPrice == nil || *item.SellPrice != 75 {
+		t.Errorf("sell price = %v, want 75", item.SellPrice)
+	}
+	if item.SellPriceNote != "" {
+		t.Errorf("sell price note = %q, want empty", item.SellPriceNote)
+	}
+}
+
 func TestMachineMergeKeepsBaselineIDs(t *testing.T) {
 	baseline := Machine{Machine: "Keg", Inputs: []Ingredient{{ID: "433", Name: "Coffee Bean", Qty: 5}}, Output: Ingredient{ID: "395", Name: "Coffee", Qty: 1}, Minutes: 120}
 	scraped := Machine{Machine: "Keg", Inputs: []Ingredient{{Name: "Coffee Bean", Qty: 5}}, Output: Ingredient{ID: "395", Name: "Coffee", Qty: 1}, Minutes: 120}
