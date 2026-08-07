@@ -4,9 +4,11 @@ package server
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
+	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -21,11 +23,39 @@ type Server struct {
 	recipes  []engine.Recipe
 	machines []engine.Machine
 
+	logUnknown sync.Once
+
 	mu       sync.RWMutex
 	version  int
 	snap     *parser.Snapshot
 	lastMod  time.Time
 	parseErr string
+}
+
+// unknownItemIDs lists item ids held in the save that no recipe or machine in
+// the dataset refers to — mod leftovers, or items added by a newer game
+// version. They are counted under their raw id and simply never match.
+func unknownItemIDs(snap *parser.Snapshot, recipes []engine.Recipe, machines []engine.Machine) []string {
+	known := map[string]bool{}
+	for _, r := range recipes {
+		for _, ing := range r.Ingredients {
+			known[ing.ID] = true
+		}
+	}
+	for _, m := range machines {
+		for _, in := range m.Inputs {
+			known[in.ID] = true
+		}
+		known[m.Output.ID] = true
+	}
+	var out []string
+	for id := range snap.Items {
+		if !known[id] {
+			out = append(out, id)
+		}
+	}
+	sort.Strings(out)
+	return out
 }
 
 // New builds a server. savePath may be empty when detection failed; detectErr
@@ -56,6 +86,19 @@ func (s *Server) refresh() {
 	s.parseErr = ""
 	s.snap = snap
 	s.version++
+
+	// Spec §8: report items the dataset does not know about, once, so a game
+	// update or a modded save is visible without spamming every poll.
+	s.logUnknown.Do(func() {
+		if unknown := unknownItemIDs(snap, s.recipes, s.machines); len(unknown) > 0 {
+			shown := unknown
+			if len(shown) > 10 {
+				shown = shown[:10]
+			}
+			log.Printf("%d item ids in the save are not referenced by any recipe or machine "+
+				"(counted, but never matched): %v...", len(unknown), shown)
+		}
+	})
 }
 
 // StartPolling re-reads the save whenever its modification time changes.
