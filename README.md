@@ -7,7 +7,7 @@ It answers three questions:
 
 1. **What can I craft or cook right now?**
 2. **What is missing for recipe X?**
-3. **How do I get what's missing**, including making intermediates from what I already own — *"smelt 5 Iridium Ore + 1 Coal → 1 Iridium Bar, ×5 → craft Deluxe Scarecrow"*.
+3. **How do I get what's missing**, including making intermediates from what I already own: *"smelt 5 Iridium Ore + 1 Coal → 1 Iridium Bar, ×5 → craft Deluxe Scarecrow"*.
 
 One static binary, no dependencies, no installer, no accounts, no telemetry, nothing leaves your network. The recipe data and the web UI are compiled into the executable.
 
