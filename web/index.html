@@ -1009,6 +1009,10 @@ function sortItems(items) {
   return arr;
 }
 
+function qualityLabel(quality) {
+  return ({ 0: 'normal', 1: 'silver', 2: 'gold', 4: 'iridium' })[quality] || 'normal';
+}
+
 function itemRowHTML(it) {
   const priced = it.stack_value !== undefined;
   const uses = it.recipe_count > 0
@@ -1016,7 +1020,7 @@ function itemRowHTML(it) {
   return `<li><button class="row" data-id="${esc(it.id)}">
     <span class="row-text">
       <span class="row-name">${esc(it.name)}</span>
-      <span class="row-meta"><span class="icount">×${fmtNum(it.count)}</span>${uses}</span>
+      <span class="row-meta"><span class="icount">×${fmtNum(it.count)}</span> · ${qualityLabel(it.quality)}${uses}</span>
     </span>
     <span class="ival">${priced
       ? `${fmtNum(it.stack_value)}<span class="g"> g</span>`
@@ -1031,7 +1035,7 @@ function renderItemsTotal() {
   const priced = ui.inv.items.filter(i => i.stack_value !== undefined);
   if (!priced.length) { el.textContent = ''; return; }
   const total = priced.reduce((s, i) => s + i.stack_value, 0);
-  el.textContent = `${fmtNum(total)} g across ${priced.length} priced items · base quality`;
+  el.textContent = `${fmtNum(total)} g across ${priced.length} priced stacks`;
 }
 
 function renderItems() {
@@ -1134,6 +1138,7 @@ function renderItemDetail() {
   const priced = it.sell_price !== undefined;
   const stats = `<div class="stats">
     <div class="stat"><b>${fmtNum(it.count)}</b><span>owned</span></div>
+    <div class="stat"><b>${esc(qualityLabel(it.quality))}</b><span>quality</span></div>
     <div class="stat"><b>${priced ? `${fmtNum(it.sell_price)}<span class="g"> g</span>` : '—'}</b><span>each</span></div>
     <div class="stat"><b>${priced ? `${fmtNum(it.stack_value)}<span class="g"> g</span>` : '—'}</b><span>stack value</span></div>
   </div>`;
