@@ -83,6 +83,15 @@ func TestStateEndpoint(t *testing.T) {
 			}
 		}
 	}
+	machines, ok := body["machines"].([]any)
+	if !ok {
+		t.Fatalf("no machines array: %v", body)
+	}
+	for _, machine := range machines {
+		if machine.(map[string]any)["max_runs"].(float64) <= 0 {
+			t.Errorf("unavailable machine returned: %v", machine)
+		}
+	}
 }
 
 func TestPlanEndpointUnknownKey(t *testing.T) {

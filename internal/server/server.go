@@ -199,7 +199,10 @@ func (s *Server) handleState(w http.ResponseWriter, r *http.Request) {
 	for i, av := range avs {
 		recipes[i] = stateRecipe{av, engine.RecipeEconomics(s.itemIdx, av.Recipe)}
 	}
-	body := map[string]any{"version": version, "save_path": s.savePath, "recipes": recipes}
+	body := map[string]any{
+		"version": version, "save_path": s.savePath, "recipes": recipes,
+		"machines": engine.AvailableMachines(snap, s.machines),
+	}
 	if parseErr != "" {
 		// Serving the last good snapshot, but the newest read failed.
 		body["error"] = parseErr
@@ -242,7 +245,7 @@ func (s *Server) handleItemDetail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	avail := engine.EvaluateWithPlanner(snap, s.recipes, s.machines)
-	detail, ok := engine.BuildItemDetail(snap, s.itemIdx, s.recipes, avail, id)
+	detail, ok := engine.BuildItemDetail(snap, s.itemIdx, s.recipes, s.machines, avail, id)
 	if !ok {
 		writeJSON(w, 404, map[string]string{"error": "unknown item"})
 		return
