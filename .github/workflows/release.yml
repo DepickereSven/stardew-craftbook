@@ -1,0 +1,139 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-main
+  cancel-in-progress: false
+
+jobs:
+  version:
+    name: Read release version
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: version
+        name: Validate release version
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(tr -d '[:space:]' < VERSION)"
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "VERSION must contain a semantic version such as 1.2.3; found '$version'." >&2
+            exit 1
+          fi
+
+          tag="v$version"
+          if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
+            tagged_commit="$(git rev-list -n1 "$tag")"
+            if [ "$tagged_commit" != "$GITHUB_SHA" ]; then
+              echo "$tag already exists for another commit. Bump VERSION before merging." >&2
+              exit 1
+            fi
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+  test:
+    name: Test and vet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25.2'
+          check-latest: true
+      - run: go test ./...
+      - run: go vet ./...
+      - run: test -z "$(gofmt -l .)"
+
+  build:
+    name: Build ${{ matrix.goos }}-${{ matrix.goarch }}
+    needs: [version, test]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - goos: linux
+            goarch: amd64
+            archive: tar.gz
+          - goos: linux
+            goarch: arm64
+            archive: tar.gz
+          - goos: darwin
+            goarch: amd64
+            archive: tar.gz
+          - goos: darwin
+            goarch: arm64
+            archive: tar.gz
+          - goos: windows
+            goarch: amd64
+            archive: zip
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25.2'
+          check-latest: true
+      - name: Build archive
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          ARCHIVE: ${{ matrix.archive }}
+        run: |
+          set -eu
+          name="stardew-craftbook-${GOOS}-${GOARCH}"
+          mkdir -p dist/package
+          binary="dist/package/stardew-craftbook"
+          if [ "$GOOS" = windows ]; then binary="${binary}.exe"; fi
+          CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o "$binary" ./cmd/stardew-craftbook
+          cp README.md LICENSE dist/package/
+          if [ "$ARCHIVE" = zip ]; then
+            (cd dist/package && zip -q "../${name}.zip" ./*)
+          else
+            tar -C dist/package -czf "dist/${name}.tar.gz" .
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stardew-craftbook-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: |
+            dist/*.tar.gz
+            dist/*.zip
+          if-no-files-found: error
+
+  publish:
+    name: Publish GitHub release
+    needs: [version, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          pattern: stardew-craftbook-*
+          merge-multiple: true
+      - name: Create checksums
+        run: |
+          cd dist
+          sha256sum stardew-craftbook-* > checksums.txt
+      - name: Publish release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${{ needs.version.outputs.tag }}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" dist/stardew-craftbook-* dist/checksums.txt --clobber
+          else
+            gh release create "$tag" dist/stardew-craftbook-* dist/checksums.txt \
+              --title "Stardew Craftbook $tag" \
+              --generate-notes
+          fi
