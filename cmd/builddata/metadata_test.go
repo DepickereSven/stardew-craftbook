@@ -111,3 +111,10 @@ func TestParseMachineIngredientsNormalizesDehydratorFruit(t *testing.T) {
 		t.Errorf("ingredients = %+v", got)
 	}
 }
+
+func TestParseMachineIngredientsKeepsFishAndCoalForFishSmoker(t *testing.T) {
+	got := parseMachineIngredients(`[[File:Fish.png|24px|link=]] Any [[Fish]] (1) {{Name|Coal|1}}`, map[string]string{"Coal": "382"})
+	if len(got) != 2 || !got[0].Category || got[0].ID != "-4" || got[0].Qty != 1 || got[1] != (Ingredient{ID: "382", Name: "Coal", Qty: 1}) {
+		t.Errorf("ingredients = %+v", got)
+	}
+}

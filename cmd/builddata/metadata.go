@@ -30,6 +30,7 @@ var fieldStartRe = regexp.MustCompile(`(?m)^\|\s*([[:alnum:]_]+)\s*=`)
 var leadingNumberRe = regexp.MustCompile(`^\s*([0-9][0-9,]*(?:\.[0-9]+)?)\s*(min(?:ute)?s?|m|h(?:our)?s?|d(?:ay)?s?)\b`)
 var trailingQuantityRe = regexp.MustCompile(`\s*\((\d+)\)\s*$`)
 var priceTemplateRe = regexp.MustCompile(`^\s*\{\{[Pp]rice\|([0-9][0-9,]*)\}\}\s*$`)
+var anyCategoryQtyRe = regexp.MustCompile(`(?i)any\s+\[\[[^\]]+\]\][^(]*\((\d+)\)`)
 
 var idlessItemInfoboxes = map[string]bool{
 	"big craftable": true,
@@ -246,6 +247,9 @@ func parseMachineIngredients(raw string, idsByName map[string]string) []Ingredie
 		name := strings.TrimSpace(fields[0])
 		out = append(out, Ingredient{ID: idsByName[name], Name: name, Qty: qty})
 	}
+	if category, ok := machineCategoryInput(raw); ok {
+		out = append([]Ingredient{category}, out...)
+	}
 	if len(out) > 0 {
 		return out
 	}
@@ -277,6 +281,27 @@ func parseMachineIngredients(raw string, idsByName map[string]string) []Ingredie
 	}
 	name = strings.Trim(name, "[] ") + " (Any)"
 	return []Ingredient{{Name: name, Qty: qty, Category: true}}
+}
+
+func machineCategoryInput(raw string) (Ingredient, bool) {
+	match := anyCategoryQtyRe.FindStringSubmatch(raw)
+	if match == nil {
+		return Ingredient{}, false
+	}
+	qty, err := strconv.Atoi(match[1])
+	if err != nil || qty < 1 {
+		return Ingredient{}, false
+	}
+	lower := strings.ToLower(raw)
+	switch {
+	case strings.Contains(lower, "fish"):
+		return Ingredient{ID: "-4", Name: "Fish (Any)", Qty: qty, Category: true}, true
+	case strings.Contains(lower, "fruit"):
+		return Ingredient{ID: "-79", Name: "Fruit (Any)", Qty: qty, Category: true}, true
+	case strings.Contains(lower, "vegetable"):
+		return Ingredient{ID: "-75", Name: "Vegetable (Any)", Qty: qty, Category: true}, true
+	}
+	return Ingredient{}, false
 }
 
 func wikiURL(title string) string {
@@ -347,11 +372,11 @@ func collectMetadata(pages map[string]string, recipeNames map[string]string) ([]
 // resolveNames cannot learn their IDs. They are kept narrowly to preserve
 // machine-only production chains such as Tea Leaves → Green Tea.
 var machineItemIDs = map[string]string{
-	"Beer": "346", "Dried Fruit": "635", "Dried Mushrooms": "634", "Flour": "246",
+	"Beer": "346", "Dried Fruit": "DriedFruit", "Dried Mushrooms": "DriedMushrooms", "Flour": "246",
 	"Green Tea": "614", "Honey": "340", "Hops": "304", "Jelly": "344", "Juice": "350",
 	"Maple Syrup": "724", "Mead": "459", "Oak Resin": "725", "Pale Ale": "303",
 	"Pickles": "342", "Pine Tar": "726", "Raisins": "733", "Rice": "423", "Sugar": "245",
-	"Tea Leaves": "815", "Wine": "348",
+	"Smoked Fish": "SmokedFish", "Tea Leaves": "815", "Wine": "348",
 }
 
 func appendMachineUnique(machines []Machine, candidate Machine) []Machine {
