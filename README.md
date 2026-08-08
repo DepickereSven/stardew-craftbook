@@ -1,6 +1,7 @@
 # Stardew Craftbook
 
-A self-hosted companion for Stardew Valley 1.6. It runs on the machine that holds your save, reads it, and serves a small web app over your local network — so you can check it on your phone while you play. The save is opened read-only and never written to.
+A self-hosted companion for Stardew Valley 1.6. It runs on the machine that holds your save, reads it, and serves 
+a small web app over your local network, so you can check it on your phone while you play. The save is opened read-only and never written to.
 
 It answers three questions:
 
@@ -12,7 +13,8 @@ One static binary, no dependencies, no installer, no accounts, no telemetry, not
 
 ## Install a release
 
-Download the archive for your platform from the [GitHub Releases page](https://github.com/DepickereSven/stardew-craftbook/releases), extract it, and run the included binary. Each release includes Linux (x86_64 and ARM64), macOS (Intel and Apple Silicon), and Windows (x86_64) builds, plus `checksums.txt` for verification.
+Download the archive for your platform from the [GitHub Releases page](https://github.com/DepickereSven/stardew-craftbook/releases), extract it, and run the included binary. 
+Each release includes Linux (x86_64 and ARM64), macOS (Intel and Apple Silicon), and Windows (x86_64) builds, plus `checksums.txt` for verification.
 
 On Linux or macOS:
 
@@ -40,7 +42,7 @@ serving on http://0.0.0.0:8375 (open from your phone via this machine's LAN IP)
 
 Open <http://localhost:8375>.
 
-If no save is found the server still starts and the web app explains what paths it tried — use `--save-path` to point it directly at one.
+If no save is found the server still starts and the web app explains what paths it tried, use `--save-path` to point it directly at one.
 
 ### Flags
 
@@ -51,7 +53,7 @@ If no save is found the server still starts and the web app explains what paths 
 | `--port`      | `8375`          | HTTP port.                                                      |
 | `--poll`      | `3`             | How often, in seconds, to check the save file for changes.      |
 
-The save is re-read automatically whenever the game writes it — sleep in-game and the page updates on its own.
+The save is re-read automatically whenever the game writes it, sleep in-game and the page updates on its own.
 
 ## Reading it on your phone
 
@@ -80,7 +82,7 @@ Saves are auto-detected in both of the usual places:
 
 ### Start it automatically with the game
 
-Steam **Launch Options** for Stardew Valley — starts the server alongside the game:
+Steam **Launch Options** for Stardew Valley, starts the server alongside the game:
 
 ```
 /home/deck/stardew-craftbook & %command%
@@ -116,7 +118,8 @@ GOOS=windows GOARCH=amd64 go build ./cmd/stardew-craftbook
 
 Run `stardew-craftbook.exe`. Saves are detected at `%AppData%\StardewValley\Saves`.
 
-Windows Firewall will prompt on first run — allow it on **private networks** so your phone can connect. Denying it still leaves `http://localhost:8375` working on the PC itself.
+Windows Firewall will prompt on first run, allow it on **private networks** so your phone can connect. 
+Denying it still leaves `http://localhost:8375` working on the PC itself.
 
 ## Regenerating the data after a game update
 
