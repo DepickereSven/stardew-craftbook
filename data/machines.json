@@ -96,7 +96,7 @@
       }
     ],
     "output": {
-      "id": "635",
+      "id": "DriedFruit",
       "name": "Dried Fruit",
       "qty": 1
     },
@@ -129,11 +129,33 @@
       }
     ],
     "output": {
-      "id": "634",
+      "id": "DriedMushrooms",
       "name": "Dried Mushrooms",
       "qty": 1
     },
     "minutes": 1750
+  },
+  {
+    "machine": "Fish Smoker",
+    "inputs": [
+      {
+        "id": "-4",
+        "name": "Fish (Any)",
+        "qty": 1,
+        "category": true
+      },
+      {
+        "id": "382",
+        "name": "Coal",
+        "qty": 1
+      }
+    ],
+    "output": {
+      "id": "SmokedFish",
+      "name": "Smoked Fish",
+      "qty": 1
+    },
+    "minutes": 50
   },
   {
     "machine": "Furnace",
@@ -376,6 +398,23 @@
       "qty": 1
     },
     "minutes": 7200
+  },
+  {
+    "machine": "Keg",
+    "inputs": [
+      {
+        "id": "-75",
+        "name": "Vegetable (Any)",
+        "qty": 1,
+        "category": true
+      }
+    ],
+    "output": {
+      "id": "350",
+      "name": "Juice",
+      "qty": 1
+    },
+    "minutes": 6000
   },
   {
     "machine": "Keg",

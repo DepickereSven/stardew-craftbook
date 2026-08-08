@@ -140,6 +140,37 @@ func TestLoadDataDecodesFieldsNotJustCounts(t *testing.T) {
 	}
 }
 
+func TestLoadDataIncludesVariableMachineConversions(t *testing.T) {
+	_, machines, err := LoadData()
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := map[string]struct {
+		output string
+		input  string
+	}{
+		"Dehydrator":  {output: "DriedFruit", input: "-79"},
+		"Fish Smoker": {output: "SmokedFish", input: "-4"},
+		"Keg":         {output: "348", input: "-79"},
+	}
+	for machine, expected := range want {
+		found := false
+		for _, got := range machines {
+			if got.Machine != machine || got.Output.ID != expected.output {
+				continue
+			}
+			for _, input := range got.Inputs {
+				if input.ID == expected.input && input.Category {
+					found = true
+				}
+			}
+		}
+		if !found {
+			t.Errorf("%s conversion to %s with category %s missing", machine, expected.output, expected.input)
+		}
+	}
+}
+
 func TestLoadItems(t *testing.T) {
 	items, err := LoadItems()
 	if err != nil {

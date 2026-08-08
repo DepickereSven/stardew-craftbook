@@ -1870,13 +1870,6 @@
     "edibility": 15,
     "wiki_url": "https://stardewvalleywiki.com/Apricot"
   },
-  "635": {
-    "id": "635",
-    "name": "Dried Fruit",
-    "sell_price_note": "7.5 × Fruit Base Price + 25",
-    "processing_minutes": 1750,
-    "wiki_url": "https://stardewvalleywiki.com/Dried_Fruit"
-  },
   "645": {
     "id": "645",
     "name": "Iridium Sprinkler",
@@ -2175,11 +2168,21 @@
   },
   "733": {
     "id": "733",
-    "name": "Raisins",
-    "sell_price": 600,
-    "edibility": 50,
-    "processing_minutes": 1750,
-    "wiki_url": "https://stardewvalleywiki.com/Raisins"
+    "name": "Shrimp Cocktail",
+    "sell_price": 160,
+    "edibility": 90,
+    "buffs": [
+      {
+        "name": "Fishing",
+        "value": "+1"
+      },
+      {
+        "name": "Luck",
+        "value": "+1"
+      }
+    ],
+    "buff_duration": "10m 2s",
+    "wiki_url": "https://stardewvalleywiki.com/Shrimp_Cocktail"
   },
   "74": {
     "id": "74",
@@ -2666,6 +2669,20 @@
     "sell_price_note": "Cannot be sold",
     "wiki_url": "https://stardewvalleywiki.com/Deluxe_Worm_Bin"
   },
+  "DriedFruit": {
+    "id": "DriedFruit",
+    "name": "Dried Fruit",
+    "sell_price_note": "7.5 × Fruit Base Price + 25",
+    "processing_minutes": 1750,
+    "wiki_url": "https://stardewvalleywiki.com/Dried_Fruit"
+  },
+  "DriedMushrooms": {
+    "id": "DriedMushrooms",
+    "name": "Dried Mushrooms",
+    "sell_price_note": "(7.5 × mushroom Base Price) + 25",
+    "processing_minutes": 1750,
+    "wiki_url": "https://stardewvalleywiki.com/Dried_Mushrooms"
+  },
   "FishSmoker": {
     "id": "FishSmoker",
     "name": "Fish Smoker",
@@ -2743,6 +2760,13 @@
     ],
     "buff_duration": "7m",
     "wiki_url": "https://stardewvalleywiki.com/Sea_Jelly"
+  },
+  "SmokedFish": {
+    "id": "SmokedFish",
+    "name": "Smoked Fish",
+    "sell_price_note": "2 × [[Fish]] Sell Price (includes Quality & Artisan prices)",
+    "processing_minutes": 50,
+    "wiki_url": "https://stardewvalleywiki.com/Smoked_Fish"
   },
   "SonarBobber": {
     "id": "SonarBobber",
