@@ -37,6 +37,23 @@ type Machine struct {
 	Minutes int          `json:"minutes"`
 }
 
+// MachineAvailability is a machine conversion the current inventory can run.
+// MaxRuns is constrained by every input, including category inputs such as
+// any fruit or any fish.
+type MachineAvailability struct {
+	Machine
+	MaxRuns int             `json:"max_runs"`
+	Profits []QualityProfit `json:"profits,omitempty"`
+}
+
+// QualityProfit is a processing gain for one quality of the selected input.
+// It is attached only to an item-detail response; the recipes overview has no
+// selected input item from which to calculate an honest value.
+type QualityProfit struct {
+	Quality int  `json:"quality"`
+	Delta   *int `json:"delta,omitempty"`
+}
+
 // Buff is one effect an item grants when eaten or drunk. Value is a signed
 // string as the wiki writes it ("+30", "-1") and may be empty for effects with
 // no magnitude, such as Tipsy.
@@ -163,6 +180,30 @@ func Evaluate(snap *parser.Snapshot, recipes []Recipe) []Availability {
 			av.State = FarOff
 		}
 		out = append(out, av)
+	}
+	return out
+}
+
+// AvailableMachines lists the individual processing jobs the inventory can
+// currently supply. Unlike recipe planning, these are useful on their own:
+// wine, dried fruit, and smoked fish are not ingredients in a craft/cook
+// recipe, so they would otherwise have no route into the UI.
+func AvailableMachines(snap *parser.Snapshot, machines []Machine) []MachineAvailability {
+	out := make([]MachineAvailability, 0, len(machines))
+	for _, machine := range machines {
+		maxRuns := -1
+		for _, in := range machine.Inputs {
+			if in.Qty <= 0 {
+				continue
+			}
+			runs := countOf(snap, in) / in.Qty
+			if maxRuns == -1 || runs < maxRuns {
+				maxRuns = runs
+			}
+		}
+		if maxRuns > 0 {
+			out = append(out, MachineAvailability{Machine: machine, MaxRuns: maxRuns})
+		}
 	}
 	return out
 }
