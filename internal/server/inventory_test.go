@@ -26,13 +26,16 @@ type invResponse struct {
 	Version int    `json:"version"`
 	Error   string `json:"error"`
 	Items   []struct {
-		ID          string `json:"id"`
-		Name        string `json:"name"`
-		Count       int    `json:"count"`
-		Quality     int    `json:"quality"`
-		SellPrice   *int   `json:"sell_price"`
-		StackValue  *int   `json:"stack_value"`
-		RecipeCount int    `json:"recipe_count"`
+		ID        string `json:"id"`
+		Name      string `json:"name"`
+		Count     int    `json:"count"`
+		Qualities []struct {
+			Quality int `json:"quality"`
+			Count   int `json:"count"`
+		} `json:"qualities"`
+		SellPrice   *int `json:"sell_price"`
+		StackValue  *int `json:"stack_value"`
+		RecipeCount int  `json:"recipe_count"`
 	} `json:"items"`
 }
 
@@ -55,8 +58,13 @@ func TestInventoryEndpoint(t *testing.T) {
 		if it.Count <= 0 {
 			t.Errorf("item %s has count %d", it.ID, it.Count)
 		}
-		if it.Quality != 0 && it.Quality != 1 && it.Quality != 2 && it.Quality != 4 {
-			t.Errorf("item %s has unexpected quality %d", it.ID, it.Quality)
+		if len(it.Qualities) == 0 {
+			t.Errorf("item %s has no quality breakdown", it.ID)
+		}
+		for _, quality := range it.Qualities {
+			if quality.Quality != 0 && quality.Quality != 1 && quality.Quality != 2 && quality.Quality != 4 {
+				t.Errorf("item %s has unexpected quality %d", it.ID, quality.Quality)
+			}
 		}
 		// Absent and zero are different facts; a priceless item must carry
 		// neither number rather than a zero.
@@ -97,6 +105,9 @@ type detailResponse struct {
 		InputCost   *int   `json:"input_cost"`
 		MaxMakeable int    `json:"max_makeable"`
 	} `json:"used_in"`
+	Processing []struct {
+		Machine string `json:"machine"`
+	} `json:"processing"`
 }
 
 func TestItemDetailEndpoint(t *testing.T) {

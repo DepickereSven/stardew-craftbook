@@ -120,14 +120,17 @@ func TestRealSaveInventoryPrices(t *testing.T) {
 		t.Fatal(err)
 	}
 	inventory := BuildInventory(snap, NewItemIndex(items), recipes)
-	priced := 0
+	priced, total := 0, 0
 	for _, item := range inventory {
-		if item.SellPrice != nil {
-			priced++
+		for _, quality := range item.Qualities {
+			total++
+			if quality.SellPrice != nil {
+				priced++
+			}
 		}
 	}
-	t.Logf("priced inventory stacks: %d/%d", priced, len(inventory))
-	if priced*10 < len(inventory)*9 {
-		t.Errorf("only %d of %d inventory stacks have prices", priced, len(inventory))
+	t.Logf("priced inventory quality stacks: %d/%d", priced, total)
+	if priced*10 < total*9 {
+		t.Errorf("only %d of %d inventory quality stacks have prices", priced, total)
 	}
 }

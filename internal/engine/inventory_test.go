@@ -88,14 +88,29 @@ func TestInventoryUsesSavedPriceAndQualityForVariants(t *testing.T) {
 		got[item.ID] = item
 	}
 	for key, want := range map[string]int{
-		"258":                                   75,
-		"DriedFruit#Dried Blueberries#p400#q0":  400,
-		"DriedFruit#Dried Strawberries#p475#q0": 475,
+		"258":                           75,
+		"DriedFruit#Dried Blueberries":  400,
+		"DriedFruit#Dried Strawberries": 475,
 	} {
 		item := got[key]
 		if item.SellPrice == nil || *item.SellPrice != want {
 			t.Errorf("%s sell price = %v, want %d", key, showInt(item.SellPrice), want)
 		}
+	}
+}
+
+func TestInventoryGroupsQualitiesOfOneItem(t *testing.T) {
+	base := 300
+	snap := &parser.Snapshot{Stacks: map[string]parser.ItemStack{
+		"pale-normal":  {ID: "303", Name: "Pale Ale", Count: 122, Price: &base},
+		"pale-iridium": {ID: "303", Name: "Pale Ale", Count: 66, Price: &base, Quality: 4},
+	}}
+	got := BuildInventory(snap, NewItemIndex(nil), nil)
+	if len(got) != 1 || got[0].Count != 188 || len(got[0].Qualities) != 2 {
+		t.Fatalf("inventory = %+v, want one Pale Ale row with two qualities", got)
+	}
+	if got[0].StackValue == nil || *got[0].StackValue != 76200 {
+		t.Errorf("Pale Ale total = %s, want 76200", showInt(got[0].StackValue))
 	}
 }
 
@@ -162,7 +177,7 @@ func testRecipes() []Recipe {
 func detailFor(t *testing.T, id string) ItemDetail {
 	t.Helper()
 	snap, idx, recipes := snapshot(), testIndex(), testRecipes()
-	d, ok := BuildItemDetail(snap, idx, recipes, Evaluate(snap, recipes), id)
+	d, ok := BuildItemDetail(snap, idx, recipes, nil, Evaluate(snap, recipes), id)
 	if !ok {
 		t.Fatalf("item %s not found", id)
 	}
@@ -227,8 +242,25 @@ func TestBigCraftableHasNoRecipes(t *testing.T) {
 
 func TestBuildItemDetailUnknownItem(t *testing.T) {
 	snap, idx, recipes := snapshot(), testIndex(), testRecipes()
-	if _, ok := BuildItemDetail(snap, idx, recipes, nil, "nope"); ok {
+	if _, ok := BuildItemDetail(snap, idx, recipes, nil, nil, "nope"); ok {
 		t.Error("unowned item reported as found")
+	}
+}
+
+func TestItemDetailListsAvailableMachineConversions(t *testing.T) {
+	snap := &parser.Snapshot{
+		Items: map[string]int{"400": 5}, Names: map[string]string{"400": "Strawberry"}, Categories: map[string]int{"400": -79},
+		Stacks: map[string]parser.ItemStack{"400": {ID: "400", Name: "Strawberry", Count: 5, Category: -79}},
+	}
+	machines := []Machine{{Machine: "Dehydrator", Inputs: []Ingredient{{ID: "-79", Name: "Fruit (Any)", Qty: 5, Category: true}}, Output: Ingredient{ID: "DriedFruit", Name: "Dried Fruit", Qty: 1}}}
+	base := 120
+	snap.Stacks["400"] = parser.ItemStack{ID: "400", Name: "Strawberry", Count: 5, Category: -79, Price: &base}
+	detail, ok := BuildItemDetail(snap, NewItemIndex(nil), nil, machines, nil, "400")
+	if !ok || len(detail.Processing) != 1 || detail.Processing[0].Machine.Machine != "Dehydrator" {
+		t.Errorf("processing = %+v, want Dehydrator", detail.Processing)
+	}
+	if profits := detail.Processing[0].Profits; len(profits) != 1 || profits[0].Delta == nil || *profits[0].Delta != 325 {
+		t.Errorf("Dehydrator profits = %+v, want +325", profits)
 	}
 }
 

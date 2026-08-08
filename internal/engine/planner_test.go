@@ -197,3 +197,22 @@ func TestPlanFishSmokerUsesFishCategoryAndCoal(t *testing.T) {
 		t.Errorf("fish smoker plan = %+v", res)
 	}
 }
+
+func TestAvailableMachinesIncludesCategoryConversions(t *testing.T) {
+	machines := []Machine{
+		{Machine: "Fish Smoker", Inputs: []Ingredient{{ID: "-4", Name: "Fish (Any)", Qty: 1, Category: true}, {ID: "382", Name: "Coal", Qty: 1}}, Output: Ingredient{ID: "SmokedFish", Name: "Smoked Fish", Qty: 1}},
+		{Machine: "Keg", Inputs: []Ingredient{{ID: "-79", Name: "Fruit (Any)", Qty: 1, Category: true}}, Output: Ingredient{ID: "348", Name: "Wine", Qty: 1}},
+		{Machine: "Dehydrator", Inputs: []Ingredient{{ID: "-79", Name: "Fruit (Any)", Qty: 5, Category: true}}, Output: Ingredient{ID: "DriedFruit", Name: "Dried Fruit", Qty: 1}},
+	}
+	snap := snapWith(map[string]int{"147": 3, "258": 12, "382": 2}, map[string]int{"147": -4, "258": -79})
+	got := AvailableMachines(snap, machines)
+	byName := map[string]int{}
+	for _, machine := range got {
+		byName[machine.Machine.Machine] = machine.MaxRuns
+	}
+	for name, want := range map[string]int{"Fish Smoker": 2, "Keg": 12, "Dehydrator": 2} {
+		if got := byName[name]; got != want {
+			t.Errorf("%s max runs = %d, want %d", name, got, want)
+		}
+	}
+}

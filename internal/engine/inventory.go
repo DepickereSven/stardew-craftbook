@@ -13,15 +13,25 @@ import (
 // save. SellPrice and StackValue are pointers because an item with no recorded
 // price must not render as free — see ui-spec-items.md §4.2.
 type InventoryItem struct {
-	ID          string `json:"id"`
-	Name        string `json:"name"`
-	Count       int    `json:"count"`
-	SellPrice   *int   `json:"sell_price,omitempty"`
-	StackValue  *int   `json:"stack_value,omitempty"`
-	Category    int    `json:"category"`
-	Quality     int    `json:"quality"`
-	RecipeCount int    `json:"recipe_count"`
-	WikiURL     string `json:"wiki_url,omitempty"`
+	ID          string         `json:"id"`
+	Name        string         `json:"name"`
+	Count       int            `json:"count"`
+	SellPrice   *int           `json:"sell_price,omitempty"`
+	StackValue  *int           `json:"stack_value,omitempty"`
+	Category    int            `json:"category"`
+	Qualities   []QualityStack `json:"qualities"`
+	RecipeCount int            `json:"recipe_count"`
+	WikiURL     string         `json:"wiki_url,omitempty"`
+}
+
+// QualityStack is the portion of one inventory item at one sell quality and
+// saved price. Keeping prices alongside quantities avoids pretending that two
+// differently-priced artisan goods are interchangeable.
+type QualityStack struct {
+	Quality    int  `json:"quality"`
+	Count      int  `json:"count"`
+	SellPrice  *int `json:"sell_price,omitempty"`
+	StackValue *int `json:"stack_value,omitempty"`
 }
 
 // Verdict answers "is making this worth it?" for one recipe. The four states
@@ -69,15 +79,16 @@ type UsedIn struct {
 
 // ItemDetail is the payload behind GET /api/item/{id}.
 type ItemDetail struct {
-	ID         string   `json:"id"`
-	Name       string   `json:"name"`
-	Count      int      `json:"count"`
-	SellPrice  *int     `json:"sell_price,omitempty"`
-	StackValue *int     `json:"stack_value,omitempty"`
-	Category   int      `json:"category"`
-	Quality    int      `json:"quality"`
-	WikiURL    string   `json:"wiki_url,omitempty"`
-	UsedIn     []UsedIn `json:"used_in"`
+	ID         string                `json:"id"`
+	Name       string                `json:"name"`
+	Count      int                   `json:"count"`
+	SellPrice  *int                  `json:"sell_price,omitempty"`
+	StackValue *int                  `json:"stack_value,omitempty"`
+	Category   int                   `json:"category"`
+	Qualities  []QualityStack        `json:"qualities"`
+	WikiURL    string                `json:"wiki_url,omitempty"`
+	UsedIn     []UsedIn              `json:"used_in"`
+	Processing []MachineAvailability `json:"processing"`
 }
 
 // priceTemplate preserves compatibility with older generated datasets whose
@@ -226,16 +237,24 @@ func BuildInventory(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe) []I
 			stacks[id] = parser.ItemStack{Key: id, ID: id, Name: snap.Names[id], Count: count, Category: snap.Categories[id]}
 		}
 	}
-	out := make([]InventoryItem, 0, len(stacks))
-	for key, stack := range stacks {
-		inv := InventoryItem{
-			ID:          key,
-			Name:        stack.Name,
-			Count:       stack.Count,
-			Category:    stack.Category,
-			Quality:     stack.Quality,
-			RecipeCount: len(rev[stack.ID]),
+	type group struct {
+		item   InventoryItem
+		priced bool
+	}
+	groups := map[string]*group{}
+	byID := map[string]int{}
+	for _, stack := range stacks {
+		key := stack.ID + "\x00" + stack.Name
+		g := groups[key]
+		if g == nil {
+			g = &group{item: InventoryItem{
+				Name: stack.Name, Category: stack.Category, RecipeCount: len(rev[stack.ID]), Qualities: []QualityStack{},
+			}, priced: true}
+			groups[key] = g
+			byID[stack.ID]++
 		}
+		inv := &g.item
+		inv.Count += stack.Count
 		metadata, known := idx.Lookup(stack.ID, stack.Name)
 		if known {
 			inv.WikiURL = metadata.WikiURL
@@ -243,14 +262,39 @@ func BuildInventory(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe) []I
 				inv.Name = metadata.Name
 			}
 		}
+		quality := QualityStack{Quality: stack.Quality, Count: stack.Count}
 		if price := savedSellPrice(stack, metadata); price != nil {
 			value := *price * stack.Count
-			inv.SellPrice = price
-			inv.StackValue = &value
+			quality.SellPrice, quality.StackValue = price, &value
+		} else {
+			g.priced = false
 		}
+		inv.Qualities = append(inv.Qualities, quality)
 		if inv.Name == "" {
 			inv.Name = stack.ID
 		}
+	}
+	out := make([]InventoryItem, 0, len(groups))
+	for key, g := range groups {
+		inv := g.item
+		id := strings.SplitN(key, "\x00", 2)[0]
+		inv.ID = id
+		if byID[id] > 1 {
+			inv.ID += "#" + inv.Name
+		}
+		total := 0
+		for _, quality := range inv.Qualities {
+			if quality.StackValue != nil {
+				total += *quality.StackValue
+			}
+		}
+		if g.priced {
+			inv.StackValue = &total
+		}
+		if len(inv.Qualities) == 1 {
+			inv.SellPrice = inv.Qualities[0].SellPrice
+		}
+		sort.Slice(inv.Qualities, func(i, j int) bool { return inv.Qualities[i].Quality < inv.Qualities[j].Quality })
 		out = append(out, inv)
 	}
 	sort.Slice(out, func(i, j int) bool {
@@ -341,41 +385,30 @@ func RecipeEconomics(idx *ItemIndex, r Recipe) Economics {
 
 // BuildItemDetail answers GET /api/item/{id}. avail supplies each recipe's
 // state and learned flag so this view never recomputes them.
-func BuildItemDetail(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe, avail []Availability, id string) (ItemDetail, bool) {
-	stack, owned := snap.Stacks[id]
-	if !owned {
-		count, legacy := snap.Items[id]
-		if !legacy {
-			return ItemDetail{}, false
-		}
-		stack = parser.ItemStack{Key: id, ID: id, Name: snap.Names[id], Count: count, Category: snap.Categories[id]}
-	}
-	detail := ItemDetail{ID: id, Name: stack.Name, Count: stack.Count, Category: stack.Category, Quality: stack.Quality, UsedIn: []UsedIn{}}
-	metadata, known := idx.Lookup(stack.ID, stack.Name)
-	if known {
-		detail.WikiURL = metadata.WikiURL
-		if detail.Name == "" {
-			detail.Name = metadata.Name
+func BuildItemDetail(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe, machines []Machine, avail []Availability, id string) (ItemDetail, bool) {
+	var item *InventoryItem
+	for _, candidate := range BuildInventory(snap, idx, recipes) {
+		if candidate.ID == id {
+			item = &candidate
+			break
 		}
 	}
-	if price := savedSellPrice(stack, metadata); price != nil {
-		value := *price * stack.Count
-		detail.SellPrice = price
-		detail.StackValue = &value
+	if item == nil {
+		return ItemDetail{}, false
 	}
-	if detail.Name == "" {
-		detail.Name = id
-	}
+	stackID := strings.SplitN(id, "#", 2)[0]
+	detail := ItemDetail{ID: item.ID, Name: item.Name, Count: item.Count, SellPrice: item.SellPrice,
+		StackValue: item.StackValue, Category: item.Category, Qualities: item.Qualities, WikiURL: item.WikiURL, UsedIn: []UsedIn{}, Processing: []MachineAvailability{}}
 
 	byKey := make(map[string]Availability, len(avail))
 	for _, av := range avail {
 		byKey[av.Recipe.Key] = av
 	}
 
-	for _, r := range recipeIndex(recipes)[stack.ID] {
+	for _, r := range recipeIndex(recipes)[stackID] {
 		qty := 0
 		for _, ing := range r.Ingredients {
-			if ing.ID == stack.ID {
+			if ing.ID == stackID {
 				qty = ing.Qty
 				break
 			}
@@ -413,5 +446,77 @@ func BuildItemDetail(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe, av
 		}
 		return a.Name < b.Name
 	})
+	for _, machine := range AvailableMachines(snap, machines) {
+		for _, in := range machine.Inputs {
+			if in.ID == stackID || (in.Category && in.ID == strconv.Itoa(item.Category)) {
+				machine.Profits = machineProfits(snap, idx, item, machine.Machine)
+				detail.Processing = append(detail.Processing, machine)
+				break
+			}
+		}
+	}
 	return detail, true
+}
+
+func machineProfits(snap *parser.Snapshot, idx *ItemIndex, item *InventoryItem, machine Machine) []QualityProfit {
+	var out []QualityProfit
+	for _, stack := range snap.Stacks {
+		if stack.ID == strings.SplitN(item.ID, "#", 2)[0] && stack.Name == item.Name {
+			out = append(out, QualityProfit{Quality: stack.Quality, Delta: machineProfit(stack, idx, machine)})
+		}
+	}
+	return out
+}
+
+// machineProfit implements the fixed sell-price formulas for the artisan
+// conversions that take a saved-price item as input. Input quality affects the
+// opportunity cost, while the output formula uses the item's base price.
+func machineProfit(stack parser.ItemStack, idx *ItemIndex, machine Machine) *int {
+	if stack.Price == nil {
+		return nil
+	}
+	base := *stack.Price
+	output := 0
+	switch machine.Machine {
+	case "Dehydrator":
+		if machine.Output.ID != "DriedFruit" {
+			return nil
+		}
+		output = base*15/2 + 25
+	case "Keg":
+		if machine.Output.ID != "348" {
+			return nil
+		}
+		output = base * 3
+	case "Preserves Jar":
+		if machine.Output.ID != "344" {
+			return nil
+		}
+		output = base*2 + 50
+	case "Fish Smoker":
+		if machine.Output.ID != "SmokedFish" {
+			return nil
+		}
+		output = base * 2
+	default:
+		return nil
+	}
+	cost := 0
+	for _, in := range machine.Inputs {
+		if in.Category && in.ID == strconv.Itoa(stack.Category) {
+			price := savedSellPrice(stack, Item{})
+			if price == nil {
+				return nil
+			}
+			cost += *price * in.Qty
+			continue
+		}
+		other, ok := idx.Lookup(in.ID, in.Name)
+		if !ok || other.SellPrice == nil {
+			return nil
+		}
+		cost += *other.SellPrice * in.Qty
+	}
+	delta := output - cost
+	return &delta
 }
