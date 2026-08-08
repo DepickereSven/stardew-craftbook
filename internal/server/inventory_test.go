@@ -29,6 +29,7 @@ type invResponse struct {
 		ID          string `json:"id"`
 		Name        string `json:"name"`
 		Count       int    `json:"count"`
+		Quality     int    `json:"quality"`
 		SellPrice   *int   `json:"sell_price"`
 		StackValue  *int   `json:"stack_value"`
 		RecipeCount int    `json:"recipe_count"`
@@ -53,6 +54,9 @@ func TestInventoryEndpoint(t *testing.T) {
 		}
 		if it.Count <= 0 {
 			t.Errorf("item %s has count %d", it.ID, it.Count)
+		}
+		if it.Quality != 0 && it.Quality != 1 && it.Quality != 2 && it.Quality != 4 {
+			t.Errorf("item %s has unexpected quality %d", it.ID, it.Quality)
 		}
 		// Absent and zero are different facts; a priceless item must carry
 		// neither number rather than a zero.

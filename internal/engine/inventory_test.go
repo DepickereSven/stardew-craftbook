@@ -72,6 +72,44 @@ func TestLookupUsesIDlessMetadataAfterAnIDCollision(t *testing.T) {
 	}
 }
 
+func TestInventoryUsesSavedPriceAndQualityForVariants(t *testing.T) {
+	baseBlueberry, driedBlueberries, driedStrawberries := 50, 400, 475
+	snap := &parser.Snapshot{Stacks: map[string]parser.ItemStack{
+		"258":                                   {Key: "258", ID: "258", Name: "Blueberry", Count: 2, Price: &baseBlueberry, Quality: 2},
+		"DriedFruit#Dried Blueberries#p400#q0":  {Key: "DriedFruit#Dried Blueberries#p400#q0", ID: "DriedFruit", Name: "Dried Blueberries", Count: 3, Price: &driedBlueberries},
+		"DriedFruit#Dried Strawberries#p475#q0": {Key: "DriedFruit#Dried Strawberries#p475#q0", ID: "DriedFruit", Name: "Dried Strawberries", Count: 2, Price: &driedStrawberries},
+	}}
+	idx := NewItemIndex(map[string]Item{
+		"258": {ID: "258", Name: "Blueberry", SellPrice: ptr(50)},
+		"635": {ID: "635", Name: "Dried Fruit", SellPriceNote: "7.5 × Fruit Base Price + 25"},
+	})
+	got := map[string]InventoryItem{}
+	for _, item := range BuildInventory(snap, idx, nil) {
+		got[item.ID] = item
+	}
+	for key, want := range map[string]int{
+		"258":                                   75,
+		"DriedFruit#Dried Blueberries#p400#q0":  400,
+		"DriedFruit#Dried Strawberries#p475#q0": 475,
+	} {
+		item := got[key]
+		if item.SellPrice == nil || *item.SellPrice != want {
+			t.Errorf("%s sell price = %v, want %d", key, showInt(item.SellPrice), want)
+		}
+	}
+}
+
+func TestInventoryUsesSavedPriceWithoutMetadata(t *testing.T) {
+	price := 42
+	snap := &parser.Snapshot{Stacks: map[string]parser.ItemStack{
+		"ModItem": {Key: "ModItem", ID: "ModItem", Name: "Uncatalogued Item", Count: 2, Price: &price},
+	}}
+	got := BuildInventory(snap, NewItemIndex(nil), nil)
+	if len(got) != 1 || got[0].SellPrice == nil || *got[0].SellPrice != 42 || got[0].StackValue == nil || *got[0].StackValue != 84 {
+		t.Errorf("inventory = %+v, want saved price 42 and stack value 84", got)
+	}
+}
+
 func TestPriceTemplateRecovered(t *testing.T) {
 	idx := testIndex()
 	it, ok := idx.Lookup("TemplItem", "Templated")

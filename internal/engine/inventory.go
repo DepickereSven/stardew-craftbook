@@ -19,6 +19,7 @@ type InventoryItem struct {
 	SellPrice   *int   `json:"sell_price,omitempty"`
 	StackValue  *int   `json:"stack_value,omitempty"`
 	Category    int    `json:"category"`
+	Quality     int    `json:"quality"`
 	RecipeCount int    `json:"recipe_count"`
 	WikiURL     string `json:"wiki_url,omitempty"`
 }
@@ -74,6 +75,7 @@ type ItemDetail struct {
 	SellPrice  *int     `json:"sell_price,omitempty"`
 	StackValue *int     `json:"stack_value,omitempty"`
 	Category   int      `json:"category"`
+	Quality    int      `json:"quality"`
 	WikiURL    string   `json:"wiki_url,omitempty"`
 	UsedIn     []UsedIn `json:"used_in"`
 }
@@ -132,8 +134,29 @@ func (idx *ItemIndex) Lookup(id, name string) (Item, bool) {
 		if it, ok := idx.byName[name]; ok {
 			return it, true
 		}
+		for _, generic := range variableItemNames(name) {
+			if it, ok := idx.byName[generic]; ok {
+				return it, true
+			}
+		}
 	}
 	return Item{}, false
+}
+
+func variableItemNames(name string) []string {
+	if strings.HasPrefix(name, "Dried ") && name != "Dried Fruit" && name != "Dried Mushrooms" {
+		return []string{"Dried Fruit"}
+	}
+	if strings.HasSuffix(name, " Roe") {
+		if strings.HasPrefix(name, "Aged ") {
+			return []string{"Aged Roe"}
+		}
+		return []string{"Roe"}
+	}
+	if strings.HasPrefix(name, "Smoked ") {
+		return []string{"Smoked Fish"}
+	}
+	return nil
 }
 
 // ByName resolves a recipe's output, which the recipe dataset identifies by
@@ -157,6 +180,26 @@ func notForSale(it Item) bool {
 	return it.SellPrice == nil && strings.EqualFold(strings.TrimSpace(it.SellPriceNote), "cannot be sold")
 }
 
+func savedSellPrice(stack parser.ItemStack, fallback Item) *int {
+	base := fallback.SellPrice
+	if stack.Price != nil {
+		base = stack.Price
+	}
+	if base == nil {
+		return nil
+	}
+	price := *base
+	switch stack.Quality {
+	case 1:
+		price = price * 5 / 4
+	case 2:
+		price = price * 3 / 2
+	case 4:
+		price *= 2
+	}
+	return &price
+}
+
 // recipeIndex maps an ingredient id to the recipes that consume it.
 func recipeIndex(recipes []Recipe) map[string][]Recipe {
 	idx := map[string][]Recipe{}
@@ -176,30 +219,37 @@ func recipeIndex(recipes []Recipe) map[string][]Recipe {
 // and zero are different facts.
 func BuildInventory(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe) []InventoryItem {
 	rev := recipeIndex(recipes)
-	out := make([]InventoryItem, 0, len(snap.Items))
-	for id, count := range snap.Items {
-		name := snap.Names[id]
-		inv := InventoryItem{
-			ID:          id,
-			Name:        name,
-			Count:       count,
-			Category:    snap.Categories[id],
-			RecipeCount: len(rev[id]),
+	stacks := snap.Stacks
+	if len(stacks) == 0 {
+		stacks = make(map[string]parser.ItemStack, len(snap.Items))
+		for id, count := range snap.Items {
+			stacks[id] = parser.ItemStack{Key: id, ID: id, Name: snap.Names[id], Count: count, Category: snap.Categories[id]}
 		}
-		if it, ok := idx.Lookup(id, name); ok {
-			inv.WikiURL = it.WikiURL
+	}
+	out := make([]InventoryItem, 0, len(stacks))
+	for key, stack := range stacks {
+		inv := InventoryItem{
+			ID:          key,
+			Name:        stack.Name,
+			Count:       stack.Count,
+			Category:    stack.Category,
+			Quality:     stack.Quality,
+			RecipeCount: len(rev[stack.ID]),
+		}
+		metadata, known := idx.Lookup(stack.ID, stack.Name)
+		if known {
+			inv.WikiURL = metadata.WikiURL
 			if inv.Name == "" {
-				inv.Name = it.Name
+				inv.Name = metadata.Name
 			}
-			if it.SellPrice != nil {
-				price := *it.SellPrice
-				value := price * count
-				inv.SellPrice = &price
-				inv.StackValue = &value
-			}
+		}
+		if price := savedSellPrice(stack, metadata); price != nil {
+			value := *price * stack.Count
+			inv.SellPrice = price
+			inv.StackValue = &value
 		}
 		if inv.Name == "" {
-			inv.Name = id
+			inv.Name = stack.ID
 		}
 		out = append(out, inv)
 	}
@@ -292,23 +342,26 @@ func RecipeEconomics(idx *ItemIndex, r Recipe) Economics {
 // BuildItemDetail answers GET /api/item/{id}. avail supplies each recipe's
 // state and learned flag so this view never recomputes them.
 func BuildItemDetail(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe, avail []Availability, id string) (ItemDetail, bool) {
-	count, owned := snap.Items[id]
+	stack, owned := snap.Stacks[id]
 	if !owned {
-		return ItemDetail{}, false
+		count, legacy := snap.Items[id]
+		if !legacy {
+			return ItemDetail{}, false
+		}
+		stack = parser.ItemStack{Key: id, ID: id, Name: snap.Names[id], Count: count, Category: snap.Categories[id]}
 	}
-	name := snap.Names[id]
-	detail := ItemDetail{ID: id, Name: name, Count: count, Category: snap.Categories[id], UsedIn: []UsedIn{}}
-	if it, ok := idx.Lookup(id, name); ok {
-		detail.WikiURL = it.WikiURL
+	detail := ItemDetail{ID: id, Name: stack.Name, Count: stack.Count, Category: stack.Category, Quality: stack.Quality, UsedIn: []UsedIn{}}
+	metadata, known := idx.Lookup(stack.ID, stack.Name)
+	if known {
+		detail.WikiURL = metadata.WikiURL
 		if detail.Name == "" {
-			detail.Name = it.Name
+			detail.Name = metadata.Name
 		}
-		if it.SellPrice != nil {
-			price := *it.SellPrice
-			value := price * count
-			detail.SellPrice = &price
-			detail.StackValue = &value
-		}
+	}
+	if price := savedSellPrice(stack, metadata); price != nil {
+		value := *price * stack.Count
+		detail.SellPrice = price
+		detail.StackValue = &value
 	}
 	if detail.Name == "" {
 		detail.Name = id
@@ -319,10 +372,10 @@ func BuildItemDetail(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe, av
 		byKey[av.Recipe.Key] = av
 	}
 
-	for _, r := range recipeIndex(recipes)[id] {
+	for _, r := range recipeIndex(recipes)[stack.ID] {
 		qty := 0
 		for _, ing := range r.Ingredients {
-			if ing.ID == id {
+			if ing.ID == stack.ID {
 				qty = ing.Qty
 				break
 			}
