@@ -1013,6 +1013,11 @@ function qualityLabel(quality) {
   return ({ 0: 'normal', 1: 'silver', 2: 'gold', 4: 'iridium' })[quality] || 'normal';
 }
 
+function qualitySummary(it) {
+  const qualities = it.qualities || [{ quality: 0, count: it.count }];
+  return qualities.map(q => `×${fmtNum(q.count)} ${qualityLabel(q.quality)}`).join(' · ');
+}
+
 function itemRowHTML(it) {
   const priced = it.stack_value !== undefined;
   const uses = it.recipe_count > 0
@@ -1020,7 +1025,7 @@ function itemRowHTML(it) {
   return `<li><button class="row" data-id="${esc(it.id)}">
     <span class="row-text">
       <span class="row-name">${esc(it.name)}</span>
-      <span class="row-meta"><span class="icount">×${fmtNum(it.count)}</span> · ${qualityLabel(it.quality)}${uses}</span>
+      <span class="row-meta">${qualitySummary(it)}${uses}</span>
     </span>
     <span class="ival">${priced
       ? `${fmtNum(it.stack_value)}<span class="g"> g</span>`
@@ -1112,6 +1117,18 @@ function usedInRowHTML(u) {
   </button></li>`;
 }
 
+function qualityRowHTML(quality) {
+  const priced = quality.sell_price !== undefined;
+  const value = quality.stack_value !== undefined;
+  return `<li><div class="row">
+    <span class="row-text">
+      <span class="row-name">${esc(qualityLabel(quality.quality))}</span>
+      <span class="row-meta">×${fmtNum(quality.count)}${priced ? ` · ${fmtNum(quality.sell_price)} g each` : ''}</span>
+    </span>
+    <span class="ival">${value ? `${fmtNum(quality.stack_value)}<span class="g"> g</span>` : '<span class="noprice">—<span class="sr-only">no price on record</span></span>'}</span>
+  </div></li>`;
+}
+
 function renderItemDetail() {
   const id = ui.views.items.detailId;
   const det = ui.itemDetail;
@@ -1135,14 +1152,15 @@ function renderItemDetail() {
   }
 
   const it = det.data;
-  const priced = it.sell_price !== undefined;
+  const qualities = it.qualities || [{ quality: 0, count: it.count, sell_price: it.sell_price, stack_value: it.stack_value }];
+  const hasPrice = qualities.some(q => q.sell_price !== undefined);
+  const averagePrice = it.stack_value !== undefined && it.count > 0 ? it.stack_value / it.count : null;
   const stats = `<div class="stats">
     <div class="stat"><b>${fmtNum(it.count)}</b><span>owned</span></div>
-    <div class="stat"><b>${esc(qualityLabel(it.quality))}</b><span>quality</span></div>
-    <div class="stat"><b>${priced ? `${fmtNum(it.sell_price)}<span class="g"> g</span>` : '—'}</b><span>each</span></div>
-    <div class="stat"><b>${priced ? `${fmtNum(it.stack_value)}<span class="g"> g</span>` : '—'}</b><span>stack value</span></div>
+    <div class="stat"><b>${averagePrice === null ? '—' : `${fmtNum(averagePrice)}<span class="g"> g</span>`}</b><span>average each</span></div>
+    <div class="stat"><b>${it.stack_value !== undefined ? `${fmtNum(it.stack_value)}<span class="g"> g</span>` : '—'}</b><span>total value</span></div>
   </div>`;
-  const priceNote = priced ? '' : `<p class="price-note">${it.wiki_url
+  const priceNote = hasPrice ? '' : `<p class="price-note">${it.wiki_url
     ? 'No sell price on record.'
     : 'Not in the item dataset — no sell price on record.'}</p>`;
   const wiki = it.wiki_url
@@ -1152,6 +1170,10 @@ function renderItemDetail() {
   const usedSection = used.length === 0
     ? '<p class="plan-plain">Not used in any recipe.</p>'
     : `<ul class="rows">${used.map(usedInRowHTML).join('')}</ul>`;
+  const processing = it.processing || [];
+  const processingSection = processing.length === 0 ? '' : `
+    <h3>Can process into · ${processing.length}</h3>
+    <ul class="rows">${processing.map(machineRowHTML).join('')}</ul>`;
 
   el.innerHTML = `
     <button class="back" data-action="back">${ICONS.chevL}All items</button>
@@ -1161,8 +1183,11 @@ function renderItemDetail() {
       ${priceNote}
       ${wiki}
     </div>
+    <h3>Quality and value</h3>
+    <ul class="rows">${qualities.map(qualityRowHTML).join('')}</ul>
     <h3>Used in · ${used.length}</h3>
-    ${usedSection}`;
+    ${usedSection}
+    ${processingSection}`;
 }
 
 /* ================================================================
@@ -1219,19 +1244,38 @@ function rowHTML(entry) {
   </button></li>`;
 }
 
+function machineRowHTML(machine) {
+  const inputs = machine.inputs.map(i => `${fmtNum(i.qty)}× ${esc(i.name)}`).join(' + ');
+  const output = `${fmtNum(machine.output.qty)}× ${esc(machine.output.name)}`;
+  const time = machine.minutes ? ` · ${fmtNum(machine.minutes)} min` : '';
+  const profits = (machine.profits || []).filter(p => p.delta !== undefined)
+    .map(p => `<span class="verdict ${p.delta >= 0 ? 'profit' : 'loss'}">${p.delta >= 0 ? '+' : '−'}${fmtNum(Math.abs(p.delta))} g ${qualityLabel(p.quality)}</span>`).join(' ');
+  return `<li><div class="row">
+    <span class="row-text">
+      <span class="row-name">${esc(machine.machine)}</span>
+      <span class="row-meta"><span>Process ${inputs} → ${output}${time}</span>${profits}</span>
+    </span>
+    <span class="make">make ×${fmtNum(machine.max_runs)}</span>
+  </div></li>`;
+}
+
 function renderOverview() {
   const el = $('#overview');
   const q = ui.search.trim().toLowerCase();
   const filtering = q !== '' || ui.typeFilter !== 'all';
   let list = ui.data.recipes;
+  let machines = ui.data.machines || [];
   if (q) list = list.filter(r => r.recipe.name.toLowerCase().includes(q));
   else if (!ui.showAll) list = list.filter(r => r.learned);
   if (ui.typeFilter !== 'all') list = list.filter(r => r.recipe.type === ui.typeFilter);
+  if (q) machines = machines.filter(m =>
+    m.machine.toLowerCase().includes(q) || m.output.name.toLowerCase().includes(q));
+  if (ui.typeFilter !== 'all') machines = [];
 
   const grouped = { craftable: [], partial: [], far_off: [] };
   for (const r of list) (grouped[r.state] || grouped.far_off).push(r);
 
-  if (filtering && list.length === 0) {
+  if (filtering && list.length === 0 && machines.length === 0) {
     const typeWord = ui.typeFilter === 'all' ? '' : ui.typeFilter + ' ';
     const actions = [
       q ? '<button class="btn ghost" data-action="clear-search">Clear search</button>' : '',
@@ -1248,7 +1292,11 @@ function renderOverview() {
     return;
   }
 
-  el.innerHTML = GROUPS.map(([state, label]) => {
+  const processing = machines.length ? `<details class="group" open>
+    <summary><span class="group-label">Ready to process</span><span class="group-count">${machines.length}</span>${ICONS.chevR}</summary>
+    <ul class="rows">${machines.map(machineRowHTML).join('')}</ul>
+  </details>` : '';
+  el.innerHTML = processing + GROUPS.map(([state, label]) => {
     const rows = grouped[state];
     if (filtering && rows.length === 0) return '';
     const body = rows.length
