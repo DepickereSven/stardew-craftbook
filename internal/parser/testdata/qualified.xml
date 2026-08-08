@@ -12,8 +12,9 @@
       <Item xsi:type="Object"><name>Coffee Maker</name><itemId>246</itemId><stack>1</stack><category>-9</category><bigCraftable>true</bigCraftable></Item>
       <Item xsi:type="MeleeWeapon"><name>Galaxy Sword</name><itemId>4</itemId><stack>1</stack><category>-98</category></Item>
       <Item xsi:type="Axe"><name>Gold Axe</name><itemId>GoldAxe</itemId><stack>1</stack><category>-99</category></Item>
-      <Item xsi:type="Object"><name>Dried Blueberries</name><itemId>DriedFruit</itemId><stack>10</stack><category>-26</category><bigCraftable>false</bigCraftable></Item>
-      <Item xsi:type="Object"><name>Dried Strawberries</name><itemId>DriedFruit</itemId><stack>8</stack><category>-26</category><bigCraftable>false</bigCraftable></Item>
+      <Item xsi:type="Object"><name>Dried Blueberries</name><itemId>DriedFruit</itemId><stack>10</stack><category>-26</category><price>400</price><quality>0</quality><bigCraftable>false</bigCraftable></Item>
+      <Item xsi:type="Object"><name>Dried Strawberries</name><itemId>DriedFruit</itemId><stack>8</stack><category>-26</category><price>475</price><quality>0</quality><bigCraftable>false</bigCraftable></Item>
+      <Item xsi:type="Object"><name>Blueberry</name><itemId>258</itemId><stack>2</stack><category>-79</category><price>50</price><quality>2</quality><bigCraftable>false</bigCraftable></Item>
     </items>
     <craftingRecipes />
     <cookingRecipes />

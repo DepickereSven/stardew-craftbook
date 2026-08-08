@@ -64,7 +64,7 @@ func PlanRecipe(snap *parser.Snapshot, recipes []Recipe, machines []Machine, key
 		}
 		// A category ingredient names a class of items, not something a
 		// machine can be asked to output, so there is nothing to produce.
-		if !ing.Category && produce(machines, budget, ing.ID, need, maxDepth, map[string]bool{}, &res) {
+		if !ing.Category && produce(machines, snap, budget, ing.ID, need, maxDepth, map[string]bool{}, &res) {
 			continue
 		}
 		res.Feasible = false
@@ -81,7 +81,7 @@ func PlanRecipe(snap *parser.Snapshot, recipes []Recipe, machines []Machine, key
 //
 // Each candidate machine is tried against a copy of the budget, so a partial
 // attempt that fails leaves nothing behind.
-func produce(machines []Machine, budget map[string]int, id string, need, depth int, visited map[string]bool, res *PlanResult) bool {
+func produce(machines []Machine, snap *parser.Snapshot, budget map[string]int, id string, need, depth int, visited map[string]bool, res *PlanResult) bool {
 	if depth == 0 || need <= 0 || id == "" || visited[id] {
 		return false
 	}
@@ -102,13 +102,15 @@ func produce(machines []Machine, budget map[string]int, id string, need, depth i
 		ok := true
 		for _, in := range m.Inputs {
 			totalNeed := in.Qty * runs
-			if in.ID != "" && !in.Category {
+			if in.Category {
+				totalNeed -= consumeCategory(snap, trial, in)
+			} else if in.ID != "" {
 				take := min(trial[in.ID], totalNeed)
 				trial[in.ID] -= take
 				totalNeed -= take
 			}
 			if totalNeed > 0 {
-				if in.Category || !produce(machines, trial, in.ID, totalNeed, depth-1, visited, &trialRes) {
+				if in.Category || !produce(machines, snap, trial, in.ID, totalNeed, depth-1, visited, &trialRes) {
 					ok = false
 					break
 				}

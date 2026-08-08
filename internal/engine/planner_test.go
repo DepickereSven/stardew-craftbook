@@ -181,3 +181,19 @@ func TestPlanCategoryConsumption(t *testing.T) {
 		t.Errorf("an id-less category must not match category-0 items: %+v", res)
 	}
 }
+
+func TestPlanFishSmokerUsesFishCategoryAndCoal(t *testing.T) {
+	smoker := Machine{Machine: "Fish Smoker",
+		Inputs: []Ingredient{{ID: "-4", Name: "Fish (Any)", Qty: 1, Category: true}, {ID: "382", Name: "Coal", Qty: 1}},
+		Output: Ingredient{ID: "SmokedFish", Name: "Smoked Fish", Qty: 1}, Minutes: 50}
+	recipe := Recipe{Key: "Smoked Fish Dish", Name: "Smoked Fish Dish", Type: "cooking", OutputQty: 1,
+		Ingredients: []Ingredient{{ID: "SmokedFish", Name: "Smoked Fish", Qty: 1}}}
+	snap := snapWith(map[string]int{"147": 1, "382": 1}, map[string]int{"147": -4})
+	res, err := PlanRecipe(snap, []Recipe{recipe}, []Machine{smoker}, recipe.Key)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !res.Feasible || len(res.Steps) != 1 || res.Steps[0].Machine != "Fish Smoker" {
+		t.Errorf("fish smoker plan = %+v", res)
+	}
+}

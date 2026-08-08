@@ -7,6 +7,7 @@ import (
 	"encoding/xml"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -15,15 +16,28 @@ import (
 // category it is in (so category ingredients like "any milk" can be resolved),
 // and which recipes have been learned.
 //
-// Items is keyed by qualified id — see qualifyID. Names is keyed the same way
-// and is populated for every entry in Items; the save names every item it
-// holds, so nothing here needs a fallback to the item dataset.
+// Items is keyed by qualified id — see qualifyID — for recipe and machine
+// matching. Stacks preserves name, base price, and quality variants which the
+// game stores under the same item id.
 type Snapshot struct {
 	Items           map[string]int
 	Names           map[string]string
 	Categories      map[string]int
+	Stacks          map[string]ItemStack
 	CraftingLearned map[string]bool
 	CookingLearned  map[string]bool
+}
+
+// ItemStack is one sell-price and quality-distinct group from the save. ID is
+// the raw qualified item id used by recipes; Key identifies the group in UI.
+type ItemStack struct {
+	Key      string
+	ID       string
+	Name     string
+	Count    int
+	Category int
+	Price    *int
+	Quality  int
 }
 
 type saveGame struct {
@@ -49,6 +63,8 @@ type itemXML struct {
 	ItemID   string `xml:"itemId"`
 	Stack    int    `xml:"stack"`
 	Category int    `xml:"category"`
+	Price    *int   `xml:"price"`
+	Quality  int    `xml:"quality"`
 	// BigCraftable is a string rather than a bool because it is absent on tools,
 	// weapons and clothing, where "" and "false" must stay distinguishable from
 	// each other only in intent — both mean "not a big craftable".
@@ -102,6 +118,7 @@ func Parse(r io.Reader) (*Snapshot, error) {
 		Items:           map[string]int{},
 		Names:           map[string]string{},
 		Categories:      map[string]int{},
+		Stacks:          map[string]ItemStack{},
 		CraftingLearned: map[string]bool{},
 		CookingLearned:  map[string]bool{},
 	}
@@ -118,6 +135,7 @@ func Parse(r io.Reader) (*Snapshot, error) {
 	for _, kv := range sg.Player.CookingRecipes {
 		snap.CookingLearned[kv.Key] = true
 	}
+	finalizeStacks(snap)
 	return snap, nil
 }
 
@@ -171,6 +189,13 @@ func addItems(snap *Snapshot, items []itemXML) {
 		}
 		snap.Items[id] += it.Stack
 		snap.Categories[id] = it.Category
+		key := stackKey(id, it.Name, it.Price, it.Quality)
+		stack := snap.Stacks[key]
+		if stack.Count == 0 {
+			stack = ItemStack{ID: id, Name: it.Name, Category: it.Category, Price: it.Price, Quality: it.Quality}
+		}
+		stack.Count += it.Stack
+		snap.Stacks[key] = stack
 		if it.Name != "" {
 			// First name wins. One id can cover several differently-named items
 			// (DriedFruit is Dried Blueberries and Dried Strawberries both), so
@@ -184,6 +209,34 @@ func addItems(snap *Snapshot, items []itemXML) {
 			addItems(snap, []itemXML{*it.HeldObject})
 		}
 	}
+}
+
+func stackKey(id, name string, price *int, quality int) string {
+	pricePart := ""
+	if price != nil {
+		pricePart = strconv.Itoa(*price)
+	}
+	return id + "\x00" + name + "\x00" + pricePart + "\x00" + strconv.Itoa(quality)
+}
+
+func finalizeStacks(snap *Snapshot) {
+	byID := map[string]int{}
+	for _, stack := range snap.Stacks {
+		byID[stack.ID]++
+	}
+	final := make(map[string]ItemStack, len(snap.Stacks))
+	for _, stack := range snap.Stacks {
+		stack.Key = stack.ID
+		if byID[stack.ID] > 1 {
+			stack.Key += "#" + stack.Name + "#p"
+			if stack.Price != nil {
+				stack.Key += strconv.Itoa(*stack.Price)
+			}
+			stack.Key += "#q" + strconv.Itoa(stack.Quality)
+		}
+		final[stack.Key] = stack
+	}
+	snap.Stacks = final
 }
 
 func addLocation(snap *Snapshot, loc *locationXML) {

@@ -109,3 +109,25 @@ func TestRealSavePlansAreWellFormed(t *testing.T) {
 	}
 	t.Logf("planned %d non-craftable recipes, %d produced machine steps", planned, withSteps)
 }
+
+// Saved item prices are the source of truth for variable artisan goods and
+// quality variants, so a representative save should expose prices for most of
+// its distinct stacks.
+func TestRealSaveInventoryPrices(t *testing.T) {
+	snap, recipes, _ := loadReal(t)
+	items, err := LoadItems()
+	if err != nil {
+		t.Fatal(err)
+	}
+	inventory := BuildInventory(snap, NewItemIndex(items), recipes)
+	priced := 0
+	for _, item := range inventory {
+		if item.SellPrice != nil {
+			priced++
+		}
+	}
+	t.Logf("priced inventory stacks: %d/%d", priced, len(inventory))
+	if priced*10 < len(inventory)*9 {
+		t.Errorf("only %d of %d inventory stacks have prices", priced, len(inventory))
+	}
+}

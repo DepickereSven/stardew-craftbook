@@ -65,6 +65,25 @@ func TestSharedIDKeepsFirstNameAndSumsCount(t *testing.T) {
 	}
 }
 
+func TestVariantsKeepSavedPriceAndQuality(t *testing.T) {
+	snap := mustParse(t, "testdata/qualified.xml")
+	for key, want := range map[string]struct {
+		name    string
+		price   int
+		quality int
+		count   int
+	}{
+		"DriedFruit#Dried Blueberries#p400#q0":  {"Dried Blueberries", 400, 0, 10},
+		"DriedFruit#Dried Strawberries#p475#q0": {"Dried Strawberries", 475, 0, 8},
+		"258":                                   {"Blueberry", 50, 2, 2},
+	} {
+		stack, ok := snap.Stacks[key]
+		if !ok || stack.Name != want.name || stack.Price == nil || *stack.Price != want.price || stack.Quality != want.quality || stack.Count != want.count {
+			t.Errorf("Stacks[%q] = %+v, want %+v", key, stack, want)
+		}
+	}
+}
+
 func TestQualifiedIDInSaveLeftAlone(t *testing.T) {
 	// (O)388 must land on 388, not "((O)388".
 	snap := mustParse(t, "testdata/player_only.xml")
