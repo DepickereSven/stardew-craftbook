@@ -450,73 +450,154 @@ func BuildItemDetail(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe, ma
 		for _, in := range machine.Inputs {
 			if in.ID == stackID || (in.Category && in.ID == strconv.Itoa(item.Category)) {
 				machine.Profits = machineProfits(snap, idx, item, machine.Machine)
+				machine.Throughput = machineThroughput(snap, idx, item, machine.Machine, in)
 				detail.Processing = append(detail.Processing, machine)
 				break
 			}
 		}
 	}
+	sort.Slice(detail.Processing, func(i, j int) bool {
+		a, b := detail.Processing[i].Throughput, detail.Processing[j].Throughput
+		// A machine whose rate could not be computed sorts last rather than
+		// leading on an implied zero.
+		if (a == nil) != (b == nil) {
+			return b == nil
+		}
+		if a != nil && a.GPerMachMin != b.GPerMachMin {
+			return a.GPerMachMin > b.GPerMachMin
+		}
+		return detail.Processing[i].Machine.Machine < detail.Processing[j].Machine.Machine
+	})
 	return detail, true
+}
+
+// stacksOf returns the player's holdings of one inventory item, one entry per
+// quality. Snapshot stacks live in a map, so the order they come out in is
+// arbitrary — sorting by quality is what makes the payload stable between
+// requests.
+func stacksOf(snap *parser.Snapshot, item *InventoryItem) []parser.ItemStack {
+	var out []parser.ItemStack
+	for _, stack := range snap.Stacks {
+		if stack.ID == strings.SplitN(item.ID, "#", 2)[0] && stack.Name == item.Name {
+			out = append(out, stack)
+		}
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i].Quality < out[j].Quality })
+	return out
 }
 
 func machineProfits(snap *parser.Snapshot, idx *ItemIndex, item *InventoryItem, machine Machine) []QualityProfit {
 	var out []QualityProfit
-	for _, stack := range snap.Stacks {
-		if stack.ID == strings.SplitN(item.ID, "#", 2)[0] && stack.Name == item.Name {
-			out = append(out, QualityProfit{Quality: stack.Quality, Delta: machineProfit(stack, idx, machine)})
-		}
+	for _, stack := range stacksOf(snap, item) {
+		out = append(out, QualityProfit{Quality: stack.Quality, Delta: machineProfit(stack, idx, machine)})
 	}
 	return out
 }
 
-// machineProfit implements the fixed sell-price formulas for the artisan
-// conversions that take a saved-price item as input. Input quality affects the
-// opportunity cost, while the output formula uses the item's base price.
-func machineProfit(stack parser.ItemStack, idx *ItemIndex, machine Machine) *int {
-	if stack.Price == nil {
+// machineThroughput converts the player's whole holding of one item through a
+// machine, quality by quality, and reduces the result to rates.
+//
+// inputQty is the qty of the input entry this item matched, not the sum across
+// every input: a machine taking five fruit and one coal turns five fruit into
+// one run. Runs floor the same way AvailableMachines does, so a quality with
+// too few items to fill the machine earns nothing rather than a fraction.
+func machineThroughput(snap *parser.Snapshot, idx *ItemIndex, item *InventoryItem, machine Machine, input Ingredient) *Throughput {
+	inputQty := input.Qty
+	if inputQty <= 0 || machine.Minutes <= 0 {
 		return nil
 	}
+	runs, collected, raw := 0, 0, 0
+	for _, stack := range stacksOf(snap, item) {
+		output, cost, ok := machineRun(stack, idx, machine)
+		if !ok {
+			// One unpriced quality would make every figure below a guess.
+			return nil
+		}
+		n := stack.Count / inputQty
+		runs += n
+		collected += n * output
+		raw += n * cost
+	}
+	total := collected - raw
+	if runs == 0 {
+		return nil
+	}
+	// The rates divide the exact mean rather than the rounded ProfitPerRun, so
+	// a long stack does not drift by the truncation of a single run.
+	perRun := float64(total) / float64(runs)
+	return &Throughput{
+		Input:        input.Name,
+		Runs:         runs,
+		Consumed:     runs * inputQty,
+		Collected:    collected,
+		RawValue:     raw,
+		TotalProfit:  total,
+		ProfitPerRun: total / runs,
+		GPerMachMin:  perRun / float64(machine.Minutes),
+		GPerInputMin: perRun / float64(inputQty) / float64(machine.Minutes),
+	}
+}
+
+// machineProfit is the gold one run adds over selling the input untouched.
+func machineProfit(stack parser.ItemStack, idx *ItemIndex, machine Machine) *int {
+	output, cost, ok := machineRun(stack, idx, machine)
+	if !ok {
+		return nil
+	}
+	delta := output - cost
+	return &delta
+}
+
+// machineRun implements the fixed sell-price formulas for the artisan
+// conversions that take a saved-price item as input. Input quality affects the
+// opportunity cost, while the output formula uses the item's base price.
+//
+// The two halves are returned separately because a card that prints only their
+// difference reads as the total takings, turning a genuine gain into an
+// apparent shortfall against the stack's raw value.
+func machineRun(stack parser.ItemStack, idx *ItemIndex, machine Machine) (output, cost int, ok bool) {
+	if stack.Price == nil {
+		return 0, 0, false
+	}
 	base := *stack.Price
-	output := 0
 	switch machine.Machine {
 	case "Dehydrator":
 		if machine.Output.ID != "DriedFruit" {
-			return nil
+			return 0, 0, false
 		}
 		output = base*15/2 + 25
 	case "Keg":
 		if machine.Output.ID != "348" {
-			return nil
+			return 0, 0, false
 		}
 		output = base * 3
 	case "Preserves Jar":
 		if machine.Output.ID != "344" {
-			return nil
+			return 0, 0, false
 		}
 		output = base*2 + 50
 	case "Fish Smoker":
 		if machine.Output.ID != "SmokedFish" {
-			return nil
+			return 0, 0, false
 		}
 		output = base * 2
 	default:
-		return nil
+		return 0, 0, false
 	}
-	cost := 0
 	for _, in := range machine.Inputs {
 		if in.Category && in.ID == strconv.Itoa(stack.Category) {
 			price := savedSellPrice(stack, Item{})
 			if price == nil {
-				return nil
+				return 0, 0, false
 			}
 			cost += *price * in.Qty
 			continue
 		}
-		other, ok := idx.Lookup(in.ID, in.Name)
-		if !ok || other.SellPrice == nil {
-			return nil
+		other, known := idx.Lookup(in.ID, in.Name)
+		if !known || other.SellPrice == nil {
+			return 0, 0, false
 		}
 		cost += *other.SellPrice * in.Qty
 	}
-	delta := output - cost
-	return &delta
+	return output, cost, true
 }
