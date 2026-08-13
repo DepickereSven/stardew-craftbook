@@ -552,6 +552,130 @@ main { max-width: 640px; margin: 0 auto; padding: 12px 14px 24px; }
 .unmake { color: var(--faint); }
 .row.use { grid-template-columns: minmax(0, 1fr) auto; }
 
+/* ---------- machine throughput cards ----------
+   A taller sibling of .row, not a variant of it: these rank machines by gold
+   per machine-minute and carry four figures where a recipe row carries one. */
+.mrow {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.mrow-best {
+  margin: 0;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+.mrow-best svg { width: 9px; height: 9px; }
+.mrow-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+}
+.mrow-name {
+  font-weight: 650;
+  font-size: 17px;
+  overflow-wrap: anywhere;
+}
+.mrow-recipe {
+  margin-top: 3px;
+  font-size: 12.5px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.mrow-rate { text-align: right; }
+.mrow-rate b {
+  display: block;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 26px;
+  font-weight: 650;
+  line-height: 1.1;
+  color: var(--accent-ink);
+}
+.mrow-rate.loss b { color: var(--warn); }
+.mrow-rate span {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.mstats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.mstat { min-width: 0; }
+.mstat b {
+  display: block;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.mstat.loss b { color: var(--warn); }
+.mstat span {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+}
+/* Spells out where the gained figure comes from. Without it the card looks
+   like it is reporting total takings, and a real gain reads as a shortfall
+   against the stack's raw value. */
+.mrow-sum {
+  margin: 0;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.mrow-sum b { font-family: var(--mono); font-weight: 650; color: var(--ink); }
+.mrow-sum b.sum-gain { color: var(--accent-ink); }
+.mrow-sum b.sum-loss { color: var(--warn); }
+.mrow-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.mrow-foot {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 10px;
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--faint);
+}
+.mrow-foot .make { font-size: 11.5px; }
+/* The category total is a different population from the runs beside it, so it
+   stays visually quieter than the item's own figure. */
+.mrow-wider { color: var(--faint); }
+@media (max-width: 380px) {
+  .mstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mrow-rate b { font-size: 20px; }
+}
+
 /* ---------- detail view ---------- */
 .back {
   display: inline-flex;
@@ -1244,18 +1368,107 @@ function rowHTML(entry) {
   </button></li>`;
 }
 
-function machineRowHTML(machine) {
-  const inputs = machine.inputs.map(i => `${fmtNum(i.qty)}× ${esc(i.name)}`).join(' + ');
-  const output = `${fmtNum(machine.output.qty)}× ${esc(machine.output.name)}`;
-  const time = machine.minutes ? ` · ${fmtNum(machine.minutes)} min` : '';
-  const profits = (machine.profits || []).filter(p => p.delta !== undefined)
-    .map(p => `<span class="verdict ${p.delta >= 0 ? 'profit' : 'loss'}">${p.delta >= 0 ? '+' : '−'}${fmtNum(Math.abs(p.delta))} g ${qualityLabel(p.quality)}</span>`).join(' ');
+/* Machine rates run small — a keg earns a tenth of a gold per minute — so they
+   need two decimals where whole-gold figures do not. Below a hundredth, print
+   a bound: a rounded "0.00" would read as "earns nothing", which is a
+   different claim from "earns very little". */
+function fmtRate(n) {
+  if (!isFinite(n)) return '—';
+  const abs = Math.abs(n), sign = n < 0 ? '−' : '';
+  if (abs === 0) return '0';
+  if (abs < 0.001) return n < 0 ? '>−0.001' : '<0.001';
+  if (abs >= 10) return signedNum(Math.round(n));
+  if (abs >= 1) return `${sign}${abs.toFixed(2)}`;
+  // Real fruit rates sit around 0.05, 0.02 and 0.009 g/min. Two fixed decimals
+  // would round those to 0.06, 0.02 and 0.01 — flattening the ranking the card
+  // exists to show — so below a gold a minute it keeps three significant digits.
+  return `${sign}${Number(abs.toPrecision(3))}`;
+}
+
+/* Whole-stack totals reach seven figures and would swamp the card. Always
+   signed: this figure is a gain over selling raw, not a sum of takings, and an
+   unsigned number invites reading it as the latter. */
+function fmtGoldCompact(n) {
+  const abs = Math.abs(n), sign = n < 0 ? '−' : '+';
+  if (abs >= 1e6) return `${sign}${(abs / 1e6).toFixed(2)}M`;
+  if (abs >= 1e5) return `${sign}${fmtNum(Math.round(abs / 1e3))}k`;
+  return `${sign}${fmtNum(abs)}`;
+}
+
+/* Negative gold is written with a minus sign, not a hyphen, as elsewhere. */
+function signedNum(n) {
+  return `${n < 0 ? '−' : ''}${fmtNum(Math.abs(n))}`;
+}
+
+/* A gain over selling raw always carries its sign, so it cannot be read as a
+   plain total of takings. */
+function gainNum(n) {
+  return `${n < 0 ? '−' : '+'}${fmtNum(Math.abs(n))}`;
+}
+
+/* "Fruit (Any)" labels a category input; the card has room for the noun only. */
+function inputNoun(name) {
+  const noun = (name || '').replace(/\s*\(any\)$/i, '').trim();
+  return noun ? noun.toLowerCase() : 'input';
+}
+
+function machineChipsHTML(machine) {
+  return (machine.profits || []).filter(p => p.delta !== undefined && p.delta !== null)
+    .map(p => `<span class="verdict ${p.delta >= 0 ? 'profit' : 'loss'}">${p.delta >= 0 ? '+' : '−'}${fmtNum(Math.abs(p.delta))} g ${qualityLabel(p.quality)}</span>`).join('');
+}
+
+/* A machine whose rate could not be computed keeps the old compact row: there
+   is nothing to rank it by, and an empty stats strip would imply zeroes. */
+function machineRowPlainHTML(machine, recipe, chips) {
   return `<li><div class="row">
     <span class="row-text">
       <span class="row-name">${esc(machine.machine)}</span>
-      <span class="row-meta"><span>Process ${inputs} → ${output}${time}</span>${profits}</span>
+      <span class="row-meta"><span>${recipe}</span>${chips}</span>
     </span>
     <span class="make">make ×${fmtNum(machine.max_runs)}</span>
+  </div></li>`;
+}
+
+function machineRowHTML(machine, index) {
+  const inputs = machine.inputs.map(i => `${fmtNum(i.qty)}× ${esc(i.name)}`).join(' + ');
+  const output = `${fmtNum(machine.output.qty)}× ${esc(machine.output.name)}`;
+  const time = machine.minutes ? ` · ${fmtNum(machine.minutes)} min` : '';
+  const recipe = `Process ${inputs} → ${output}${time}`;
+  const chips = machineChipsHTML(machine);
+  const tp = machine.throughput;
+  if (!tp) return machineRowPlainHTML(machine, recipe, chips);
+
+  const noun = inputNoun(tp.input);
+  const losing = tp.total_profit < 0;
+  // Only the leader is badged. Numbering every card would flatten the signal
+  // the ordering already carries.
+  const best = index === 0
+    ? `<p class="mrow-best">${ICONS.up}best per machine</p>` : '';
+  const wider = machine.max_runs !== tp.runs
+    ? `<span class="mrow-wider">×${fmtNum(machine.max_runs)} using all ${esc(tp.input)}</span>` : '';
+  return `<li><div class="mrow">
+    ${best}
+    <div class="mrow-head">
+      <div>
+        <div class="mrow-name">${esc(machine.machine)}</div>
+        <div class="mrow-recipe">${recipe}</div>
+      </div>
+      <div class="mrow-rate${losing ? ' loss' : ''}">
+        <b>${fmtRate(tp.g_per_machine_min)}</b><span>g/min per machine</span>
+      </div>
+    </div>
+    <div class="mstats">
+      <div class="mstat"><b>${fmtRate(tp.g_per_input_min)}</b><span>g/min per ${esc(noun)}</span></div>
+      <div class="mstat${losing ? ' loss' : ''}"><b>${signedNum(tp.profit_per_run)}</b><span>gained per run</span></div>
+      <div class="mstat${losing ? ' loss' : ''}"><b title="${fmtNum(tp.total_profit)} g">${fmtGoldCompact(tp.total_profit)}</b><span>total gained</span></div>
+    </div>
+    <p class="mrow-sum">collect <b>${fmtNum(tp.collected)} g</b> · ${esc(noun)} sells raw for
+      <b>${fmtNum(tp.raw_value)} g</b> · <b class="${losing ? 'sum-loss' : 'sum-gain'}">${gainNum(tp.total_profit)} g</b></p>
+    ${chips ? `<div class="mrow-chips">${chips}</div>` : ''}
+    <div class="mrow-foot">
+      <span>${fmtNum(tp.runs)} runs · ${fmtNum(tp.consumed)} ${esc(noun)} used</span>
+      ${wider}
+    </div>
   </div></li>`;
 }
 
