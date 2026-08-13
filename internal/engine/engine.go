@@ -42,8 +42,35 @@ type Machine struct {
 // any fruit or any fish.
 type MachineAvailability struct {
 	Machine
-	MaxRuns int             `json:"max_runs"`
-	Profits []QualityProfit `json:"profits,omitempty"`
+	MaxRuns    int             `json:"max_runs"`
+	Profits    []QualityProfit `json:"profits,omitempty"`
+	Throughput *Throughput     `json:"throughput,omitempty"`
+}
+
+// Throughput is the whole-stack economics of one machine conversion for the
+// selected item: every quality the player holds, converted at its own rate and
+// summed. Like QualityProfit it is attached only to an item-detail response,
+// since only there is there a selected input to convert.
+//
+// Nil means the arithmetic could not be trusted — an unpriced quality, no full
+// run, or a machine with no recorded time — and the UI says so rather than
+// printing a confident zero.
+type Throughput struct {
+	// Input names the ingredient entry the selected item matched, so a card can
+	// say whose runs these are when the machine accepts a whole category.
+	Input    string `json:"input"`
+	Runs     int    `json:"runs"`
+	Consumed int    `json:"consumed"`
+	// Collected is what the finished output sells for and RawValue is what the
+	// consumed input would have sold for untouched. TotalProfit is the
+	// difference. All three are reported because the difference alone reads as
+	// the total takings and makes a real gain look like a shortfall.
+	Collected    int     `json:"collected"`
+	RawValue     int     `json:"raw_value"`
+	TotalProfit  int     `json:"total_profit"`
+	ProfitPerRun int     `json:"profit_per_run"`
+	GPerMachMin  float64 `json:"g_per_machine_min"`
+	GPerInputMin float64 `json:"g_per_input_min"`
 }
 
 // QualityProfit is a processing gain for one quality of the selected input.

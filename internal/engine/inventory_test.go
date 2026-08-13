@@ -1,6 +1,7 @@
 package engine
 
 import (
+	"math"
 	"strconv"
 	"testing"
 
@@ -261,6 +262,210 @@ func TestItemDetailListsAvailableMachineConversions(t *testing.T) {
 	}
 	if profits := detail.Processing[0].Profits; len(profits) != 1 || profits[0].Delta == nil || *profits[0].Delta != 325 {
 		t.Errorf("Dehydrator profits = %+v, want +325", profits)
+	}
+}
+
+// fruitSnapshot holds one Strawberry stack per quality, all at the given base
+// price, so machine throughput can be checked against a hand-computed blend.
+// counts is keyed by quality: 0 normal, 1 silver, 2 gold.
+func fruitSnapshot(base int, counts map[int]int) *parser.Snapshot {
+	total := 0
+	stacks := map[string]parser.ItemStack{}
+	for quality, count := range counts {
+		total += count
+		price := base
+		stacks["400#q"+strconv.Itoa(quality)] = parser.ItemStack{
+			ID: "400", Name: "Strawberry", Count: count, Category: -79, Price: &price, Quality: quality}
+	}
+	return &parser.Snapshot{
+		Items:      map[string]int{"400": total},
+		Names:      map[string]string{"400": "Strawberry"},
+		Categories: map[string]int{"400": -79},
+		Stacks:     stacks,
+	}
+}
+
+// dehydrator takes five fruit of any kind. At a base price of 120 its per-run
+// profit is 925 output minus five inputs: +325 normal, +175 silver, +25 gold.
+func dehydrator(minutes int) []Machine {
+	return []Machine{{
+		Machine: "Dehydrator",
+		Inputs:  []Ingredient{{ID: "-79", Name: "Fruit (Any)", Qty: 5, Category: true}},
+		Output:  Ingredient{ID: "DriedFruit", Name: "Dried Fruit", Qty: 1},
+		Minutes: minutes,
+	}}
+}
+
+func throughputOf(t *testing.T, snap *parser.Snapshot, machines []Machine) *Throughput {
+	t.Helper()
+	detail, ok := BuildItemDetail(snap, NewItemIndex(nil), nil, machines, nil, "400")
+	if !ok || len(detail.Processing) != 1 {
+		t.Fatalf("processing = %+v, want one machine", detail.Processing)
+	}
+	return detail.Processing[0].Throughput
+}
+
+func TestThroughputBlendsProfitAcrossQualitiesHeld(t *testing.T) {
+	// 10 normal is two runs at +325, 5 silver is one run at +175.
+	tp := throughputOf(t, fruitSnapshot(120, map[int]int{0: 10, 1: 5}), dehydrator(1750))
+	if tp == nil {
+		t.Fatal("throughput = nil, want a blended figure")
+	}
+	if tp.Runs != 3 || tp.Consumed != 15 {
+		t.Errorf("Runs/Consumed = %d/%d, want 3/15", tp.Runs, tp.Consumed)
+	}
+	if tp.TotalProfit != 825 || tp.ProfitPerRun != 275 {
+		t.Errorf("TotalProfit/ProfitPerRun = %d/%d, want 825/275", tp.TotalProfit, tp.ProfitPerRun)
+	}
+}
+
+// Four fruit cannot fill a five-fruit dehydrator, so that quality earns nothing
+// and is not counted among the runs.
+func TestThroughputIgnoresQualityBelowOneFullRun(t *testing.T) {
+	tp := throughputOf(t, fruitSnapshot(120, map[int]int{0: 10, 2: 3}), dehydrator(1750))
+	if tp == nil {
+		t.Fatal("throughput = nil, want the normal-quality runs")
+	}
+	if tp.Runs != 2 || tp.Consumed != 10 || tp.TotalProfit != 650 {
+		t.Errorf("Runs/Consumed/TotalProfit = %d/%d/%d, want 2/10/650", tp.Runs, tp.Consumed, tp.TotalProfit)
+	}
+}
+
+func TestThroughputRatesDivideByMinutesAndInputQty(t *testing.T) {
+	tp := throughputOf(t, fruitSnapshot(120, map[int]int{0: 10, 1: 5}), dehydrator(1750))
+	if tp == nil {
+		t.Fatal("throughput = nil, want rates")
+	}
+	// 275 g per run over 1,750 minutes, across five fruit per run.
+	if !nearly(tp.GPerMachMin, 275.0/1750) {
+		t.Errorf("GPerMachMin = %v, want %v", tp.GPerMachMin, 275.0/1750)
+	}
+	if !nearly(tp.GPerInputMin, 275.0/5/1750) {
+		t.Errorf("GPerInputMin = %v, want %v", tp.GPerInputMin, 275.0/5/1750)
+	}
+}
+
+func nearly(got, want float64) bool { return math.Abs(got-want) < 1e-9 }
+
+// Every figure on the card is net of the fruit given up, which reads as a loss
+// unless the card can show the gross beside it: two runs collect 1,850 g of
+// dried fruit for 1,200 g of strawberries, gaining 650.
+func TestThroughputSeparatesCollectedFromRawValue(t *testing.T) {
+	tp := throughputOf(t, fruitSnapshot(120, map[int]int{0: 10}), dehydrator(1750))
+	if tp == nil {
+		t.Fatal("throughput = nil, want the gross figures")
+	}
+	if tp.Collected != 1850 || tp.RawValue != 1200 {
+		t.Errorf("Collected/RawValue = %d/%d, want 1850/1200", tp.Collected, tp.RawValue)
+	}
+	if tp.Collected-tp.RawValue != tp.TotalProfit {
+		t.Errorf("Collected−RawValue = %d, want TotalProfit %d", tp.Collected-tp.RawValue, tp.TotalProfit)
+	}
+}
+
+// The card contrasts runs from this item against runs from the whole category,
+// which needs the name of the input the item matched — a machine may take
+// several and only one of them is the fruit.
+func TestThroughputNamesTheInputThisItemMatched(t *testing.T) {
+	tp := throughputOf(t, fruitSnapshot(120, map[int]int{0: 10}), dehydrator(1750))
+	if tp == nil {
+		t.Fatal("throughput = nil, want the matched input")
+	}
+	if tp.Input != "Fruit (Any)" {
+		t.Errorf("Input = %q, want %q", tp.Input, "Fruit (Any)")
+	}
+}
+
+// A stack the save records no price for makes every quality's share of the
+// blend unknowable, so the whole figure is withheld rather than computed from
+// the qualities that happen to be priced.
+func TestThroughputWithheldWhenAQualityHasNoPrice(t *testing.T) {
+	snap := fruitSnapshot(120, map[int]int{0: 10, 1: 5})
+	unpriced := snap.Stacks["400#q1"]
+	unpriced.Price = nil
+	snap.Stacks["400#q1"] = unpriced
+	if tp := throughputOf(t, snap, dehydrator(1750)); tp != nil {
+		t.Errorf("throughput = %+v, want nil for an unpriced quality", tp)
+	}
+}
+
+func TestThroughputWithheldWhenMachineHasNoRecordedTime(t *testing.T) {
+	if tp := throughputOf(t, fruitSnapshot(120, map[int]int{0: 10}), dehydrator(0)); tp != nil {
+		t.Errorf("throughput = %+v, want nil without a duration to divide by", tp)
+	}
+}
+
+// The machine is listed because the category has enough fruit between them all,
+// but three strawberries cannot fill it even once, so this item has no rate.
+func TestThroughputWithheldWhenThisItemFillsNoRun(t *testing.T) {
+	snap := fruitSnapshot(120, map[int]int{0: 3})
+	snap.Items["613"] = 10
+	snap.Names["613"] = "Apple"
+	snap.Categories["613"] = -79
+	if tp := throughputOf(t, snap, dehydrator(1750)); tp != nil {
+		t.Errorf("throughput = %+v, want nil when no full run comes from this item", tp)
+	}
+}
+
+// Iridium fruit costs more to give up than the dried result sells for. A losing
+// conversion is a real answer and has to survive as one.
+func TestThroughputKeepsALosingConversion(t *testing.T) {
+	tp := throughputOf(t, fruitSnapshot(120, map[int]int{4: 10}), dehydrator(1750))
+	if tp == nil {
+		t.Fatal("throughput = nil, want a computed loss")
+	}
+	if tp.TotalProfit != -550 || tp.ProfitPerRun != -275 {
+		t.Errorf("TotalProfit/ProfitPerRun = %d/%d, want -550/-275", tp.TotalProfit, tp.ProfitPerRun)
+	}
+}
+
+func fruitMachines() []Machine {
+	fruit := []Ingredient{{ID: "-79", Name: "Fruit (Any)", Qty: 1, Category: true}}
+	return []Machine{
+		{Machine: "Keg", Inputs: fruit, Output: Ingredient{ID: "348", Name: "Wine", Qty: 1}, Minutes: 10000},
+		{Machine: "Cask", Inputs: fruit, Output: Ingredient{ID: "CaskItem", Name: "Cask", Qty: 1}},
+		{Machine: "Preserves Jar", Inputs: fruit, Output: Ingredient{ID: "344", Name: "Jelly", Qty: 1}, Minutes: 4000},
+		{Machine: "Dehydrator", Inputs: []Ingredient{{ID: "-79", Name: "Fruit (Any)", Qty: 5, Category: true}},
+			Output: Ingredient{ID: "DriedFruit", Name: "Dried Fruit", Qty: 1}, Minutes: 1750},
+	}
+}
+
+// The dehydrator earns least per fruit of the three but most per machine-minute,
+// which is the ranking a player with a fixed shed of machines needs.
+func TestProcessingSortedByGoldPerMachineMinute(t *testing.T) {
+	detail, ok := BuildItemDetail(fruitSnapshot(120, map[int]int{0: 10}), NewItemIndex(nil), nil, fruitMachines(), nil, "400")
+	if !ok {
+		t.Fatal("item detail not built")
+	}
+	var order []string
+	for _, machine := range detail.Processing {
+		order = append(order, machine.Machine.Machine)
+	}
+	want := []string{"Dehydrator", "Preserves Jar", "Keg", "Cask"}
+	if len(order) != len(want) {
+		t.Fatalf("processing = %v, want %v", order, want)
+	}
+	for i := range want {
+		if order[i] != want[i] {
+			t.Fatalf("processing = %v, want %v", order, want)
+		}
+	}
+}
+
+// Snapshot stacks come out of a map in arbitrary order; the payload must not.
+func TestProcessingProfitsOrderedByQuality(t *testing.T) {
+	detail, ok := BuildItemDetail(fruitSnapshot(120, map[int]int{2: 5, 0: 5, 1: 5}), NewItemIndex(nil), nil, dehydrator(1750), nil, "400")
+	if !ok || len(detail.Processing) != 1 {
+		t.Fatalf("processing = %+v, want one machine", detail.Processing)
+	}
+	profits := detail.Processing[0].Profits
+	if len(profits) != 3 {
+		t.Fatalf("profits = %+v, want three qualities", profits)
+	}
+	for i, quality := range []int{0, 1, 2} {
+		if profits[i].Quality != quality {
+			t.Fatalf("profit qualities = %+v, want normal, silver, gold in order", profits)
+		}
 	}
 }
 
