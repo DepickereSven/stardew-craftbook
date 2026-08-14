@@ -448,7 +448,10 @@ func BuildItemDetail(snap *parser.Snapshot, idx *ItemIndex, recipes []Recipe, ma
 	})
 	for _, machine := range AvailableMachines(snap, machines) {
 		for _, in := range machine.Inputs {
-			if in.ID == stackID || (in.Category && in.ID == strconv.Itoa(item.Category)) {
+			// A machine input with no id — an item no recipe mentions — is
+			// still this item if the names agree.
+			named := in.ID == "" && !in.Category && strings.EqualFold(in.Name, item.Name)
+			if in.ID == stackID || named || (in.Category && in.ID == strconv.Itoa(item.Category)) {
 				machine.Profits = machineProfits(snap, idx, item, machine.Machine)
 				machine.Throughput = machineThroughput(snap, idx, item, machine.Machine, in)
 				detail.Processing = append(detail.Processing, machine)
@@ -548,44 +551,60 @@ func machineProfit(stack parser.ItemStack, idx *ItemIndex, machine Machine) *int
 	return &delta
 }
 
-// machineRun implements the fixed sell-price formulas for the artisan
-// conversions that take a saved-price item as input. Input quality affects the
-// opportunity cost, while the output formula uses the item's base price.
+// passiveMachines draw from something they do not consume: a bee house leaves
+// the flower in the ground and a tapper leaves the tree standing. Their output
+// is real but there is no input given up to price it against, so subtracting
+// one would charge the player for a flower they still own.
+var passiveMachines = map[string]bool{"Bee House": true, "Tapper": true, "Heavy Tapper": true}
+
+// derivedOutput prices the artisan goods whose value is a formula over the
+// input's *base* price, keyed by output id because the same machine makes
+// several of them — a keg turns fruit into wine and vegetables into juice.
+// Anything absent here sells for a flat price the dataset already records.
+func derivedOutput(outputID string, base int) (int, bool) {
+	switch outputID {
+	case "348": // Wine
+		return base * 3, true
+	case "350": // Juice
+		return base * 9 / 4, true
+	case "344", "342": // Jelly, Pickles
+		return base*2 + 50, true
+	case "DriedFruit", "DriedMushrooms":
+		return base*15/2 + 25, true
+	case "SmokedFish":
+		return base * 2, true
+	}
+	return 0, false
+}
+
+// machineRun prices one run of a conversion for a held stack. Input quality
+// affects the opportunity cost, while a derived output formula uses the item's
+// base price — quality does not carry into artisan goods.
 //
 // The two halves are returned separately because a card that prints only their
 // difference reads as the total takings, turning a genuine gain into an
 // apparent shortfall against the stack's raw value.
 func machineRun(stack parser.ItemStack, idx *ItemIndex, machine Machine) (output, cost int, ok bool) {
-	if stack.Price == nil {
+	if stack.Price == nil || passiveMachines[machine.Machine] {
 		return 0, 0, false
 	}
-	base := *stack.Price
-	switch machine.Machine {
-	case "Dehydrator":
-		if machine.Output.ID != "DriedFruit" {
+	outQty := machine.Output.Qty
+	if outQty <= 0 {
+		outQty = 1
+	}
+	if value, derived := derivedOutput(machine.Output.ID, *stack.Price); derived {
+		output = value * outQty
+	} else {
+		made, known := idx.Lookup(machine.Output.ID, machine.Output.Name)
+		if !known || made.SellPrice == nil {
 			return 0, 0, false
 		}
-		output = base*15/2 + 25
-	case "Keg":
-		if machine.Output.ID != "348" {
-			return 0, 0, false
-		}
-		output = base * 3
-	case "Preserves Jar":
-		if machine.Output.ID != "344" {
-			return 0, 0, false
-		}
-		output = base*2 + 50
-	case "Fish Smoker":
-		if machine.Output.ID != "SmokedFish" {
-			return 0, 0, false
-		}
-		output = base * 2
-	default:
-		return 0, 0, false
+		output = *made.SellPrice * outQty
 	}
 	for _, in := range machine.Inputs {
-		if in.Category && in.ID == strconv.Itoa(stack.Category) {
+		if inputIsStack(in, stack) {
+			// The item in hand is priced from the save, so its quality counts:
+			// gold corn costs more to give up than the dataset's base price.
 			price := savedSellPrice(stack, Item{})
 			if price == nil {
 				return 0, 0, false
@@ -600,4 +619,16 @@ func machineRun(stack parser.ItemStack, idx *ItemIndex, machine Machine) (output
 		cost += *other.SellPrice * in.Qty
 	}
 	return output, cost, true
+}
+
+// inputIsStack reports whether an ingredient entry is the item being examined,
+// by category for a category input and by id or name otherwise.
+func inputIsStack(in Ingredient, stack parser.ItemStack) bool {
+	if in.Category {
+		return in.ID == strconv.Itoa(stack.Category)
+	}
+	if in.ID != "" && in.ID == stack.ID {
+		return true
+	}
+	return in.Name != "" && strings.EqualFold(in.Name, stack.Name)
 }

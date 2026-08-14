@@ -469,6 +469,135 @@ func TestProcessingProfitsOrderedByQuality(t *testing.T) {
 	}
 }
 
+// vegSnapshot holds one Corn stack per quality at the given base price, the
+// vegetable counterpart to fruitSnapshot.
+func vegSnapshot(base int, counts map[int]int) *parser.Snapshot {
+	total := 0
+	stacks := map[string]parser.ItemStack{}
+	for quality, count := range counts {
+		total += count
+		price := base
+		stacks["270#q"+strconv.Itoa(quality)] = parser.ItemStack{
+			ID: "270", Name: "Corn", Count: count, Category: -75, Price: &price, Quality: quality}
+	}
+	return &parser.Snapshot{
+		Items:      map[string]int{"270": total},
+		Names:      map[string]string{"270": "Corn"},
+		Categories: map[string]int{"270": -75},
+		Stacks:     stacks,
+	}
+}
+
+func machineOf(t *testing.T, snap *parser.Snapshot, idx *ItemIndex, machines []Machine, id string) MachineAvailability {
+	t.Helper()
+	detail, ok := BuildItemDetail(snap, idx, nil, machines, nil, id)
+	if !ok || len(detail.Processing) != 1 {
+		t.Fatalf("processing = %+v, want one machine", detail.Processing)
+	}
+	return detail.Processing[0]
+}
+
+// A vegetable in a keg is juice at 2.25× its base price — the veg half of the
+// artisan formulas, which used to fall through and report nothing at all.
+func TestKegPricesVegetableAsJuice(t *testing.T) {
+	keg := []Machine{{Machine: "Keg",
+		Inputs:  []Ingredient{{ID: "-75", Name: "Vegetable (Any)", Qty: 1, Category: true}},
+		Output:  Ingredient{ID: "350", Name: "Juice", Qty: 1},
+		Minutes: 6000}}
+	got := machineOf(t, vegSnapshot(50, map[int]int{0: 10}), NewItemIndex(nil), keg, "270")
+	if got.Throughput == nil {
+		t.Fatal("throughput = nil, want juice priced from the corn")
+	}
+	// 50 g corn juices at 112 g (2.25× truncated), against 500 g of corn given up.
+	if got.Throughput.Collected != 1120 || got.Throughput.RawValue != 500 || got.Throughput.TotalProfit != 620 {
+		t.Errorf("collected/raw/profit = %d/%d/%d, want 1120/500/620",
+			got.Throughput.Collected, got.Throughput.RawValue, got.Throughput.TotalProfit)
+	}
+}
+
+// Pickles carry the same formula as jelly: twice the base price plus fifty.
+func TestPreservesJarPricesVegetableAsPickles(t *testing.T) {
+	jar := []Machine{{Machine: "Preserves Jar",
+		Inputs:  []Ingredient{{ID: "-75", Name: "Vegetable (Any)", Qty: 1, Category: true}},
+		Output:  Ingredient{ID: "342", Name: "Pickles", Qty: 1},
+		Minutes: 4000}}
+	got := machineOf(t, vegSnapshot(50, map[int]int{0: 1}), NewItemIndex(nil), jar, "270")
+	if got.Throughput == nil || got.Throughput.Collected != 150 || got.Throughput.TotalProfit != 100 {
+		t.Errorf("throughput = %+v, want 150 collected and +100", got.Throughput)
+	}
+}
+
+// Beer, oil and cheese have flat prices that do not vary with their input, so
+// the dataset price is the answer — without this every such machine reported
+// nothing rather than a plain gain.
+func TestMachineOutputWithAFlatDatasetPriceIsPriced(t *testing.T) {
+	idx := NewItemIndex(map[string]Item{"247": {ID: "247", Name: "Oil", SellPrice: ptr(100)}})
+	oilMaker := []Machine{{Machine: "Oil Maker",
+		Inputs:  []Ingredient{{ID: "270", Name: "Corn", Qty: 1}},
+		Output:  Ingredient{ID: "247", Name: "Oil", Qty: 1},
+		Minutes: 1000}}
+	got := machineOf(t, vegSnapshot(50, map[int]int{0: 4}), idx, oilMaker, "270")
+	if got.Throughput == nil || got.Throughput.TotalProfit != 200 || got.Throughput.Runs != 4 {
+		t.Errorf("throughput = %+v, want 4 runs at +50 each", got.Throughput)
+	}
+}
+
+// The opportunity cost of a gold crop is the gold price, whether the machine
+// names the item outright or takes its whole category.
+func TestNamedInputCostsWhatThatQualityWouldSellFor(t *testing.T) {
+	idx := NewItemIndex(map[string]Item{"247": {ID: "247", Name: "Oil", SellPrice: ptr(100)}})
+	oilMaker := []Machine{{Machine: "Oil Maker",
+		Inputs:  []Ingredient{{ID: "270", Name: "Corn", Qty: 1}},
+		Output:  Ingredient{ID: "247", Name: "Oil", Qty: 1},
+		Minutes: 1000}}
+	got := machineOf(t, vegSnapshot(50, map[int]int{2: 1}), idx, oilMaker, "270")
+	// Gold corn sells for 75, not the dataset's base 50.
+	if got.Throughput == nil || got.Throughput.RawValue != 75 || got.Throughput.TotalProfit != 25 {
+		t.Errorf("throughput = %+v, want 75 given up and +25", got.Throughput)
+	}
+}
+
+// A bee house does not consume the flower beside it and a tapper does not
+// consume its tree, so there is no input given up and no gain to subtract it
+// from. Reporting one would price a flower the player still owns.
+func TestPassiveMachinesReportNoProfit(t *testing.T) {
+	idx := NewItemIndex(map[string]Item{"340": {ID: "340", Name: "Honey", SellPrice: ptr(100)}})
+	beeHouse := []Machine{{Machine: "Bee House",
+		Inputs:  []Ingredient{{ID: "-80", Name: "Flower (Any)", Qty: 1, Category: true}},
+		Output:  Ingredient{ID: "340", Name: "Honey", Qty: 1},
+		Minutes: 6100}}
+	snap := vegSnapshot(50, map[int]int{0: 5})
+	for key, stack := range snap.Stacks {
+		stack.Category = -80
+		snap.Stacks[key] = stack
+	}
+	snap.Categories["270"] = -80
+	got := machineOf(t, snap, idx, beeHouse, "270")
+	if got.Throughput != nil {
+		t.Errorf("throughput = %+v, want none for a machine that consumes nothing", got.Throughput)
+	}
+}
+
+// The wiki lists a machine's alternative inputs as one row per accepted item,
+// which decodes as a machine demanding milk *and* large milk at once. Left in,
+// it prices a run against ingredients no single run consumes.
+func TestLoadDataDropsAlternativeInputVariants(t *testing.T) {
+	cheese := Ingredient{ID: "424", Name: "Cheese", Qty: 1}
+	got := dropAlternativeVariants([]Machine{
+		{Machine: "Cheese Press", Inputs: []Ingredient{{ID: "184", Name: "Milk", Qty: 1}}, Output: cheese},
+		{Machine: "Cheese Press", Inputs: []Ingredient{{Name: "Milk", Qty: 1}, {Name: "Large Milk", Qty: 1}}, Output: cheese},
+		{Machine: "Cheese Press", Inputs: []Ingredient{{ID: "436", Name: "Goat Milk", Qty: 1}}, Output: Ingredient{ID: "426", Name: "Goat Cheese", Qty: 1}},
+	})
+	if len(got) != 2 {
+		t.Fatalf("machines = %+v, want the milk variant dropped", got)
+	}
+	for _, machine := range got {
+		if len(machine.Inputs) != 1 {
+			t.Errorf("kept a multi-input variant: %+v", machine)
+		}
+	}
+}
+
 func TestInventorySortedByStackValue(t *testing.T) {
 	inv := BuildInventory(snapshot(), testIndex(), testRecipes())
 	if len(inv) != 4 {
