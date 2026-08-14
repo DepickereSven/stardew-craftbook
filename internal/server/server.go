@@ -202,6 +202,9 @@ func (s *Server) handleState(w http.ResponseWriter, r *http.Request) {
 	body := map[string]any{
 		"version": version, "save_path": s.savePath, "recipes": recipes,
 		"machines": engine.AvailableMachines(snap, s.machines),
+		// Every conversion, runnable or not, so a search for "beer" finds the
+		// keg that makes it before there is any wheat to put in.
+		"all_machines": engine.AllMachines(snap, s.machines),
 	}
 	if parseErr != "" {
 		// Serving the last good snapshot, but the newest read failed.
