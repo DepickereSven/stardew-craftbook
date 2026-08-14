@@ -920,11 +920,54 @@ main { max-width: 640px; margin: 0 auto; padding: 12px 14px 24px; }
 .loading { padding: 40px 0; text-align: center; color: var(--faint); }
 
 /* ---------- crops ---------- */
-/* The location filter holds one chip per place with crops in it, which is a
-   list the save decides the length of — so unlike the fixed control rows above,
-   this one has to wrap rather than push the page wider than the viewport. */
-#crop-locations { flex-wrap: wrap; }
-#crop-locations .chipbtn { padding: 6px 12px; min-height: 36px; white-space: nowrap; }
+/* The location filter holds one chip per place with crops in it — a list the
+   save decides the length of. Wrapping it left a ragged two or three rows in a
+   sticky header. Sideways scrolling fixed the look and broke the function —
+   a mouse cannot scroll a horizontal strip — so it wraps, and the labels are
+   kept short enough that the wrap lands tidily. */
+.chipwrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 2px 0;
+}
+.chipwrap > * { flex: none; }
+.chipbtn.compact {
+  min-height: 34px;
+  padding: 5px 12px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+/* Deliberately not a chip: it changes the order of the list rather than
+   filtering it, and sitting at the end of a row of chips it would otherwise
+   read as one more location. */
+.sortbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 5px 2px 5px 12px;
+  margin-left: 2px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.sortbtn svg { color: var(--faint); }
+.chipbtn .count {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--faint);
+}
+.chipbtn[aria-pressed="true"] .count { color: inherit; opacity: 0.75; }
 .crops-date {
   margin: 10px 2px 0;
   font-size: 12.5px;
@@ -1105,10 +1148,7 @@ footer {
       </div>
     </div>
     <div id="controls-crops" hidden>
-      <div class="controls-row" id="crop-locations" role="group" aria-label="Filter by location"></div>
-      <div class="controls-row">
-        <button class="chipbtn" id="crop-sort" aria-label="Change sort order">Soonest ↑</button>
-      </div>
+      <div class="controls-row chipwrap" id="crop-filters" role="group" aria-label="Crop filters"></div>
     </div>
   </div>
 </div>
@@ -1932,24 +1972,35 @@ function cropTimelineHTML(buckets) {
   }).join('')}</ul>`;
 }
 
-function renderCropLocations() {
-  const el = $('#crop-locations');
+const SORT_ICON = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="m3.5 7.5 3.5-3.5 3.5 3.5"/><path d="M13 7h8M13 12h6M13 17h4"/></svg>';
+
+// Chip labels only: the game's one long location name is "Ginger Island X", and
+// spelled out in full it is what pushed the filter row onto a third line. The
+// section headings below still say it in full, where there is room.
+function chipLabel(label) {
+  return label.replace(/^Ginger /, '');
+}
+
+function renderCropFilters() {
+  const el = $('#crop-filters');
   const locations = (ui.crops && ui.crops.locations) || [];
-  if (locations.length < 2) {
-    el.innerHTML = '';
-    el.hidden = true;
-    return;
-  }
-  el.hidden = false;
-  const total = locations.reduce((s, l) => s + l.count, 0);
   const chip = (value, label, count) =>
-    `<button class="chipbtn" data-loc="${esc(value)}" aria-pressed="${ui.cropLocation === value}">${esc(label)} <span class="uses">${fmtNum(count)}</span></button>`;
-  el.innerHTML = chip('', 'All', total) + locations.map(l => chip(l.name, l.label, l.count)).join('');
+    `<button class="chipbtn compact" data-loc="${esc(value)}" aria-pressed="${ui.cropLocation === value}">${esc(label)} <span class="count">${fmtNum(count)}</span></button>`;
+  let html = '';
+  if (locations.length > 1) {
+    const total = locations.reduce((s, l) => s + l.count, 0);
+    html = chip('', 'All', total) + locations.map(l => chip(l.name, chipLabel(l.label), l.count)).join('');
+  }
+  // The sort control shares the row so it wraps with the chips rather than
+  // sitting alone on a line of its own.
+  html += `<button class="sortbtn" id="crop-sort" aria-label="Change sort order">${SORT_ICON}<span>${
+    ui.cropSort === 'soonest' ? 'Soonest' : 'Most planted'}</span></button>`;
+  el.innerHTML = html;
 }
 
 function renderCrops() {
   const el = $('#crops');
-  renderCropLocations();
+  renderCropFilters();
   if (!ui.crops) {
     el.innerHTML = '<p class="loading">Reading the save…</p>';
     return;
@@ -2267,16 +2318,17 @@ $('#type-seg').addEventListener('change', e => {
 });
 $('#view-seg').addEventListener('change', e => switchView(e.target.value));
 
-$('#crop-locations').addEventListener('click', e => {
+$('#crop-filters').addEventListener('click', e => {
   const chip = e.target.closest('[data-loc]');
-  if (!chip) return;
-  ui.cropLocation = chip.dataset.loc;
-  renderCrops();
-});
-$('#crop-sort').addEventListener('click', () => {
-  ui.cropSort = ui.cropSort === 'soonest' ? 'count' : 'soonest';
-  $('#crop-sort').textContent = ui.cropSort === 'soonest' ? 'Soonest \u2191' : 'Most planted \u2193';
-  renderCrops();
+  if (chip) {
+    ui.cropLocation = chip.dataset.loc;
+    renderCrops();
+    return;
+  }
+  if (e.target.closest('#crop-sort')) {
+    ui.cropSort = ui.cropSort === 'soonest' ? 'count' : 'soonest';
+    renderCrops();
+  }
 });
 $('#crops').addEventListener('toggle', e => {
   const d = e.target;
