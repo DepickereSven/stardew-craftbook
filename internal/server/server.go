@@ -24,6 +24,7 @@ type Server struct {
 	machines []engine.Machine
 	items    map[string]engine.Item
 	itemIdx  *engine.ItemIndex
+	crops    map[string]engine.CropData
 
 	logUnknown sync.Once
 
@@ -75,12 +76,17 @@ func New(savePath, detectErr string) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
+	crops, err := engine.LoadCrops()
+	if err != nil {
+		return nil, err
+	}
 	s := &Server{
 		savePath: savePath,
 		recipes:  recipes,
 		machines: machines,
 		items:    items,
 		itemIdx:  engine.NewItemIndex(items),
+		crops:    crops,
 		parseErr: detectErr,
 	}
 	if savePath != "" {
@@ -143,6 +149,7 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("GET /api/state", s.handleState)
 	mux.HandleFunc("GET /api/items", s.handleItems)
 	mux.HandleFunc("GET /api/inventory", s.handleInventory)
+	mux.HandleFunc("GET /api/crops", s.handleCrops)
 	mux.HandleFunc("GET /api/item/", s.handleItemDetail)
 	mux.HandleFunc("GET /api/plan/", s.handlePlan)
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
@@ -226,6 +233,30 @@ func (s *Server) handleInventory(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	body := map[string]any{"version": version, "items": engine.BuildInventory(snap, s.itemIdx, s.recipes)}
+	if parseErr != "" {
+		body["error"] = parseErr
+	}
+	writeJSON(w, 200, body)
+}
+
+// handleCrops serves every crop planted in the save, grouped by location and
+// crop type and laid out on a harvest timeline. Error semantics match
+// /api/inventory: an error with no crops means no save could be read, an error
+// alongside crops means these came from the last good snapshot.
+func (s *Server) handleCrops(w http.ResponseWriter, r *http.Request) {
+	s.mu.RLock()
+	snap, version, parseErr := s.snap, s.version, s.parseErr
+	s.mu.RUnlock()
+	if snap == nil {
+		writeJSON(w, 200, map[string]any{"version": version, "error": parseErr, "crops": []any{}})
+		return
+	}
+	view := engine.BuildCrops(snap, s.crops)
+	body := map[string]any{
+		"version": version, "date": view.Date, "summary": view.Summary,
+		"locations": view.Locations, "crops": view.Crops,
+		"groups": view.Groups, "timeline": view.Timeline,
+	}
 	if parseErr != "" {
 		body["error"] = parseErr
 	}
