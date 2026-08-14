@@ -24,6 +24,18 @@ func TestParsesGameDate(t *testing.T) {
 	}
 }
 
+// Mail flags are how the game records world progress, and the only reason to
+// read them here is that some of them gate whole locations.
+func TestParsesMailFlags(t *testing.T) {
+	snap := mustParse(t, "testdata/crops.xml")
+	if !snap.MailReceived["ccPantry"] || !snap.MailReceived["Willy_married"] {
+		t.Errorf("mail flags = %v", snap.MailReceived)
+	}
+	if snap.MailReceived["willyBoatFixed"] {
+		t.Error("a flag the save does not carry read as set")
+	}
+}
+
 func TestParsesPlantedCrops(t *testing.T) {
 	snap := mustParse(t, "testdata/crops.xml")
 	if len(snap.Crops) != 5 {

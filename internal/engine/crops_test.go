@@ -315,6 +315,71 @@ func TestDeadCropsAreExcludedFromHarvestCounts(t *testing.T) {
 	}
 }
 
+// Every save ships the Ginger Island locations with wild ginger already in
+// them, whether or not the boat has been repaired, so an unreached island must
+// not turn up as a planting.
+func TestIslandCropsAreLockedUntilTheBoatIsFixed(t *testing.T) {
+	plants := []parser.CropPlant{
+		{Location: "Farm", Outdoors: true, HarvestID: "276", PhaseDays: []int{1, 99999}, CurrentPhase: 1, Watered: true},
+		{Location: "IslandWest", Outdoors: true, Forage: true, FullyGrown: true},
+		{Location: "IslandNorth", Outdoors: true, Forage: true, FullyGrown: true},
+	}
+	locked := snapshotFixture(plants...)
+	locked.MailReceived = map[string]bool{}
+	view := BuildCrops(locked, cropsFixture(t))
+	if view.Summary.Locked != 2 {
+		t.Errorf("locked = %d, want 2", view.Summary.Locked)
+	}
+	for _, c := range view.Crops {
+		want := c.Location == "Farm"
+		if c.Accessible != want {
+			t.Errorf("%s accessible = %v, want %v", c.Location, c.Accessible, want)
+		}
+	}
+	// Reachable places sort ahead of locked ones whatever their counts.
+	if len(view.Locations) != 3 || view.Locations[0].Name != "Farm" || view.Locations[0].Accessible != true {
+		t.Fatalf("locations = %+v", view.Locations)
+	}
+	for _, l := range view.Locations[1:] {
+		if l.Accessible {
+			t.Errorf("%s should be locked", l.Name)
+		}
+	}
+
+	// Repair the boat and the same crops become the player's business.
+	open := snapshotFixture(plants...)
+	open.MailReceived = map[string]bool{boatFixedMail: true}
+	view = BuildCrops(open, cropsFixture(t))
+	if view.Summary.Locked != 0 {
+		t.Errorf("locked = %d after the boat is fixed, want 0", view.Summary.Locked)
+	}
+	for _, g := range view.Groups {
+		if !g.Accessible {
+			t.Errorf("group %s still locked", g.Location)
+		}
+	}
+}
+
+func TestLocationAccessible(t *testing.T) {
+	fixed := map[string]bool{boatFixedMail: true}
+	for _, tc := range []struct {
+		name string
+		mail map[string]bool
+		want bool
+	}{
+		{"Farm", nil, true},
+		{"Greenhouse", nil, true},
+		{"IslandWest", nil, false},
+		{"IslandNorth", nil, false},
+		{"IslandWest", fixed, true},
+		{"Farm", fixed, true},
+	} {
+		if got := locationAccessible(tc.name, tc.mail); got != tc.want {
+			t.Errorf("locationAccessible(%q, boat=%v) = %v, want %v", tc.name, tc.mail != nil, got, tc.want)
+		}
+	}
+}
+
 func TestLocationLabels(t *testing.T) {
 	for name, want := range map[string]string{
 		"Farm":            "Farm",
@@ -368,6 +433,14 @@ func TestRealSaveCropsAreAllKnown(t *testing.T) {
 	if counted+view.Summary.Dead != view.Summary.TotalGrowing {
 		t.Errorf("timeline covers %d of %d crops", counted, view.Summary.TotalGrowing)
 	}
+	// This save has never repaired the boat, so its island forage must be
+	// reported as out of reach rather than as something to go and harvest.
+	if snap.MailReceived[boatFixedMail] {
+		t.Log("save has the boat repaired; island crops are legitimately reachable")
+	} else if view.Summary.Locked == 0 {
+		t.Error("island crops not flagged as locked in a save without a repaired boat")
+	}
+
 	next := "nothing pending"
 	if view.Summary.NextHarvestDate != nil {
 		next = view.Summary.NextHarvestDate.Label

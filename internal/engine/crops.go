@@ -79,6 +79,9 @@ type CropInstance struct {
 	InSeason     *bool  `json:"in_season"`
 	SeasonExempt bool   `json:"season_exempt,omitempty"`
 	WikiURL      string `json:"wiki_url,omitempty"`
+	// Accessible is false for a crop in a place this save cannot reach yet —
+	// see locationAccessible.
+	Accessible bool `json:"accessible"`
 }
 
 // CropBucket is one "these many are this many days out" slice, used both for a
@@ -126,6 +129,7 @@ type CropGroup struct {
 	RegrowDays *int         `json:"regrow_days,omitempty"`
 	Seasons    []string     `json:"seasons,omitempty"`
 	WikiURL    string       `json:"wiki_url,omitempty"`
+	Accessible bool         `json:"accessible"`
 	Buckets    []CropBucket `json:"buckets"`
 }
 
@@ -135,6 +139,9 @@ type CropsSummary struct {
 	Unwatered    int `json:"unwatered"`
 	Dead         int `json:"dead"`
 	OutOfSeason  int `json:"out_of_season"`
+	// Locked counts the crops standing in places this save cannot reach. They
+	// are reported so a client can offer them, not so it must show them.
+	Locked int `json:"locked"`
 	// NextHarvestDays is the soonest a crop that is not already ready can come
 	// in, and nil when nothing is still growing.
 	NextHarvestDays *int      `json:"next_harvest_days"`
@@ -151,9 +158,28 @@ type CropsView struct {
 }
 
 type CropLocation struct {
-	Name  string `json:"name"`
-	Label string `json:"label"`
-	Count int    `json:"count"`
+	Name       string `json:"name"`
+	Label      string `json:"label"`
+	Count      int    `json:"count"`
+	Accessible bool   `json:"accessible"`
+}
+
+// boatFixedMail is the flag the game itself checks before letting the boat sail
+// to Ginger Island.
+const boatFixedMail = "willyBoatFixed"
+
+// locationAccessible reports whether the save can actually reach a place.
+//
+// Every save carries the Ginger Island locations from the day it is created,
+// wild ginger already growing in them, whether or not the boat has ever been
+// repaired. Listing that alongside a player's own plantings tells them about
+// crops they cannot walk to, so the island is gated on the same flag the game
+// gates the boat on.
+func locationAccessible(name string, mail map[string]bool) bool {
+	if strings.HasPrefix(name, "Island") {
+		return mail[boatFixedMail]
+	}
+	return true
 }
 
 // daysUntilHarvest reports how many *successful growth days* the crop still
@@ -332,6 +358,7 @@ func BuildCrops(snap *parser.Snapshot, crops map[string]CropData) CropsView {
 			meta = &d
 		}
 		instance := buildCropInstance(p, meta, today.Season)
+		instance.Accessible = locationAccessible(p.Location, snap.MailReceived)
 		view.Crops = append(view.Crops, instance)
 		locationCounts[p.Location]++
 
@@ -348,6 +375,9 @@ func BuildCrops(snap *parser.Snapshot, crops map[string]CropData) CropsView {
 		if instance.InSeason != nil && !*instance.InSeason {
 			view.Summary.OutOfSeason++
 		}
+		if !instance.Accessible {
+			view.Summary.Locked++
+		}
 
 		key := p.Location + "\x00" + instance.CropID
 		state, ok := groups[key]
@@ -358,6 +388,7 @@ func BuildCrops(snap *parser.Snapshot, crops map[string]CropData) CropsView {
 					Location: instance.Location, LocationLabel: instance.LocationLabel,
 					Regrows: instance.Regrows, RegrowDays: instance.RegrowDays,
 					Seasons: instance.Seasons, WikiURL: instance.WikiURL,
+					Accessible: instance.Accessible,
 				},
 				buckets: map[int]int{},
 			}
@@ -438,13 +469,22 @@ func BuildCrops(snap *parser.Snapshot, crops map[string]CropData) CropsView {
 	}
 
 	for name, count := range locationCounts {
-		view.Locations = append(view.Locations, CropLocation{Name: name, Label: locationLabel(name), Count: count})
+		view.Locations = append(view.Locations, CropLocation{
+			Name: name, Label: locationLabel(name), Count: count,
+			Accessible: locationAccessible(name, snap.MailReceived),
+		})
 	}
+	// Reachable places first, then by how much is growing there: a locked
+	// location is never the one a player is looking for.
 	sort.Slice(view.Locations, func(i, j int) bool {
-		if view.Locations[i].Count != view.Locations[j].Count {
-			return view.Locations[i].Count > view.Locations[j].Count
+		a, b := view.Locations[i], view.Locations[j]
+		if a.Accessible != b.Accessible {
+			return a.Accessible
 		}
-		return view.Locations[i].Label < view.Locations[j].Label
+		if a.Count != b.Count {
+			return a.Count > b.Count
+		}
+		return a.Label < b.Label
 	})
 	return view
 }

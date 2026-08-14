@@ -2,6 +2,10 @@
 <SaveGame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <player>
     <items />
+    <mailReceived>
+      <string>Willy_married</string>
+      <string>ccPantry</string>
+    </mailReceived>
   </player>
   <locations>
     <GameLocation xsi:type="Farm">
