@@ -206,6 +206,9 @@ func TestAvailableMachinesIncludesCategoryConversions(t *testing.T) {
 	}
 	snap := snapWith(map[string]int{"147": 3, "258": 12, "382": 2}, map[string]int{"147": -4, "258": -79})
 	got := AvailableMachines(snap, machines)
+	if len(got) != 3 {
+		t.Fatalf("available machines = %+v, want three", got)
+	}
 	byName := map[string]int{}
 	for _, machine := range got {
 		byName[machine.Machine.Machine] = machine.MaxRuns
@@ -214,5 +217,48 @@ func TestAvailableMachinesIncludesCategoryConversions(t *testing.T) {
 		if got := byName[name]; got != want {
 			t.Errorf("%s max runs = %d, want %d", name, got, want)
 		}
+	}
+}
+
+// Item ids are learned from recipe data, so wheat — which no recipe uses — has
+// none, and a keg input naming it carries an empty id. Matching on the name is
+// the only way that wheat in the chest can ever become beer.
+func TestMachineInputWithNoIDMatchesByName(t *testing.T) {
+	keg := []Machine{{Machine: "Keg", Inputs: []Ingredient{{Name: "Wheat", Qty: 1}}, Output: Ingredient{ID: "346", Name: "Beer", Qty: 1}}}
+	snap := snapWith(map[string]int{"262": 20}, nil)
+	snap.Names = map[string]string{"262": "Wheat"}
+	got := AvailableMachines(snap, keg)
+	if len(got) != 1 || got[0].MaxRuns != 20 {
+		t.Errorf("available = %+v, want the keg at 20 runs", got)
+	}
+}
+
+// A conversion the player cannot supply yet still has to be findable — beer is
+// a keg recipe whether or not there is wheat in the chest, and a search that
+// only covers what is already possible cannot answer "how do I make beer".
+func TestAllMachinesKeepsConversionsWithNothingToFeedThem(t *testing.T) {
+	machines := []Machine{
+		{Machine: "Keg", Inputs: []Ingredient{{ID: "-79", Name: "Fruit (Any)", Qty: 1, Category: true}}, Output: Ingredient{ID: "348", Name: "Wine", Qty: 1}},
+		{Machine: "Keg", Inputs: []Ingredient{{ID: "262", Name: "Wheat", Qty: 1}}, Output: Ingredient{ID: "346", Name: "Beer", Qty: 1}},
+	}
+	snap := snapWith(map[string]int{"258": 4}, map[string]int{"258": -79})
+	got := AllMachines(snap, machines)
+	if len(got) != 2 {
+		t.Fatalf("all machines = %+v, want both conversions", got)
+	}
+	var beer *MachineAvailability
+	for i, machine := range got {
+		if machine.Output.Name == "Beer" {
+			beer = &got[i]
+		}
+	}
+	if beer == nil {
+		t.Fatal("beer conversion missing")
+	}
+	if beer.MaxRuns != 0 {
+		t.Errorf("beer max runs = %d, want 0", beer.MaxRuns)
+	}
+	if len(beer.Missing) != 1 || beer.Missing[0].Name != "Wheat" || beer.Missing[0].Need != 1 || beer.Missing[0].Have != 0 {
+		t.Errorf("beer missing = %+v, want one wheat short", beer.Missing)
 	}
 }

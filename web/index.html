@@ -1429,6 +1429,24 @@ function machineRowPlainHTML(machine, recipe, chips) {
   </div></li>`;
 }
 
+/* A conversion with nothing to feed it. It carries no rate and no gain — only
+   what it makes and what it is still short of. */
+function machineRowWaitingHTML(machine) {
+  const inputs = machine.inputs.map(i => `${fmtNum(i.qty)}× ${esc(i.name)}`).join(' + ');
+  const output = `${fmtNum(machine.output.qty)}× ${esc(machine.output.name)}`;
+  const time = machine.minutes ? ` · ${fmtNum(machine.minutes)} min` : '';
+  const short = (machine.missing || [])
+    .map(m => `<span class="ing-frac"><b>${fmtNum(m.have)}</b>/${fmtNum(m.need)} ${esc(m.name)}</span>`).join('');
+  return `<li><div class="row">
+    <span class="row-text">
+      <span class="row-name">${esc(machine.machine)}</span>
+      <span class="row-meta"><span>Process ${inputs} → ${output}${time}</span></span>
+      ${short ? `<span class="row-meta">${short}</span>` : ''}
+    </span>
+    <span class="unmake">need input</span>
+  </div></li>`;
+}
+
 function machineRowHTML(machine, index) {
   const inputs = machine.inputs.map(i => `${fmtNum(i.qty)}× ${esc(i.name)}`).join(' + ');
   const output = `${fmtNum(machine.output.qty)}× ${esc(machine.output.name)}`;
@@ -1477,18 +1495,23 @@ function renderOverview() {
   const q = ui.search.trim().toLowerCase();
   const filtering = q !== '' || ui.typeFilter !== 'all';
   let list = ui.data.recipes;
-  let machines = ui.data.machines || [];
+  /* A search covers every conversion, not only the ones with ingredients in
+     hand: "beer" has to find the keg that makes it before there is any wheat. */
+  let machines = q ? (ui.data.all_machines || ui.data.machines || []) : (ui.data.machines || []);
   if (q) list = list.filter(r => r.recipe.name.toLowerCase().includes(q));
   else if (!ui.showAll) list = list.filter(r => r.learned);
   if (ui.typeFilter !== 'all') list = list.filter(r => r.recipe.type === ui.typeFilter);
   if (q) machines = machines.filter(m =>
-    m.machine.toLowerCase().includes(q) || m.output.name.toLowerCase().includes(q));
+    m.machine.toLowerCase().includes(q) || m.output.name.toLowerCase().includes(q)
+    || (m.inputs || []).some(i => i.name.toLowerCase().includes(q)));
   if (ui.typeFilter !== 'all') machines = [];
+  const waiting = machines.filter(m => !(m.max_runs > 0));
+  machines = machines.filter(m => m.max_runs > 0);
 
   const grouped = { craftable: [], partial: [], far_off: [] };
   for (const r of list) (grouped[r.state] || grouped.far_off).push(r);
 
-  if (filtering && list.length === 0 && machines.length === 0) {
+  if (filtering && list.length === 0 && machines.length === 0 && waiting.length === 0) {
     const typeWord = ui.typeFilter === 'all' ? '' : ui.typeFilter + ' ';
     const actions = [
       q ? '<button class="btn ghost" data-action="clear-search">Clear search</button>' : '',
@@ -1509,7 +1532,13 @@ function renderOverview() {
     <summary><span class="group-label">Ready to process</span><span class="group-count">${machines.length}</span>${ICONS.chevR}</summary>
     <ul class="rows">${machines.map(machineRowHTML).join('')}</ul>
   </details>` : '';
-  el.innerHTML = processing + GROUPS.map(([state, label]) => {
+  /* Only ever shown while searching, where finding the conversion is the whole
+     point even when the ingredients for it are still out in the world. */
+  const notYet = waiting.length ? `<details class="group" open>
+    <summary><span class="group-label">Nothing to process yet</span><span class="group-count">${waiting.length}</span>${ICONS.chevR}</summary>
+    <ul class="rows">${waiting.map(machineRowWaitingHTML).join('')}</ul>
+  </details>` : '';
+  el.innerHTML = processing + notYet + GROUPS.map(([state, label]) => {
     const rows = grouped[state];
     if (filtering && rows.length === 0) return '';
     const body = rows.length

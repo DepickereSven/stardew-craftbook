@@ -42,7 +42,11 @@ type Machine struct {
 // any fruit or any fish.
 type MachineAvailability struct {
 	Machine
-	MaxRuns    int             `json:"max_runs"`
+	MaxRuns int `json:"max_runs"`
+	// Missing is what the inventory is short of, and is only ever populated for
+	// a conversion that cannot run: a machine listed so it can be found by
+	// search has to say what it is waiting for.
+	Missing    []MissingItem   `json:"missing,omitempty"`
 	Profits    []QualityProfit `json:"profits,omitempty"`
 	Throughput *Throughput     `json:"throughput,omitempty"`
 }
@@ -137,7 +141,51 @@ func LoadData() ([]Recipe, []Machine, error) {
 	if err := json.Unmarshal(data.MachinesJSON, &machines); err != nil {
 		return nil, nil, err
 	}
-	return recipes, machines, nil
+	return recipes, dropAlternativeVariants(machines), nil
+}
+
+// dropAlternativeVariants removes the machine entries that list a conversion's
+// *alternative* inputs as if one run consumed them all — the wiki writes "milk
+// or large milk" as two ingredient rows, which decodes as a cheese press
+// demanding both. Such an entry is always a superset of a real one for the same
+// machine and output, so it is recognised by that and dropped: left in, it
+// prices a run against ingredients no run consumes.
+func dropAlternativeVariants(machines []Machine) []Machine {
+	names := func(m Machine) map[string]bool {
+		set := make(map[string]bool, len(m.Inputs))
+		for _, in := range m.Inputs {
+			set[in.Name] = true
+		}
+		return set
+	}
+	out := make([]Machine, 0, len(machines))
+	for i, machine := range machines {
+		superset := false
+		for j, other := range machines {
+			if i == j || other.Machine != machine.Machine || other.Output.ID != machine.Output.ID {
+				continue
+			}
+			if len(other.Inputs) >= len(machine.Inputs) {
+				continue
+			}
+			mine, theirs := names(machine), names(other)
+			covered := true
+			for name := range theirs {
+				if !mine[name] {
+					covered = false
+					break
+				}
+			}
+			if covered && len(theirs) < len(mine) {
+				superset = true
+				break
+			}
+		}
+		if !superset {
+			out = append(out, machine)
+		}
+	}
+	return out
 }
 
 // LoadItems decodes the embedded item metadata, keyed by item id.
@@ -153,10 +201,13 @@ func LoadItems() (map[string]Item, error) {
 // ingredient is satisfied by any owned item in that category.
 func countOf(snap *parser.Snapshot, ing Ingredient) int {
 	if !ing.Category {
-		if ing.ID == "" {
-			return 0
+		if n, ok := snap.Items[ing.ID]; ok && ing.ID != "" {
+			return n
 		}
-		return snap.Items[ing.ID]
+		// Ids are learned from recipe data, so an item no recipe mentions —
+		// wheat, milk, wool — reaches a machine input by name alone. Without
+		// this the keg could never see the wheat that makes beer.
+		return countByName(snap, ing.Name)
 	}
 	// Some generated machine inputs describe their category in prose and carry
 	// no id; nothing in the save can match those.
@@ -168,6 +219,20 @@ func countOf(snap *parser.Snapshot, ing Ingredient) int {
 	for id, n := range snap.Items {
 		if snap.Categories[id] == cat {
 			total += n
+		}
+	}
+	return total
+}
+
+// countByName sums every owned id the save calls by this name.
+func countByName(snap *parser.Snapshot, name string) int {
+	if name == "" {
+		return 0
+	}
+	total := 0
+	for id, owned := range snap.Names {
+		if strings.EqualFold(owned, name) {
+			total += snap.Items[id]
 		}
 	}
 	return total
@@ -217,20 +282,45 @@ func Evaluate(snap *parser.Snapshot, recipes []Recipe) []Availability {
 // recipe, so they would otherwise have no route into the UI.
 func AvailableMachines(snap *parser.Snapshot, machines []Machine) []MachineAvailability {
 	out := make([]MachineAvailability, 0, len(machines))
+	for _, machine := range AllMachines(snap, machines) {
+		if machine.MaxRuns > 0 {
+			out = append(out, machine)
+		}
+	}
+	return out
+}
+
+// AllMachines is every conversion in the dataset with the runs the inventory
+// could supply, zero included. A machine the player cannot feed yet still has
+// to be reachable — beer is a keg conversion whether or not there is wheat in
+// the chest — so search covers this list while the ready-to-run view filters it.
+func AllMachines(snap *parser.Snapshot, machines []Machine) []MachineAvailability {
+	out := make([]MachineAvailability, 0, len(machines))
 	for _, machine := range machines {
-		maxRuns := -1
+		av := MachineAvailability{Machine: machine, MaxRuns: -1}
 		for _, in := range machine.Inputs {
 			if in.Qty <= 0 {
 				continue
 			}
-			runs := countOf(snap, in) / in.Qty
-			if maxRuns == -1 || runs < maxRuns {
-				maxRuns = runs
+			have := countOf(snap, in)
+			if runs := have / in.Qty; av.MaxRuns == -1 || runs < av.MaxRuns {
+				av.MaxRuns = runs
+			}
+			if have < in.Qty {
+				av.Missing = append(av.Missing, MissingItem{
+					ID: in.ID, Name: in.Name, Need: in.Qty, Have: have, WikiURL: wikiURL(in.Name),
+				})
 			}
 		}
-		if maxRuns > 0 {
-			out = append(out, MachineAvailability{Machine: machine, MaxRuns: maxRuns})
+		if av.MaxRuns < 0 {
+			av.MaxRuns = 0
 		}
+		if av.MaxRuns > 0 {
+			// A short input and a runnable machine cannot both be true; the
+			// list is only a to-do for a conversion that cannot run.
+			av.Missing = nil
+		}
+		out = append(out, av)
 	}
 	return out
 }

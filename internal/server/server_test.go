@@ -94,6 +94,30 @@ func TestStateEndpoint(t *testing.T) {
 	}
 }
 
+// A search has to reach conversions the save cannot supply yet, so the state
+// carries every machine beside the runnable ones — with beer among them.
+func TestStateCarriesEveryConversionForSearch(t *testing.T) {
+	_, body := get(t, testServer(t), "/api/state")
+	all, ok := body["all_machines"].([]any)
+	if !ok || len(all) == 0 {
+		t.Fatalf("no all_machines array: %v", body["all_machines"])
+	}
+	ready, _ := body["machines"].([]any)
+	if len(all) <= len(ready) {
+		t.Errorf("all_machines (%d) does not exceed runnable machines (%d)", len(all), len(ready))
+	}
+	found := false
+	for _, machine := range all {
+		output := machine.(map[string]any)["output"].(map[string]any)
+		if output["name"] == "Beer" {
+			found = true
+		}
+	}
+	if !found {
+		t.Error("beer conversion is not reachable from /api/state")
+	}
+}
+
 func TestPlanEndpointUnknownKey(t *testing.T) {
 	code, _ := get(t, testServer(t), "/api/plan/NotARecipe")
 	if code != 404 {
