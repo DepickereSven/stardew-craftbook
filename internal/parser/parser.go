@@ -26,6 +26,9 @@ type Snapshot struct {
 	Stacks          map[string]ItemStack
 	CraftingLearned map[string]bool
 	CookingLearned  map[string]bool
+	// MailReceived is the player's mail flag set, which is how the game records
+	// world progress. Only the flags that gate a place are of interest here.
+	MailReceived map[string]bool
 	// Date is the in-game day the save was written on, and Crops is every crop
 	// planted in tilled soil or a garden pot. Both are needed together: a crop's
 	// remaining growth is only meaningful relative to the day it is measured on.
@@ -58,6 +61,7 @@ type playerXML struct {
 	Items           []itemXML `xml:"items>Item"`
 	CraftingRecipes []kvXML   `xml:"craftingRecipes>item"`
 	CookingRecipes  []kvXML   `xml:"cookingRecipes>item"`
+	MailReceived    []string  `xml:"mailReceived>string"`
 }
 
 type kvXML struct {
@@ -139,6 +143,7 @@ func Parse(r io.Reader) (*Snapshot, error) {
 		Stacks:          map[string]ItemStack{},
 		CraftingLearned: map[string]bool{},
 		CookingLearned:  map[string]bool{},
+		MailReceived:    map[string]bool{},
 	}
 	snap.Date = GameDate{Season: strings.ToLower(sg.CurrentSeason), Day: sg.DayOfMonth, Year: sg.Year}
 	addItems(snap, sg.Player.Items)
@@ -153,6 +158,9 @@ func Parse(r io.Reader) (*Snapshot, error) {
 	}
 	for _, kv := range sg.Player.CookingRecipes {
 		snap.CookingLearned[kv.Key] = true
+	}
+	for _, flag := range sg.Player.MailReceived {
+		snap.MailReceived[flag] = true
 	}
 	finalizeStacks(snap)
 	return snap, nil
