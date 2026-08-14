@@ -940,18 +940,23 @@ main { max-width: 640px; margin: 0 auto; padding: 12px 14px 24px; }
   font-size: 13px;
   white-space: nowrap;
 }
-/* Deliberately not a chip: it changes the order of the list rather than
-   filtering it, and sitting at the end of a row of chips it would otherwise
-   read as one more location. */
+/* Deliberately not chips: these change what the list shows rather than which
+   location it shows, and among a row of pills they would read as two more
+   locations. Plain text against pills is the distinction. */
+.ctlgroup {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 2px;
+  margin-left: 2px;
+}
 .sortbtn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   min-height: 34px;
-  padding: 5px 2px 5px 12px;
-  margin-left: 2px;
+  padding: 5px 8px;
   border: 0;
-  border-left: 1px solid var(--line);
   background: none;
   font-size: 13px;
   font-weight: 600;
@@ -961,6 +966,20 @@ main { max-width: 640px; margin: 0 auto; padding: 12px 14px 24px; }
   -webkit-tap-highlight-color: transparent;
 }
 .sortbtn svg { color: var(--faint); }
+.chipbtn.locked { border-style: dashed; color: var(--faint); }
+.sortbtn[aria-pressed="true"] { color: var(--accent-ink); }
+.sortbtn[aria-pressed="true"] svg { color: var(--accent); }
+.lockedtag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.lockedtag svg { width: 12px; height: 12px; }
 .chipbtn .count {
   font-family: var(--mono);
   font-size: 12px;
@@ -1214,6 +1233,7 @@ const ui = {
   crops: null,         // last /api/crops payload
   cropLocation: '',    // '' is every location
   cropSort: 'soonest', // 'soonest' | 'count'
+  showLocked: false,   // crops in places this save can't reach yet
   cropOpen: {},        // location key -> section open
   showAll: false,
   typeFilter: 'all',
@@ -1851,6 +1871,7 @@ function visibleCropGroups() {
   const groups = (ui.crops && ui.crops.groups) || [];
   const q = ui.search.trim().toLowerCase();
   return groups.filter(g => {
+    if (!g.accessible && !ui.showLocked) return false;
     if (ui.cropLocation && g.location !== ui.cropLocation) return false;
     if (!q) return true;
     return g.name.toLowerCase().includes(q) || g.location_label.toLowerCase().includes(q);
@@ -1973,6 +1994,7 @@ function cropTimelineHTML(buckets) {
 }
 
 const SORT_ICON = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="m3.5 7.5 3.5-3.5 3.5 3.5"/><path d="M13 7h8M13 12h6M13 17h4"/></svg>';
+const LOCK_ICON = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>';
 
 // Chip labels only: the game's one long location name is "Ginger Island X", and
 // spelled out in full it is what pushed the filter row onto a third line. The
@@ -1981,20 +2003,38 @@ function chipLabel(label) {
   return label.replace(/^Ginger /, '');
 }
 
+function locationIsAccessible(name) {
+  const found = ((ui.crops && ui.crops.locations) || []).find(l => l.name === name);
+  return !found || found.accessible;
+}
+
 function renderCropFilters() {
   const el = $('#crop-filters');
-  const locations = (ui.crops && ui.crops.locations) || [];
-  const chip = (value, label, count) =>
-    `<button class="chipbtn compact" data-loc="${esc(value)}" aria-pressed="${ui.cropLocation === value}">${esc(label)} <span class="count">${fmtNum(count)}</span></button>`;
+  const all = (ui.crops && ui.crops.locations) || [];
+  const locations = all.filter(l => l.accessible || ui.showLocked);
+  const locked = all.filter(l => !l.accessible);
+  const lockedCount = locked.reduce((s, l) => s + l.count, 0);
+  const chip = (value, label, count, extra = '') =>
+    `<button class="chipbtn compact${extra}" data-loc="${esc(value)}" aria-pressed="${ui.cropLocation === value}">${esc(label)} <span class="count">${fmtNum(count)}</span></button>`;
   let html = '';
   if (locations.length > 1) {
     const total = locations.reduce((s, l) => s + l.count, 0);
-    html = chip('', 'All', total) + locations.map(l => chip(l.name, chipLabel(l.label), l.count)).join('');
+    html = chip('', 'All', total) + locations.map(l =>
+      chip(l.name, chipLabel(l.label), l.count, l.accessible ? '' : ' locked')).join('');
   }
-  // The sort control shares the row so it wraps with the chips rather than
-  // sitting alone on a line of its own.
-  html += `<button class="sortbtn" id="crop-sort" aria-label="Change sort order">${SORT_ICON}<span>${
+  // Offered rather than shown: the crops are real, but they are standing
+  // somewhere this save cannot get to yet.
+  let controls = '';
+  if (lockedCount > 0) {
+    controls += `<button class="sortbtn" id="crop-locked" aria-pressed="${ui.showLocked}" aria-label="${
+      ui.showLocked ? 'Hide' : 'Show'} crops in locations you haven't unlocked">${LOCK_ICON}<span>${
+      ui.showLocked ? 'Hide locked' : `Locked ${fmtNum(lockedCount)}`}</span></button>`;
+  }
+  controls += `<button class="sortbtn" id="crop-sort" aria-label="Change sort order">${SORT_ICON}<span>${
     ui.cropSort === 'soonest' ? 'Soonest' : 'Most planted'}</span></button>`;
+  // The controls share the chips' row and wrap as one unit, so neither is ever
+  // left stranded on a line by itself.
+  html += `<span class="ctlgroup">${controls}</span>`;
   el.innerHTML = html;
 }
 
@@ -2010,6 +2050,15 @@ function renderCrops() {
     return;
   }
   const all = (ui.crops.groups || []);
+  const lockedTotal = (ui.crops.summary && ui.crops.summary.locked) || 0;
+  if (all.length > 0 && all.every(g => !g.accessible) && !ui.showLocked) {
+    el.innerHTML = `<div class="empty"><h2>Nothing planted yet</h2>
+      <p>The only crops in this save are the ${fmtNum(lockedTotal)} growing wild on Ginger Island,
+      which you haven't unlocked — the game puts them there from the start.</p>
+      <div class="actions"><button class="btn ghost" data-action="show-locked">Show them anyway</button></div></div>`;
+    renderCropFilters();
+    return;
+  }
   if (all.length === 0) {
     el.innerHTML = `<div class="empty"><h2>Nothing planted</h2>
       <p>No crops are growing in this save right now — the dashboard fills in as soon as seeds go into the ground.</p></div>`;
@@ -2045,6 +2094,7 @@ function renderCrops() {
       <div class="actions">
         ${ui.search.trim() ? '<button class="btn ghost" data-action="clear-search">Clear search</button>' : ''}
         ${ui.cropLocation ? '<button class="btn ghost" data-action="clear-crop-location">Show every location</button>' : ''}
+        ${!ui.showLocked && lockedTotal ? '<button class="btn ghost" data-action="show-locked">Include locked locations</button>' : ''}
       </div></div>`;
     el.innerHTML = html;
     return;
@@ -2062,8 +2112,9 @@ function renderCrops() {
     const label = list[0].location_label;
     const count = list.reduce((sum, g) => sum + g.count, 0);
     const open = ui.cropOpen[location] !== false;
+    const locked = list[0].accessible ? '' : `<span class="lockedtag">${LOCK_ICON}not unlocked</span>`;
     html += `<details class="group" data-loc="${esc(location)}"${open ? ' open' : ''}>
-      <summary><span class="group-label">${esc(label)}</span><span class="group-count">${fmtNum(count)}</span>${ICONS.chevR}</summary>
+      <summary><span class="group-label">${esc(label)}</span><span class="group-count">${fmtNum(count)}</span>${locked}${ICONS.chevR}</summary>
       <ul class="rows">${list.map(cropGroupHTML).join('')}</ul>
     </details>`;
   }
@@ -2328,6 +2379,14 @@ $('#crop-filters').addEventListener('click', e => {
   if (e.target.closest('#crop-sort')) {
     ui.cropSort = ui.cropSort === 'soonest' ? 'count' : 'soonest';
     renderCrops();
+    return;
+  }
+  if (e.target.closest('#crop-locked')) {
+    ui.showLocked = !ui.showLocked;
+    // Hiding the locations again must not leave the list filtered to one of
+    // them, which would show nothing at all.
+    if (!ui.showLocked && ui.cropLocation && !locationIsAccessible(ui.cropLocation)) ui.cropLocation = '';
+    renderCrops();
   }
 });
 $('#crops').addEventListener('toggle', e => {
@@ -2356,6 +2415,7 @@ $('#main').addEventListener('click', e => {
   if (a === 'clear-type') { ui.typeFilter = 'all'; $('#type-seg input[value="all"]').checked = true; renderOverview(); }
   if (a === 'clear-useful') { ui.onlyUseful = false; $('#feeds-filter').setAttribute('aria-pressed', 'false'); renderItems(); }
   if (a === 'clear-crop-location') { ui.cropLocation = ''; renderCrops(); }
+  if (a === 'show-locked') { ui.showLocked = true; renderCrops(); }
   if (a === 'goto-recipes') switchView('recipes');
 });
 
