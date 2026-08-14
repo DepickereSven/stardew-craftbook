@@ -1,0 +1,925 @@
+{
+  "188": {
+    "id": "188",
+    "name": "Green Bean",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 10,
+    "regrow_days": 3,
+    "seed_ids": [
+      "473"
+    ],
+    "seed_names": [
+      "Bean Starter"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Green_Bean"
+  },
+  "190": {
+    "id": "190",
+    "name": "Cauliflower",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 12,
+    "seed_ids": [
+      "474"
+    ],
+    "seed_names": [
+      "Cauliflower Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Cauliflower"
+  },
+  "192": {
+    "id": "192",
+    "name": "Potato",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 6,
+    "seed_ids": [
+      "475"
+    ],
+    "seed_names": [
+      "Potato Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Potato"
+  },
+  "24": {
+    "id": "24",
+    "name": "Parsnip",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 4,
+    "seed_ids": [
+      "472"
+    ],
+    "seed_names": [
+      "Parsnip Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Parsnip"
+  },
+  "248": {
+    "id": "248",
+    "name": "Garlic",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 4,
+    "seed_ids": [
+      "476"
+    ],
+    "seed_names": [
+      "Garlic Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Garlic"
+  },
+  "250": {
+    "id": "250",
+    "name": "Kale",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 6,
+    "seed_ids": [
+      "477"
+    ],
+    "seed_names": [
+      "Kale Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Kale"
+  },
+  "252": {
+    "id": "252",
+    "name": "Rhubarb",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 13,
+    "seed_ids": [
+      "478"
+    ],
+    "seed_names": [
+      "Rhubarb Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Rhubarb"
+  },
+  "254": {
+    "id": "254",
+    "name": "Melon",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 12,
+    "seed_ids": [
+      "479"
+    ],
+    "seed_names": [
+      "Melon Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Melon"
+  },
+  "256": {
+    "id": "256",
+    "name": "Tomato",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 11,
+    "regrow_days": 4,
+    "seed_ids": [
+      "480"
+    ],
+    "seed_names": [
+      "Tomato Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Tomato"
+  },
+  "258": {
+    "id": "258",
+    "name": "Blueberry",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 13,
+    "regrow_days": 4,
+    "seed_ids": [
+      "481"
+    ],
+    "seed_names": [
+      "Blueberry Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Blueberry"
+  },
+  "260": {
+    "id": "260",
+    "name": "Hot Pepper",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 5,
+    "regrow_days": 3,
+    "seed_ids": [
+      "482"
+    ],
+    "seed_names": [
+      "Pepper Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Hot_Pepper"
+  },
+  "262": {
+    "id": "262",
+    "name": "Wheat",
+    "seasons": [
+      "summer",
+      "fall"
+    ],
+    "growth_days": 4,
+    "seed_ids": [
+      "483"
+    ],
+    "seed_names": [
+      "Wheat Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Wheat"
+  },
+  "264": {
+    "id": "264",
+    "name": "Radish",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 6,
+    "seed_ids": [
+      "484"
+    ],
+    "seed_names": [
+      "Radish Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Radish"
+  },
+  "266": {
+    "id": "266",
+    "name": "Red Cabbage",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 9,
+    "seed_ids": [
+      "485"
+    ],
+    "seed_names": [
+      "Red Cabbage Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Red_Cabbage"
+  },
+  "268": {
+    "id": "268",
+    "name": "Starfruit",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 13,
+    "seed_ids": [
+      "486"
+    ],
+    "seed_names": [
+      "Starfruit Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Starfruit"
+  },
+  "270": {
+    "id": "270",
+    "name": "Corn",
+    "seasons": [
+      "summer",
+      "fall"
+    ],
+    "growth_days": 14,
+    "regrow_days": 4,
+    "seed_ids": [
+      "487"
+    ],
+    "seed_names": [
+      "Corn Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Corn"
+  },
+  "271": {
+    "id": "271",
+    "name": "Unmilled Rice",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 8,
+    "seed_ids": [
+      "273"
+    ],
+    "seed_names": [
+      "Rice Shoot"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Unmilled_Rice"
+  },
+  "272": {
+    "id": "272",
+    "name": "Eggplant",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 5,
+    "regrow_days": 5,
+    "seed_ids": [
+      "488"
+    ],
+    "seed_names": [
+      "Eggplant Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Eggplant"
+  },
+  "274": {
+    "id": "274",
+    "name": "Artichoke",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 8,
+    "seed_ids": [
+      "489"
+    ],
+    "seed_names": [
+      "Artichoke Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Artichoke"
+  },
+  "276": {
+    "id": "276",
+    "name": "Pumpkin",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 13,
+    "seed_ids": [
+      "490"
+    ],
+    "seed_names": [
+      "Pumpkin Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Pumpkin"
+  },
+  "278": {
+    "id": "278",
+    "name": "Bok Choy",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 4,
+    "seed_ids": [
+      "491"
+    ],
+    "seed_names": [
+      "Bok Choy Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Bok_Choy"
+  },
+  "280": {
+    "id": "280",
+    "name": "Yam",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 10,
+    "seed_ids": [
+      "492"
+    ],
+    "seed_names": [
+      "Yam Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Yam"
+  },
+  "282": {
+    "id": "282",
+    "name": "Cranberries",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 7,
+    "regrow_days": 5,
+    "seed_ids": [
+      "493"
+    ],
+    "seed_names": [
+      "Cranberry Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Cranberries"
+  },
+  "284": {
+    "id": "284",
+    "name": "Beet",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 6,
+    "seed_ids": [
+      "494"
+    ],
+    "seed_names": [
+      "Beet Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Beet"
+  },
+  "300": {
+    "id": "300",
+    "name": "Amaranth",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 7,
+    "seed_ids": [
+      "299"
+    ],
+    "seed_names": [
+      "Amaranth Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Amaranth"
+  },
+  "304": {
+    "id": "304",
+    "name": "Hops",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 11,
+    "regrow_days": 1,
+    "seed_ids": [
+      "302"
+    ],
+    "seed_names": [
+      "Hops Starter"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Hops"
+  },
+  "376": {
+    "id": "376",
+    "name": "Poppy",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 7,
+    "seed_ids": [
+      "453"
+    ],
+    "seed_names": [
+      "Poppy Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Poppy"
+  },
+  "398": {
+    "id": "398",
+    "name": "Grape",
+    "seasons": [
+      "summer",
+      "fall"
+    ],
+    "growth_days": 7,
+    "regrow_days": 3,
+    "seed_ids": [
+      "496",
+      "301"
+    ],
+    "seed_names": [
+      "Summer Seeds",
+      "Grape Starter"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Grape"
+  },
+  "400": {
+    "id": "400",
+    "name": "Strawberry",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 8,
+    "regrow_days": 4,
+    "seed_ids": [
+      "745"
+    ],
+    "seed_names": [
+      "Strawberry Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Strawberry"
+  },
+  "417": {
+    "id": "417",
+    "name": "Sweet Gem Berry",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 24,
+    "seed_ids": [
+      "347"
+    ],
+    "seed_names": [
+      "Rare Seed"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Sweet_Gem_Berry"
+  },
+  "421": {
+    "id": "421",
+    "name": "Sunflower",
+    "seasons": [
+      "summer",
+      "fall"
+    ],
+    "growth_days": 8,
+    "seed_ids": [
+      "431"
+    ],
+    "seed_names": [
+      "Sunflower Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Sunflower"
+  },
+  "433": {
+    "id": "433",
+    "name": "Coffee Bean",
+    "seasons": [
+      "spring",
+      "summer"
+    ],
+    "growth_days": 10,
+    "regrow_days": 2,
+    "seed_ids": [
+      "433"
+    ],
+    "seed_names": [
+      "Coffee Bean"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Coffee_Bean"
+  },
+  "454": {
+    "id": "454",
+    "name": "Ancient Fruit",
+    "seasons": [
+      "spring",
+      "summer",
+      "fall"
+    ],
+    "growth_days": 28,
+    "regrow_days": 7,
+    "seed_ids": [
+      "499"
+    ],
+    "seed_names": [
+      "Ancient Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Ancient_Fruit"
+  },
+  "591": {
+    "id": "591",
+    "name": "Tulip",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 6,
+    "seed_ids": [
+      "427"
+    ],
+    "seed_names": [
+      "Tulip Bulb"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Tulip"
+  },
+  "593": {
+    "id": "593",
+    "name": "Summer Spangle",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 8,
+    "seed_ids": [
+      "455"
+    ],
+    "seed_names": [
+      "Spangle Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Summer_Spangle"
+  },
+  "595": {
+    "id": "595",
+    "name": "Fairy Rose",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 12,
+    "seed_ids": [
+      "425"
+    ],
+    "seed_names": [
+      "Fairy Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Fairy_Rose"
+  },
+  "597": {
+    "id": "597",
+    "name": "Blue Jazz",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 7,
+    "seed_ids": [
+      "429"
+    ],
+    "seed_names": [
+      "Jazz Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Blue_Jazz"
+  },
+  "613": {
+    "id": "613",
+    "name": "Apple",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 28,
+    "wiki_url": "https://stardewvalleywiki.com/Apple"
+  },
+  "634": {
+    "id": "634",
+    "name": "Apricot",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 28,
+    "wiki_url": "https://stardewvalleywiki.com/Apricot"
+  },
+  "635": {
+    "id": "635",
+    "name": "Orange",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 28,
+    "wiki_url": "https://stardewvalleywiki.com/Orange"
+  },
+  "636": {
+    "id": "636",
+    "name": "Peach",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 28,
+    "wiki_url": "https://stardewvalleywiki.com/Peach"
+  },
+  "637": {
+    "id": "637",
+    "name": "Pomegranate",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 28,
+    "wiki_url": "https://stardewvalleywiki.com/Pomegranate"
+  },
+  "638": {
+    "id": "638",
+    "name": "Cherry",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 28,
+    "wiki_url": "https://stardewvalleywiki.com/Cherry"
+  },
+  "771": {
+    "id": "771",
+    "name": "Fiber",
+    "seed_ids": [
+      "885"
+    ],
+    "seed_names": [
+      "Fiber Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Fiber"
+  },
+  "815": {
+    "id": "815",
+    "name": "Tea Leaves",
+    "seasons": [
+      "spring",
+      "summer",
+      "fall"
+    ],
+    "growth_days": 20,
+    "regrow_days": 1,
+    "seed_ids": [
+      "251"
+    ],
+    "seed_names": [
+      "Tea Sapling"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Tea_Leaves"
+  },
+  "830": {
+    "id": "830",
+    "name": "Taro Root",
+    "seasons": [
+      "spring",
+      "summer",
+      "fall",
+      "winter"
+    ],
+    "growth_days": 10,
+    "seed_ids": [
+      "831"
+    ],
+    "seed_names": [
+      "Taro Tuber"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Taro_Root"
+  },
+  "832": {
+    "id": "832",
+    "name": "Pineapple",
+    "seasons": [
+      "spring",
+      "summer",
+      "fall",
+      "winter"
+    ],
+    "growth_days": 14,
+    "regrow_days": 7,
+    "seed_ids": [
+      "833"
+    ],
+    "seed_names": [
+      "Pineapple Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Pineapple"
+  },
+  "834": {
+    "id": "834",
+    "name": "Mango",
+    "seasons": [
+      "spring",
+      "summer",
+      "fall",
+      "winter"
+    ],
+    "growth_days": 28,
+    "wiki_url": "https://stardewvalleywiki.com/Mango"
+  },
+  "889": {
+    "id": "889",
+    "name": "Qi Fruit",
+    "seasons": [
+      "spring",
+      "summer",
+      "fall",
+      "winter"
+    ],
+    "growth_days": 4,
+    "seed_ids": [
+      "890"
+    ],
+    "seed_names": [
+      "Qi Bean"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Qi_Fruit"
+  },
+  "90": {
+    "id": "90",
+    "name": "Cactus Fruit",
+    "seasons": [
+      "spring",
+      "summer",
+      "fall",
+      "winter"
+    ],
+    "growth_days": 12,
+    "regrow_days": 3,
+    "seed_ids": [
+      "802"
+    ],
+    "seed_names": [
+      "Cactus Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Cactus_Fruit"
+  },
+  "91": {
+    "id": "91",
+    "name": "Banana",
+    "seasons": [
+      "spring",
+      "summer",
+      "fall",
+      "winter"
+    ],
+    "growth_days": 28,
+    "wiki_url": "https://stardewvalleywiki.com/Banana"
+  },
+  "Broccoli": {
+    "id": "Broccoli",
+    "name": "Broccoli",
+    "seasons": [
+      "fall"
+    ],
+    "growth_days": 8,
+    "regrow_days": 4,
+    "seed_ids": [
+      "BroccoliSeeds"
+    ],
+    "seed_names": [
+      "Broccoli Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Broccoli"
+  },
+  "Carrot": {
+    "id": "Carrot",
+    "name": "Carrot",
+    "seasons": [
+      "spring"
+    ],
+    "growth_days": 3,
+    "seed_ids": [
+      "CarrotSeeds"
+    ],
+    "seed_names": [
+      "Carrot Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Carrot"
+  },
+  "Grass": {
+    "id": "Grass",
+    "name": "Grass",
+    "seasons": [
+      "spring",
+      "summer",
+      "fall"
+    ],
+    "seed_ids": [
+      "297"
+    ],
+    "seed_names": [
+      "Grass Starter"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Grass"
+  },
+  "MahoganyTree": {
+    "id": "MahoganyTree",
+    "name": "Mahogany Tree",
+    "seed_ids": [
+      "292"
+    ],
+    "seed_names": [
+      "Mahogany Seed"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Mahogany_Tree"
+  },
+  "MapleTree": {
+    "id": "MapleTree",
+    "name": "Maple Tree",
+    "seed_ids": [
+      "310"
+    ],
+    "seed_names": [
+      "Maple Seed"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Maple_Tree"
+  },
+  "MushroomTree": {
+    "id": "MushroomTree",
+    "name": "Mushroom Tree",
+    "seed_ids": [
+      "891"
+    ],
+    "seed_names": [
+      "Mushroom Tree Seed"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Mushroom_Tree"
+  },
+  "MysticTree": {
+    "id": "MysticTree",
+    "name": "Mystic Tree",
+    "seed_ids": [
+      "MysticTreeSeed"
+    ],
+    "seed_names": [
+      "Mystic Tree Seed"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Mystic_Tree"
+  },
+  "OakTree": {
+    "id": "OakTree",
+    "name": "Oak Tree",
+    "seed_ids": [
+      "309"
+    ],
+    "seed_names": [
+      "Acorn"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Oak_Tree"
+  },
+  "PalmTree": {
+    "id": "PalmTree",
+    "name": "Palm Tree",
+    "wiki_url": "https://stardewvalleywiki.com/Palm_Tree"
+  },
+  "PineTree": {
+    "id": "PineTree",
+    "name": "Pine Tree",
+    "seed_ids": [
+      "311"
+    ],
+    "seed_names": [
+      "Pine Cone"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Pine_Tree"
+  },
+  "Powdermelon": {
+    "id": "Powdermelon",
+    "name": "Powdermelon",
+    "seasons": [
+      "winter"
+    ],
+    "growth_days": 7,
+    "seed_ids": [
+      "PowdermelonSeeds"
+    ],
+    "seed_names": [
+      "Powdermelon Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Powdermelon"
+  },
+  "SummerSquash": {
+    "id": "SummerSquash",
+    "name": "Summer Squash",
+    "seasons": [
+      "summer"
+    ],
+    "growth_days": 6,
+    "regrow_days": 3,
+    "seed_ids": [
+      "SummerSquashSeeds"
+    ],
+    "seed_names": [
+      "Summer Squash Seeds"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Summer_Squash"
+  },
+  "TeaBush": {
+    "id": "TeaBush",
+    "name": "Tea Bush",
+    "seasons": [
+      "spring",
+      "summer",
+      "fall"
+    ],
+    "growth_days": 20,
+    "seed_ids": [
+      "251"
+    ],
+    "seed_names": [
+      "Tea Sapling"
+    ],
+    "wiki_url": "https://stardewvalleywiki.com/Tea_Bush"
+  }
+}
