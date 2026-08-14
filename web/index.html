@@ -117,7 +117,7 @@ svg.ic { width: 16px; height: 16px; flex: none; }
   align-items: center;
   gap: 10px;
 }
-.vswitch-row .seg { flex: 1; }
+.vswitch-row .seg { flex: 1; min-width: 0; }
 .search { position: relative; }
 .search > svg {
   position: absolute;
@@ -162,7 +162,7 @@ svg.ic { width: 16px; height: 16px; flex: none; }
   border: 1px solid var(--line);
   border-radius: 999px;
 }
-.seg-opt { flex: 1; position: relative; }
+.seg-opt { flex: 1; min-width: 0; position: relative; }
 .seg-opt input {
   position: absolute;
   opacity: 0;
@@ -919,6 +919,107 @@ main { max-width: 640px; margin: 0 auto; padding: 12px 14px 24px; }
 .empty .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .loading { padding: 40px 0; text-align: center; color: var(--faint); }
 
+/* ---------- crops ---------- */
+/* The location filter holds one chip per place with crops in it, which is a
+   list the save decides the length of — so unlike the fixed control rows above,
+   this one has to wrap rather than push the page wider than the viewport. */
+#crop-locations { flex-wrap: wrap; }
+#crop-locations .chipbtn { padding: 6px 12px; min-height: 36px; white-space: nowrap; }
+.crops-date {
+  margin: 10px 2px 0;
+  font-size: 12.5px;
+  color: var(--faint);
+}
+.crops-caveat {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  font-size: 12.5px;
+  color: var(--muted);
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.crops-caveat svg { width: 16px; height: 16px; flex: none; color: var(--faint); margin-top: 1px; }
+.crops-caveat b { color: var(--ink); font-weight: 650; }
+.crops-h {
+  margin: 22px 2px 0;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.crop-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 10px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.crop-when {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+}
+.crop-when b { display: block; font-size: 13px; font-weight: 650; color: var(--ink); }
+.crop-when.now b { color: var(--accent-ink); }
+/* One stacked bar per group: a segment per harvest-day bucket, soonest first,
+   so a glance says how much of a planting comes in together. */
+.cbar {
+  grid-column: 1 / -1;
+  display: flex;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--line);
+}
+.cbar i { display: block; height: 100%; min-width: 2px; }
+.cbar i.s0 { background: var(--accent); }
+.cbar i.s1 { background: color-mix(in srgb, var(--accent) 62%, var(--line)); }
+.cbar i.s2 { background: color-mix(in srgb, var(--accent) 38%, var(--line)); }
+.cbar i.s3 { background: color-mix(in srgb, var(--accent) 20%, var(--line)); }
+.cbar i.dead { background: var(--warn-soft); }
+.warnnote { color: var(--warn); }
+.tl { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+.tl li {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
+  gap: 4px 10px;
+  align-items: center;
+  padding: 9px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.tl-when { font-size: 13px; font-weight: 650; }
+.tl-when.now { color: var(--accent-ink); }
+.tl-when small { display: block; font-weight: 500; font-size: 11px; color: var(--faint); }
+.tl-bar { height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.tl-bar > span { display: block; height: 100%; background: var(--accent); border-radius: 4px; }
+.tl-count {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+.tl-crops {
+  grid-column: 2 / -1;
+  font-size: 12px;
+  color: var(--faint);
+  overflow-wrap: anywhere;
+}
+@media (max-width: 400px) {
+  .tl li { grid-template-columns: 76px minmax(0, 1fr) auto; }
+}
+
 /* ---------- footer ---------- */
 footer {
   max-width: 640px;
@@ -960,12 +1061,16 @@ footer {
           <input type="radio" name="view" value="recipes">
           <span>Recipes</span>
         </label>
+        <label class="seg-opt">
+          <input type="radio" name="view" value="crops">
+          <span>Crops</span>
+        </label>
       </div>
       <span class="refresh-note" id="refresh-note" role="status" aria-live="polite"></span>
     </div>
     <div class="search">
       <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="search" type="search" placeholder="Search…" autocomplete="off" enterkeyhint="search" aria-label="Search items and recipes">
+      <input id="search" type="search" placeholder="Search…" autocomplete="off" enterkeyhint="search" aria-label="Search items, recipes and crops">
       <button class="search-clear" id="search-clear" hidden aria-label="Clear search">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
       </button>
@@ -999,6 +1104,12 @@ footer {
         </label>
       </div>
     </div>
+    <div id="controls-crops" hidden>
+      <div class="controls-row" id="crop-locations" role="group" aria-label="Filter by location"></div>
+      <div class="controls-row">
+        <button class="chipbtn" id="crop-sort" aria-label="Change sort order">Soonest ↑</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1011,6 +1122,9 @@ footer {
   </div>
   <div id="view-recipes" hidden>
     <div id="overview"></div>
+  </div>
+  <div id="view-crops" hidden>
+    <div id="crops"></div>
   </div>
   <div id="detail" class="detail" hidden></div>
 </main>
@@ -1054,8 +1168,13 @@ const ui = {
   view: 'items',
   views: {
     items:   { scroll: 0, detailId: null },   // item id string
-    recipes: { scroll: 0, detailKey: null }   // recipe key
+    recipes: { scroll: 0, detailKey: null },  // recipe key
+    crops:   { scroll: 0 }                    // no detail screen
   },
+  crops: null,         // last /api/crops payload
+  cropLocation: '',    // '' is every location
+  cropSort: 'soonest', // 'soonest' | 'count'
+  cropOpen: {},        // location key -> section open
   showAll: false,
   typeFilter: 'all',
   onlyUseful: false,   // items: only items feeding recipes
@@ -1080,6 +1199,7 @@ async function fetchJSON(url) {
 const api = {
   state: () => fetchJSON('/api/state'),
   inventory: () => fetchJSON('/api/inventory'),
+  crops: () => fetchJSON('/api/crops'),
   version: () => fetchJSON('/api/version'),
   plan: key => fetchJSON('/api/plan/' + encodeURIComponent(key)),
   item: id => fetchJSON('/api/item/' + encodeURIComponent(id))
@@ -1680,10 +1800,232 @@ function renderPlan(body, p) {
 }
 
 /* ================================================================
+   Crops
+   ================================================================ */
+
+/* Everything the crops view draws comes out of the server's groups: one entry
+   per crop type per location, already carrying its counts and its harvest-day
+   buckets. Filtering therefore never has to walk the individual tiles, and the
+   summary above the list always agrees with the rows below it. */
+function visibleCropGroups() {
+  const groups = (ui.crops && ui.crops.groups) || [];
+  const q = ui.search.trim().toLowerCase();
+  return groups.filter(g => {
+    if (ui.cropLocation && g.location !== ui.cropLocation) return false;
+    if (!q) return true;
+    return g.name.toLowerCase().includes(q) || g.location_label.toLowerCase().includes(q);
+  });
+}
+
+function sortCropGroups(groups) {
+  const soonest = g => g.earliest_days === null || g.earliest_days === undefined ? Infinity : g.earliest_days;
+  return [...groups].sort((a, b) => {
+    if (ui.cropSort === 'count' && a.count !== b.count) return b.count - a.count;
+    const d = soonest(a) - soonest(b);
+    if (d) return d;
+    if (a.count !== b.count) return b.count - a.count;
+    return a.name.localeCompare(b.name);
+  });
+}
+
+function summarizeCrops(groups) {
+  const s = { total: 0, ready: 0, unwatered: 0, dead: 0, outOfSeason: 0, nextDays: null, nextDate: null };
+  for (const g of groups) {
+    s.total += g.count;
+    s.ready += g.ready;
+    s.unwatered += g.unwatered;
+    s.dead += g.dead || 0;
+    s.outOfSeason += g.out_of_season || 0;
+    if (g.earliest_days > 0 && (s.nextDays === null || g.earliest_days < s.nextDays)) {
+      s.nextDays = g.earliest_days;
+      s.nextDate = g.earliest_date || null;
+    }
+  }
+  return s;
+}
+
+// The timeline is the same buckets seen end-on: summed across every visible
+// group instead of down one of them.
+function cropTimeline(groups) {
+  const byDays = new Map();
+  for (const g of groups) {
+    for (const b of g.buckets) {
+      let entry = byDays.get(b.days);
+      if (!entry) {
+        entry = { days: b.days, label: b.label, count: 0, date: b.date || null, crops: new Map() };
+        byDays.set(b.days, entry);
+      }
+      entry.count += b.count;
+      entry.crops.set(g.name, (entry.crops.get(g.name) || 0) + b.count);
+    }
+  }
+  return [...byDays.values()].sort((a, b) => a.days - b.days).map(e => ({
+    ...e,
+    crops: [...e.crops].map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
+  }));
+}
+
+function whenHTML(g) {
+  if (g.earliest_days === null || g.earliest_days === undefined) {
+    return `<div class="crop-when"><b>—</b>no harvest</div>`;
+  }
+  if (g.earliest_days === 0) return `<div class="crop-when now"><b>Ready now</b></div>`;
+  const unit = g.earliest_days === 1 ? '1 day' : g.earliest_days + ' days';
+  return `<div class="crop-when"><b>${unit}</b>${g.earliest_date ? esc(g.earliest_date.label) : ''}</div>`;
+}
+
+// Shade by how far off the harvest is, never by position in the list, so the
+// same colour means the same wait on every row: a lone bar of pumpkins seven
+// days out must not read like a lone bar of beets ready to pick.
+function bucketShade(days) {
+  if (days === 0) return 's0';
+  if (days <= 2) return 's1';
+  if (days <= 5) return 's2';
+  return 's3';
+}
+
+function cropBarHTML(g) {
+  const total = g.count || 1;
+  const segments = g.buckets.map(b =>
+    `<i class="${bucketShade(b.days)}" style="width:${(b.count / total) * 100}%" title="${esc(b.label)}: ${fmtNum(b.count)}"></i>`);
+  const accounted = g.buckets.reduce((s, b) => s + b.count, 0);
+  if (accounted < g.count) {
+    segments.push(`<i class="dead" style="width:${((g.count - accounted) / total) * 100}%" title="Never harvestable"></i>`);
+  }
+  return `<div class="cbar" role="img" aria-label="${esc(g.buckets.map(b => `${b.count} ${b.label.toLowerCase()}`).join(', ') || 'nothing due')}">${segments.join('')}</div>`;
+}
+
+function cropGroupHTML(g) {
+  const bits = [`${fmtNum(g.count)} planted`];
+  if (g.ready) bits.push(`<b>${fmtNum(g.ready)} ready</b>`);
+  if (g.regrows && g.regrow_days) bits.push(`regrows every ${g.regrow_days} d`);
+  else if (g.regrows) bits.push('regrows');
+  else if (g.regrows === null) bits.push('regrowth unknown');
+  const warnings = [];
+  if (g.unwatered) warnings.push(`${fmtNum(g.unwatered)} unwatered`);
+  if (g.out_of_season) warnings.push(`${fmtNum(g.out_of_season)} out of season`);
+  if (g.dead) warnings.push(`${fmtNum(g.dead)} dead`);
+  return `<li><div class="crop-row">
+    <div class="row-text">
+      <span class="row-name">${esc(g.name)}</span>
+      <span class="row-meta">${bits.join(' · ')}${warnings.length ? ` <span class="warnnote">· ${esc(warnings.join(' · '))}</span>` : ''}</span>
+    </div>
+    ${whenHTML(g)}
+    ${cropBarHTML(g)}
+  </div></li>`;
+}
+
+function cropTimelineHTML(buckets) {
+  if (buckets.length === 0) return '';
+  const peak = Math.max(...buckets.map(b => b.count));
+  return `<h3 class="crops-h">Harvest timeline</h3>
+  <ul class="tl">${buckets.map(b => {
+    const names = b.crops.slice(0, 4).map(c => `${esc(c.name)} ×${fmtNum(c.count)}`).join(', ');
+    const more = b.crops.length > 4 ? ` +${b.crops.length - 4} more` : '';
+    return `<li>
+      <div class="tl-when${b.days === 0 ? ' now' : ''}">${esc(b.label)}${b.days > 0 && b.date ? `<small>${esc(b.date.label)}</small>` : ''}</div>
+      <div class="tl-bar"><span style="width:${(b.count / peak) * 100}%"></span></div>
+      <div class="tl-count">${fmtNum(b.count)}</div>
+      <div class="tl-crops">${names}${more}</div>
+    </li>`;
+  }).join('')}</ul>`;
+}
+
+function renderCropLocations() {
+  const el = $('#crop-locations');
+  const locations = (ui.crops && ui.crops.locations) || [];
+  if (locations.length < 2) {
+    el.innerHTML = '';
+    el.hidden = true;
+    return;
+  }
+  el.hidden = false;
+  const total = locations.reduce((s, l) => s + l.count, 0);
+  const chip = (value, label, count) =>
+    `<button class="chipbtn" data-loc="${esc(value)}" aria-pressed="${ui.cropLocation === value}">${esc(label)} <span class="uses">${fmtNum(count)}</span></button>`;
+  el.innerHTML = chip('', 'All', total) + locations.map(l => chip(l.name, l.label, l.count)).join('');
+}
+
+function renderCrops() {
+  const el = $('#crops');
+  renderCropLocations();
+  if (!ui.crops) {
+    el.innerHTML = '<p class="loading">Reading the save…</p>';
+    return;
+  }
+  if (ui.crops.error && (!ui.crops.groups || ui.crops.groups.length === 0)) {
+    el.innerHTML = emptySaveHTML(ui.crops.error);
+    return;
+  }
+  const all = (ui.crops.groups || []);
+  if (all.length === 0) {
+    el.innerHTML = `<div class="empty"><h2>Nothing planted</h2>
+      <p>No crops are growing in this save right now — the dashboard fills in as soon as seeds go into the ground.</p></div>`;
+    return;
+  }
+  const groups = sortCropGroups(visibleCropGroups());
+  const s = summarizeCrops(groups);
+  const date = ui.crops.date;
+
+  const nextTile = s.nextDays === null
+    ? `<div class="stat"><b>—</b><span>Next harvest</span></div>`
+    : `<div class="stat"><b>${s.nextDays === 1 ? '1 day' : s.nextDays + ' days'}</b><span>${s.nextDate ? esc(s.nextDate.label) : 'Next harvest'}</span></div>`;
+
+  const flags = [];
+  if (s.unwatered) flags.push(`${fmtNum(s.unwatered)} unwatered today`);
+  if (s.outOfSeason) flags.push(`${fmtNum(s.outOfSeason)} out of season`);
+  if (s.dead) flags.push(`${fmtNum(s.dead)} dead`);
+
+  let html = `<p class="crops-date">${date && date.label ? esc(date.label) : 'Date unknown'}</p>
+  <div class="stats">
+    <div class="stat"><b>${fmtNum(s.total)}</b><span>Growing</span></div>
+    <div class="stat"><b>${fmtNum(s.ready)}</b><span>Ready now</span></div>
+    ${nextTile}
+  </div>
+  <div class="crops-caveat">${ICONS.question}<span><b>Days are watered growth days, not calendar days.</b>
+    A crop only advances on a day it is watered, so a missed watering, a season it cannot survive, or
+    a wilting pushes these dates back. Nothing here can see tomorrow's weather.${
+      flags.length ? ` Right now: <span class="warnnote">${esc(flags.join(' · '))}</span>.` : ''}</span></div>`;
+
+  if (groups.length === 0) {
+    html += `<div class="empty"><h2>No crops match</h2>
+      <p>Nothing is growing that matches this filter.</p>
+      <div class="actions">
+        ${ui.search.trim() ? '<button class="btn ghost" data-action="clear-search">Clear search</button>' : ''}
+        ${ui.cropLocation ? '<button class="btn ghost" data-action="clear-crop-location">Show every location</button>' : ''}
+      </div></div>`;
+    el.innerHTML = html;
+    return;
+  }
+
+  html += cropTimelineHTML(cropTimeline(groups));
+
+  const byLocation = new Map();
+  for (const g of groups) {
+    if (!byLocation.has(g.location)) byLocation.set(g.location, []);
+    byLocation.get(g.location).push(g);
+  }
+  html += '<h3 class="crops-h">By location</h3>';
+  for (const [location, list] of byLocation) {
+    const label = list[0].location_label;
+    const count = list.reduce((sum, g) => sum + g.count, 0);
+    const open = ui.cropOpen[location] !== false;
+    html += `<details class="group" data-loc="${esc(location)}"${open ? ' open' : ''}>
+      <summary><span class="group-label">${esc(label)}</span><span class="group-count">${fmtNum(count)}</span>${ICONS.chevR}</summary>
+      <ul class="rows">${list.map(cropGroupHTML).join('')}</ul>
+    </details>`;
+  }
+  el.innerHTML = html;
+}
+
+/* ================================================================
    Navigation
    ================================================================ */
 function activeDetail() {
-  return ui.view === 'items' ? ui.views.items.detailId : ui.views.recipes.detailKey;
+  if (ui.view === 'items') return ui.views.items.detailId;
+  if (ui.view === 'recipes') return ui.views.recipes.detailKey;
+  return null; // the crops view is a dashboard; it has no detail screen
 }
 
 function renderDetail() {
@@ -1695,6 +2037,7 @@ function renderActiveList() {
   if (!ui.data) return;
   if (ui.data.error && ui.data.recipes.length === 0) return; // empty-save state handled in renderAll
   if (ui.view === 'items') renderItems();
+  else if (ui.view === 'crops') renderCrops();
   else renderOverview();
 }
 
@@ -1711,12 +2054,15 @@ function withViewTransition(run) {
 function applyNav(restoreScroll = true) {
   const det = activeDetail();
   const isItems = ui.view === 'items';
+  const isCrops = ui.view === 'crops';
   const run = () => {
     $('#view-items').hidden = !isItems || !!det;
-    $('#view-recipes').hidden = isItems || !!det;
+    $('#view-recipes').hidden = ui.view !== 'recipes' || !!det;
+    $('#view-crops').hidden = !isCrops;
     $('#detail').hidden = !det;
     $('#controls-items').hidden = !isItems || !!det;
-    $('#controls-recipes').hidden = isItems || !!det;
+    $('#controls-recipes').hidden = ui.view !== 'recipes' || !!det;
+    $('#controls-crops').hidden = !isCrops;
     $('.search').hidden = !!det;
     $('#banner').hidden = !!det || $('#banner').dataset.empty === 'true';
     $('#footer').hidden = !!det;
@@ -1777,11 +2123,11 @@ window.addEventListener('popstate', e => {
     // back/forward popped the detail we were showing — forget it, so a later
     // tab switch lands on that view's list, not on a screen we already left
     if (leaving === 'items') ui.views.items.detailId = null;
-    else ui.views.recipes.detailKey = null;
+    else if (leaving === 'recipes') ui.views.recipes.detailKey = null;
     ui.plan = null;
   }
   if (s.v === 'items') ui.views.items.detailId = s.d || null;
-  else { ui.views.recipes.detailKey = s.d || null; ui.plan = null; }
+  else if (s.v === 'recipes') { ui.views.recipes.detailKey = s.d || null; ui.plan = null; }
   if (!activeDetail()) renderActiveList();
   applyNav();
   if (s.v === 'items' && s.d) ensureItemFresh();
@@ -1791,8 +2137,9 @@ window.addEventListener('popstate', e => {
 function renderBanner() {
   const el = $('#banner');
   const d = ui.data;
-  const stale = (d && d.error && d.recipes.length) || (ui.inv && ui.inv.error && ui.inv.items && ui.inv.items.length);
-  const msg = (d && d.error) || (ui.inv && ui.inv.error) || '';
+  const stale = (d && d.error && d.recipes.length) || (ui.inv && ui.inv.error && ui.inv.items && ui.inv.items.length)
+    || (ui.crops && ui.crops.error && ui.crops.groups && ui.crops.groups.length);
+  const msg = (d && d.error) || (ui.inv && ui.inv.error) || (ui.crops && ui.crops.error) || '';
   if (ui.netDown) {
     el.dataset.empty = 'false';
     el.hidden = false;
@@ -1835,6 +2182,7 @@ function renderAll() {
     $('#items-total').textContent = '';
     $('#items-list').innerHTML = emptySaveHTML(d.error);
     $('#overview').innerHTML = emptySaveHTML(d.error);
+    $('#crops').innerHTML = emptySaveHTML(d.error);
     return;
   }
   renderActiveList();
@@ -1853,9 +2201,9 @@ function flashUpdated() {
 async function refresh(initial = false) {
   const y = window.scrollY;
   const det = activeDetail();
-  let state, inv;
+  let state, inv, crops;
   try {
-    [state, inv] = await Promise.all([api.state(), api.inventory()]);
+    [state, inv, crops] = await Promise.all([api.state(), api.inventory(), api.crops()]);
   } catch (e) {
     ui.netDown = true;
     renderBanner();
@@ -1864,6 +2212,7 @@ async function refresh(initial = false) {
   ui.netDown = false;
   ui.data = state;
   ui.inv = inv;
+  ui.crops = crops;
   ui.version = state.version;
   renderAll();
   if (det) {
@@ -1918,6 +2267,22 @@ $('#type-seg').addEventListener('change', e => {
 });
 $('#view-seg').addEventListener('change', e => switchView(e.target.value));
 
+$('#crop-locations').addEventListener('click', e => {
+  const chip = e.target.closest('[data-loc]');
+  if (!chip) return;
+  ui.cropLocation = chip.dataset.loc;
+  renderCrops();
+});
+$('#crop-sort').addEventListener('click', () => {
+  ui.cropSort = ui.cropSort === 'soonest' ? 'count' : 'soonest';
+  $('#crop-sort').textContent = ui.cropSort === 'soonest' ? 'Soonest \u2191' : 'Most planted \u2193';
+  renderCrops();
+});
+$('#crops').addEventListener('toggle', e => {
+  const d = e.target;
+  if (d.matches && d.matches('details.group')) ui.cropOpen[d.dataset.loc] = d.open;
+}, true);
+
 $('#feeds-filter').addEventListener('click', () => {
   ui.onlyUseful = !ui.onlyUseful;
   $('#feeds-filter').setAttribute('aria-pressed', String(ui.onlyUseful));
@@ -1938,6 +2303,7 @@ $('#main').addEventListener('click', e => {
   if (a === 'show-all') { ui.showAll = true; $('#show-all').checked = true; renderOverview(); }
   if (a === 'clear-type') { ui.typeFilter = 'all'; $('#type-seg input[value="all"]').checked = true; renderOverview(); }
   if (a === 'clear-useful') { ui.onlyUseful = false; $('#feeds-filter').setAttribute('aria-pressed', 'false'); renderItems(); }
+  if (a === 'clear-crop-location') { ui.cropLocation = ''; renderCrops(); }
   if (a === 'goto-recipes') switchView('recipes');
 });
 
