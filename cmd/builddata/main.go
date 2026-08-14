@@ -76,6 +76,12 @@ func main() {
 	machines, items, unresolved, err := collectMetadata(itemPages, machineNames)
 	must(err)
 	fmt.Fprintf(os.Stderr, "unresolved machine ingredient names: %d\n", unresolved)
+
+	spriteText, err := fetchWikitext(objectSpritesPage)
+	must(err)
+	objectIDs := objectIDsByName(spriteText)
+	fmt.Fprintf(os.Stderr, "object ids read from the sprite sheet: %d\n", len(objectIDs))
+	crops := collectCrops(itemPages, objectIDs)
 	if problems := validate(recipes, machines, items); len(problems) > 0 {
 		for _, p := range problems {
 			fmt.Fprintln(os.Stderr, "INVALID:", p)
@@ -85,7 +91,8 @@ func main() {
 	writeJSON(*out+"/recipes.json", recipes)
 	writeJSON(*out+"/machines.json", machines)
 	writeJSON(*out+"/items.json", items)
-	fmt.Printf("wrote %d recipes, %d machine conversions, %d items\n", len(recipes), len(machines), len(items))
+	writeJSON(*out+"/crops.json", crops)
+	fmt.Printf("wrote %d recipes, %d machine conversions, %d items, %d crops\n", len(recipes), len(machines), len(items), len(crops))
 }
 
 func resolveOutputNames(names map[string]string, entries []rawEntry) {
