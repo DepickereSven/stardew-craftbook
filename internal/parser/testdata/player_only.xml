@@ -1,19 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SaveGame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <player>
-    <name>Test</name>
-    <items>
-      <Item xsi:type="Object"><name>Wood</name><itemId>388</itemId><stack>50</stack><category>-16</category></Item>
-      <Item xsi:type="Object"><name>Milk</name><itemId>184</itemId><stack>2</stack><category>-6</category></Item>
-      <Item xsi:nil="true" />
-      <Item xsi:type="Object"><name>Wood</name><itemId>(O)388</itemId><stack>25</stack><category>-16</category></Item>
-    </items>
-    <craftingRecipes>
-      <item><key><string>Gate</string></key><value><int>4</int></value></item>
-    </craftingRecipes>
-    <cookingRecipes>
-      <item><key><string>Fried Egg</string></key><value><int>0</int></value></item>
-    </cookingRecipes>
-  </player>
-  <locations />
+    <player>
+        <name>Test</name>
+        <items>
+            <Item xsi:type="Object">
+                <name>Wood</name>
+                <itemId>388</itemId>
+                <stack>50</stack>
+                <category>-16</category>
+            </Item>
+            <Item xsi:type="Object">
+                <name>Milk</name>
+                <itemId>184</itemId>
+                <stack>2</stack>
+                <category>-6</category>
+            </Item>
+            <Item xsi:nil="true"/>
+            <Item xsi:type="Object">
+                <name>Wood</name>
+                <itemId>(O)388</itemId>
+                <stack>25</stack>
+                <category>-16</category>
+            </Item>
+        </items>
+        <craftingRecipes>
+            <item>
+                <key>
+                    <string>Gate</string>
+                </key>
+                <value>
+                    <int>4</int>
+                </value>
+            </item>
+        </craftingRecipes>
+        <cookingRecipes>
+            <item>
+                <key>
+                    <string>Fried Egg</string>
+                </key>
+                <value>
+                    <int>0</int>
+                </value>
+            </item>
+        </cookingRecipes>
+    </player>
+    <locations/>
 </SaveGame>

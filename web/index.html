@@ -1,1305 +1,2087 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Stardew Craftbook</title>
-<style>
-/* ---------- tokens ---------- */
-:root {
-  color-scheme: light;
-  --bg: #ecefe6;
-  --surface: #f7f8f2;
-  --raised: #ffffff;
-  --ink: #232d27;
-  --muted: #5f6b62;
-  --faint: #8a948c;
-  --line: #d7dccd;
-  --accent: #2f6f47;
-  --accent-ink: #255737;
-  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
-  --craft: #96682a;
-  --cook: #8c4a68;
-  --warn: #8a6219;
-  --warn-soft: color-mix(in srgb, var(--warn) 13%, transparent);
-  --radius: 12px;
-  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --bg: #111612;
-    --surface: #18201a;
-    --raised: #1f2821;
-    --ink: #e3e9df;
-    --muted: #9aa895;
-    --faint: #76826f;
-    --line: #2c372e;
-    --accent: #93c7a0;
-    --accent-ink: #aed8b9;
-    --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
-    --craft: #d6a55e;
-    --cook: #d78fab;
-    --warn: #d8b26a;
-    --warn-soft: color-mix(in srgb, var(--warn) 15%, transparent);
-  }
-}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Stardew Craftbook</title>
+    <style>
+        /* ---------- tokens ---------- */
+        :root {
+            color-scheme: light;
+            --bg: #ecefe6;
+            --surface: #f7f8f2;
+            --raised: #ffffff;
+            --ink: #232d27;
+            --muted: #5f6b62;
+            --faint: #8a948c;
+            --line: #d7dccd;
+            --accent: #2f6f47;
+            --accent-ink: #255737;
+            --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+            --craft: #96682a;
+            --cook: #8c4a68;
+            --warn: #8a6219;
+            --warn-soft: color-mix(in srgb, var(--warn) 13%, transparent);
+            --radius: 12px;
+            --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        }
 
-/* ---------- base ---------- */
-*, *::before, *::after { box-sizing: border-box; }
-[hidden] { display: none !important; }
-html, body { overflow-x: clip; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font);
-  font-size: 15px;
-  line-height: 1.45;
-  -webkit-text-size-adjust: 100%;
-}
-button { font: inherit; color: inherit; }
-a { color: var(--accent-ink); }
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 6px;
-}
-svg.ic { width: 16px; height: 16px; flex: none; }
-.sr-only {
-  position: absolute;
-  width: 1px; height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
+        @media (prefers-color-scheme: dark) {
+            :root {
+                color-scheme: dark;
+                --bg: #111612;
+                --surface: #18201a;
+                --raised: #1f2821;
+                --ink: #e3e9df;
+                --muted: #9aa895;
+                --faint: #76826f;
+                --line: #2c372e;
+                --accent: #93c7a0;
+                --accent-ink: #aed8b9;
+                --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+                --craft: #d6a55e;
+                --cook: #d78fab;
+                --warn: #d8b26a;
+                --warn-soft: color-mix(in srgb, var(--warn) 15%, transparent);
+            }
+        }
 
-/* ---------- header ---------- */
-.site {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 18px 14px 10px;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-.site h1 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 750;
-  letter-spacing: 0.01em;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.site h1 svg { width: 20px; height: 20px; color: var(--accent); }
-.site h1 span { color: var(--muted); font-weight: 600; }
+        /* ---------- base ---------- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
 
-/* ---------- sticky controls ---------- */
-.controls {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
-  padding: 8px 0 10px;
-}
-.controls-inner {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 0 14px;
-  display: grid;
-  gap: 8px;
-}
-.vswitch-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.vswitch-row .seg { flex: 1; }
-.search { position: relative; }
-.search > svg {
-  position: absolute;
-  left: 12px; top: 50%;
-  translate: 0 -50%;
-  color: var(--faint);
-  pointer-events: none;
-}
-.search input {
-  width: 100%;
-  min-height: 44px;
-  padding: 10px 44px 10px 38px;
-  font-size: 16px; /* avoid iOS focus zoom */
-  font-family: var(--font);
-  color: var(--ink);
-  background: var(--raised);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  -webkit-appearance: none;
-  appearance: none;
-}
-.search input::placeholder { color: var(--faint); }
-.search input:focus-visible { outline-offset: 0; }
-.search-clear {
-  position: absolute;
-  right: 4px; top: 50%;
-  translate: 0 -50%;
-  width: 36px; height: 36px;
-  display: grid;
-  place-items: center;
-  background: none;
-  border: 0;
-  border-radius: 50%;
-  color: var(--muted);
-  cursor: pointer;
-}
-.seg {
-  display: flex;
-  gap: 3px;
-  padding: 3px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-}
-.seg-opt { flex: 1; position: relative; }
-.seg-opt input {
-  position: absolute;
-  opacity: 0;
-  width: 1px; height: 1px;
-}
-.seg-opt span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  min-height: 38px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--muted);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.seg-opt svg { width: 14px; height: 14px; }
-.seg-opt input:focus-visible + span {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-.seg-opt input:checked + span {
-  background: var(--raised);
-  color: var(--ink);
-  box-shadow: inset 0 0 0 1px var(--line);
-}
-.seg-opt[data-t="crafting"] input:checked + span {
-  color: var(--craft);
-  background: color-mix(in srgb, var(--craft) 14%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--craft) 35%, transparent);
-}
-.seg-opt[data-t="cooking"] input:checked + span {
-  color: var(--cook);
-  background: color-mix(in srgb, var(--cook) 14%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cook) 35%, transparent);
-}
-.controls-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-}
-.controls-row .spacer { flex: 1; }
-.switch {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 44px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.switch input {
-  position: absolute;
-  opacity: 0;
-  width: 1px; height: 1px;
-}
-.switch .track {
-  width: 40px; height: 24px;
-  border-radius: 999px;
-  border: 1.5px solid var(--faint);
-  position: relative;
-  transition: background 0.15s, border-color 0.15s;
-  flex: none;
-}
-.switch .track::after {
-  content: "";
-  position: absolute;
-  top: 2px; left: 2px;
-  width: 17px; height: 17px;
-  border-radius: 50%;
-  background: var(--faint);
-  transition: translate 0.15s, background 0.15s;
-}
-.switch input:checked + .track {
-  background: var(--accent);
-  border-color: var(--accent);
-}
-.switch input:checked + .track::after {
-  translate: 16px 0;
-  background: var(--bg);
-}
-.switch input:focus-visible + .track {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-.switch-label { font-size: 14px; color: var(--muted); }
-.chipbtn {
-  min-height: 44px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  font-weight: 600;
-  font-size: 13.5px;
-  color: var(--muted);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  -webkit-tap-highlight-color: transparent;
-}
-.chipbtn svg { width: 13px; height: 13px; }
-.chipbtn[aria-pressed="true"] {
-  color: var(--accent-ink);
-  background: var(--accent-soft);
-  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-}
-.refresh-note {
-  font-size: 12px;
-  color: var(--accent-ink);
-  opacity: 0;
-  transition: opacity 0.4s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-}
-.refresh-note::before {
-  content: "";
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-.refresh-note.show { opacity: 1; }
+        [hidden] {
+            display: none !important;
+        }
 
-/* ---------- banner ---------- */
-.wrap { max-width: 640px; margin: 0 auto; padding: 0 14px; }
-.banner {
-  margin-top: 10px;
-  padding: 10px 12px;
-  border-radius: var(--radius);
-  background: var(--warn-soft);
-  color: var(--ink);
-  border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  font-size: 13.5px;
-}
-.banner svg { color: var(--warn); margin-top: 1px; }
+        html, body {
+            overflow-x: clip;
+        }
 
-/* ---------- sections ---------- */
-main { max-width: 640px; margin: 0 auto; padding: 12px 14px 24px; }
-.group { margin-top: 14px; }
-.group > summary {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  border-radius: 8px;
-}
-.group > summary::-webkit-details-marker { display: none; }
-.group-label {
-  font-size: 12px;
-  font-weight: 750;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.group-count {
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 1px 8px;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent-ink);
-  font-variant-numeric: tabular-nums;
-}
-.group > summary .chev {
-  margin-left: auto;
-  color: var(--faint);
-  transition: rotate 0.15s;
-}
-.group[open] > summary .chev { rotate: 90deg; }
-.group-empty {
-  margin: 2px 0 8px;
-  padding: 8px 2px;
-  color: var(--faint);
-  font-size: 13.5px;
-}
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: var(--font);
+            font-size: 15px;
+            line-height: 1.45;
+            -webkit-text-size-adjust: 100%;
+        }
 
-/* ---------- rows ---------- */
-.rows {
-  list-style: none;
-  margin: 2px 0 0;
-  padding: 0;
-  display: grid;
-  gap: 8px;
-}
-.row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto 16px;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  min-height: 56px;
-  padding: 9px 12px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  cursor: pointer;
-  text-align: left;
-  -webkit-tap-highlight-color: transparent;
-}
-.row:active { background: var(--raised); }
-.row-text { display: grid; gap: 3px; min-width: 0; }
-.row-name {
-  font-weight: 620;
-  font-size: 15px;
-  overflow-wrap: anywhere;
-}
-.row-meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 4px 8px;
-  font-size: 12.5px;
-  color: var(--muted);
-  min-width: 0;
-}
-.row .chev { color: var(--faint); justify-self: end; }
-.needs {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-.needs b { color: var(--ink); font-weight: 600; }
+        button {
+            font: inherit;
+            color: inherit;
+        }
 
-/* ---------- badges & chips ---------- */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 2px 8px 2px 6px;
-  border-radius: 999px;
-  flex: none;
-}
-.badge svg { width: 12px; height: 12px; }
-.badge.crafting { color: var(--craft); background: color-mix(in srgb, var(--craft) 13%, transparent); }
-.badge.cooking  { color: var(--cook);  background: color-mix(in srgb, var(--cook) 13%, transparent); }
-.yields {
-  font-family: var(--mono);
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-  color: var(--accent-ink);
-  font-weight: 600;
-}
+        a {
+            color: var(--accent-ink);
+        }
 
-/* ---------- readiness pips (signature) ---------- */
-.pips {
-  display: inline-flex;
-  gap: 3px;
-  align-items: center;
-}
-.pips i {
-  width: 13px; height: 8px;
-  border-radius: 3px;
-  border: 1.5px solid var(--faint);
-}
-.pips i.on {
-  background: var(--accent);
-  border-color: var(--accent);
-}
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 6px;
+        }
 
-/* ---------- items list ---------- */
-.items-total {
-  margin: 10px 2px 0;
-  font-size: 12.5px;
-  color: var(--faint);
-  font-variant-numeric: tabular-nums;
-}
-.icount { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-.uses { color: var(--faint); }
-.ival {
-  font-family: var(--mono);
-  font-variant-numeric: tabular-nums;
-  font-weight: 650;
-  font-size: 14px;
-  text-align: right;
-  white-space: nowrap;
-}
-.ival .g { color: var(--faint); font-size: 11px; font-weight: 500; }
-.ival .noprice { color: var(--faint); font-weight: 400; }
+        svg.ic {
+            width: 16px;
+            height: 16px;
+            flex: none;
+        }
 
-/* ---------- item detail ---------- */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-  margin: 14px 0 0;
-}
-.stat {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 10px 12px;
-  min-width: 0;
-}
-.stat b {
-  display: block;
-  font-family: var(--mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 16px;
-  font-weight: 650;
-  overflow-wrap: anywhere;
-}
-.stat b .g { color: var(--faint); font-size: 11px; font-weight: 500; }
-.stat span {
-  font-size: 10.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--muted);
-}
-.price-note {
-  margin: 8px 0 0;
-  font-size: 13px;
-  color: var(--muted);
-}
-.use-econ {
-  display: grid;
-  justify-items: end;
-  gap: 3px;
-  flex: none;
-}
-.verdict {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-family: var(--mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 12px;
-  font-weight: 650;
-  padding: 3px 8px;
-  border-radius: 999px;
-  white-space: nowrap;
-}
-.verdict svg { width: 11px; height: 11px; }
-.verdict.profit { color: var(--accent-ink); background: var(--accent-soft); }
-.verdict.loss { color: var(--warn); background: var(--warn-soft); }
-.verdict.use { color: var(--muted); border: 1px solid var(--line); }
-.verdict.unknown { color: var(--faint); border: 1px dashed var(--faint); }
-.verdict-stack {
-  font-family: var(--mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 11.5px;
-  color: var(--muted);
-  white-space: nowrap;
-}
-.dtag {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  font-family: var(--mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 11.5px;
-  font-weight: 650;
-  white-space: nowrap;
-}
-.dtag svg { width: 9px; height: 9px; }
-.dtag.profit { color: var(--accent-ink); }
-.dtag.loss { color: var(--warn); }
-.econ {
-  margin: 10px 0 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.econ-detail {
-  font-size: 12.5px;
-  color: var(--faint);
-  font-variant-numeric: tabular-nums;
-}
-.make { color: var(--accent-ink); font-weight: 650; }
-.unmake { color: var(--faint); }
-.row.use { grid-template-columns: minmax(0, 1fr) auto; }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
 
-/* ---------- machine throughput cards ----------
-   A taller sibling of .row, not a variant of it: these rank machines by gold
-   per machine-minute and carry four figures where a recipe row carries one. */
-.mrow {
-  display: grid;
-  gap: 10px;
-  padding: 14px 16px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-}
-.mrow-best {
-  margin: 0;
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--accent-ink);
-  background: var(--accent-soft);
-  padding: 3px 9px;
-  border-radius: 999px;
-}
-.mrow-best svg { width: 9px; height: 9px; }
-.mrow-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
-  gap: 12px;
-}
-.mrow-name {
-  font-weight: 650;
-  font-size: 17px;
-  overflow-wrap: anywhere;
-}
-.mrow-recipe {
-  margin-top: 3px;
-  font-size: 12.5px;
-  color: var(--muted);
-  overflow-wrap: anywhere;
-}
-.mrow-rate { text-align: right; }
-.mrow-rate b {
-  display: block;
-  font-family: var(--mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 26px;
-  font-weight: 650;
-  line-height: 1.1;
-  color: var(--accent-ink);
-}
-.mrow-rate.loss b { color: var(--warn); }
-.mrow-rate span {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--muted);
-  white-space: nowrap;
-}
-.mstats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  padding: 10px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.mstat { min-width: 0; }
-.mstat b {
-  display: block;
-  font-family: var(--mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 15px;
-  font-weight: 650;
-  overflow-wrap: anywhere;
-}
-.mstat.loss b { color: var(--warn); }
-.mstat span {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--muted);
-}
-/* Spells out where the gained figure comes from. Without it the card looks
-   like it is reporting total takings, and a real gain reads as a shortfall
-   against the stack's raw value. */
-.mrow-sum {
-  margin: 0;
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-  color: var(--muted);
-  overflow-wrap: anywhere;
-}
-.mrow-sum b { font-family: var(--mono); font-weight: 650; color: var(--ink); }
-.mrow-sum b.sum-gain { color: var(--accent-ink); }
-.mrow-sum b.sum-loss { color: var(--warn); }
-.mrow-chips {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.mrow-foot {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 4px 10px;
-  font-size: 11.5px;
-  font-variant-numeric: tabular-nums;
-  color: var(--faint);
-}
-.mrow-foot .make { font-size: 11.5px; }
-/* The category total is a different population from the runs beside it, so it
-   stays visually quieter than the item's own figure. */
-.mrow-wider { color: var(--faint); }
-@media (max-width: 380px) {
-  .mstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mrow-rate b { font-size: 20px; }
-}
+        /* ---------- header ---------- */
+        .site {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 18px 14px 10px;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
 
-/* ---------- detail view ---------- */
-.back {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  min-height: 44px;
-  padding: 8px 12px 8px 4px;
-  background: none;
-  border: 0;
-  color: var(--accent-ink);
-  font-weight: 620;
-  cursor: pointer;
-  border-radius: 8px;
-}
-.detail-head { margin-top: 2px; }
-.detail-head h2 {
-  margin: 0 0 8px;
-  font-size: 23px;
-  font-weight: 750;
-  letter-spacing: 0.005em;
-  overflow-wrap: anywhere;
-}
-.chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  font-weight: 650;
-  padding: 3px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  color: var(--muted);
-  background: var(--surface);
-}
-.chip svg { width: 12px; height: 12px; }
-.chip.state-craftable { color: var(--accent-ink); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: var(--accent-soft); }
-.chip.state-partial   { color: var(--warn);       border-color: color-mix(in srgb, var(--warn) 40%, transparent);   background: var(--warn-soft); }
-.chip.state-far_off   { color: var(--muted); }
-.unlock {
-  margin: 12px 0 0;
-  font-size: 13.5px;
-  color: var(--muted);
-}
-.unlock .wiki { white-space: nowrap; font-weight: 600; }
-.not-learned {
-  margin: 8px 0 0;
-  font-size: 13.5px;
-  color: var(--warn);
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-.not-learned svg { width: 14px; height: 14px; }
+        .site h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 750;
+            letter-spacing: 0.01em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.detail h3 {
-  margin: 22px 0 6px;
-  font-size: 12px;
-  font-weight: 750;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
+        .site h1 svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
+        }
 
-/* ingredient lines */
-.ings { list-style: none; margin: 0; padding: 0; }
-.ing {
-  display: grid;
-  grid-template-columns: 22px minmax(0, 1fr) auto;
-  gap: 3px 10px;
-  align-items: center;
-  padding: 10px 2px;
-  border-top: 1px solid var(--line);
-}
-.ing:first-child { border-top: 0; }
-.ing-ic { display: grid; place-items: center; }
-.ing.ok .ing-ic { color: var(--accent); }
-.ing.miss .ing-ic { color: var(--faint); }
-.ing-body { display: grid; min-width: 0; }
-.ing-name { overflow-wrap: anywhere; }
-.ing.miss .ing-name { font-weight: 650; }
-.ing.ok .ing-name { color: var(--muted); }
-.ing-cat { font-size: 12px; color: var(--faint); }
-.ing-frac {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-.ing-frac b { font-weight: 700; }
-.ing.ok .ing-frac { color: var(--muted); }
-.bar {
-  grid-column: 2 / -1;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--line);
-  overflow: hidden;
-}
-.bar > span {
-  display: block;
-  height: 100%;
-  border-radius: 3px;
-  background: var(--accent);
-}
+        .site h1 span {
+            color: var(--muted);
+            font-weight: 600;
+        }
 
-/* plan */
-.plan-btn, .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  border: 0;
-  background: var(--accent);
-  color: #fff;
-  font-weight: 650;
-  cursor: pointer;
-}
-@media (prefers-color-scheme: dark) {
-  .plan-btn, .btn { color: #10211a; }
-}
-.btn.ghost {
-  background: var(--surface);
-  color: var(--ink);
-  border: 1px solid var(--line);
-}
-.plan-body { margin-top: 12px; }
-.plan-note { font-size: 12.5px; color: var(--faint); margin: 10px 0 0; }
-.plan-plain { margin: 4px 0 0; color: var(--muted); }
-.steps {
-  list-style: none;
-  margin: 6px 0 0;
-  padding: 0 0 0 20px;
-  position: relative;
-}
-.steps::before {
-  content: "";
-  position: absolute;
-  left: 5px; top: 12px; bottom: 12px;
-  width: 2px;
-  background: var(--line);
-  border-radius: 1px;
-}
-.step { position: relative; padding: 10px 0; }
-.step::before {
-  content: "";
-  position: absolute;
-  left: -19px; top: 17px;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--bg);
-}
-.step-head {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.step-machine { font-weight: 700; }
-.step-runs {
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--accent-ink);
-  background: var(--accent-soft);
-  padding: 1px 8px;
-  border-radius: 999px;
-  font-variant-numeric: tabular-nums;
-}
-.step-time { font-size: 12.5px; color: var(--faint); }
-.step-io, .step-total {
-  font-size: 13.5px;
-  margin-top: 3px;
-  display: flex;
-  gap: 8px;
-}
-.step-io .tag, .step-total .tag {
-  flex: none;
-  width: 62px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--faint);
-  padding-top: 2px;
-}
-.step-io .vals { font-weight: 550; }
-.step-total .vals { color: var(--muted); font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
-.still { margin-top: 16px; }
-.still h4 {
-  margin: 0 0 4px;
-  font-size: 12px;
-  font-weight: 750;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.still ul { list-style: none; margin: 0; padding: 0; }
-.still li {
-  padding: 8px 2px;
-  border-top: 1px solid var(--line);
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  align-items: baseline;
-}
-.still li a { font-weight: 620; }
-.still .frac {
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
+        /* ---------- sticky controls ---------- */
+        .controls {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: var(--bg);
+            border-bottom: 1px solid var(--line);
+            padding: 8px 0 10px;
+        }
 
-/* ---------- empty / misc states ---------- */
-.empty {
-  margin-top: 28px;
-  padding: 22px 18px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-}
-.empty h2 { margin: 0 0 8px; font-size: 18px; }
-.empty p { margin: 8px 0; color: var(--muted); }
-.empty code {
-  display: block;
-  margin: 10px 0;
-  padding: 10px 12px;
-  background: var(--raised);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  font-family: var(--mono);
-  font-size: 12.5px;
-  overflow-wrap: anywhere;
-  white-space: pre-wrap;
-}
-.empty .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.loading { padding: 40px 0; text-align: center; color: var(--faint); }
+        .controls-inner {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 14px;
+            display: grid;
+            gap: 8px;
+        }
 
-/* ---------- footer ---------- */
-footer {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 0 14px calc(18px + env(safe-area-inset-bottom));
-  font-size: 12px;
-  color: var(--faint);
-  overflow-wrap: anywhere;
-}
+        .vswitch-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-/* ---------- motion ---------- */
-@media (prefers-reduced-motion: no-preference) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) { animation-duration: 0.18s; }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-</style>
+        .vswitch-row .seg {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .search {
+            position: relative;
+        }
+
+        .search > svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            translate: 0 -50%;
+            color: var(--faint);
+            pointer-events: none;
+        }
+
+        .search input {
+            width: 100%;
+            min-height: 44px;
+            padding: 10px 44px 10px 38px;
+            font-size: 16px; /* avoid iOS focus zoom */
+            font-family: var(--font);
+            color: var(--ink);
+            background: var(--raised);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .search input::placeholder {
+            color: var(--faint);
+        }
+
+        .search input:focus-visible {
+            outline-offset: 0;
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            translate: 0 -50%;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            background: none;
+            border: 0;
+            border-radius: 50%;
+            color: var(--muted);
+            cursor: pointer;
+        }
+
+        .seg {
+            display: flex;
+            gap: 3px;
+            padding: 3px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+        }
+
+        .seg-opt {
+            flex: 1;
+            min-width: 0;
+            position: relative;
+        }
+
+        .seg-opt input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+        }
+
+        .seg-opt span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-height: 38px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .seg-opt svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .seg-opt input:focus-visible + span {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .seg-opt input:checked + span {
+            background: var(--raised);
+            color: var(--ink);
+            box-shadow: inset 0 0 0 1px var(--line);
+        }
+
+        .seg-opt[data-t="crafting"] input:checked + span {
+            color: var(--craft);
+            background: color-mix(in srgb, var(--craft) 14%, transparent);
+            box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--craft) 35%, transparent);
+        }
+
+        .seg-opt[data-t="cooking"] input:checked + span {
+            color: var(--cook);
+            background: color-mix(in srgb, var(--cook) 14%, transparent);
+            box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cook) 35%, transparent);
+        }
+
+        .controls-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+        }
+
+        .controls-row .spacer {
+            flex: 1;
+        }
+
+        .switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 44px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .switch input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+        }
+
+        .switch .track {
+            width: 40px;
+            height: 24px;
+            border-radius: 999px;
+            border: 1.5px solid var(--faint);
+            position: relative;
+            transition: background 0.15s, border-color 0.15s;
+            flex: none;
+        }
+
+        .switch .track::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--faint);
+            transition: translate 0.15s, background 0.15s;
+        }
+
+        .switch input:checked + .track {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .switch input:checked + .track::after {
+            translate: 16px 0;
+            background: var(--bg);
+        }
+
+        .switch input:focus-visible + .track {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .switch-label {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .chipbtn {
+            min-height: 44px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            font-weight: 600;
+            font-size: 13.5px;
+            color: var(--muted);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .chipbtn svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        .chipbtn[aria-pressed="true"] {
+            color: var(--accent-ink);
+            background: var(--accent-soft);
+            border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+        }
+
+        .refresh-note {
+            font-size: 12px;
+            color: var(--accent-ink);
+            opacity: 0;
+            transition: opacity 0.4s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .refresh-note::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .refresh-note.show {
+            opacity: 1;
+        }
+
+        /* ---------- banner ---------- */
+        .wrap {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 14px;
+        }
+
+        .banner {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: var(--radius);
+            background: var(--warn-soft);
+            color: var(--ink);
+            border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            font-size: 13.5px;
+        }
+
+        .banner svg {
+            color: var(--warn);
+            margin-top: 1px;
+        }
+
+        /* ---------- sections ---------- */
+        main {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 12px 14px 24px;
+        }
+
+        .group {
+            margin-top: 14px;
+        }
+
+        .group > summary {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            border-radius: 8px;
+        }
+
+        .group > summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .group-label {
+            font-size: 12px;
+            font-weight: 750;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .group-count {
+            font-family: var(--mono);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 1px 8px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: var(--accent-ink);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .group > summary .chev {
+            margin-left: auto;
+            color: var(--faint);
+            transition: rotate 0.15s;
+        }
+
+        .group[open] > summary .chev {
+            rotate: 90deg;
+        }
+
+        .group-empty {
+            margin: 2px 0 8px;
+            padding: 8px 2px;
+            color: var(--faint);
+            font-size: 13.5px;
+        }
+
+        /* ---------- rows ---------- */
+        .rows {
+            list-style: none;
+            margin: 2px 0 0;
+            padding: 0;
+            display: grid;
+            gap: 8px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto 16px;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            min-height: 56px;
+            padding: 9px 12px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            cursor: pointer;
+            text-align: left;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .row:active {
+            background: var(--raised);
+        }
+
+        .row-text {
+            display: grid;
+            gap: 3px;
+            min-width: 0;
+        }
+
+        .row-name {
+            font-weight: 620;
+            font-size: 15px;
+            overflow-wrap: anywhere;
+        }
+
+        .row-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px 8px;
+            font-size: 12.5px;
+            color: var(--muted);
+            min-width: 0;
+        }
+
+        .row .chev {
+            color: var(--faint);
+            justify-self: end;
+        }
+
+        .needs {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
+        .needs b {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        /* ---------- badges & chips ---------- */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 2px 8px 2px 6px;
+            border-radius: 999px;
+            flex: none;
+        }
+
+        .badge svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .badge.crafting {
+            color: var(--craft);
+            background: color-mix(in srgb, var(--craft) 13%, transparent);
+        }
+
+        .badge.cooking {
+            color: var(--cook);
+            background: color-mix(in srgb, var(--cook) 13%, transparent);
+        }
+
+        .yields {
+            font-family: var(--mono);
+            font-size: 12px;
+            font-variant-numeric: tabular-nums;
+            color: var(--accent-ink);
+            font-weight: 600;
+        }
+
+        /* ---------- readiness pips (signature) ---------- */
+        .pips {
+            display: inline-flex;
+            gap: 3px;
+            align-items: center;
+        }
+
+        .pips i {
+            width: 13px;
+            height: 8px;
+            border-radius: 3px;
+            border: 1.5px solid var(--faint);
+        }
+
+        .pips i.on {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* ---------- items list ---------- */
+        .items-total {
+            margin: 10px 2px 0;
+            font-size: 12.5px;
+            color: var(--faint);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .icount {
+            font-family: var(--mono);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .uses {
+            color: var(--faint);
+        }
+
+        .ival {
+            font-family: var(--mono);
+            font-variant-numeric: tabular-nums;
+            font-weight: 650;
+            font-size: 14px;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .ival .g {
+            color: var(--faint);
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .ival .noprice {
+            color: var(--faint);
+            font-weight: 400;
+        }
+
+        /* ---------- item detail ---------- */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin: 14px 0 0;
+        }
+
+        .stat {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 10px 12px;
+            min-width: 0;
+        }
+
+        .stat b {
+            display: block;
+            font-family: var(--mono);
+            font-variant-numeric: tabular-nums;
+            font-size: 16px;
+            font-weight: 650;
+            overflow-wrap: anywhere;
+        }
+
+        .stat b .g {
+            color: var(--faint);
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .stat span {
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--muted);
+        }
+
+        .price-note {
+            margin: 8px 0 0;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .use-econ {
+            display: grid;
+            justify-items: end;
+            gap: 3px;
+            flex: none;
+        }
+
+        .verdict {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: var(--mono);
+            font-variant-numeric: tabular-nums;
+            font-size: 12px;
+            font-weight: 650;
+            padding: 3px 8px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        .verdict svg {
+            width: 11px;
+            height: 11px;
+        }
+
+        .verdict.profit {
+            color: var(--accent-ink);
+            background: var(--accent-soft);
+        }
+
+        .verdict.loss {
+            color: var(--warn);
+            background: var(--warn-soft);
+        }
+
+        .verdict.use {
+            color: var(--muted);
+            border: 1px solid var(--line);
+        }
+
+        .verdict.unknown {
+            color: var(--faint);
+            border: 1px dashed var(--faint);
+        }
+
+        .verdict-stack {
+            font-family: var(--mono);
+            font-variant-numeric: tabular-nums;
+            font-size: 11.5px;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .dtag {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            font-family: var(--mono);
+            font-variant-numeric: tabular-nums;
+            font-size: 11.5px;
+            font-weight: 650;
+            white-space: nowrap;
+        }
+
+        .dtag svg {
+            width: 9px;
+            height: 9px;
+        }
+
+        .dtag.profit {
+            color: var(--accent-ink);
+        }
+
+        .dtag.loss {
+            color: var(--warn);
+        }
+
+        .econ {
+            margin: 10px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .econ-detail {
+            font-size: 12.5px;
+            color: var(--faint);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .make {
+            color: var(--accent-ink);
+            font-weight: 650;
+        }
+
+        .unmake {
+            color: var(--faint);
+        }
+
+        .row.use {
+            grid-template-columns: minmax(0, 1fr) auto;
+        }
+
+        /* ---------- machine throughput cards ----------
+           A taller sibling of .row, not a variant of it: these rank machines by gold
+           per machine-minute and carry four figures where a recipe row carries one. */
+        .mrow {
+            display: grid;
+            gap: 10px;
+            padding: 14px 16px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+        }
+
+        .mrow-best {
+            margin: 0;
+            justify-self: start;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-ink);
+            background: var(--accent-soft);
+            padding: 3px 9px;
+            border-radius: 999px;
+        }
+
+        .mrow-best svg {
+            width: 9px;
+            height: 9px;
+        }
+
+        .mrow-head {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .mrow-name {
+            font-weight: 650;
+            font-size: 17px;
+            overflow-wrap: anywhere;
+        }
+
+        .mrow-recipe {
+            margin-top: 3px;
+            font-size: 12.5px;
+            color: var(--muted);
+            overflow-wrap: anywhere;
+        }
+
+        .mrow-rate {
+            text-align: right;
+        }
+
+        .mrow-rate b {
+            display: block;
+            font-family: var(--mono);
+            font-variant-numeric: tabular-nums;
+            font-size: 26px;
+            font-weight: 650;
+            line-height: 1.1;
+            color: var(--accent-ink);
+        }
+
+        .mrow-rate.loss b {
+            color: var(--warn);
+        }
+
+        .mrow-rate span {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .mstats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            padding: 10px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .mstat {
+            min-width: 0;
+        }
+
+        .mstat b {
+            display: block;
+            font-family: var(--mono);
+            font-variant-numeric: tabular-nums;
+            font-size: 15px;
+            font-weight: 650;
+            overflow-wrap: anywhere;
+        }
+
+        .mstat.loss b {
+            color: var(--warn);
+        }
+
+        .mstat span {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--muted);
+        }
+
+        /* Spells out where the gained figure comes from. Without it the card looks
+           like it is reporting total takings, and a real gain reads as a shortfall
+           against the stack's raw value. */
+        .mrow-sum {
+            margin: 0;
+            font-size: 12px;
+            font-variant-numeric: tabular-nums;
+            color: var(--muted);
+            overflow-wrap: anywhere;
+        }
+
+        .mrow-sum b {
+            font-family: var(--mono);
+            font-weight: 650;
+            color: var(--ink);
+        }
+
+        .mrow-sum b.sum-gain {
+            color: var(--accent-ink);
+        }
+
+        .mrow-sum b.sum-loss {
+            color: var(--warn);
+        }
+
+        .mrow-chips {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .mrow-foot {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 4px 10px;
+            font-size: 11.5px;
+            font-variant-numeric: tabular-nums;
+            color: var(--faint);
+        }
+
+        .mrow-foot .make {
+            font-size: 11.5px;
+        }
+
+        /* The category total is a different population from the runs beside it, so it
+           stays visually quieter than the item's own figure. */
+        .mrow-wider {
+            color: var(--faint);
+        }
+
+        @media (max-width: 380px) {
+            .mstats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .mrow-rate b {
+                font-size: 20px;
+            }
+        }
+
+        /* ---------- detail view ---------- */
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            min-height: 44px;
+            padding: 8px 12px 8px 4px;
+            background: none;
+            border: 0;
+            color: var(--accent-ink);
+            font-weight: 620;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .detail-head {
+            margin-top: 2px;
+        }
+
+        .detail-head h2 {
+            margin: 0 0 8px;
+            font-size: 23px;
+            font-weight: 750;
+            letter-spacing: 0.005em;
+            overflow-wrap: anywhere;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 650;
+            padding: 3px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            color: var(--muted);
+            background: var(--surface);
+        }
+
+        .chip svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .chip.state-craftable {
+            color: var(--accent-ink);
+            border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+            background: var(--accent-soft);
+        }
+
+        .chip.state-partial {
+            color: var(--warn);
+            border-color: color-mix(in srgb, var(--warn) 40%, transparent);
+            background: var(--warn-soft);
+        }
+
+        .chip.state-far_off {
+            color: var(--muted);
+        }
+
+        .unlock {
+            margin: 12px 0 0;
+            font-size: 13.5px;
+            color: var(--muted);
+        }
+
+        .unlock .wiki {
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        .not-learned {
+            margin: 8px 0 0;
+            font-size: 13.5px;
+            color: var(--warn);
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .not-learned svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .detail h3 {
+            margin: 22px 0 6px;
+            font-size: 12px;
+            font-weight: 750;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ingredient lines */
+        .ings {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ing {
+            display: grid;
+            grid-template-columns: 22px minmax(0, 1fr) auto;
+            gap: 3px 10px;
+            align-items: center;
+            padding: 10px 2px;
+            border-top: 1px solid var(--line);
+        }
+
+        .ing:first-child {
+            border-top: 0;
+        }
+
+        .ing-ic {
+            display: grid;
+            place-items: center;
+        }
+
+        .ing.ok .ing-ic {
+            color: var(--accent);
+        }
+
+        .ing.miss .ing-ic {
+            color: var(--faint);
+        }
+
+        .ing-body {
+            display: grid;
+            min-width: 0;
+        }
+
+        .ing-name {
+            overflow-wrap: anywhere;
+        }
+
+        .ing.miss .ing-name {
+            font-weight: 650;
+        }
+
+        .ing.ok .ing-name {
+            color: var(--muted);
+        }
+
+        .ing-cat {
+            font-size: 12px;
+            color: var(--faint);
+        }
+
+        .ing-frac {
+            font-family: var(--mono);
+            font-size: 13px;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        .ing-frac b {
+            font-weight: 700;
+        }
+
+        .ing.ok .ing-frac {
+            color: var(--muted);
+        }
+
+        .bar {
+            grid-column: 2 / -1;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--line);
+            overflow: hidden;
+        }
+
+        .bar > span {
+            display: block;
+            height: 100%;
+            border-radius: 3px;
+            background: var(--accent);
+        }
+
+        /* plan */
+        .plan-btn, .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 0;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 650;
+            cursor: pointer;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .plan-btn, .btn {
+                color: #10211a;
+            }
+        }
+
+        .btn.ghost {
+            background: var(--surface);
+            color: var(--ink);
+            border: 1px solid var(--line);
+        }
+
+        .plan-body {
+            margin-top: 12px;
+        }
+
+        .plan-note {
+            font-size: 12.5px;
+            color: var(--faint);
+            margin: 10px 0 0;
+        }
+
+        .plan-plain {
+            margin: 4px 0 0;
+            color: var(--muted);
+        }
+
+        .steps {
+            list-style: none;
+            margin: 6px 0 0;
+            padding: 0 0 0 20px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 12px;
+            bottom: 12px;
+            width: 2px;
+            background: var(--line);
+            border-radius: 1px;
+        }
+
+        .step {
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .step::before {
+            content: "";
+            position: absolute;
+            left: -19px;
+            top: 17px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--bg);
+        }
+
+        .step-head {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .step-machine {
+            font-weight: 700;
+        }
+
+        .step-runs {
+            font-family: var(--mono);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-ink);
+            background: var(--accent-soft);
+            padding: 1px 8px;
+            border-radius: 999px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .step-time {
+            font-size: 12.5px;
+            color: var(--faint);
+        }
+
+        .step-io, .step-total {
+            font-size: 13.5px;
+            margin-top: 3px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .step-io .tag, .step-total .tag {
+            flex: none;
+            width: 62px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--faint);
+            padding-top: 2px;
+        }
+
+        .step-io .vals {
+            font-weight: 550;
+        }
+
+        .step-total .vals {
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 12.5px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .still {
+            margin-top: 16px;
+        }
+
+        .still h4 {
+            margin: 0 0 4px;
+            font-size: 12px;
+            font-weight: 750;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .still ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .still li {
+            padding: 8px 2px;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: baseline;
+        }
+
+        .still li a {
+            font-weight: 620;
+        }
+
+        .still .frac {
+            font-family: var(--mono);
+            font-size: 12.5px;
+            color: var(--muted);
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        /* ---------- empty / misc states ---------- */
+        .empty {
+            margin-top: 28px;
+            padding: 22px 18px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+        }
+
+        .empty h2 {
+            margin: 0 0 8px;
+            font-size: 18px;
+        }
+
+        .empty p {
+            margin: 8px 0;
+            color: var(--muted);
+        }
+
+        .empty code {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 12px;
+            background: var(--raised);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            font-family: var(--mono);
+            font-size: 12.5px;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .empty .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .loading {
+            padding: 40px 0;
+            text-align: center;
+            color: var(--faint);
+        }
+
+        /* ---------- crops ---------- */
+        /* The location filter holds one chip per place with crops in it — a list the
+           save decides the length of. Wrapping it left a ragged two or three rows in a
+           sticky header. Sideways scrolling fixed the look and broke the function —
+           a mouse cannot scroll a horizontal strip — so it wraps, and the labels are
+           kept short enough that the wrap lands tidily. */
+        .chipwrap {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
+            padding: 2px 0;
+        }
+
+        .chipwrap > * {
+            flex: none;
+        }
+
+        .chipbtn.compact {
+            min-height: 34px;
+            padding: 5px 12px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        /* Deliberately not chips: these change what the list shows rather than which
+           location it shows, and among a row of pills they would read as two more
+           locations. Plain text against pills is the distinction. */
+        .ctlgroup {
+            display: inline-flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 2px;
+            margin-left: 2px;
+        }
+
+        .sortbtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 34px;
+            padding: 5px 8px;
+            border: 0;
+            background: none;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+            white-space: nowrap;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .sortbtn svg {
+            color: var(--faint);
+        }
+
+        .chipbtn.locked {
+            border-style: dashed;
+            color: var(--faint);
+        }
+
+        .sortbtn[aria-pressed="true"] {
+            color: var(--accent-ink);
+        }
+
+        .sortbtn[aria-pressed="true"] svg {
+            color: var(--accent);
+        }
+
+        .lockedtag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 650;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--faint);
+        }
+
+        .lockedtag svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .chipbtn .count {
+            font-family: var(--mono);
+            font-size: 12px;
+            font-variant-numeric: tabular-nums;
+            color: var(--faint);
+        }
+
+        .chipbtn[aria-pressed="true"] .count {
+            color: inherit;
+            opacity: 0.75;
+        }
+
+        .crops-date {
+            margin: 10px 2px 0;
+            font-size: 12.5px;
+            color: var(--faint);
+        }
+
+        .crops-caveat {
+            margin: 10px 0 0;
+            padding: 10px 12px;
+            border: 1px dashed var(--line);
+            border-radius: var(--radius);
+            font-size: 12.5px;
+            color: var(--muted);
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .crops-caveat svg {
+            width: 16px;
+            height: 16px;
+            flex: none;
+            color: var(--faint);
+            margin-top: 1px;
+        }
+
+        .crops-caveat b {
+            color: var(--ink);
+            font-weight: 650;
+        }
+
+        .crops-h {
+            margin: 22px 2px 0;
+            font-size: 12px;
+            font-weight: 750;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .crop-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 4px 10px;
+            padding: 10px 12px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+        }
+
+        .crop-when {
+            font-family: var(--mono);
+            font-size: 12.5px;
+            font-variant-numeric: tabular-nums;
+            color: var(--muted);
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .crop-when b {
+            display: block;
+            font-size: 13px;
+            font-weight: 650;
+            color: var(--ink);
+        }
+
+        .crop-when.now b {
+            color: var(--accent-ink);
+        }
+
+        /* One stacked bar per group: a segment per harvest-day bucket, soonest first,
+           so a glance says how much of a planting comes in together. */
+        .cbar {
+            grid-column: 1 / -1;
+            display: flex;
+            height: 8px;
+            margin-top: 6px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--line);
+        }
+
+        .cbar i {
+            display: block;
+            height: 100%;
+            min-width: 2px;
+        }
+
+        .cbar i.s0 {
+            background: var(--accent);
+        }
+
+        .cbar i.s1 {
+            background: color-mix(in srgb, var(--accent) 62%, var(--line));
+        }
+
+        .cbar i.s2 {
+            background: color-mix(in srgb, var(--accent) 38%, var(--line));
+        }
+
+        .cbar i.s3 {
+            background: color-mix(in srgb, var(--accent) 20%, var(--line));
+        }
+
+        .cbar i.dead {
+            background: var(--warn-soft);
+        }
+
+        .warnnote {
+            color: var(--warn);
+        }
+
+        .tl {
+            list-style: none;
+            margin: 8px 0 0;
+            padding: 0;
+            display: grid;
+            gap: 8px;
+        }
+
+        .tl li {
+            display: grid;
+            grid-template-columns: 96px minmax(0, 1fr) auto;
+            gap: 4px 10px;
+            align-items: center;
+            padding: 9px 12px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+        }
+
+        .tl-when {
+            font-size: 13px;
+            font-weight: 650;
+        }
+
+        .tl-when.now {
+            color: var(--accent-ink);
+        }
+
+        .tl-when small {
+            display: block;
+            font-weight: 500;
+            font-size: 11px;
+            color: var(--faint);
+        }
+
+        .tl-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: var(--line);
+            overflow: hidden;
+        }
+
+        .tl-bar > span {
+            display: block;
+            height: 100%;
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        .tl-count {
+            font-family: var(--mono);
+            font-size: 12.5px;
+            font-weight: 650;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .tl-crops {
+            grid-column: 2 / -1;
+            font-size: 12px;
+            color: var(--faint);
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 400px) {
+            .tl li {
+                grid-template-columns: 76px minmax(0, 1fr) auto;
+            }
+        }
+
+        /* ---------- footer ---------- */
+        footer {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 14px calc(18px + env(safe-area-inset-bottom));
+            font-size: 12px;
+            color: var(--faint);
+            overflow-wrap: anywhere;
+        }
+
+        /* ---------- motion ---------- */
+        @media (prefers-reduced-motion: no-preference) {
+            ::view-transition-old(root),
+            ::view-transition-new(root) {
+                animation-duration: 0.18s;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <header class="site">
-  <h1 id="brand"></h1>
+    <h1 id="brand"></h1>
 </header>
 
 <div class="controls" id="controls">
-  <div class="controls-inner">
-    <div class="vswitch-row">
-      <div class="seg" id="view-seg" role="radiogroup" aria-label="View">
-        <label class="seg-opt">
-          <input type="radio" name="view" value="items" checked>
-          <span>Items</span>
-        </label>
-        <label class="seg-opt">
-          <input type="radio" name="view" value="recipes">
-          <span>Recipes</span>
-        </label>
-      </div>
-      <span class="refresh-note" id="refresh-note" role="status" aria-live="polite"></span>
+    <div class="controls-inner">
+        <div class="vswitch-row">
+            <div class="seg" id="view-seg" role="radiogroup" aria-label="View">
+                <label class="seg-opt">
+                    <input type="radio" name="view" value="items" checked>
+                    <span>Items</span>
+                </label>
+                <label class="seg-opt">
+                    <input type="radio" name="view" value="recipes">
+                    <span>Recipes</span>
+                </label>
+                <label class="seg-opt">
+                    <input type="radio" name="view" value="crops">
+                    <span>Crops &amp; trees</span>
+                </label>
+            </div>
+            <span class="refresh-note" id="refresh-note" role="status" aria-live="polite"></span>
+        </div>
+        <div class="search">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"/>
+                <path d="m20 20-3.5-3.5"/>
+            </svg>
+            <input id="search" type="search" placeholder="Search…" autocomplete="off" enterkeyhint="search"
+                   aria-label="Search items, recipes and crops">
+            <button class="search-clear" id="search-clear" hidden aria-label="Clear search">
+                <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" aria-hidden="true">
+                    <path d="M6 6l12 12M18 6 6 18"/>
+                </svg>
+            </button>
+        </div>
+        <div id="controls-items">
+            <div class="controls-row">
+                <button class="chipbtn" id="feeds-filter" aria-pressed="false">Feeds recipes</button>
+                <button class="chipbtn" id="sort-toggle" aria-label="Change sort order">Value ↓</button>
+            </div>
+        </div>
+        <div id="controls-recipes" hidden>
+            <div class="seg" id="type-seg" role="radiogroup" aria-label="Recipe type">
+                <label class="seg-opt" data-t="all">
+                    <input type="radio" name="type" value="all" checked>
+                    <span>All types</span>
+                </label>
+                <label class="seg-opt" data-t="crafting">
+                    <input type="radio" name="type" value="crafting">
+                    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path
+                            d="M12.5 5.5 4.5 13.5l2.5 2.5 8-8"/><path d="M11 4h6a2 2 0 0 1 2 2v3l-4 2-5-5z"/></svg>Crafting</span>
+                </label>
+                <label class="seg-opt" data-t="cooking">
+                    <input type="radio" name="type" value="cooking">
+                    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path
+                            d="M4 11h16v2.5a8 8 0 0 1-16 0z"/><path d="M2 11h20"/><path
+                            d="M9 8c0-1.4 1-1.6 1-3M14 8c0-1.4 1-1.6 1-3"/></svg>Cooking</span>
+                </label>
+            </div>
+            <div class="controls-row">
+                <label class="switch">
+                    <input type="checkbox" id="show-all">
+                    <span class="track" aria-hidden="true"></span>
+                    <span class="switch-label">Show all recipes</span>
+                </label>
+            </div>
+        </div>
+        <div id="controls-crops" hidden>
+            <div class="controls-row chipwrap" id="crop-filters" role="group" aria-label="Crop filters"></div>
+        </div>
     </div>
-    <div class="search">
-      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="search" type="search" placeholder="Search…" autocomplete="off" enterkeyhint="search" aria-label="Search items and recipes">
-      <button class="search-clear" id="search-clear" hidden aria-label="Clear search">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
-      </button>
-    </div>
-    <div id="controls-items">
-      <div class="controls-row">
-        <button class="chipbtn" id="feeds-filter" aria-pressed="false">Feeds recipes</button>
-        <button class="chipbtn" id="sort-toggle" aria-label="Change sort order">Value ↓</button>
-      </div>
-    </div>
-    <div id="controls-recipes" hidden>
-      <div class="seg" id="type-seg" role="radiogroup" aria-label="Recipe type">
-        <label class="seg-opt" data-t="all">
-          <input type="radio" name="type" value="all" checked>
-          <span>All types</span>
-        </label>
-        <label class="seg-opt" data-t="crafting">
-          <input type="radio" name="type" value="crafting">
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 5.5 4.5 13.5l2.5 2.5 8-8"/><path d="M11 4h6a2 2 0 0 1 2 2v3l-4 2-5-5z"/></svg>Crafting</span>
-        </label>
-        <label class="seg-opt" data-t="cooking">
-          <input type="radio" name="type" value="cooking">
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16v2.5a8 8 0 0 1-16 0z"/><path d="M2 11h20"/><path d="M9 8c0-1.4 1-1.6 1-3M14 8c0-1.4 1-1.6 1-3"/></svg>Cooking</span>
-        </label>
-      </div>
-      <div class="controls-row">
-        <label class="switch">
-          <input type="checkbox" id="show-all">
-          <span class="track" aria-hidden="true"></span>
-          <span class="switch-label">Show all recipes</span>
-        </label>
-      </div>
-    </div>
-  </div>
 </div>
 
-<div class="wrap"><div class="banner" id="banner" hidden></div></div>
+<div class="wrap">
+    <div class="banner" id="banner" hidden></div>
+</div>
 
 <main id="main">
-  <div id="view-items">
-    <p class="items-total" id="items-total"></p>
-    <div id="items-list"></div>
-  </div>
-  <div id="view-recipes" hidden>
-    <div id="overview"></div>
-  </div>
-  <div id="detail" class="detail" hidden></div>
+    <div id="view-items">
+        <p class="items-total" id="items-total"></p>
+        <div id="items-list"></div>
+    </div>
+    <div id="view-recipes" hidden>
+        <div id="overview"></div>
+    </div>
+    <div id="view-crops" hidden>
+        <div id="crops"></div>
+    </div>
+    <div id="detail" class="detail" hidden></div>
 </main>
 
 <footer id="footer"></footer>
 
 <script>
-'use strict';
+    'use strict';
 
-/* ---------- helpers ---------- */
-const $ = s => document.querySelector(s);
-const esc = s => String(s).replace(/[&<>"']/g, c => ({
-  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-}[c]));
-const fmtNum = n => Number(n).toLocaleString('en-US');
-const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* ---------- helpers ---------- */
+    const $ = s => document.querySelector(s);
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+    const fmtNum = n => Number(n).toLocaleString('en-US');
+    const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const ICONS = {
-  leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19C5 9 13 4 20 4c0 9-4 15-13 15"/><path d="M5 19c3-5 7-8 11-10"/></svg>',
-  hammer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 5.5 4.5 13.5l2.5 2.5 8-8"/><path d="M11 4h6a2 2 0 0 1 2 2v3l-4 2-5-5z"/></svg>',
-  pot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16v2.5a8 8 0 0 1-16 0z"/><path d="M2 11h20"/><path d="M9 8c0-1.4 1-1.6 1-3M14 8c0-1.4 1-1.6 1-3"/></svg>',
-  check: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg>',
-  circle: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>',
-  half: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" stroke="none"/></svg>',
-  chevR: '<svg class="ic chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>',
-  chevL: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>',
-  ext: '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M19 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h6"/></svg>',
-  warn: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 2.5 20h19z"/><path d="M12 9.5V14"/><path d="M12 17h.01"/></svg>',
-  up: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 5.5 19 17H5z"/></svg>',
-  down: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 18.5 5 7h14z"/></svg>',
-  wrench: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6.5a4.2 4.2 0 0 0-5.7 5L4 16.3 7.7 20l4.8-4.8a4.2 4.2 0 0 0 5-5.7l-2.8 2.8-2.6-.7-.7-2.6z"/></svg>',
-  question: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.5 2.3c-.8.35-1.1.8-1.1 1.8"/><path d="M12 17h.01"/></svg>'
-};
+    const ICONS = {
+        leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19C5 9 13 4 20 4c0 9-4 15-13 15"/><path d="M5 19c3-5 7-8 11-10"/></svg>',
+        hammer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 5.5 4.5 13.5l2.5 2.5 8-8"/><path d="M11 4h6a2 2 0 0 1 2 2v3l-4 2-5-5z"/></svg>',
+        pot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16v2.5a8 8 0 0 1-16 0z"/><path d="M2 11h20"/><path d="M9 8c0-1.4 1-1.6 1-3M14 8c0-1.4 1-1.6 1-3"/></svg>',
+        check: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg>',
+        circle: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>',
+        half: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" stroke="none"/></svg>',
+        chevR: '<svg class="ic chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>',
+        chevL: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>',
+        ext: '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M19 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h6"/></svg>',
+        warn: '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 2.5 20h19z"/><path d="M12 9.5V14"/><path d="M12 17h.01"/></svg>',
+        up: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 5.5 19 17H5z"/></svg>',
+        down: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 18.5 5 7h14z"/></svg>',
+        wrench: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6.5a4.2 4.2 0 0 0-5.7 5L4 16.3 7.7 20l4.8-4.8a4.2 4.2 0 0 0 5-5.7l-2.8 2.8-2.6-.7-.7-2.6z"/></svg>',
+        question: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.5 2.3c-.8.35-1.1.8-1.1 1.8"/><path d="M12 17h.01"/></svg>'
+    };
 
-/* ---------- state ---------- */
-const ui = {
-  data: null,          // last /api/state payload
-  inv: null,           // last /api/inventory payload
-  version: null,
-  search: '',
-  view: 'items',
-  views: {
-    items:   { scroll: 0, detailId: null },   // item id string
-    recipes: { scroll: 0, detailKey: null }   // recipe key
-  },
-  showAll: false,
-  typeFilter: 'all',
-  onlyUseful: false,   // items: only items feeding recipes
-  itemsSort: 'value',  // 'value' | 'count'
-  open: { craftable: true, partial: true, far_off: false },
-  plan: null,          // { key, status, result }
-  itemDetail: null,    // { id, version, status: 'loading'|'ready'|'gone'|'error', data }
-  netDown: false
-};
+    /* ---------- state ---------- */
+    const ui = {
+        data: null,          // last /api/state payload
+        inv: null,           // last /api/inventory payload
+        version: null,
+        search: '',
+        view: 'items',
+        views: {
+            items: {scroll: 0, detailId: null},   // item id string
+            recipes: {scroll: 0, detailKey: null},  // recipe key
+            crops: {scroll: 0}                    // no detail screen
+        },
+        crops: null,         // last /api/crops payload
+        cropLocation: '',    // '' is every location
+        cropSort: 'soonest', // 'soonest' | 'count'
+        showLocked: false,   // crops in places this save can't reach yet
+        cropOpen: {},        // location key -> section open
+        showAll: false,
+        typeFilter: 'all',
+        onlyUseful: false,   // items: only items feeding recipes
+        itemsSort: 'value',  // 'value' | 'count'
+        open: {craftable: true, partial: true, far_off: false},
+        plan: null,          // { key, status, result }
+        itemDetail: null,    // { id, version, status: 'loading'|'ready'|'gone'|'error', data }
+        netDown: false
+    };
 
-/* ---------- api ---------- */
-async function fetchJSON(url) {
-  const r = await fetch(url);
-  if (!r.ok) {
-    const err = new Error('HTTP ' + r.status);
-    err.status = r.status;
-    try { err.body = await r.json(); } catch (_) {}
-    throw err;
-  }
-  return r.json();
-}
-const api = {
-  state: () => fetchJSON('/api/state'),
-  inventory: () => fetchJSON('/api/inventory'),
-  version: () => fetchJSON('/api/version'),
-  plan: key => fetchJSON('/api/plan/' + encodeURIComponent(key)),
-  item: id => fetchJSON('/api/item/' + encodeURIComponent(id))
-};
+    /* ---------- api ---------- */
+    async function fetchJSON(url) {
+        const r = await fetch(url);
+        if (!r.ok) {
+            const err = new Error('HTTP ' + r.status);
+            err.status = r.status;
+            try {
+                err.body = await r.json();
+            } catch (_) {
+            }
+            throw err;
+        }
+        return r.json();
+    }
 
-/* ---------- shared bits ---------- */
-const GROUPS = [
-  ['craftable', 'Craftable now'],
-  ['partial', 'Partially there'],
-  ['far_off', 'Far off']
-];
-const STATE_LABEL = { craftable: 'Ready to craft', partial: 'Partially there', far_off: 'Far off' };
-const STATE_ICON = { craftable: ICONS.check, partial: ICONS.half, far_off: ICONS.circle };
+    const api = {
+        state: () => fetchJSON('/api/state'),
+        inventory: () => fetchJSON('/api/inventory'),
+        crops: () => fetchJSON('/api/crops'),
+        version: () => fetchJSON('/api/version'),
+        plan: key => fetchJSON('/api/plan/' + encodeURIComponent(key)),
+        item: id => fetchJSON('/api/item/' + encodeURIComponent(id))
+    };
 
-function badge(type) {
-  const icon = type === 'cooking' ? ICONS.pot : ICONS.hammer;
-  const label = type === 'cooking' ? 'Cooking' : 'Crafting';
-  return `<span class="badge ${esc(type)}">${icon}${label}</span>`;
-}
+    /* ---------- shared bits ---------- */
+    const GROUPS = [
+        ['craftable', 'Craftable now'],
+        ['partial', 'Partially there'],
+        ['far_off', 'Far off']
+    ];
+    const STATE_LABEL = {craftable: 'Ready to craft', partial: 'Partially there', far_off: 'Far off'};
+    const STATE_ICON = {craftable: ICONS.check, partial: ICONS.half, far_off: ICONS.circle};
 
-function pips(entry) {
-  const total = entry.recipe.ingredients.length;
-  const ready = total - (entry.missing || []).length;
-  let out = '';
-  for (let i = 0; i < total; i++) out += `<i class="${i < ready ? 'on' : ''}"></i>`;
-  return `<span class="pips" role="img" aria-label="${ready} of ${total} ingredients satisfied">${out}</span>`;
-}
+    function badge(type) {
+        const icon = type === 'cooking' ? ICONS.pot : ICONS.hammer;
+        const label = type === 'cooking' ? 'Cooking' : 'Crafting';
+        return `<span class="badge ${esc(type)}">${icon}${label}</span>`;
+    }
 
-function needsSummary(missing) {
-  const shown = missing.slice(0, 2)
-    .map(m => `<b>${m.need}×</b> ${esc(m.name)}`).join(', ');
-  const rest = missing.length - 2;
-  return `needs ${shown}${rest > 0 ? ` <span>+${rest} more</span>` : ''}`;
-}
+    function pips(entry) {
+        const total = entry.recipe.ingredients.length;
+        const ready = total - (entry.missing || []).length;
+        let out = '';
+        for (let i = 0; i < total; i++) out += `<i class="${i < ready ? 'on' : ''}"></i>`;
+        return `<span class="pips" role="img" aria-label="${ready} of ${total} ingredients satisfied">${out}</span>`;
+    }
 
-function recipeByKey(key) {
-  return ui.data && ui.data.recipes.find(r => r.recipe.key === key);
-}
+    function needsSummary(missing) {
+        const shown = missing.slice(0, 2)
+            .map(m => `<b>${m.need}×</b> ${esc(m.name)}`).join(', ');
+        const rest = missing.length - 2;
+        return `needs ${shown}${rest > 0 ? ` <span>+${rest} more</span>` : ''}`;
+    }
 
-/* ================================================================
-   Items view
-   ================================================================ */
-function sortItems(items) {
-  const arr = [...items];
-  if (ui.itemsSort === 'count') {
-    arr.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
-  } else {
-    const val = i => i.stack_value === undefined ? -1 : i.stack_value;
-    arr.sort((a, b) => val(b) - val(a) || b.count - a.count || a.name.localeCompare(b.name));
-  }
-  return arr;
-}
+    function recipeByKey(key) {
+        return ui.data && ui.data.recipes.find(r => r.recipe.key === key);
+    }
 
-function qualityLabel(quality) {
-  return ({ 0: 'normal', 1: 'silver', 2: 'gold', 4: 'iridium' })[quality] || 'normal';
-}
+    /* ================================================================
+       Items view
+       ================================================================ */
+    function sortItems(items) {
+        const arr = [...items];
+        if (ui.itemsSort === 'count') {
+            arr.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+        } else {
+            const val = i => i.stack_value === undefined ? -1 : i.stack_value;
+            arr.sort((a, b) => val(b) - val(a) || b.count - a.count || a.name.localeCompare(b.name));
+        }
+        return arr;
+    }
 
-function qualitySummary(it) {
-  const qualities = it.qualities || [{ quality: 0, count: it.count }];
-  return qualities.map(q => `×${fmtNum(q.count)} ${qualityLabel(q.quality)}`).join(' · ');
-}
+    function qualityLabel(quality) {
+        return ({0: 'normal', 1: 'silver', 2: 'gold', 4: 'iridium'})[quality] || 'normal';
+    }
 
-function itemRowHTML(it) {
-  const priced = it.stack_value !== undefined;
-  const uses = it.recipe_count > 0
-    ? `<span class="uses">${it.recipe_count} recipe${it.recipe_count === 1 ? '' : 's'}</span>` : '';
-  return `<li><button class="row" data-id="${esc(it.id)}">
+    function qualitySummary(it) {
+        const qualities = it.qualities || [{quality: 0, count: it.count}];
+        return qualities.map(q => `×${fmtNum(q.count)} ${qualityLabel(q.quality)}`).join(' · ');
+    }
+
+    function itemRowHTML(it) {
+        const priced = it.stack_value !== undefined;
+        const uses = it.recipe_count > 0
+            ? `<span class="uses">${it.recipe_count} recipe${it.recipe_count === 1 ? '' : 's'}</span>` : '';
+        return `<li><button class="row" data-id="${esc(it.id)}">
     <span class="row-text">
       <span class="row-name">${esc(it.name)}</span>
       <span class="row-meta">${qualitySummary(it)}${uses}</span>
     </span>
     <span class="ival">${priced
-      ? `${fmtNum(it.stack_value)}<span class="g"> g</span>`
-      : '<span class="noprice">—<span class="sr-only">no price on record</span></span>'}</span>
+            ? `${fmtNum(it.stack_value)}<span class="g"> g</span>`
+            : '<span class="noprice">—<span class="sr-only">no price on record</span></span>'}</span>
     ${ICONS.chevR}
   </button></li>`;
-}
+    }
 
-function renderItemsTotal() {
-  const el = $('#items-total');
-  if (!ui.inv || !ui.inv.items) { el.textContent = ''; return; }
-  const priced = ui.inv.items.filter(i => i.stack_value !== undefined);
-  if (!priced.length) { el.textContent = ''; return; }
-  const total = priced.reduce((s, i) => s + i.stack_value, 0);
-  el.textContent = `${fmtNum(total)} g across ${priced.length} priced stacks`;
-}
+    function renderItemsTotal() {
+        const el = $('#items-total');
+        if (!ui.inv || !ui.inv.items) {
+            el.textContent = '';
+            return;
+        }
+        const priced = ui.inv.items.filter(i => i.stack_value !== undefined);
+        if (!priced.length) {
+            el.textContent = '';
+            return;
+        }
+        const total = priced.reduce((s, i) => s + i.stack_value, 0);
+        el.textContent = `${fmtNum(total)} g across ${priced.length} priced stacks`;
+    }
 
-function renderItems() {
-  const el = $('#items-list');
-  renderItemsTotal();
-  const q = ui.search.trim().toLowerCase();
-  let items = ui.inv.items || [];
-  if (q) items = items.filter(i => i.name.toLowerCase().includes(q));
-  if (ui.onlyUseful) items = items.filter(i => (i.recipe_count || 0) > 0);
-  items = sortItems(items);
+    function renderItems() {
+        const el = $('#items-list');
+        renderItemsTotal();
+        const q = ui.search.trim().toLowerCase();
+        let items = ui.inv.items || [];
+        if (q) items = items.filter(i => i.name.toLowerCase().includes(q));
+        if (ui.onlyUseful) items = items.filter(i => (i.recipe_count || 0) > 0);
+        items = sortItems(items);
 
-  if (items.length === 0) {
-    const actions = [
-      q ? '<button class="btn ghost" data-action="clear-search">Clear search</button>' : '',
-      q ? `<button class="btn ghost" data-action="goto-recipes">Search recipes for “${esc(ui.search.trim())}”</button>` : '',
-      ui.onlyUseful ? '<button class="btn ghost" data-action="clear-useful">Show everything</button>' : ''
-    ].join('');
-    el.innerHTML = `<div class="empty">
+        if (items.length === 0) {
+            const actions = [
+                q ? '<button class="btn ghost" data-action="clear-search">Clear search</button>' : '',
+                q ? `<button class="btn ghost" data-action="goto-recipes">Search recipes for “${esc(ui.search.trim())}”</button>` : '',
+                ui.onlyUseful ? '<button class="btn ghost" data-action="clear-useful">Show everything</button>' : ''
+            ].join('');
+            el.innerHTML = `<div class="empty">
       <h2>${q ? `No items match “${esc(ui.search.trim())}”` : ui.onlyUseful ? 'Nothing you own feeds a recipe' : 'Nothing owned'}</h2>
       <p>${q ? 'The same search term stays typed if you switch to Recipes.' : 'Collect ingredients and they will show up here.'}</p>
       <div class="actions">${actions}</div>
     </div>`;
-    return;
-  }
-  el.innerHTML = `<ul class="rows">${items.map(itemRowHTML).join('')}</ul>`;
-}
+            return;
+        }
+        el.innerHTML = `<ul class="rows">${items.map(itemRowHTML).join('')}</ul>`;
+    }
 
-/* ---------- item detail ---------- */
-async function loadItem(id, { quiet = false } = {}) {
-  const have = ui.itemDetail && ui.itemDetail.id === id && ui.itemDetail.status === 'ready';
-  if (!(quiet && have)) {
-    ui.itemDetail = { id, version: ui.version, status: 'loading' };
-    if (ui.view === 'items' && ui.views.items.detailId === id) renderDetail();
-  }
-  try {
-    const d = await api.item(id);
-    if (ui.views.items.detailId !== id) return;
-    ui.itemDetail = { id, version: ui.version, status: 'ready', data: d };
-  } catch (e) {
-    if (ui.views.items.detailId !== id) return;
-    ui.itemDetail = { id, version: ui.version, status: e && e.status === 404 ? 'gone' : 'error' };
-  }
-  if (ui.view === 'items' && ui.views.items.detailId === id) renderDetail();
-}
+    /* ---------- item detail ---------- */
+    async function loadItem(id, {quiet = false} = {}) {
+        const have = ui.itemDetail && ui.itemDetail.id === id && ui.itemDetail.status === 'ready';
+        if (!(quiet && have)) {
+            ui.itemDetail = {id, version: ui.version, status: 'loading'};
+            if (ui.view === 'items' && ui.views.items.detailId === id) renderDetail();
+        }
+        try {
+            const d = await api.item(id);
+            if (ui.views.items.detailId !== id) return;
+            ui.itemDetail = {id, version: ui.version, status: 'ready', data: d};
+        } catch (e) {
+            if (ui.views.items.detailId !== id) return;
+            ui.itemDetail = {id, version: ui.version, status: e && e.status === 404 ? 'gone' : 'error'};
+        }
+        if (ui.view === 'items' && ui.views.items.detailId === id) renderDetail();
+    }
 
-function verdictHTML(u) {
-  const each = u.delta !== undefined && u.delta !== null;
-  const scaled = each && u.max_makeable > 1
-    ? `<span class="verdict-stack">×${u.max_makeable} → ${u.delta > 0 ? '+' : '−'}${fmtNum(Math.abs(u.delta * u.max_makeable))} g</span>` : '';
-  switch (u.verdict) {
-    case 'profit':
-      return `<span class="verdict profit">${ICONS.up}+${fmtNum(u.delta)} g each</span>${scaled}`;
-    case 'loss':
-      return `<span class="verdict loss">${ICONS.down}−${fmtNum(Math.abs(u.delta))} g each</span>${scaled}`;
-    case 'not_for_sale':
-      return `<span class="verdict use">${ICONS.wrench}for use</span>`;
-    default:
-      return `<span class="verdict unknown">${ICONS.question}price unknown</span>`;
-  }
-}
+    function verdictHTML(u) {
+        const each = u.delta !== undefined && u.delta !== null;
+        const scaled = each && u.max_makeable > 1
+            ? `<span class="verdict-stack">×${u.max_makeable} → ${u.delta > 0 ? '+' : '−'}${fmtNum(Math.abs(u.delta * u.max_makeable))} g</span>` : '';
+        switch (u.verdict) {
+            case 'profit':
+                return `<span class="verdict profit">${ICONS.up}+${fmtNum(u.delta)} g each</span>${scaled}`;
+            case 'loss':
+                return `<span class="verdict loss">${ICONS.down}−${fmtNum(Math.abs(u.delta))} g each</span>${scaled}`;
+            case 'not_for_sale':
+                return `<span class="verdict use">${ICONS.wrench}for use</span>`;
+            default:
+                return `<span class="verdict unknown">${ICONS.question}price unknown</span>`;
+        }
+    }
 
-function usedInRowHTML(u) {
-  const actionable = u.max_makeable > 0;
-  const make = actionable
-    ? `<span class="make">make ×${fmtNum(u.max_makeable)}</span>`
-    : `<span class="unmake">missing ingredients</span>`;
-  const learned = u.learned ? '' : '<span class="unmake">· not learned</span>';
-  return `<li><button class="row use" data-key="${esc(u.recipe_key)}">
+    function usedInRowHTML(u) {
+        const actionable = u.max_makeable > 0;
+        const make = actionable
+            ? `<span class="make">make ×${fmtNum(u.max_makeable)}</span>`
+            : `<span class="unmake">missing ingredients</span>`;
+        const learned = u.learned ? '' : '<span class="unmake">· not learned</span>';
+        return `<li><button class="row use" data-key="${esc(u.recipe_key)}">
     <span class="row-text">
       <span class="row-name">${esc(u.name)}</span>
       <span class="row-meta">${badge(u.type)}<span>takes ${u.qty_here}</span>${make}${learned}</span>
     </span>
     <span class="use-econ">${verdictHTML(u)}</span>
   </button></li>`;
-}
+    }
 
-function qualityRowHTML(quality) {
-  const priced = quality.sell_price !== undefined;
-  const value = quality.stack_value !== undefined;
-  return `<li><div class="row">
+    function qualityRowHTML(quality) {
+        const priced = quality.sell_price !== undefined;
+        const value = quality.stack_value !== undefined;
+        return `<li><div class="row">
     <span class="row-text">
       <span class="row-name">${esc(qualityLabel(quality.quality))}</span>
       <span class="row-meta">×${fmtNum(quality.count)}${priced ? ` · ${fmtNum(quality.sell_price)} g each` : ''}</span>
     </span>
     <span class="ival">${value ? `${fmtNum(quality.stack_value)}<span class="g"> g</span>` : '<span class="noprice">—<span class="sr-only">no price on record</span></span>'}</span>
   </div></li>`;
-}
+    }
 
-function renderItemDetail() {
-  const id = ui.views.items.detailId;
-  const det = ui.itemDetail;
-  const el = $('#detail');
+    function renderItemDetail() {
+        const id = ui.views.items.detailId;
+        const det = ui.itemDetail;
+        const el = $('#detail');
 
-  if (!det || det.id !== id || det.status === 'loading') {
-    el.innerHTML = `<button class="back" data-action="back">${ICONS.chevL}All items</button>
+        if (!det || det.id !== id || det.status === 'loading') {
+            el.innerHTML = `<button class="back" data-action="back">${ICONS.chevL}All items</button>
       <p class="loading">Counting stacks…</p>`;
-    return;
-  }
-  if (det.status === 'gone') {
-    el.innerHTML = `<button class="back" data-action="back">${ICONS.chevL}All items</button>
+            return;
+        }
+        if (det.status === 'gone') {
+            el.innerHTML = `<button class="back" data-action="back">${ICONS.chevL}All items</button>
       <div class="empty"><h2>None left</h2><p>You no longer own any of this — the list has the current picture.</p></div>`;
-    return;
-  }
-  if (det.status === 'error') {
-    el.innerHTML = `<button class="back" data-action="back">${ICONS.chevL}All items</button>
+            return;
+        }
+        if (det.status === 'error') {
+            el.innerHTML = `<button class="back" data-action="back">${ICONS.chevL}All items</button>
       <div class="empty"><h2>Couldn't load this item</h2>
       <div class="actions"><button class="btn ghost" data-action="retry-item">Try again</button></div></div>`;
-    return;
-  }
+            return;
+        }
 
-  const it = det.data;
-  const qualities = it.qualities || [{ quality: 0, count: it.count, sell_price: it.sell_price, stack_value: it.stack_value }];
-  const hasPrice = qualities.some(q => q.sell_price !== undefined);
-  const averagePrice = it.stack_value !== undefined && it.count > 0 ? it.stack_value / it.count : null;
-  const stats = `<div class="stats">
+        const it = det.data;
+        const qualities = it.qualities || [{
+            quality: 0,
+            count: it.count,
+            sell_price: it.sell_price,
+            stack_value: it.stack_value
+        }];
+        const hasPrice = qualities.some(q => q.sell_price !== undefined);
+        const averagePrice = it.stack_value !== undefined && it.count > 0 ? it.stack_value / it.count : null;
+        const stats = `<div class="stats">
     <div class="stat"><b>${fmtNum(it.count)}</b><span>owned</span></div>
     <div class="stat"><b>${averagePrice === null ? '—' : `${fmtNum(averagePrice)}<span class="g"> g</span>`}</b><span>average each</span></div>
     <div class="stat"><b>${it.stack_value !== undefined ? `${fmtNum(it.stack_value)}<span class="g"> g</span>` : '—'}</b><span>total value</span></div>
   </div>`;
-  const priceNote = hasPrice ? '' : `<p class="price-note">${it.wiki_url
-    ? 'No sell price on record.'
-    : 'Not in the item dataset — no sell price on record.'}</p>`;
-  const wiki = it.wiki_url
-    ? `<p class="unlock"><a class="wiki" href="${esc(it.wiki_url)}" target="_blank" rel="noopener">wiki ${ICONS.ext}</a></p>` : '';
+        const priceNote = hasPrice ? '' : `<p class="price-note">${it.wiki_url
+            ? 'No sell price on record.'
+            : 'Not in the item dataset — no sell price on record.'}</p>`;
+        const wiki = it.wiki_url
+            ? `<p class="unlock"><a class="wiki" href="${esc(it.wiki_url)}" target="_blank" rel="noopener">wiki ${ICONS.ext}</a></p>` : '';
 
-  const used = it.used_in || [];
-  const usedSection = used.length === 0
-    ? '<p class="plan-plain">Not used in any recipe.</p>'
-    : `<ul class="rows">${used.map(usedInRowHTML).join('')}</ul>`;
-  const processing = it.processing || [];
-  const processingSection = processing.length === 0 ? '' : `
+        const used = it.used_in || [];
+        const usedSection = used.length === 0
+            ? '<p class="plan-plain">Not used in any recipe.</p>'
+            : `<ul class="rows">${used.map(usedInRowHTML).join('')}</ul>`;
+        const processing = it.processing || [];
+        const processingSection = processing.length === 0 ? '' : `
     <h3>Can process into · ${processing.length}</h3>
     <ul class="rows">${processing.map(machineRowHTML).join('')}</ul>`;
 
-  el.innerHTML = `
+        el.innerHTML = `
     <button class="back" data-action="back">${ICONS.chevL}All items</button>
     <div class="detail-head">
       <h2 tabindex="-1">${esc(it.name)}</h2>
@@ -1312,132 +2094,132 @@ function renderItemDetail() {
     <h3>Used in · ${used.length}</h3>
     ${usedSection}
     ${processingSection}`;
-}
+    }
 
-/* ================================================================
-   Recipes view
-   ================================================================ */
-/* The sale arithmetic of one crafting. Rows only show the two decidable
-   states — "for use" and "unknown" stay quiet so the list doesn't cry loss. */
-function deltaTagHTML(ec) {
-  if (!ec || ec.delta === undefined || ec.delta === null) return '';
-  const d = ec.delta;
-  return d >= 0
-    ? `<span class="dtag profit">${ICONS.up}+${fmtNum(d)} g</span>`
-    : `<span class="dtag loss">${ICONS.down}−${fmtNum(Math.abs(d))} g</span>`;
-}
+    /* ================================================================
+       Recipes view
+       ================================================================ */
+    /* The sale arithmetic of one crafting. Rows only show the two decidable
+       states — "for use" and "unknown" stay quiet so the list doesn't cry loss. */
+    function deltaTagHTML(ec) {
+        if (!ec || ec.delta === undefined || ec.delta === null) return '';
+        const d = ec.delta;
+        return d >= 0
+            ? `<span class="dtag profit">${ICONS.up}+${fmtNum(d)} g</span>`
+            : `<span class="dtag loss">${ICONS.down}−${fmtNum(Math.abs(d))} g</span>`;
+    }
 
-function econLineHTML(ec, outputQty) {
-  let chip, detail = '';
-  switch (ec.verdict) {
-    case 'profit':
-      chip = `<span class="verdict profit">${ICONS.up}+${fmtNum(ec.delta)} g</span>`;
-      break;
-    case 'loss':
-      chip = `<span class="verdict loss">${ICONS.down}−${fmtNum(Math.abs(ec.delta))} g</span>`;
-      break;
-    case 'not_for_sale':
-      chip = `<span class="verdict use">${ICONS.wrench}for use</span>`;
-      detail = '<span class="econ-detail">made to be used, not sold</span>';
-      break;
-    default:
-      chip = `<span class="verdict unknown">${ICONS.question}price unknown</span>`;
-  }
-  if (ec.verdict === 'profit' || ec.verdict === 'loss') {
-    detail = `<span class="econ-detail">output ${fmtNum(ec.output_value)} g${outputQty > 1 ? ` ×${outputQty}` : ''} − ingredients ${fmtNum(ec.input_cost)} g, per crafting</span>`;
-  }
-  return `<p class="econ">${chip}${detail}</p>`;
-}
+    function econLineHTML(ec, outputQty) {
+        let chip, detail = '';
+        switch (ec.verdict) {
+            case 'profit':
+                chip = `<span class="verdict profit">${ICONS.up}+${fmtNum(ec.delta)} g</span>`;
+                break;
+            case 'loss':
+                chip = `<span class="verdict loss">${ICONS.down}−${fmtNum(Math.abs(ec.delta))} g</span>`;
+                break;
+            case 'not_for_sale':
+                chip = `<span class="verdict use">${ICONS.wrench}for use</span>`;
+                detail = '<span class="econ-detail">made to be used, not sold</span>';
+                break;
+            default:
+                chip = `<span class="verdict unknown">${ICONS.question}price unknown</span>`;
+        }
+        if (ec.verdict === 'profit' || ec.verdict === 'loss') {
+            detail = `<span class="econ-detail">output ${fmtNum(ec.output_value)} g${outputQty > 1 ? ` ×${outputQty}` : ''} − ingredients ${fmtNum(ec.input_cost)} g, per crafting</span>`;
+        }
+        return `<p class="econ">${chip}${detail}</p>`;
+    }
 
-function rowHTML(entry) {
-  const r = entry.recipe;
-  let meta = badge(r.type);
-  if (entry.state === 'craftable') {
-    if (r.output_qty > 1) meta += `<span class="yields">yields ×${r.output_qty}</span>`;
-  } else {
-    meta += `<span class="needs">${needsSummary(entry.missing || [])}</span>`;
-  }
-  meta += deltaTagHTML(entry.economics);
-  const side = entry.state === 'craftable' ? '' : pips(entry);
-  return `<li><button class="row" data-key="${esc(r.key)}">
+    function rowHTML(entry) {
+        const r = entry.recipe;
+        let meta = badge(r.type);
+        if (entry.state === 'craftable') {
+            if (r.output_qty > 1) meta += `<span class="yields">yields ×${r.output_qty}</span>`;
+        } else {
+            meta += `<span class="needs">${needsSummary(entry.missing || [])}</span>`;
+        }
+        meta += deltaTagHTML(entry.economics);
+        const side = entry.state === 'craftable' ? '' : pips(entry);
+        return `<li><button class="row" data-key="${esc(r.key)}">
     <span class="row-text">
       <span class="row-name">${esc(r.name)}</span>
       <span class="row-meta">${meta}</span>
     </span>
     ${side}${ICONS.chevR}
   </button></li>`;
-}
+    }
 
-/* Machine rates run small — a keg earns a tenth of a gold per minute — so they
-   need two decimals where whole-gold figures do not. Below a hundredth, print
-   a bound: a rounded "0.00" would read as "earns nothing", which is a
-   different claim from "earns very little". */
-function fmtRate(n) {
-  if (!isFinite(n)) return '—';
-  const abs = Math.abs(n), sign = n < 0 ? '−' : '';
-  if (abs === 0) return '0';
-  if (abs < 0.001) return n < 0 ? '>−0.001' : '<0.001';
-  if (abs >= 10) return signedNum(Math.round(n));
-  if (abs >= 1) return `${sign}${abs.toFixed(2)}`;
-  // Real fruit rates sit around 0.05, 0.02 and 0.009 g/min. Two fixed decimals
-  // would round those to 0.06, 0.02 and 0.01 — flattening the ranking the card
-  // exists to show — so below a gold a minute it keeps three significant digits.
-  return `${sign}${Number(abs.toPrecision(3))}`;
-}
+    /* Machine rates run small — a keg earns a tenth of a gold per minute — so they
+       need two decimals where whole-gold figures do not. Below a hundredth, print
+       a bound: a rounded "0.00" would read as "earns nothing", which is a
+       different claim from "earns very little". */
+    function fmtRate(n) {
+        if (!isFinite(n)) return '—';
+        const abs = Math.abs(n), sign = n < 0 ? '−' : '';
+        if (abs === 0) return '0';
+        if (abs < 0.001) return n < 0 ? '>−0.001' : '<0.001';
+        if (abs >= 10) return signedNum(Math.round(n));
+        if (abs >= 1) return `${sign}${abs.toFixed(2)}`;
+        // Real fruit rates sit around 0.05, 0.02 and 0.009 g/min. Two fixed decimals
+        // would round those to 0.06, 0.02 and 0.01 — flattening the ranking the card
+        // exists to show — so below a gold a minute it keeps three significant digits.
+        return `${sign}${Number(abs.toPrecision(3))}`;
+    }
 
-/* Whole-stack totals reach seven figures and would swamp the card. Always
-   signed: this figure is a gain over selling raw, not a sum of takings, and an
-   unsigned number invites reading it as the latter. */
-function fmtGoldCompact(n) {
-  const abs = Math.abs(n), sign = n < 0 ? '−' : '+';
-  if (abs >= 1e6) return `${sign}${(abs / 1e6).toFixed(2)}M`;
-  if (abs >= 1e5) return `${sign}${fmtNum(Math.round(abs / 1e3))}k`;
-  return `${sign}${fmtNum(abs)}`;
-}
+    /* Whole-stack totals reach seven figures and would swamp the card. Always
+       signed: this figure is a gain over selling raw, not a sum of takings, and an
+       unsigned number invites reading it as the latter. */
+    function fmtGoldCompact(n) {
+        const abs = Math.abs(n), sign = n < 0 ? '−' : '+';
+        if (abs >= 1e6) return `${sign}${(abs / 1e6).toFixed(2)}M`;
+        if (abs >= 1e5) return `${sign}${fmtNum(Math.round(abs / 1e3))}k`;
+        return `${sign}${fmtNum(abs)}`;
+    }
 
-/* Negative gold is written with a minus sign, not a hyphen, as elsewhere. */
-function signedNum(n) {
-  return `${n < 0 ? '−' : ''}${fmtNum(Math.abs(n))}`;
-}
+    /* Negative gold is written with a minus sign, not a hyphen, as elsewhere. */
+    function signedNum(n) {
+        return `${n < 0 ? '−' : ''}${fmtNum(Math.abs(n))}`;
+    }
 
-/* A gain over selling raw always carries its sign, so it cannot be read as a
-   plain total of takings. */
-function gainNum(n) {
-  return `${n < 0 ? '−' : '+'}${fmtNum(Math.abs(n))}`;
-}
+    /* A gain over selling raw always carries its sign, so it cannot be read as a
+       plain total of takings. */
+    function gainNum(n) {
+        return `${n < 0 ? '−' : '+'}${fmtNum(Math.abs(n))}`;
+    }
 
-/* "Fruit (Any)" labels a category input; the card has room for the noun only. */
-function inputNoun(name) {
-  const noun = (name || '').replace(/\s*\(any\)$/i, '').trim();
-  return noun ? noun.toLowerCase() : 'input';
-}
+    /* "Fruit (Any)" labels a category input; the card has room for the noun only. */
+    function inputNoun(name) {
+        const noun = (name || '').replace(/\s*\(any\)$/i, '').trim();
+        return noun ? noun.toLowerCase() : 'input';
+    }
 
-function machineChipsHTML(machine) {
-  return (machine.profits || []).filter(p => p.delta !== undefined && p.delta !== null)
-    .map(p => `<span class="verdict ${p.delta >= 0 ? 'profit' : 'loss'}">${p.delta >= 0 ? '+' : '−'}${fmtNum(Math.abs(p.delta))} g ${qualityLabel(p.quality)}</span>`).join('');
-}
+    function machineChipsHTML(machine) {
+        return (machine.profits || []).filter(p => p.delta !== undefined && p.delta !== null)
+            .map(p => `<span class="verdict ${p.delta >= 0 ? 'profit' : 'loss'}">${p.delta >= 0 ? '+' : '−'}${fmtNum(Math.abs(p.delta))} g ${qualityLabel(p.quality)}</span>`).join('');
+    }
 
-/* A machine whose rate could not be computed keeps the old compact row: there
-   is nothing to rank it by, and an empty stats strip would imply zeroes. */
-function machineRowPlainHTML(machine, recipe, chips) {
-  return `<li><div class="row">
+    /* A machine whose rate could not be computed keeps the old compact row: there
+       is nothing to rank it by, and an empty stats strip would imply zeroes. */
+    function machineRowPlainHTML(machine, recipe, chips) {
+        return `<li><div class="row">
     <span class="row-text">
       <span class="row-name">${esc(machine.machine)}</span>
       <span class="row-meta"><span>${recipe}</span>${chips}</span>
     </span>
     <span class="make">make ×${fmtNum(machine.max_runs)}</span>
   </div></li>`;
-}
+    }
 
-/* A conversion with nothing to feed it. It carries no rate and no gain — only
-   what it makes and what it is still short of. */
-function machineRowWaitingHTML(machine) {
-  const inputs = machine.inputs.map(i => `${fmtNum(i.qty)}× ${esc(i.name)}`).join(' + ');
-  const output = `${fmtNum(machine.output.qty)}× ${esc(machine.output.name)}`;
-  const time = machine.minutes ? ` · ${fmtNum(machine.minutes)} min` : '';
-  const short = (machine.missing || [])
-    .map(m => `<span class="ing-frac"><b>${fmtNum(m.have)}</b>/${fmtNum(m.need)} ${esc(m.name)}</span>`).join('');
-  return `<li><div class="row">
+    /* A conversion with nothing to feed it. It carries no rate and no gain — only
+       what it makes and what it is still short of. */
+    function machineRowWaitingHTML(machine) {
+        const inputs = machine.inputs.map(i => `${fmtNum(i.qty)}× ${esc(i.name)}`).join(' + ');
+        const output = `${fmtNum(machine.output.qty)}× ${esc(machine.output.name)}`;
+        const time = machine.minutes ? ` · ${fmtNum(machine.minutes)} min` : '';
+        const short = (machine.missing || [])
+            .map(m => `<span class="ing-frac"><b>${fmtNum(m.have)}</b>/${fmtNum(m.need)} ${esc(m.name)}</span>`).join('');
+        return `<li><div class="row">
     <span class="row-text">
       <span class="row-name">${esc(machine.machine)}</span>
       <span class="row-meta"><span>Process ${inputs} → ${output}${time}</span></span>
@@ -1445,26 +2227,26 @@ function machineRowWaitingHTML(machine) {
     </span>
     <span class="unmake">need input</span>
   </div></li>`;
-}
+    }
 
-function machineRowHTML(machine, index) {
-  const inputs = machine.inputs.map(i => `${fmtNum(i.qty)}× ${esc(i.name)}`).join(' + ');
-  const output = `${fmtNum(machine.output.qty)}× ${esc(machine.output.name)}`;
-  const time = machine.minutes ? ` · ${fmtNum(machine.minutes)} min` : '';
-  const recipe = `Process ${inputs} → ${output}${time}`;
-  const chips = machineChipsHTML(machine);
-  const tp = machine.throughput;
-  if (!tp) return machineRowPlainHTML(machine, recipe, chips);
+    function machineRowHTML(machine, index) {
+        const inputs = machine.inputs.map(i => `${fmtNum(i.qty)}× ${esc(i.name)}`).join(' + ');
+        const output = `${fmtNum(machine.output.qty)}× ${esc(machine.output.name)}`;
+        const time = machine.minutes ? ` · ${fmtNum(machine.minutes)} min` : '';
+        const recipe = `Process ${inputs} → ${output}${time}`;
+        const chips = machineChipsHTML(machine);
+        const tp = machine.throughput;
+        if (!tp) return machineRowPlainHTML(machine, recipe, chips);
 
-  const noun = inputNoun(tp.input);
-  const losing = tp.total_profit < 0;
-  // Only the leader is badged. Numbering every card would flatten the signal
-  // the ordering already carries.
-  const best = index === 0
-    ? `<p class="mrow-best">${ICONS.up}best per machine</p>` : '';
-  const wider = machine.max_runs !== tp.runs
-    ? `<span class="mrow-wider">×${fmtNum(machine.max_runs)} using all ${esc(tp.input)}</span>` : '';
-  return `<li><div class="mrow">
+        const noun = inputNoun(tp.input);
+        const losing = tp.total_profit < 0;
+        // Only the leader is badged. Numbering every card would flatten the signal
+        // the ordering already carries.
+        const best = index === 0
+            ? `<p class="mrow-best">${ICONS.up}best per machine</p>` : '';
+        const wider = machine.max_runs !== tp.runs
+            ? `<span class="mrow-wider">×${fmtNum(machine.max_runs)} using all ${esc(tp.input)}</span>` : '';
+        return `<li><div class="mrow">
     ${best}
     <div class="mrow-head">
       <div>
@@ -1488,63 +2270,63 @@ function machineRowHTML(machine, index) {
       ${wider}
     </div>
   </div></li>`;
-}
+    }
 
-function renderOverview() {
-  const el = $('#overview');
-  const q = ui.search.trim().toLowerCase();
-  const filtering = q !== '' || ui.typeFilter !== 'all';
-  let list = ui.data.recipes;
-  /* A search covers every conversion, not only the ones with ingredients in
-     hand: "beer" has to find the keg that makes it before there is any wheat. */
-  let machines = q ? (ui.data.all_machines || ui.data.machines || []) : (ui.data.machines || []);
-  if (q) list = list.filter(r => r.recipe.name.toLowerCase().includes(q));
-  else if (!ui.showAll) list = list.filter(r => r.learned);
-  if (ui.typeFilter !== 'all') list = list.filter(r => r.recipe.type === ui.typeFilter);
-  if (q) machines = machines.filter(m =>
-    m.machine.toLowerCase().includes(q) || m.output.name.toLowerCase().includes(q)
-    || (m.inputs || []).some(i => i.name.toLowerCase().includes(q)));
-  if (ui.typeFilter !== 'all') machines = [];
-  const waiting = machines.filter(m => !(m.max_runs > 0));
-  machines = machines.filter(m => m.max_runs > 0);
+    function renderOverview() {
+        const el = $('#overview');
+        const q = ui.search.trim().toLowerCase();
+        const filtering = q !== '' || ui.typeFilter !== 'all';
+        let list = ui.data.recipes;
+        /* A search covers every conversion, not only the ones with ingredients in
+           hand: "beer" has to find the keg that makes it before there is any wheat. */
+        let machines = q ? (ui.data.all_machines || ui.data.machines || []) : (ui.data.machines || []);
+        if (q) list = list.filter(r => r.recipe.name.toLowerCase().includes(q));
+        else if (!ui.showAll) list = list.filter(r => r.learned);
+        if (ui.typeFilter !== 'all') list = list.filter(r => r.recipe.type === ui.typeFilter);
+        if (q) machines = machines.filter(m =>
+            m.machine.toLowerCase().includes(q) || m.output.name.toLowerCase().includes(q)
+            || (m.inputs || []).some(i => i.name.toLowerCase().includes(q)));
+        if (ui.typeFilter !== 'all') machines = [];
+        const waiting = machines.filter(m => !(m.max_runs > 0));
+        machines = machines.filter(m => m.max_runs > 0);
 
-  const grouped = { craftable: [], partial: [], far_off: [] };
-  for (const r of list) (grouped[r.state] || grouped.far_off).push(r);
+        const grouped = {craftable: [], partial: [], far_off: []};
+        for (const r of list) (grouped[r.state] || grouped.far_off).push(r);
 
-  if (filtering && list.length === 0 && machines.length === 0 && waiting.length === 0) {
-    const typeWord = ui.typeFilter === 'all' ? '' : ui.typeFilter + ' ';
-    const actions = [
-      q ? '<button class="btn ghost" data-action="clear-search">Clear search</button>' : '',
-      ui.typeFilter !== 'all' ? '<button class="btn ghost" data-action="clear-type">All types</button>' : '',
-      !ui.showAll ? '<button class="btn ghost" data-action="show-all">Show all recipes</button>' : ''
-    ].join('');
-    el.innerHTML = `<div class="empty">
+        if (filtering && list.length === 0 && machines.length === 0 && waiting.length === 0) {
+            const typeWord = ui.typeFilter === 'all' ? '' : ui.typeFilter + ' ';
+            const actions = [
+                q ? '<button class="btn ghost" data-action="clear-search">Clear search</button>' : '',
+                ui.typeFilter !== 'all' ? '<button class="btn ghost" data-action="clear-type">All types</button>' : '',
+                !ui.showAll ? '<button class="btn ghost" data-action="show-all">Show all recipes</button>' : ''
+            ].join('');
+            el.innerHTML = `<div class="empty">
       <h2>${q ? `No ${typeWord}recipes match “${esc(ui.search.trim())}”` : `No ${ui.showAll ? '' : 'learned '}${typeWord}recipes`}</h2>
       <p>${q
-        ? 'Search covers every known recipe, learned or not — so this name isn\'t in the book.'
-        : 'Nothing in the current view matches these filters.'}</p>
+                ? 'Search covers every known recipe, learned or not — so this name isn\'t in the book.'
+                : 'Nothing in the current view matches these filters.'}</p>
       <div class="actions">${actions}</div>
     </div>`;
-    return;
-  }
+            return;
+        }
 
-  const processing = machines.length ? `<details class="group" open>
+        const processing = machines.length ? `<details class="group" open>
     <summary><span class="group-label">Ready to process</span><span class="group-count">${machines.length}</span>${ICONS.chevR}</summary>
     <ul class="rows">${machines.map(machineRowHTML).join('')}</ul>
   </details>` : '';
-  /* Only ever shown while searching, where finding the conversion is the whole
-     point even when the ingredients for it are still out in the world. */
-  const notYet = waiting.length ? `<details class="group" open>
+        /* Only ever shown while searching, where finding the conversion is the whole
+           point even when the ingredients for it are still out in the world. */
+        const notYet = waiting.length ? `<details class="group" open>
     <summary><span class="group-label">Nothing to process yet</span><span class="group-count">${waiting.length}</span>${ICONS.chevR}</summary>
     <ul class="rows">${waiting.map(machineRowWaitingHTML).join('')}</ul>
   </details>` : '';
-  el.innerHTML = processing + notYet + GROUPS.map(([state, label]) => {
-    const rows = grouped[state];
-    if (filtering && rows.length === 0) return '';
-    const body = rows.length
-      ? `<ul class="rows">${rows.map(rowHTML).join('')}</ul>`
-      : `<p class="group-empty">None right now.</p>`;
-    return `<details class="group" data-state="${state}"${ui.open[state] ? ' open' : ''}>
+        el.innerHTML = processing + notYet + GROUPS.map(([state, label]) => {
+            const rows = grouped[state];
+            if (filtering && rows.length === 0) return '';
+            const body = rows.length
+                ? `<ul class="rows">${rows.map(rowHTML).join('')}</ul>`
+                : `<p class="group-empty">None right now.</p>`;
+            return `<details class="group" data-state="${state}"${ui.open[state] ? ' open' : ''}>
       <summary>
         <span class="group-label">${label}</span>
         <span class="group-count">${rows.length}</span>
@@ -1552,50 +2334,50 @@ function renderOverview() {
       </summary>
       ${body}
     </details>`;
-  }).join('');
-}
+        }).join('');
+    }
 
-/* ---------- recipe detail ---------- */
-function ingLine(ing, miss) {
-  const cat = ing.category ? '<span class="ing-cat">any item of this type works</span>' : '';
-  if (miss) {
-    const pct = miss.need > 0 ? Math.min(100, Math.round(miss.have / miss.need * 100)) : 0;
-    return `<li class="ing miss">
+    /* ---------- recipe detail ---------- */
+    function ingLine(ing, miss) {
+        const cat = ing.category ? '<span class="ing-cat">any item of this type works</span>' : '';
+        if (miss) {
+            const pct = miss.need > 0 ? Math.min(100, Math.round(miss.have / miss.need * 100)) : 0;
+            return `<li class="ing miss">
       <span class="ing-ic">${ICONS.circle}</span>
       <span class="ing-body"><span class="ing-name">${esc(miss.name)}</span>${cat}</span>
       <span class="ing-frac"><b>${miss.have}</b>/${miss.need}</span>
       <span class="bar" role="img" aria-label="${miss.have} of ${miss.need} ${esc(miss.name)}"><span style="width:${pct}%"></span></span>
     </li>`;
-  }
-  return `<li class="ing ok">
+        }
+        return `<li class="ing ok">
     <span class="ing-ic">${ICONS.check}</span>
     <span class="ing-body"><span class="ing-name">${esc(ing.name)}</span>${cat}</span>
     <span class="ing-frac">×${ing.qty} · ready</span>
   </li>`;
-}
+    }
 
-function renderRecipeDetail() {
-  const entry = recipeByKey(ui.views.recipes.detailKey);
-  if (!entry) return;
-  const r = entry.recipe;
-  const missingById = new Map((entry.missing || []).map(m => [m.id, m]));
+    function renderRecipeDetail() {
+        const entry = recipeByKey(ui.views.recipes.detailKey);
+        if (!entry) return;
+        const r = entry.recipe;
+        const missingById = new Map((entry.missing || []).map(m => [m.id, m]));
 
-  const chips = [
-    badge(r.type),
-    r.output_qty > 1 ? `<span class="chip">yields ×${r.output_qty}</span>` : '',
-    `<span class="chip state-${entry.state}">${STATE_ICON[entry.state] || ''}${STATE_LABEL[entry.state] || entry.state}</span>`
-  ].join('');
+        const chips = [
+            badge(r.type),
+            r.output_qty > 1 ? `<span class="chip">yields ×${r.output_qty}</span>` : '',
+            `<span class="chip state-${entry.state}">${STATE_ICON[entry.state] || ''}${STATE_LABEL[entry.state] || entry.state}</span>`
+        ].join('');
 
-  const ings = r.ingredients.map(ing => ingLine(ing, missingById.get(ing.id))).join('');
+        const ings = r.ingredients.map(ing => ingLine(ing, missingById.get(ing.id))).join('');
 
-  const planSection = entry.state === 'craftable' ? '' : `
+        const planSection = entry.state === 'craftable' ? '' : `
     <h3>Getting there</h3>
     <div class="plan-area">
       <button class="plan-btn" data-action="plan" data-key="${esc(r.key)}">How to get there</button>
       <div class="plan-body"></div>
     </div>`;
 
-  $('#detail').innerHTML = `
+        $('#detail').innerHTML = `
     <button class="back" data-action="back">${ICONS.chevL}All recipes</button>
     <div class="detail-head">
       <h2 tabindex="-1">${esc(r.name)}</h2>
@@ -1610,50 +2392,50 @@ function renderRecipeDetail() {
     <ul class="ings">${ings}</ul>
     ${planSection}`;
 
-  if (ui.plan && ui.plan.key === ui.views.recipes.detailKey) loadPlan(ui.views.recipes.detailKey);
-}
+        if (ui.plan && ui.plan.key === ui.views.recipes.detailKey) loadPlan(ui.views.recipes.detailKey);
+    }
 
-function fmtMinutes(m) {
-  if (m >= 60 && m % 60 === 0) return `≈${m / 60}h`;
-  if (m > 120) return `≈${(m / 60).toFixed(1)}h`;
-  return `~${m}m`;
-}
+    function fmtMinutes(m) {
+        if (m >= 60 && m % 60 === 0) return `≈${m / 60}h`;
+        if (m > 120) return `≈${(m / 60).toFixed(1)}h`;
+        return `~${m}m`;
+    }
 
-function ioList(list) {
-  return list.map(i => `${i.qty} ${esc(i.name)}`).join(' + ');
-}
+    function ioList(list) {
+        return list.map(i => `${i.qty} ${esc(i.name)}`).join(' + ');
+    }
 
-async function loadPlan(key) {
-  const body = $('#detail .plan-body');
-  if (!body) return;
-  ui.plan = { key, status: 'loading' };
-  const btn = $('#detail .plan-btn');
-  if (btn) btn.hidden = true;
-  body.innerHTML = '<p class="plan-plain">Working it out…</p>';
-  try {
-    const p = await api.plan(key);
-    if (ui.views.recipes.detailKey !== key) return; // user moved on
-    ui.plan = { key, status: 'ready', result: p };
-    renderPlan(body, p);
-  } catch (e) {
-    if (ui.views.recipes.detailKey !== key) return;
-    ui.plan = { key, status: 'error' };
-    body.innerHTML = `<p class="plan-plain">Couldn't work out a plan${e && e.status === 503 ? ' — no save is loaded' : ''}.</p>
+    async function loadPlan(key) {
+        const body = $('#detail .plan-body');
+        if (!body) return;
+        ui.plan = {key, status: 'loading'};
+        const btn = $('#detail .plan-btn');
+        if (btn) btn.hidden = true;
+        body.innerHTML = '<p class="plan-plain">Working it out…</p>';
+        try {
+            const p = await api.plan(key);
+            if (ui.views.recipes.detailKey !== key) return; // user moved on
+            ui.plan = {key, status: 'ready', result: p};
+            renderPlan(body, p);
+        } catch (e) {
+            if (ui.views.recipes.detailKey !== key) return;
+            ui.plan = {key, status: 'error'};
+            body.innerHTML = `<p class="plan-plain">Couldn't work out a plan${e && e.status === 503 ? ' — no save is loaded' : ''}.</p>
       <button class="btn ghost" data-action="plan" data-key="${esc(key)}">Try again</button>`;
-  }
-}
+        }
+    }
 
-function renderPlan(body, p) {
-  let html = '';
-  if (!p.steps || p.steps.length === 0) {
-    html += p.feasible
-      ? '<p class="plan-plain">You already have everything — nothing needs making.</p>'
-      : '<p class="plan-plain">Nothing here can be produced from what you own.</p>';
-  } else {
-    html += `<ol class="steps">${p.steps.map(s => {
-      const totals = s.inputs.map(i => `${i.qty * s.runs} ${esc(i.name)}`).join(' + ');
-      const outTotal = s.output.qty * s.runs;
-      return `<li class="step">
+    function renderPlan(body, p) {
+        let html = '';
+        if (!p.steps || p.steps.length === 0) {
+            html += p.feasible
+                ? '<p class="plan-plain">You already have everything — nothing needs making.</p>'
+                : '<p class="plan-plain">Nothing here can be produced from what you own.</p>';
+        } else {
+            html += `<ol class="steps">${p.steps.map(s => {
+                const totals = s.inputs.map(i => `${i.qty * s.runs} ${esc(i.name)}`).join(' + ');
+                const outTotal = s.output.qty * s.runs;
+                return `<li class="step">
         <div class="step-head">
           <span class="step-machine">${esc(s.machine)}</span>
           <span class="step-runs">×${s.runs} ${s.runs === 1 ? 'run' : 'runs'}</span>
@@ -1662,314 +2444,663 @@ function renderPlan(body, p) {
         <div class="step-io"><span class="tag">per run</span><span class="vals">${ioList(s.inputs)} → ${s.output.qty} ${esc(s.output.name)}</span></div>
         ${s.runs > 1 ? `<div class="step-total"><span class="tag">total</span><span class="vals">${totals} → ${outTotal} ${esc(s.output.name)}</span></div>` : ''}
       </li>`;
-    }).join('')}</ol>
+            }).join('')}</ol>
     <p class="plan-note">Durations are in-game time, per run.</p>`;
-  }
-  if (!p.feasible && p.still_missing && p.still_missing.length) {
-    html += `<div class="still">
+        }
+        if (!p.feasible && p.still_missing && p.still_missing.length) {
+            html += `<div class="still">
       <h4>You still need to obtain</h4>
       <ul>${p.still_missing.map(m => `<li>
         <a href="${esc(m.wiki_url)}" target="_blank" rel="noopener">${esc(m.name)} ${ICONS.ext}</a>
         <span class="frac">${m.have}/${m.need}</span>
       </li>`).join('')}</ul>
     </div>`;
-  } else if (p.feasible && p.steps && p.steps.length) {
-    html += '<p class="plan-plain">That covers everything you were missing.</p>';
-  }
-  body.innerHTML = html;
-}
+        } else if (p.feasible && p.steps && p.steps.length) {
+            html += '<p class="plan-plain">That covers everything you were missing.</p>';
+        }
+        body.innerHTML = html;
+    }
 
-/* ================================================================
-   Navigation
-   ================================================================ */
-function activeDetail() {
-  return ui.view === 'items' ? ui.views.items.detailId : ui.views.recipes.detailKey;
-}
+    /* ================================================================
+       Crops
+       ================================================================ */
 
-function renderDetail() {
-  if (ui.view === 'items') renderItemDetail();
-  else renderRecipeDetail();
-}
+    /* Everything the crops view draws comes out of the server's groups: one entry
+       per crop type per location, already carrying its counts and its harvest-day
+       buckets. Filtering therefore never has to walk the individual tiles, and the
+       summary above the list always agrees with the rows below it. */
+    function visibleCropGroups() {
+        const groups = (ui.crops && ui.crops.groups) || [];
+        const q = ui.search.trim().toLowerCase();
+        return groups.filter(g => {
+            if (!g.accessible && !ui.showLocked) return false;
+            if (ui.cropLocation && g.location !== ui.cropLocation) return false;
+            if (!q) return true;
+            return g.name.toLowerCase().includes(q) || g.location_label.toLowerCase().includes(q);
+        });
+    }
 
-function renderActiveList() {
-  if (!ui.data) return;
-  if (ui.data.error && ui.data.recipes.length === 0) return; // empty-save state handled in renderAll
-  if (ui.view === 'items') renderItems();
-  else renderOverview();
-}
+    function sortCropGroups(groups) {
+        const soonest = g => g.earliest_days === null || g.earliest_days === undefined ? Infinity : g.earliest_days;
+        return [...groups].sort((a, b) => {
+            if (ui.cropSort === 'count' && a.count !== b.count) return b.count - a.count;
+            const d = soonest(a) - soonest(b);
+            if (d) return d;
+            if (a.count !== b.count) return b.count - a.count;
+            return a.name.localeCompare(b.name);
+        });
+    }
 
-let viewTransitionDepth = 0;
-function withViewTransition(run) {
-  if (viewTransitionDepth > 0 || reducedMotion() || !document.startViewTransition
-      || location.search.includes('notransition')) { run(); return; }
-  viewTransitionDepth++;
-  const t = document.startViewTransition(run);
-  const done = () => { viewTransitionDepth--; };
-  t.finished.then(done, done);
-}
+    function summarizeCrops(groups) {
+        const s = {total: 0, ready: 0, unwatered: 0, dead: 0, outOfSeason: 0, nextDays: null, nextDate: null};
+        for (const g of groups) {
+            s.total += g.count;
+            s.ready += g.ready;
+            s.unwatered += g.unwatered;
+            s.dead += g.dead || 0;
+            s.outOfSeason += g.out_of_season || 0;
+            if (g.earliest_days > 0 && (s.nextDays === null || g.earliest_days < s.nextDays)) {
+                s.nextDays = g.earliest_days;
+                s.nextDate = g.earliest_date || null;
+            }
+        }
+        return s;
+    }
 
-function applyNav(restoreScroll = true) {
-  const det = activeDetail();
-  const isItems = ui.view === 'items';
-  const run = () => {
-    $('#view-items').hidden = !isItems || !!det;
-    $('#view-recipes').hidden = isItems || !!det;
-    $('#detail').hidden = !det;
-    $('#controls-items').hidden = !isItems || !!det;
-    $('#controls-recipes').hidden = isItems || !!det;
-    $('.search').hidden = !!det;
-    $('#banner').hidden = !!det || $('#banner').dataset.empty === 'true';
-    $('#footer').hidden = !!det;
-    $(`#view-seg input[value="${ui.view}"]`).checked = true;
-    if (det) renderDetail();
-  };
-  withViewTransition(run);
-  if (restoreScroll) requestAnimationFrame(() => window.scrollTo(0, det ? 0 : ui.views[ui.view].scroll));
-}
+    // The timeline is the same buckets seen end-on: summed across every visible
+    // group instead of down one of them.
+    function cropTimeline(groups) {
+        const byDays = new Map();
+        for (const g of groups) {
+            for (const b of g.buckets) {
+                let entry = byDays.get(b.days);
+                if (!entry) {
+                    entry = {days: b.days, label: b.label, count: 0, date: b.date || null, crops: new Map()};
+                    byDays.set(b.days, entry);
+                }
+                entry.count += b.count;
+                entry.crops.set(g.name, (entry.crops.get(g.name) || 0) + b.count);
+            }
+        }
+        return [...byDays.values()].sort((a, b) => a.days - b.days).map(e => ({
+            ...e,
+            crops: [...e.crops].map(([name, count]) => ({name, count}))
+                .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
+        }));
+    }
 
-function switchView(v) {
-  if (v === ui.view || !ui.data) return;
-  ui.views[ui.view].scroll = window.scrollY;
-  ui.view = v;
-  history.replaceState({ v, d: activeDetail() }, '');
-  const det = activeDetail();
-  if (!det) renderActiveList();
-  applyNav();
-  if (v === 'items' && ui.views.items.detailId) ensureItemFresh();
-}
+    function whenHTML(g) {
+        if (g.earliest_days === null || g.earliest_days === undefined) {
+            return `<div class="crop-when"><b>—</b>no harvest</div>`;
+        }
+        if (g.earliest_days === 0) return `<div class="crop-when now"><b>Ready now</b></div>`;
+        const unit = g.earliest_days === 1 ? '1 day' : g.earliest_days + ' days';
+        return `<div class="crop-when"><b>${unit}</b>${g.earliest_date ? esc(g.earliest_date.label) : ''}</div>`;
+    }
 
-function openRecipeDetail(key, { push = true, focus = true } = {}) {
-  if (ui.view !== 'recipes') ui.views[ui.view].scroll = window.scrollY;
-  ui.view = 'recipes';
-  ui.views.recipes.detailKey = key;
-  ui.plan = null;
-  if (push) history.pushState({ v: 'recipes', d: key }, '');
-  applyNav();
-  if (focus) { const h = $('#detail h2'); if (h) h.focus({ preventScroll: true }); }
-}
+    // Shade by how far off the harvest is, never by position in the list, so the
+    // same colour means the same wait on every row: a lone bar of pumpkins seven
+    // days out must not read like a lone bar of beets ready to pick.
+    function bucketShade(days) {
+        if (days === 0) return 's0';
+        if (days <= 2) return 's1';
+        if (days <= 5) return 's2';
+        return 's3';
+    }
 
-function openItemDetail(id) {
-  ui.views.items.detailId = id;
-  history.pushState({ v: 'items', d: id }, '');
-  applyNav();
-  loadItem(id);
-  const h = $('#detail h2'); if (h) h.focus({ preventScroll: true });
-}
+    function cropBarHTML(g) {
+        const total = g.count || 1;
+        const segments = g.buckets.map(b =>
+            `<i class="${bucketShade(b.days)}" style="width:${(b.count / total) * 100}%" title="${esc(b.label)}: ${fmtNum(b.count)}"></i>`);
+        const accounted = g.buckets.reduce((s, b) => s + b.count, 0);
+        if (accounted < g.count) {
+            segments.push(`<i class="dead" style="width:${((g.count - accounted) / total) * 100}%" title="Never harvestable"></i>`);
+        }
+        return `<div class="cbar" role="img" aria-label="${esc(g.buckets.map(b => `${b.count} ${b.label.toLowerCase()}`).join(', ') || 'nothing due')}">${segments.join('')}</div>`;
+    }
 
-function closeDetail() {
-  history.back();
-}
+    function cropGroupHTML(g) {
+        const bits = [g.fruit_tree
+            ? `${fmtNum(g.count)} ${g.count === 1 ? 'tree' : 'trees'}`
+            : `${fmtNum(g.count)} planted`];
+        if (g.ready) bits.push(`<b>${fmtNum(g.ready)} ready</b>`);
+        if (g.fruit_tree) bits.push('bears daily in season');
+        else if (g.regrows && g.regrow_days) bits.push(`regrows every ${g.regrow_days} d`);
+        else if (g.regrows) bits.push('regrows');
+        else if (g.regrows === null) bits.push('regrowth unknown');
+        const warnings = [];
+        if (g.unwatered) warnings.push(`${fmtNum(g.unwatered)} unwatered`);
+        if (g.out_of_season) warnings.push(`${fmtNum(g.out_of_season)} out of season`);
+        if (g.dead) warnings.push(`${fmtNum(g.dead)} dead`);
+        return `<li><div class="crop-row">
+    <div class="row-text">
+      <span class="row-name">${esc(g.name)}</span>
+      <span class="row-meta">${bits.join(' · ')}${warnings.length ? ` <span class="warnnote">· ${esc(warnings.join(' · '))}</span>` : ''}</span>
+    </div>
+    ${whenHTML(g)}
+    ${cropBarHTML(g)}
+  </div></li>`;
+    }
 
-function ensureItemFresh() {
-  const id = ui.views.items.detailId;
-  if (!id) return;
-  if (ui.itemDetail && ui.itemDetail.id === id && ui.itemDetail.version === ui.version && ui.itemDetail.status === 'ready') return;
-  loadItem(id, { quiet: true });
-}
+    function cropTimelineHTML(buckets) {
+        if (buckets.length === 0) return '';
+        const peak = Math.max(...buckets.map(b => b.count));
+        return `<h3 class="crops-h">Harvest timeline</h3>
+  <ul class="tl">${buckets.map(b => {
+            const names = b.crops.slice(0, 4).map(c => `${esc(c.name)} ×${fmtNum(c.count)}`).join(', ');
+            const more = b.crops.length > 4 ? ` +${b.crops.length - 4} more` : '';
+            return `<li>
+      <div class="tl-when${b.days === 0 ? ' now' : ''}">${esc(b.label)}${b.days > 0 && b.date ? `<small>${esc(b.date.label)}</small>` : ''}</div>
+      <div class="tl-bar"><span style="width:${(b.count / peak) * 100}%"></span></div>
+      <div class="tl-count">${fmtNum(b.count)}</div>
+      <div class="tl-crops">${names}${more}</div>
+    </li>`;
+        }).join('')}</ul>`;
+    }
 
-window.addEventListener('popstate', e => {
-  const s = e.state;
-  if (!s || !s.v || !ui.data) return;
-  ui.views[ui.view].scroll = window.scrollY;
-  const leaving = ui.view;
-  ui.view = s.v;
-  if (leaving !== s.v) {
-    // back/forward popped the detail we were showing — forget it, so a later
-    // tab switch lands on that view's list, not on a screen we already left
-    if (leaving === 'items') ui.views.items.detailId = null;
-    else ui.views.recipes.detailKey = null;
-    ui.plan = null;
-  }
-  if (s.v === 'items') ui.views.items.detailId = s.d || null;
-  else { ui.views.recipes.detailKey = s.d || null; ui.plan = null; }
-  if (!activeDetail()) renderActiveList();
-  applyNav();
-  if (s.v === 'items' && s.d) ensureItemFresh();
-});
+    const SORT_ICON = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16"/><path d="m3.5 7.5 3.5-3.5 3.5 3.5"/><path d="M13 7h8M13 12h6M13 17h4"/></svg>';
+    const LOCK_ICON = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>';
 
-/* ---------- banner / footer ---------- */
-function renderBanner() {
-  const el = $('#banner');
-  const d = ui.data;
-  const stale = (d && d.error && d.recipes.length) || (ui.inv && ui.inv.error && ui.inv.items && ui.inv.items.length);
-  const msg = (d && d.error) || (ui.inv && ui.inv.error) || '';
-  if (ui.netDown) {
-    el.dataset.empty = 'false';
-    el.hidden = false;
-    el.innerHTML = `${ICONS.warn}<span>Can't reach the server — retrying every few seconds. The data below is the last good snapshot.</span>`;
-  } else if (stale) {
-    el.dataset.empty = 'false';
-    el.hidden = false;
-    el.innerHTML = `${ICONS.warn}<span>The save couldn't be re-read just now — showing the last good snapshot. <span style="color:var(--muted)">${esc(msg)}</span></span>`;
-  } else {
-    el.dataset.empty = 'true';
-    el.hidden = true;
-    el.innerHTML = '';
-  }
-}
+    // Chip labels only: the game's one long location name is "Ginger Island X", and
+    // spelled out in full it is what pushed the filter row onto a third line. The
+    // section headings below still say it in full, where there is room.
+    function chipLabel(label) {
+        return label.replace(/^Ginger /, '');
+    }
 
-function renderFooter() {
-  const d = ui.data;
-  const n = ui.inv && ui.inv.items ? ` · ${ui.inv.items.length} items` : '';
-  $('#footer').textContent = d && d.save_path
-    ? `save: ${d.save_path} · snapshot v${d.version} · ${d.recipes.length} recipes${n}`
-    : '';
-}
+    function locationIsAccessible(name) {
+        const found = ((ui.crops && ui.crops.locations) || []).find(l => l.name === name);
+        return !found || found.accessible;
+    }
 
-/* ---------- full render ---------- */
-function emptySaveHTML(error) {
-  return `<div class="empty">
+    function renderCropFilters() {
+        const el = $('#crop-filters');
+        const all = (ui.crops && ui.crops.locations) || [];
+        const locations = all.filter(l => l.accessible || ui.showLocked);
+        const locked = all.filter(l => !l.accessible);
+        const lockedCount = locked.reduce((s, l) => s + l.count, 0);
+        const chip = (value, label, count, extra = '') =>
+            `<button class="chipbtn compact${extra}" data-loc="${esc(value)}" aria-pressed="${ui.cropLocation === value}">${esc(label)} <span class="count">${fmtNum(count)}</span></button>`;
+        let html = '';
+        if (locations.length > 1) {
+            const total = locations.reduce((s, l) => s + l.count, 0);
+            html = chip('', 'All', total) + locations.map(l =>
+                chip(l.name, chipLabel(l.label), l.count, l.accessible ? '' : ' locked')).join('');
+        }
+        // Offered rather than shown: the crops are real, but they are standing
+        // somewhere this save cannot get to yet.
+        let controls = '';
+        if (lockedCount > 0) {
+            controls += `<button class="sortbtn" id="crop-locked" aria-pressed="${ui.showLocked}" aria-label="${
+                ui.showLocked ? 'Hide' : 'Show'} crops in locations you haven't unlocked">${LOCK_ICON}<span>${
+                ui.showLocked ? 'Hide locked' : `Locked ${fmtNum(lockedCount)}`}</span></button>`;
+        }
+        controls += `<button class="sortbtn" id="crop-sort" aria-label="Change sort order">${SORT_ICON}<span>${
+            ui.cropSort === 'soonest' ? 'Soonest' : 'Most planted'}</span></button>`;
+        // The controls share the chips' row and wrap as one unit, so neither is ever
+        // left stranded on a line by itself.
+        html += `<span class="ctlgroup">${controls}</span>`;
+        el.innerHTML = html;
+    }
+
+    function renderCrops() {
+        const el = $('#crops');
+        renderCropFilters();
+        if (!ui.crops) {
+            el.innerHTML = '<p class="loading">Reading the save…</p>';
+            return;
+        }
+        if (ui.crops.error && (!ui.crops.groups || ui.crops.groups.length === 0)) {
+            el.innerHTML = emptySaveHTML(ui.crops.error);
+            return;
+        }
+        const all = (ui.crops.groups || []);
+        const lockedTotal = (ui.crops.summary && ui.crops.summary.locked) || 0;
+        if (all.length > 0 && all.every(g => !g.accessible) && !ui.showLocked) {
+            el.innerHTML = `<div class="empty"><h2>Nothing planted yet</h2>
+      <p>The only crops in this save are the ${fmtNum(lockedTotal)} growing wild on Ginger Island,
+      which you haven't unlocked — the game puts them there from the start.</p>
+      <div class="actions"><button class="btn ghost" data-action="show-locked">Show them anyway</button></div></div>`;
+            renderCropFilters();
+            return;
+        }
+        if (all.length === 0) {
+            el.innerHTML = `<div class="empty"><h2>Nothing planted</h2>
+      <p>No crops or fruit trees are growing in this save right now — the dashboard fills in as soon as something is planted.</p></div>`;
+            return;
+        }
+        const groups = sortCropGroups(visibleCropGroups());
+        const s = summarizeCrops(groups);
+        const date = ui.crops.date;
+        const hasCrops = groups.some(g => !g.fruit_tree);
+        const hasTrees = groups.some(g => g.fruit_tree);
+
+        const nextTile = s.nextDays === null
+            ? `<div class="stat"><b>—</b><span>Next harvest</span></div>`
+            : `<div class="stat"><b>${s.nextDays === 1 ? '1 day' : s.nextDays + ' days'}</b><span>${s.nextDate ? esc(s.nextDate.label) : 'Next harvest'}</span></div>`;
+
+        const flags = [];
+        if (s.unwatered) flags.push(`${fmtNum(s.unwatered)} unwatered today`);
+        if (s.outOfSeason) flags.push(`${fmtNum(s.outOfSeason)} out of season`);
+        if (s.dead) flags.push(`${fmtNum(s.dead)} dead`);
+
+        const timingNotes = [];
+        if (hasCrops) timingNotes.push('Crop dates assume watering every day.');
+        if (hasTrees) timingNotes.push('Fruit-tree dates are calendar days and assume unobstructed growth.');
+
+        let html = `<p class="crops-date">${date && date.label ? esc(date.label) : 'Date unknown'}</p>
+  <div class="stats">
+    <div class="stat"><b>${fmtNum(s.total)}</b><span>Growing</span></div>
+    <div class="stat"><b>${fmtNum(s.ready)}</b><span>Ready now</span></div>
+    ${nextTile}
+  </div>
+  <div class="crops-caveat">${ICONS.question}<span><b>${esc(timingNotes.join(' '))}</b>
+    A missed watering or blocked fruit tree can push these dates back. Nothing here can see tomorrow's weather.${
+            flags.length ? ` Right now: <span class="warnnote">${esc(flags.join(' · '))}</span>.` : ''}</span></div>`;
+
+        if (groups.length === 0) {
+            html += `<div class="empty"><h2>No plants match</h2>
+      <p>No crops or fruit trees match this filter.</p>
+      <div class="actions">
+        ${ui.search.trim() ? '<button class="btn ghost" data-action="clear-search">Clear search</button>' : ''}
+        ${ui.cropLocation ? '<button class="btn ghost" data-action="clear-crop-location">Show every location</button>' : ''}
+        ${!ui.showLocked && lockedTotal ? '<button class="btn ghost" data-action="show-locked">Include locked locations</button>' : ''}
+      </div></div>`;
+            el.innerHTML = html;
+            return;
+        }
+
+        html += cropTimelineHTML(cropTimeline(groups));
+
+        const byLocation = new Map();
+        for (const g of groups) {
+            if (!byLocation.has(g.location)) byLocation.set(g.location, []);
+            byLocation.get(g.location).push(g);
+        }
+        html += '<h3 class="crops-h">By location</h3>';
+        for (const [location, list] of byLocation) {
+            const label = list[0].location_label;
+            const count = list.reduce((sum, g) => sum + g.count, 0);
+            const open = ui.cropOpen[location] !== false;
+            const locked = list[0].accessible ? '' : `<span class="lockedtag">${LOCK_ICON}not unlocked</span>`;
+            html += `<details class="group" data-loc="${esc(location)}"${open ? ' open' : ''}>
+      <summary><span class="group-label">${esc(label)}</span><span class="group-count">${fmtNum(count)}</span>${locked}${ICONS.chevR}</summary>
+      <ul class="rows">${list.map(cropGroupHTML).join('')}</ul>
+    </details>`;
+        }
+        el.innerHTML = html;
+    }
+
+    /* ================================================================
+       Navigation
+       ================================================================ */
+    function activeDetail() {
+        if (ui.view === 'items') return ui.views.items.detailId;
+        if (ui.view === 'recipes') return ui.views.recipes.detailKey;
+        return null; // the crops view is a dashboard; it has no detail screen
+    }
+
+    function renderDetail() {
+        if (ui.view === 'items') renderItemDetail();
+        else renderRecipeDetail();
+    }
+
+    function renderActiveList() {
+        if (!ui.data) return;
+        if (ui.data.error && ui.data.recipes.length === 0) return; // empty-save state handled in renderAll
+        if (ui.view === 'items') renderItems();
+        else if (ui.view === 'crops') renderCrops();
+        else renderOverview();
+    }
+
+    let viewTransitionDepth = 0;
+
+    function withViewTransition(run) {
+        if (viewTransitionDepth > 0 || reducedMotion() || !document.startViewTransition
+            || location.search.includes('notransition')) {
+            run();
+            return;
+        }
+        viewTransitionDepth++;
+        const t = document.startViewTransition(run);
+        const done = () => {
+            viewTransitionDepth--;
+        };
+        t.finished.then(done, done);
+    }
+
+    function applyNav(restoreScroll = true) {
+        const det = activeDetail();
+        const isItems = ui.view === 'items';
+        const isCrops = ui.view === 'crops';
+        const run = () => {
+            $('#view-items').hidden = !isItems || !!det;
+            $('#view-recipes').hidden = ui.view !== 'recipes' || !!det;
+            $('#view-crops').hidden = !isCrops;
+            $('#detail').hidden = !det;
+            $('#controls-items').hidden = !isItems || !!det;
+            $('#controls-recipes').hidden = ui.view !== 'recipes' || !!det;
+            $('#controls-crops').hidden = !isCrops;
+            $('.search').hidden = !!det;
+            $('#banner').hidden = !!det || $('#banner').dataset.empty === 'true';
+            $('#footer').hidden = !!det;
+            $(`#view-seg input[value="${ui.view}"]`).checked = true;
+            if (det) renderDetail();
+        };
+        withViewTransition(run);
+        if (restoreScroll) requestAnimationFrame(() => window.scrollTo(0, det ? 0 : ui.views[ui.view].scroll));
+    }
+
+    function switchView(v) {
+        if (v === ui.view || !ui.data) return;
+        ui.views[ui.view].scroll = window.scrollY;
+        ui.view = v;
+        history.replaceState({v, d: activeDetail()}, '');
+        const det = activeDetail();
+        if (!det) renderActiveList();
+        applyNav();
+        if (v === 'items' && ui.views.items.detailId) ensureItemFresh();
+    }
+
+    function openRecipeDetail(key, {push = true, focus = true} = {}) {
+        if (ui.view !== 'recipes') ui.views[ui.view].scroll = window.scrollY;
+        ui.view = 'recipes';
+        ui.views.recipes.detailKey = key;
+        ui.plan = null;
+        if (push) history.pushState({v: 'recipes', d: key}, '');
+        applyNav();
+        if (focus) {
+            const h = $('#detail h2');
+            if (h) h.focus({preventScroll: true});
+        }
+    }
+
+    function openItemDetail(id) {
+        ui.views.items.detailId = id;
+        history.pushState({v: 'items', d: id}, '');
+        applyNav();
+        loadItem(id);
+        const h = $('#detail h2');
+        if (h) h.focus({preventScroll: true});
+    }
+
+    function closeDetail() {
+        history.back();
+    }
+
+    function ensureItemFresh() {
+        const id = ui.views.items.detailId;
+        if (!id) return;
+        if (ui.itemDetail && ui.itemDetail.id === id && ui.itemDetail.version === ui.version && ui.itemDetail.status === 'ready') return;
+        loadItem(id, {quiet: true});
+    }
+
+    window.addEventListener('popstate', e => {
+        const s = e.state;
+        if (!s || !s.v || !ui.data) return;
+        ui.views[ui.view].scroll = window.scrollY;
+        const leaving = ui.view;
+        ui.view = s.v;
+        if (leaving !== s.v) {
+            // back/forward popped the detail we were showing — forget it, so a later
+            // tab switch lands on that view's list, not on a screen we already left
+            if (leaving === 'items') ui.views.items.detailId = null;
+            else if (leaving === 'recipes') ui.views.recipes.detailKey = null;
+            ui.plan = null;
+        }
+        if (s.v === 'items') ui.views.items.detailId = s.d || null;
+        else if (s.v === 'recipes') {
+            ui.views.recipes.detailKey = s.d || null;
+            ui.plan = null;
+        }
+        if (!activeDetail()) renderActiveList();
+        applyNav();
+        if (s.v === 'items' && s.d) ensureItemFresh();
+    });
+
+    /* ---------- banner / footer ---------- */
+    function renderBanner() {
+        const el = $('#banner');
+        const d = ui.data;
+        const stale = (d && d.error && d.recipes.length) || (ui.inv && ui.inv.error && ui.inv.items && ui.inv.items.length)
+            || (ui.crops && ui.crops.error && ui.crops.groups && ui.crops.groups.length);
+        const msg = (d && d.error) || (ui.inv && ui.inv.error) || (ui.crops && ui.crops.error) || '';
+        if (ui.netDown) {
+            el.dataset.empty = 'false';
+            el.hidden = false;
+            el.innerHTML = `${ICONS.warn}<span>Can't reach the server — retrying every few seconds. The data below is the last good snapshot.</span>`;
+        } else if (stale) {
+            el.dataset.empty = 'false';
+            el.hidden = false;
+            el.innerHTML = `${ICONS.warn}<span>The save couldn't be re-read just now — showing the last good snapshot. <span style="color:var(--muted)">${esc(msg)}</span></span>`;
+        } else {
+            el.dataset.empty = 'true';
+            el.hidden = true;
+            el.innerHTML = '';
+        }
+    }
+
+    function renderFooter() {
+        const d = ui.data;
+        const n = ui.inv && ui.inv.items ? ` · ${ui.inv.items.length} items` : '';
+        $('#footer').textContent = d && d.save_path
+            ? `save: ${d.save_path} · snapshot v${d.version} · ${d.recipes.length} recipes${n}`
+            : '';
+    }
+
+    /* ---------- full render ---------- */
+    function emptySaveHTML(error) {
+        return `<div class="empty">
     <h2>No save found</h2>
     <p>The server is running, but it couldn't find a Stardew Valley save to read.</p>
     <code>${esc(error)}</code>
     <p>Point it at a save file, e.g. <code>--save-path &lt;path-to-save-file&gt;</code>, then wait a moment — this page checks for changes on its own.</p>
   </div>`;
-}
-
-function renderAll() {
-  const d = ui.data;
-  renderBanner();
-  renderFooter();
-  if (!d) return;
-  if (d.error && d.recipes.length === 0) {
-    $('#items-total').textContent = '';
-    $('#items-list').innerHTML = emptySaveHTML(d.error);
-    $('#overview').innerHTML = emptySaveHTML(d.error);
-    return;
-  }
-  renderActiveList();
-}
-
-/* ---------- refresh ---------- */
-let flashTimer;
-function flashUpdated() {
-  const el = $('#refresh-note');
-  el.textContent = 'Updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  el.classList.add('show');
-  clearTimeout(flashTimer);
-  flashTimer = setTimeout(() => el.classList.remove('show'), 2600);
-}
-
-async function refresh(initial = false) {
-  const y = window.scrollY;
-  const det = activeDetail();
-  let state, inv;
-  try {
-    [state, inv] = await Promise.all([api.state(), api.inventory()]);
-  } catch (e) {
-    ui.netDown = true;
-    renderBanner();
-    return;
-  }
-  ui.netDown = false;
-  ui.data = state;
-  ui.inv = inv;
-  ui.version = state.version;
-  renderAll();
-  if (det) {
-    if (ui.view === 'items') {
-      loadItem(det, { quiet: true });
-    } else if (recipeByKey(det)) {
-      renderRecipeDetail();
-    } else {
-      ui.views.recipes.detailKey = null;
-      applyNav();
     }
-  } else {
-    requestAnimationFrame(() => window.scrollTo(0, y));
-  }
-  if (!initial) flashUpdated();
-}
 
-async function poll() {
-  if (!ui.data) { await refresh(); return; }
-  let v;
-  try {
-    v = await api.version();
-  } catch (e) {
-    ui.netDown = true;
-    renderBanner();
-    return;
-  }
-  if (v.version !== ui.version) await refresh();
-  else if (ui.netDown) { ui.netDown = false; renderBanner(); }
-}
+    function renderAll() {
+        const d = ui.data;
+        renderBanner();
+        renderFooter();
+        if (!d) return;
+        if (d.error && d.recipes.length === 0) {
+            $('#items-total').textContent = '';
+            $('#items-list').innerHTML = emptySaveHTML(d.error);
+            $('#overview').innerHTML = emptySaveHTML(d.error);
+            $('#crops').innerHTML = emptySaveHTML(d.error);
+            return;
+        }
+        renderActiveList();
+    }
 
-/* ---------- events ---------- */
-$('#search').addEventListener('input', e => {
-  ui.search = e.target.value;
-  $('#search-clear').hidden = !ui.search;
-  if (ui.data) renderActiveList();
-});
-$('#search-clear').addEventListener('click', () => {
-  ui.search = '';
-  $('#search').value = '';
-  $('#search-clear').hidden = true;
-  renderActiveList();
-  $('#search').focus();
-});
-$('#show-all').addEventListener('change', e => {
-  ui.showAll = e.target.checked;
-  if (ui.data) renderOverview();
-});
-$('#type-seg').addEventListener('change', e => {
-  ui.typeFilter = e.target.value;
-  if (ui.data) renderOverview();
-});
-$('#view-seg').addEventListener('change', e => switchView(e.target.value));
+    /* ---------- refresh ---------- */
+    let flashTimer;
 
-$('#feeds-filter').addEventListener('click', () => {
-  ui.onlyUseful = !ui.onlyUseful;
-  $('#feeds-filter').setAttribute('aria-pressed', String(ui.onlyUseful));
-  if (ui.inv) renderItems();
-});
-$('#sort-toggle').addEventListener('click', () => {
-  ui.itemsSort = ui.itemsSort === 'value' ? 'count' : 'value';
-  $('#sort-toggle').textContent = ui.itemsSort === 'value' ? 'Value ↓' : 'Count ↓';
-  if (ui.inv) renderItems();
-});
+    function flashUpdated() {
+        const el = $('#refresh-note');
+        el.textContent = 'Updated ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+        el.classList.add('show');
+        clearTimeout(flashTimer);
+        flashTimer = setTimeout(() => el.classList.remove('show'), 2600);
+    }
 
-/* shared action buttons (empty states) */
-$('#main').addEventListener('click', e => {
-  const action = e.target.closest('[data-action]');
-  if (!action) return;
-  const a = action.dataset.action;
-  if (a === 'clear-search') { ui.search = ''; $('#search').value = ''; $('#search-clear').hidden = true; renderActiveList(); }
-  if (a === 'show-all') { ui.showAll = true; $('#show-all').checked = true; renderOverview(); }
-  if (a === 'clear-type') { ui.typeFilter = 'all'; $('#type-seg input[value="all"]').checked = true; renderOverview(); }
-  if (a === 'clear-useful') { ui.onlyUseful = false; $('#feeds-filter').setAttribute('aria-pressed', 'false'); renderItems(); }
-  if (a === 'goto-recipes') switchView('recipes');
-});
+    async function refresh(initial = false) {
+        const y = window.scrollY;
+        const det = activeDetail();
+        let state, inv, crops;
+        try {
+            [state, inv, crops] = await Promise.all([api.state(), api.inventory(), api.crops()]);
+        } catch (e) {
+            ui.netDown = true;
+            renderBanner();
+            return;
+        }
+        ui.netDown = false;
+        ui.data = state;
+        ui.inv = inv;
+        ui.crops = crops;
+        ui.version = state.version;
+        renderAll();
+        if (det) {
+            if (ui.view === 'items') {
+                loadItem(det, {quiet: true});
+            } else if (recipeByKey(det)) {
+                renderRecipeDetail();
+            } else {
+                ui.views.recipes.detailKey = null;
+                applyNav();
+            }
+        } else {
+            requestAnimationFrame(() => window.scrollTo(0, y));
+        }
+        if (!initial) flashUpdated();
+    }
 
-$('#items-list').addEventListener('click', e => {
-  const row = e.target.closest('.row[data-id]');
-  if (row) openItemDetail(row.dataset.id);
-});
+    async function poll() {
+        if (!ui.data) {
+            await refresh();
+            return;
+        }
+        let v;
+        try {
+            v = await api.version();
+        } catch (e) {
+            ui.netDown = true;
+            renderBanner();
+            return;
+        }
+        if (v.version !== ui.version) await refresh();
+        else if (ui.netDown) {
+            ui.netDown = false;
+            renderBanner();
+        }
+    }
 
-$('#overview').addEventListener('click', e => {
-  const row = e.target.closest('.row[data-key]');
-  if (row) openRecipeDetail(row.dataset.key);
-});
-$('#overview').addEventListener('toggle', e => {
-  const d = e.target;
-  if (d.matches && d.matches('details.group')) ui.open[d.dataset.state] = d.open;
-}, true);
+    /* ---------- events ---------- */
+    $('#search').addEventListener('input', e => {
+        ui.search = e.target.value;
+        $('#search-clear').hidden = !ui.search;
+        if (ui.data) renderActiveList();
+    });
+    $('#search-clear').addEventListener('click', () => {
+        ui.search = '';
+        $('#search').value = '';
+        $('#search-clear').hidden = true;
+        renderActiveList();
+        $('#search').focus();
+    });
+    $('#show-all').addEventListener('change', e => {
+        ui.showAll = e.target.checked;
+        if (ui.data) renderOverview();
+    });
+    $('#type-seg').addEventListener('change', e => {
+        ui.typeFilter = e.target.value;
+        if (ui.data) renderOverview();
+    });
+    $('#view-seg').addEventListener('change', e => switchView(e.target.value));
 
-$('#detail').addEventListener('click', e => {
-  const el = e.target.closest('[data-action], .row[data-key]');
-  if (!el) return;
-  if (el.dataset.action === 'back') closeDetail();
-  if (el.dataset.action === 'plan') loadPlan(el.dataset.key);
-  if (el.dataset.action === 'retry-item') loadItem(ui.views.items.detailId);
-  if (el.dataset.key && el.classList.contains('row')) openRecipeDetail(el.dataset.key);
-});
+    $('#crop-filters').addEventListener('click', e => {
+        const chip = e.target.closest('[data-loc]');
+        if (chip) {
+            ui.cropLocation = chip.dataset.loc;
+            renderCrops();
+            return;
+        }
+        if (e.target.closest('#crop-sort')) {
+            ui.cropSort = ui.cropSort === 'soonest' ? 'count' : 'soonest';
+            renderCrops();
+            return;
+        }
+        if (e.target.closest('#crop-locked')) {
+            ui.showLocked = !ui.showLocked;
+            // Hiding the locations again must not leave the list filtered to one of
+            // them, which would show nothing at all.
+            if (!ui.showLocked && ui.cropLocation && !locationIsAccessible(ui.cropLocation)) ui.cropLocation = '';
+            renderCrops();
+        }
+    });
+    $('#crops').addEventListener('toggle', e => {
+        const d = e.target;
+        if (d.matches && d.matches('details.group')) ui.cropOpen[d.dataset.loc] = d.open;
+    }, true);
 
-/* ---------- boot ---------- */
-$('#brand').innerHTML = `${ICONS.leaf}Stardew <span>Craftbook</span>`;
-$('#items-list').innerHTML = '<p class="loading">Reading the save…</p>';
-history.replaceState({ v: 'items', d: null }, '');
-refresh(true);
-setInterval(poll, 5000);
+    $('#feeds-filter').addEventListener('click', () => {
+        ui.onlyUseful = !ui.onlyUseful;
+        $('#feeds-filter').setAttribute('aria-pressed', String(ui.onlyUseful));
+        if (ui.inv) renderItems();
+    });
+    $('#sort-toggle').addEventListener('click', () => {
+        ui.itemsSort = ui.itemsSort === 'value' ? 'count' : 'value';
+        $('#sort-toggle').textContent = ui.itemsSort === 'value' ? 'Value ↓' : 'Count ↓';
+        if (ui.inv) renderItems();
+    });
+
+    /* shared action buttons (empty states) */
+    $('#main').addEventListener('click', e => {
+        const action = e.target.closest('[data-action]');
+        if (!action) return;
+        const a = action.dataset.action;
+        if (a === 'clear-search') {
+            ui.search = '';
+            $('#search').value = '';
+            $('#search-clear').hidden = true;
+            renderActiveList();
+        }
+        if (a === 'show-all') {
+            ui.showAll = true;
+            $('#show-all').checked = true;
+            renderOverview();
+        }
+        if (a === 'clear-type') {
+            ui.typeFilter = 'all';
+            $('#type-seg input[value="all"]').checked = true;
+            renderOverview();
+        }
+        if (a === 'clear-useful') {
+            ui.onlyUseful = false;
+            $('#feeds-filter').setAttribute('aria-pressed', 'false');
+            renderItems();
+        }
+        if (a === 'clear-crop-location') {
+            ui.cropLocation = '';
+            renderCrops();
+        }
+        if (a === 'show-locked') {
+            ui.showLocked = true;
+            renderCrops();
+        }
+        if (a === 'goto-recipes') switchView('recipes');
+    });
+
+    $('#items-list').addEventListener('click', e => {
+        const row = e.target.closest('.row[data-id]');
+        if (row) openItemDetail(row.dataset.id);
+    });
+
+    $('#overview').addEventListener('click', e => {
+        const row = e.target.closest('.row[data-key]');
+        if (row) openRecipeDetail(row.dataset.key);
+    });
+    $('#overview').addEventListener('toggle', e => {
+        const d = e.target;
+        if (d.matches && d.matches('details.group')) ui.open[d.dataset.state] = d.open;
+    }, true);
+
+    $('#detail').addEventListener('click', e => {
+        const el = e.target.closest('[data-action], .row[data-key]');
+        if (!el) return;
+        if (el.dataset.action === 'back') closeDetail();
+        if (el.dataset.action === 'plan') loadPlan(el.dataset.key);
+        if (el.dataset.action === 'retry-item') loadItem(ui.views.items.detailId);
+        if (el.dataset.key && el.classList.contains('row')) openRecipeDetail(el.dataset.key);
+    });
+
+    /* ---------- boot ---------- */
+    $('#brand').innerHTML = `${ICONS.leaf}Stardew <span>Craftbook</span>`;
+    $('#items-list').innerHTML = '<p class="loading">Reading the save…</p>';
+    history.replaceState({v: 'items', d: null}, '');
+    refresh(true);
+    setInterval(poll, 5000);
 </script>
 </body>
 </html>

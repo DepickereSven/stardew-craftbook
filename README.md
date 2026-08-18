@@ -3,11 +3,12 @@
 A self-hosted companion for Stardew Valley 1.6. It runs on the machine that holds your save, reads it, and serves 
 a small web app over your local network, so you can check it on your phone while you play. The save is opened read-only and never written to.
 
-It answers three questions:
+It answers four questions:
 
 1. **What can I craft or cook right now?**
 2. **What is missing for recipe X?**
 3. **How do I get what's missing**, including making intermediates from what I already own: *"smelt 5 Iridium Ore + 1 Coal → 1 Iridium Bar, ×5 → craft Deluxe Scarecrow"*.
+4. **What is growing, and when does it come in?** — every planted crop and fruit tree, grouped by location and type, on one harvest timeline.
 
 One static binary, no dependencies, no installer, no accounts, no telemetry, nothing leaves your network. The recipe data and the web UI are compiled into the executable.
 
@@ -129,30 +130,44 @@ Recipe, machine and item data are generated from the [Stardew Valley Wiki](https
 go run ./cmd/builddata
 ```
 
-This rewrites `data/recipes.json`, `data/machines.json` and `data/items.json`, validating as it goes and refusing to write anything if the data looks wrong. Rebuild afterwards to embed the new data.
+This rewrites `data/recipes.json`, `data/machines.json`, `data/items.json` and `data/crops.json`, validating as it goes and refusing to write anything if the data looks wrong. Rebuild afterwards to embed the new data.
 
 ## Status
 
-The app is complete: an Items view (what you own, what it's worth raw vs. processed) and a Recipes view (what's craftable, what's missing, how to get there), both in a single self-contained page at `/`.
+The app is complete: an Items view (what you own, what it's worth raw vs. processed), a Recipes view (what's craftable, what's missing, how to get there) and a Crops view (what's in the ground and when it's due), all in a single self-contained page at `/`.
 
 The JSON API behind it:
 
-| Endpoint              | Returns                                                    |
-|-----------------------|------------------------------------------------------------|
-| `GET /api/version`    | Snapshot counter, for cheap change polling                 |
-| `GET /api/state`      | Every recipe: craftability, what's missing, sale economics |
-| `GET /api/plan/{key}` | Step chain to produce a recipe's missing intermediates     |
-| `GET /api/items`      | Item reference: sell price, buffs, processing time         |
-| `GET /api/inventory`  | Everything you own, most valuable stack first              |
-| `GET /api/item/{id}`  | One item, the recipes it feeds, and whether they pay       |
+| Endpoint              | Returns                                                               |
+|-----------------------|-----------------------------------------------------------------------|
+| `GET /api/version`    | Snapshot counter, for cheap change polling                            |
+| `GET /api/state`      | Every recipe: craftability, what's missing, sale economics            |
+| `GET /api/plan/{key}` | Step chain to produce a recipe's missing intermediates                |
+| `GET /api/items`      | Item reference: sell price, buffs, processing time                    |
+| `GET /api/inventory`  | Everything you own, most valuable stack first                         |
+| `GET /api/item/{id}`  | One item, the recipes it feeds, and whether they pay                  |
+| `GET /api/crops`      | Every planted crop and fruit tree, with groups and a harvest timeline |
 
 ```sh
 curl -s localhost:8375/api/plan/Anvil
 curl -s localhost:8375/api/inventory
 curl -s localhost:8375/api/item/709          # Hardwood: what it makes, and the margins
+curl -s localhost:8375/api/crops             # what's growing and when it's due
 ```
 
-Not modelled, by design: growing, foraging, fishing and buying. When a plan needs a Banana, it says so and links to the wiki rather than trying to explain farming.
+### What "days until harvest" means
+
+A crop only advances on a day it is **watered** — that is the rule the game itself
+uses, and it is the rule the countdown follows. So `days_until_harvest` is a count
+of remaining watered growth days, not of calendar days. Miss a watering, plant into
+a season the crop cannot survive, or let it wilt, and the real date slips. The dates
+the API and the UI print are therefore the *earliest* possible ones, and both say so.
+
+Fruit-tree countdowns are calendar days instead. They account for the tree's
+remaining maturity time and bearing season; trees in the Greenhouse or on Ginger
+Island bear year-round. A blocked sapling can still delay its predicted date.
+
+Not modelled, by design: foraging, fishing and buying. 
 
 ## Development
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SaveGame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <player>
+        <items/>
+    </player>
+    <locations>
+        <GameLocation xsi:type="Farm">
+            <terrainFeatures>
+                <item>
+                    <key>
+                        <Vector2>
+                            <X>74</X>
+                            <Y>49</Y>
+                        </Vector2>
+                    </key>
+                    <value>
+                        <TerrainFeature xsi:type="FruitTree">
+                            <growthStage>4</growthStage>
+                            <treeId>632</treeId>
+                            <daysUntilMature>-135</daysUntilMature>
+                            <fruit xsi:type="Object">
+                                <itemId>637</itemId>
+                            </fruit>
+                            <fruit xsi:type="Object">
+                                <itemId>637</itemId>
+                            </fruit>
+                            <stump>false</stump>
+                        </TerrainFeature>
+                    </value>
+                </item>
+            </terrainFeatures>
+            <name>Farm</name>
+            <isOutdoors>true</isOutdoors>
+            <IsGreenhouse>false</IsGreenhouse>
+            <buildings>
+                <Building>
+                    <indoors xsi:type="GameLocation">
+                        <terrainFeatures>
+                            <item>
+                                <key>
+                                    <Vector2>
+                                        <X>8</X>
+                                        <Y>22</Y>
+                                    </Vector2>
+                                </key>
+                                <value>
+                                    <TerrainFeature xsi:type="FruitTree">
+                                        <growthStage>1</growthStage>
+                                        <treeId>630</treeId>
+                                        <daysUntilMature>20</daysUntilMature>
+                                        <fruitsOnTree xsi:nil="true"/>
+                                        <stump>false</stump>
+                                    </TerrainFeature>
+                                </value>
+                            </item>
+                        </terrainFeatures>
+                        <name>Greenhouse</name>
+                        <isOutdoors>false</isOutdoors>
+                        <IsGreenhouse>true</IsGreenhouse>
+                    </indoors>
+                </Building>
+            </buildings>
+        </GameLocation>
+    </locations>
+    <currentSeason>fall</currentSeason>
+    <dayOfMonth>7</dayOfMonth>
+    <year>3</year>
+</SaveGame>

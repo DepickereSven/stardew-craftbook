@@ -26,6 +26,15 @@ type Snapshot struct {
 	Stacks          map[string]ItemStack
 	CraftingLearned map[string]bool
 	CookingLearned  map[string]bool
+	// MailReceived is the player's mail flag set, which is how the game records
+	// world progress. Only the flags that gate a place are of interest here.
+	MailReceived map[string]bool
+	// Date is the in-game day the save was written on, and Crops is every crop
+	// planted in tilled soil or a garden pot plus every fruit tree. Both are
+	// needed together: remaining growth is only meaningful relative to the day
+	// it is measured on.
+	Date  GameDate
+	Crops []CropPlant
 }
 
 // ItemStack is one sell-price and quality-distinct group from the save. ID is
@@ -41,15 +50,19 @@ type ItemStack struct {
 }
 
 type saveGame struct {
-	Player    playerXML     `xml:"player"`
-	Locations []locationXML `xml:"locations>GameLocation"`
-	Team      teamXML       `xml:"team"`
+	Player        playerXML     `xml:"player"`
+	Locations     []locationXML `xml:"locations>GameLocation"`
+	Team          teamXML       `xml:"team"`
+	CurrentSeason string        `xml:"currentSeason"`
+	DayOfMonth    int           `xml:"dayOfMonth"`
+	Year          int           `xml:"year"`
 }
 
 type playerXML struct {
 	Items           []itemXML `xml:"items>Item"`
 	CraftingRecipes []kvXML   `xml:"craftingRecipes>item"`
 	CookingRecipes  []kvXML   `xml:"cookingRecipes>item"`
+	MailReceived    []string  `xml:"mailReceived>string"`
 }
 
 type kvXML struct {
@@ -70,6 +83,9 @@ type itemXML struct {
 	// each other only in intent — both mean "not a big craftable".
 	BigCraftable string    `xml:"bigCraftable"`
 	Items        []itemXML `xml:"items>Item"` // chest contents
+	// HoeDirt is the soil inside a garden pot, which is an object rather than a
+	// terrain feature and so is reached through the object list.
+	HoeDirt *hoeDirtXML `xml:"hoeDirt>HoeDirt"`
 	// HeldObject is a machine's finished output sitting in it, waiting to be
 	// collected. Deliberately NOT lastInputItem, which merely records what the
 	// machine last consumed and is no longer owned.
@@ -79,13 +95,20 @@ type itemXML struct {
 // A location holds placed objects (chests among them), a farmhouse fridge,
 // and buildings whose interiors are locations in their own right.
 type locationXML struct {
-	Objects   []objEntryXML `xml:"objects>item"`
-	Fridge    *itemXML      `xml:"fridge"`
-	Buildings []buildingXML `xml:"buildings>Building"`
+	Name string `xml:"name"`
+	// IsOutdoors and IsGreenhouse decide whether a crop planted here is subject
+	// to the season at all: greenhouse soil and indoor garden pots are not.
+	IsOutdoors      bool              `xml:"isOutdoors"`
+	IsGreenhouse    bool              `xml:"IsGreenhouse"`
+	Objects         []objEntryXML     `xml:"objects>item"`
+	TerrainFeatures []terrainEntryXML `xml:"terrainFeatures>item"`
+	Fridge          *itemXML          `xml:"fridge"`
+	Buildings       []buildingXML     `xml:"buildings>Building"`
 }
 
 type objEntryXML struct {
-	Object itemXML `xml:"value>Object"`
+	Key    vector2XML `xml:"key>Vector2"`
+	Object itemXML    `xml:"value>Object"`
 }
 
 type buildingXML struct {
@@ -121,7 +144,9 @@ func Parse(r io.Reader) (*Snapshot, error) {
 		Stacks:          map[string]ItemStack{},
 		CraftingLearned: map[string]bool{},
 		CookingLearned:  map[string]bool{},
+		MailReceived:    map[string]bool{},
 	}
+	snap.Date = GameDate{Season: strings.ToLower(sg.CurrentSeason), Day: sg.DayOfMonth, Year: sg.Year}
 	addItems(snap, sg.Player.Items)
 	for i := range sg.Locations {
 		addLocation(snap, &sg.Locations[i])
@@ -134,6 +159,9 @@ func Parse(r io.Reader) (*Snapshot, error) {
 	}
 	for _, kv := range sg.Player.CookingRecipes {
 		snap.CookingLearned[kv.Key] = true
+	}
+	for _, flag := range sg.Player.MailReceived {
+		snap.MailReceived[flag] = true
 	}
 	finalizeStacks(snap)
 	return snap, nil
@@ -243,6 +271,7 @@ func addLocation(snap *Snapshot, loc *locationXML) {
 	for i := range loc.Objects {
 		addItems(snap, []itemXML{loc.Objects[i].Object})
 	}
+	addCrops(snap, loc, loc.Name)
 	// Chest objects carry their own boolean <fridge> field, which decodes to
 	// an empty item and is skipped; only a location's fridge holds contents.
 	if loc.Fridge != nil {
@@ -250,6 +279,11 @@ func addLocation(snap *Snapshot, loc *locationXML) {
 	}
 	for _, b := range loc.Buildings {
 		if b.Indoors != nil {
+			// A building interior usually names itself; the few that do not are
+			// better reported as the location they stand in than as nowhere.
+			if b.Indoors.Name == "" {
+				b.Indoors.Name = loc.Name
+			}
 			addLocation(snap, b.Indoors)
 		}
 	}

@@ -10,3 +10,6 @@ var MachinesJSON []byte
 
 //go:embed items.json
 var ItemsJSON []byte
+
+//go:embed crops.json
+var CropsJSON []byte
