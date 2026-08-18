@@ -17,9 +17,10 @@ const DaysPerSeason = 28
 // Seasons in the order the year runs.
 var Seasons = []string{"spring", "summer", "fall", "winter"}
 
-// CropPlant is one crop growing on one tile, exactly as the save records it.
-// Nothing here is interpreted — the arithmetic that turns it into "three days
-// left" lives in the engine, so this stays a faithful reading of the file.
+// CropPlant is one crop or fruit tree growing on one tile, exactly as the save
+// records it. Nothing here is interpreted — the arithmetic that turns it into
+// "three days left" lives in the engine, so this stays a faithful reading of
+// the file.
 type CropPlant struct {
 	Location string
 	X, Y     int
@@ -45,6 +46,13 @@ type CropPlant struct {
 	Dead       bool
 	// Forage marks the wild-seed crops, which carry no growth schedule at all.
 	Forage bool
+
+	// Fruit trees are terrain features too, but carry a calendar-day maturity
+	// countdown and a list of fruit instead of a crop phase schedule.
+	FruitTree       bool
+	TreeID          string
+	DaysUntilMature int
+	FruitCount      int
 }
 
 type vector2XML struct {
@@ -60,8 +68,14 @@ type terrainEntryXML struct {
 // terrainXML covers every terrain feature; only HoeDirt carries a crop, and
 // the rest decode to a zero value with a nil Crop, which is skipped.
 type terrainXML struct {
-	State int      `xml:"state"`
-	Crop  *cropXML `xml:"crop"`
+	Type            string    `xml:"http://www.w3.org/2001/XMLSchema-instance type,attr"`
+	State           int       `xml:"state"`
+	Crop            *cropXML  `xml:"crop"`
+	GrowthStage     int       `xml:"growthStage"`
+	TreeID          string    `xml:"treeId"`
+	DaysUntilMature int       `xml:"daysUntilMature"`
+	Fruit           []itemXML `xml:"fruit"`
+	Stump           bool      `xml:"stump"`
 }
 
 type hoeDirtXML struct {
@@ -85,12 +99,16 @@ const wateredState = 1
 
 func addCrops(snap *Snapshot, loc *locationXML, name string) {
 	for _, entry := range loc.TerrainFeatures {
-		if entry.Value.Crop == nil {
+		if entry.Value.Crop != nil {
+			snap.Crops = append(snap.Crops, cropPlant(
+				entry.Value.Crop, loc, name, entry.Key.X, entry.Key.Y,
+				entry.Value.State == wateredState, false))
 			continue
 		}
-		snap.Crops = append(snap.Crops, cropPlant(
-			entry.Value.Crop, loc, name, entry.Key.X, entry.Key.Y,
-			entry.Value.State == wateredState, false))
+		if entry.Value.Type == "FruitTree" {
+			snap.Crops = append(snap.Crops, fruitTreePlant(
+				&entry.Value, loc, name, entry.Key.X, entry.Key.Y))
+		}
 	}
 	for _, entry := range loc.Objects {
 		dirt := entry.Object.HoeDirt
@@ -102,6 +120,28 @@ func addCrops(snap *Snapshot, loc *locationXML, name string) {
 		snap.Crops = append(snap.Crops, cropPlant(
 			dirt.Crop, loc, name, entry.Key.X, entry.Key.Y,
 			dirt.State == wateredState, true))
+	}
+}
+
+func fruitTreePlant(tree *terrainXML, loc *locationXML, location string, x, y int) CropPlant {
+	harvestID := ""
+	if len(tree.Fruit) > 0 {
+		harvestID = strings.TrimPrefix(tree.Fruit[0].ItemID, "(O)")
+	}
+	return CropPlant{
+		Location:        location,
+		X:               x,
+		Y:               y,
+		Watered:         true,
+		Outdoors:        loc.IsOutdoors,
+		Greenhouse:      loc.IsGreenhouse,
+		HarvestID:       harvestID,
+		CurrentPhase:    tree.GrowthStage,
+		Dead:            tree.Stump,
+		FruitTree:       true,
+		TreeID:          strings.TrimPrefix(tree.TreeID, "(O)"),
+		DaysUntilMature: tree.DaysUntilMature,
+		FruitCount:      len(tree.Fruit),
 	}
 }
 

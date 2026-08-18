@@ -102,6 +102,32 @@ func TestParsesCropsInsideBuildings(t *testing.T) {
 	}
 }
 
+func TestParsesFruitTrees(t *testing.T) {
+	snap := mustParse(t, "testdata/fruit_trees.xml")
+	if len(snap.Crops) != 2 {
+		t.Fatalf("plants = %d, want 2 fruit trees", len(snap.Crops))
+	}
+
+	mature := cropAt(t, snap, 74, 49)
+	if !mature.FruitTree || mature.TreeID != "632" || mature.HarvestID != "637" {
+		t.Errorf("mature tree ids = %+v", mature)
+	}
+	if mature.DaysUntilMature != -135 || mature.FruitCount != 2 || mature.Dead {
+		t.Errorf("mature tree state = %+v", mature)
+	}
+	if !mature.Outdoors || mature.Greenhouse {
+		t.Errorf("mature tree location flags = %+v", mature)
+	}
+
+	immature := cropAt(t, snap, 8, 22)
+	if !immature.FruitTree || immature.TreeID != "630" || immature.DaysUntilMature != 20 {
+		t.Errorf("immature tree = %+v", immature)
+	}
+	if immature.FruitCount != 0 || !immature.Greenhouse || immature.Outdoors {
+		t.Errorf("immature tree state = %+v", immature)
+	}
+}
+
 func TestRealSaveCrops(t *testing.T) {
 	if _, err := os.Stat(realSavePath); err != nil {
 		t.Skip("real save not present")
