@@ -8,7 +8,7 @@ It answers four questions:
 1. **What can I craft or cook right now?**
 2. **What is missing for recipe X?**
 3. **How do I get what's missing**, including making intermediates from what I already own: *"smelt 5 Iridium Ore + 1 Coal → 1 Iridium Bar, ×5 → craft Deluxe Scarecrow"*.
-4. **What is growing, and when does it come in?** — every planted crop, grouped by field and crop, on a harvest timeline.
+4. **What is growing, and when does it come in?** — every planted crop and fruit tree, grouped by location and type, on one harvest timeline.
 
 One static binary, no dependencies, no installer, no accounts, no telemetry, nothing leaves your network. The recipe data and the web UI are compiled into the executable.
 
@@ -138,15 +138,15 @@ The app is complete: an Items view (what you own, what it's worth raw vs. proces
 
 The JSON API behind it:
 
-| Endpoint              | Returns                                                             |
-|-----------------------|---------------------------------------------------------------------|
-| `GET /api/version`    | Snapshot counter, for cheap change polling                          |
-| `GET /api/state`      | Every recipe: craftability, what's missing, sale economics          |
-| `GET /api/plan/{key}` | Step chain to produce a recipe's missing intermediates              |
-| `GET /api/items`      | Item reference: sell price, buffs, processing time                  |
-| `GET /api/inventory`  | Everything you own, most valuable stack first                       |
-| `GET /api/item/{id}`  | One item, the recipes it feeds, and whether they pay                |
-| `GET /api/crops`      | Every planted crop, plus per-location groups and a harvest timeline |
+| Endpoint              | Returns                                                               |
+|-----------------------|-----------------------------------------------------------------------|
+| `GET /api/version`    | Snapshot counter, for cheap change polling                            |
+| `GET /api/state`      | Every recipe: craftability, what's missing, sale economics            |
+| `GET /api/plan/{key}` | Step chain to produce a recipe's missing intermediates                |
+| `GET /api/items`      | Item reference: sell price, buffs, processing time                    |
+| `GET /api/inventory`  | Everything you own, most valuable stack first                         |
+| `GET /api/item/{id}`  | One item, the recipes it feeds, and whether they pay                  |
+| `GET /api/crops`      | Every planted crop and fruit tree, with groups and a harvest timeline |
 
 ```sh
 curl -s localhost:8375/api/plan/Anvil
@@ -162,6 +162,10 @@ uses, and it is the rule the countdown follows. So `days_until_harvest` is a cou
 of remaining watered growth days, not of calendar days. Miss a watering, plant into
 a season the crop cannot survive, or let it wilt, and the real date slips. The dates
 the API and the UI print are therefore the *earliest* possible ones, and both say so.
+
+Fruit-tree countdowns are calendar days instead. They account for the tree's
+remaining maturity time and bearing season; trees in the Greenhouse or on Ginger
+Island bear year-round. A blocked sapling can still delay its predicted date.
 
 Not modelled, by design: foraging, fishing and buying. 
 
