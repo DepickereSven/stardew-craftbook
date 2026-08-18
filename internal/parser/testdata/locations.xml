@@ -1,67 +1,108 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SaveGame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <player>
-    <name>Test</name>
-    <items />
-    <craftingRecipes />
-    <cookingRecipes />
-  </player>
-  <locations>
-    <GameLocation xsi:type="Farm">
-      <objects>
-        <item>
-          <key><Vector2><X>10</X><Y>10</Y></Vector2></key>
-          <value>
-            <Object xsi:type="Chest">
-              <name>Chest</name><itemId>130</itemId><stack>1</stack><category>-9</category>
-              <fridge>false</fridge>
-              <items>
-                <Item xsi:type="Object"><name>Stone</name><itemId>390</itemId><stack>100</stack><category>-16</category></Item>
-              </items>
-            </Object>
-          </value>
-        </item>
-      </objects>
-      <buildings>
-        <Building>
-          <indoors xsi:type="Shed">
+    <player>
+        <name>Test</name>
+        <items/>
+        <craftingRecipes/>
+        <cookingRecipes/>
+    </player>
+    <locations>
+        <GameLocation xsi:type="Farm">
             <objects>
-              <item>
-                <key><Vector2><X>2</X><Y>2</Y></Vector2></key>
-                <value>
-                  <Object xsi:type="Chest">
-                    <name>Chest</name><itemId>130</itemId><stack>1</stack><category>-9</category>
-                    <items>
-                      <Item xsi:type="Object"><name>Stone</name><itemId>390</itemId><stack>50</stack><category>-16</category></Item>
-                    </items>
-                  </Object>
-                </value>
-              </item>
+                <item>
+                    <key>
+                        <Vector2>
+                            <X>10</X>
+                            <Y>10</Y>
+                        </Vector2>
+                    </key>
+                    <value>
+                        <Object xsi:type="Chest">
+                            <name>Chest</name>
+                            <itemId>130</itemId>
+                            <stack>1</stack>
+                            <category>-9</category>
+                            <fridge>false</fridge>
+                            <items>
+                                <Item xsi:type="Object">
+                                    <name>Stone</name>
+                                    <itemId>390</itemId>
+                                    <stack>100</stack>
+                                    <category>-16</category>
+                                </Item>
+                            </items>
+                        </Object>
+                    </value>
+                </item>
             </objects>
-          </indoors>
-        </Building>
-      </buildings>
-    </GameLocation>
-    <GameLocation xsi:type="FarmHouse">
-      <objects />
-      <fridge>
-        <name>Chest</name><itemId>216</itemId><stack>1</stack><category>-9</category>
-        <items>
-          <Item xsi:type="Object"><name>Egg</name><itemId>176</itemId><stack>6</stack><category>-5</category></Item>
-        </items>
-      </fridge>
-    </GameLocation>
-  </locations>
-  <team>
-    <globalInventories>
-      <item>
-        <key><string>JunimoChests</string></key>
-        <value>
-          <Inventory>
-            <Item xsi:type="Object"><name>Coal</name><itemId>382</itemId><stack>7</stack><category>-15</category></Item>
-          </Inventory>
-        </value>
-      </item>
-    </globalInventories>
-  </team>
+            <buildings>
+                <Building>
+                    <indoors xsi:type="Shed">
+                        <objects>
+                            <item>
+                                <key>
+                                    <Vector2>
+                                        <X>2</X>
+                                        <Y>2</Y>
+                                    </Vector2>
+                                </key>
+                                <value>
+                                    <Object xsi:type="Chest">
+                                        <name>Chest</name>
+                                        <itemId>130</itemId>
+                                        <stack>1</stack>
+                                        <category>-9</category>
+                                        <items>
+                                            <Item xsi:type="Object">
+                                                <name>Stone</name>
+                                                <itemId>390</itemId>
+                                                <stack>50</stack>
+                                                <category>-16</category>
+                                            </Item>
+                                        </items>
+                                    </Object>
+                                </value>
+                            </item>
+                        </objects>
+                    </indoors>
+                </Building>
+            </buildings>
+        </GameLocation>
+        <GameLocation xsi:type="FarmHouse">
+            <objects/>
+            <fridge>
+                <name>Chest</name>
+                <itemId>216</itemId>
+                <stack>1</stack>
+                <category>-9</category>
+                <items>
+                    <Item xsi:type="Object">
+                        <name>Egg</name>
+                        <itemId>176</itemId>
+                        <stack>6</stack>
+                        <category>-5</category>
+                    </Item>
+                </items>
+            </fridge>
+        </GameLocation>
+    </locations>
+    <team>
+        <globalInventories>
+            <item>
+                <key>
+                    <string>JunimoChests</string>
+                </key>
+                <value>
+                    <Inventory>
+                        <Item xsi:type="Object">
+                            <name>Coal</name>
+                            <itemId>382</itemId>
+                            <stack>7</stack>
+                            <category>-15</category>
+                        </Item>
+                    </Inventory>
+                </value>
+            </item>
+        </globalInventories>
+    </team>
 </SaveGame>
