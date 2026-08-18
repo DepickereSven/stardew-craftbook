@@ -199,8 +199,8 @@ func cropFromPage(title, page string, objectIDs map[string]string) (Crop, bool) 
 
 // collectCrops picks the plantable things out of the already-fetched item
 // pages. The filter is "the infobox names a seed", which also admits fruit
-// trees; that is harmless, because a lookup only ever comes from a crop planted
-// in tilled soil, and a tree is never one of those.
+// trees. Their fruit names, seasons and wiki links feed the shared harvest view;
+// the runtime maps the tree IDs stored in saves to these harvested fruit IDs.
 func collectCrops(pages map[string]string, objectIDs map[string]string) map[string]Crop {
 	crops := map[string]Crop{}
 	for title, page := range pages {

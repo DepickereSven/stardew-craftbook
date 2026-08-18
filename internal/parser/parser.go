@@ -30,8 +30,9 @@ type Snapshot struct {
 	// world progress. Only the flags that gate a place are of interest here.
 	MailReceived map[string]bool
 	// Date is the in-game day the save was written on, and Crops is every crop
-	// planted in tilled soil or a garden pot. Both are needed together: a crop's
-	// remaining growth is only meaningful relative to the day it is measured on.
+	// planted in tilled soil or a garden pot plus every fruit tree. Both are
+	// needed together: remaining growth is only meaningful relative to the day
+	// it is measured on.
 	Date  GameDate
 	Crops []CropPlant
 }
