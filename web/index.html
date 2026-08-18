@@ -1125,7 +1125,7 @@ footer {
         </label>
         <label class="seg-opt">
           <input type="radio" name="view" value="crops">
-          <span>Crops</span>
+          <span>Crops &amp; trees</span>
         </label>
       </div>
       <span class="refresh-note" id="refresh-note" role="status" aria-live="polite"></span>
@@ -1958,9 +1958,12 @@ function cropBarHTML(g) {
 }
 
 function cropGroupHTML(g) {
-  const bits = [`${fmtNum(g.count)} planted`];
+  const bits = [g.fruit_tree
+    ? `${fmtNum(g.count)} ${g.count === 1 ? 'tree' : 'trees'}`
+    : `${fmtNum(g.count)} planted`];
   if (g.ready) bits.push(`<b>${fmtNum(g.ready)} ready</b>`);
-  if (g.regrows && g.regrow_days) bits.push(`regrows every ${g.regrow_days} d`);
+  if (g.fruit_tree) bits.push('bears daily in season');
+  else if (g.regrows && g.regrow_days) bits.push(`regrows every ${g.regrow_days} d`);
   else if (g.regrows) bits.push('regrows');
   else if (g.regrows === null) bits.push('regrowth unknown');
   const warnings = [];
@@ -2061,12 +2064,14 @@ function renderCrops() {
   }
   if (all.length === 0) {
     el.innerHTML = `<div class="empty"><h2>Nothing planted</h2>
-      <p>No crops are growing in this save right now — the dashboard fills in as soon as seeds go into the ground.</p></div>`;
+      <p>No crops or fruit trees are growing in this save right now — the dashboard fills in as soon as something is planted.</p></div>`;
     return;
   }
   const groups = sortCropGroups(visibleCropGroups());
   const s = summarizeCrops(groups);
   const date = ui.crops.date;
+  const hasCrops = groups.some(g => !g.fruit_tree);
+  const hasTrees = groups.some(g => g.fruit_tree);
 
   const nextTile = s.nextDays === null
     ? `<div class="stat"><b>—</b><span>Next harvest</span></div>`
@@ -2077,20 +2082,23 @@ function renderCrops() {
   if (s.outOfSeason) flags.push(`${fmtNum(s.outOfSeason)} out of season`);
   if (s.dead) flags.push(`${fmtNum(s.dead)} dead`);
 
+  const timingNotes = [];
+  if (hasCrops) timingNotes.push('Crop dates assume watering every day.');
+  if (hasTrees) timingNotes.push('Fruit-tree dates are calendar days and assume unobstructed growth.');
+
   let html = `<p class="crops-date">${date && date.label ? esc(date.label) : 'Date unknown'}</p>
   <div class="stats">
     <div class="stat"><b>${fmtNum(s.total)}</b><span>Growing</span></div>
     <div class="stat"><b>${fmtNum(s.ready)}</b><span>Ready now</span></div>
     ${nextTile}
   </div>
-  <div class="crops-caveat">${ICONS.question}<span><b>Days are watered growth days, not calendar days.</b>
-    A crop only advances on a day it is watered, so a missed watering, a season it cannot survive, or
-    a wilting pushes these dates back. Nothing here can see tomorrow's weather.${
+  <div class="crops-caveat">${ICONS.question}<span><b>${esc(timingNotes.join(' '))}</b>
+    A missed watering or blocked fruit tree can push these dates back. Nothing here can see tomorrow's weather.${
       flags.length ? ` Right now: <span class="warnnote">${esc(flags.join(' · '))}</span>.` : ''}</span></div>`;
 
   if (groups.length === 0) {
-    html += `<div class="empty"><h2>No crops match</h2>
-      <p>Nothing is growing that matches this filter.</p>
+    html += `<div class="empty"><h2>No plants match</h2>
+      <p>No crops or fruit trees match this filter.</p>
       <div class="actions">
         ${ui.search.trim() ? '<button class="btn ghost" data-action="clear-search">Clear search</button>' : ''}
         ${ui.cropLocation ? '<button class="btn ghost" data-action="clear-crop-location">Show every location</button>' : ''}
