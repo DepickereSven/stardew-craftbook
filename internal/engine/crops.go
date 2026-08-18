@@ -40,9 +40,9 @@ type GameDate struct {
 	Label  string `json:"label"`
 }
 
-// CropInstance is one planted tile: what it is, where it is, and how far it has
-// left to go. DaysUntilHarvest counts *watered growth days*, not calendar days
-// — see daysUntilHarvest.
+// CropInstance is one planted crop or fruit tree: what it is, where it is, and
+// how far it has left to go. DaysUntilHarvest counts watered growth days for
+// crops and calendar days for fruit trees.
 type CropInstance struct {
 	CropID        string `json:"crop_id"`
 	SeedID        string `json:"seed_id,omitempty"`
@@ -52,6 +52,7 @@ type CropInstance struct {
 	X             int    `json:"x"`
 	Y             int    `json:"y"`
 	InPot         bool   `json:"in_pot,omitempty"`
+	FruitTree     bool   `json:"fruit_tree,omitempty"`
 
 	Phase         int   `json:"phase"`
 	PhaseCount    int   `json:"phase_count"`
@@ -110,6 +111,7 @@ type CropGroup struct {
 	Name          string `json:"name"`
 	Location      string `json:"location"`
 	LocationLabel string `json:"location_label"`
+	FruitTree     bool   `json:"fruit_tree,omitempty"`
 
 	Count     int `json:"count"`
 	Ready     int `json:"ready"`
@@ -162,6 +164,26 @@ type CropLocation struct {
 	Label      string `json:"label"`
 	Count      int    `json:"count"`
 	Accessible bool   `json:"accessible"`
+}
+
+type fruitTreeSpec struct {
+	HarvestID string
+	Seasons   []string
+}
+
+// Fruit tree saves carry the sapling/tree ID, while crops.json is keyed by the
+// harvested fruit ID. These are the vanilla Data/FruitTrees mappings. Banana
+// and mango bear in summer on the mainland; Ginger Island and the greenhouse
+// are handled by seasonExempt.
+var fruitTreeSpecs = map[string]fruitTreeSpec{
+	"628": {HarvestID: "638", Seasons: []string{"spring"}}, // Cherry
+	"629": {HarvestID: "634", Seasons: []string{"spring"}}, // Apricot
+	"630": {HarvestID: "635", Seasons: []string{"summer"}}, // Orange
+	"631": {HarvestID: "636", Seasons: []string{"summer"}}, // Peach
+	"632": {HarvestID: "637", Seasons: []string{"fall"}},   // Pomegranate
+	"633": {HarvestID: "613", Seasons: []string{"fall"}},   // Apple
+	"69":  {HarvestID: "91", Seasons: []string{"summer"}},  // Banana
+	"835": {HarvestID: "834", Seasons: []string{"summer"}}, // Mango
 }
 
 // boatFixedMail is the flag the game itself checks before letting the boat sail
@@ -354,10 +376,16 @@ func BuildCrops(snap *parser.Snapshot, crops map[string]CropData) CropsView {
 
 	for _, p := range snap.Crops {
 		var meta *CropData
-		if d, ok := crops[p.HarvestID]; ok {
+		if spec, ok := fruitTreeSpecs[p.TreeID]; p.FruitTree && ok {
+			p.HarvestID = spec.HarvestID
+			if d, found := crops[p.HarvestID]; found {
+				d.Seasons = spec.Seasons
+				meta = &d
+			}
+		} else if d, ok := crops[p.HarvestID]; ok {
 			meta = &d
 		}
-		instance := buildCropInstance(p, meta, today.Season)
+		instance := buildCropInstance(p, meta, today)
 		instance.Accessible = locationAccessible(p.Location, snap.MailReceived)
 		view.Crops = append(view.Crops, instance)
 		locationCounts[p.Location]++
@@ -372,7 +400,7 @@ func BuildCrops(snap *parser.Snapshot, crops map[string]CropData) CropsView {
 		if instance.Dead {
 			view.Summary.Dead++
 		}
-		if instance.InSeason != nil && !*instance.InSeason {
+		if !instance.FruitTree && instance.InSeason != nil && !*instance.InSeason {
 			view.Summary.OutOfSeason++
 		}
 		if !instance.Accessible {
@@ -386,7 +414,8 @@ func BuildCrops(snap *parser.Snapshot, crops map[string]CropData) CropsView {
 				group: &CropGroup{
 					Key: key, CropID: instance.CropID, Name: instance.Name,
 					Location: instance.Location, LocationLabel: instance.LocationLabel,
-					Regrows: instance.Regrows, RegrowDays: instance.RegrowDays,
+					FruitTree: instance.FruitTree,
+					Regrows:   instance.Regrows, RegrowDays: instance.RegrowDays,
 					Seasons: instance.Seasons, WikiURL: instance.WikiURL,
 					Accessible: instance.Accessible,
 				},
@@ -408,7 +437,7 @@ func BuildCrops(snap *parser.Snapshot, crops map[string]CropData) CropsView {
 		if instance.Dead {
 			g.Dead++
 		}
-		if instance.InSeason != nil && !*instance.InSeason {
+		if !instance.FruitTree && instance.InSeason != nil && !*instance.InSeason {
 			g.OutOfSeason++
 		}
 		// A crop with no reachable harvest belongs in no bucket: it is dead.
@@ -518,7 +547,10 @@ func sortedBuckets(counts map[int]int, today GameDate) []CropBucket {
 	return buckets
 }
 
-func buildCropInstance(p parser.CropPlant, meta *CropData, season string) CropInstance {
+func buildCropInstance(p parser.CropPlant, meta *CropData, today GameDate) CropInstance {
+	if p.FruitTree {
+		return buildFruitTreeInstance(p, meta, today)
+	}
 	days, ready := daysUntilHarvest(p)
 	c := CropInstance{
 		CropID:        p.HarvestID,
@@ -576,10 +608,10 @@ func buildCropInstance(p parser.CropPlant, meta *CropData, season string) CropIn
 	case c.SeasonExempt:
 		yes := true
 		c.InSeason = &yes
-	case meta != nil && len(meta.Seasons) > 0 && season != "":
+	case meta != nil && len(meta.Seasons) > 0 && today.Season != "":
 		in := false
 		for _, s := range meta.Seasons {
-			if s == season {
+			if s == today.Season {
 				in = true
 				break
 			}
@@ -589,9 +621,111 @@ func buildCropInstance(p parser.CropPlant, meta *CropData, season string) CropIn
 	return c
 }
 
+func buildFruitTreeInstance(p parser.CropPlant, meta *CropData, today GameDate) CropInstance {
+	mature := p.DaysUntilMature <= 0
+	yes := true
+	oneDay := 1
+	c := CropInstance{
+		CropID:        p.HarvestID,
+		SeedID:        p.TreeID,
+		Name:          cropName(p, meta),
+		Location:      p.Location,
+		LocationLabel: locationLabel(p.Location),
+		X:             p.X,
+		Y:             p.Y,
+		FruitTree:     true,
+		Phase:         p.CurrentPhase,
+		PhaseCount:    5,
+		PhaseSchedule: []int{7, 7, 7, 7},
+		Watered:       true,
+		Dead:          p.Dead,
+		Ready:         p.FruitCount > 0 && !p.Dead,
+		FullyGrown:    mature,
+		Regrows:       &yes,
+		RegrowDays:    &oneDay,
+		SeasonExempt:  seasonExempt(p),
+	}
+	if meta != nil {
+		c.Seasons = meta.Seasons
+		c.WikiURL = meta.WikiURL
+	}
+	switch {
+	case c.SeasonExempt:
+		in := true
+		c.InSeason = &in
+	case meta != nil && len(meta.Seasons) > 0 && today.Season != "":
+		in := seasonContains(meta.Seasons, today.Season)
+		c.InSeason = &in
+	}
+
+	if c.Ready {
+		full := 1.0
+		c.Progress = &full
+		return c
+	}
+	if p.Dead {
+		return c
+	}
+	if days, ok := fruitTreeNextHarvest(p, meta, today); ok {
+		c.DaysUntilHarvest = &days
+	}
+	total := 28
+	done := total - p.DaysUntilMature
+	if mature {
+		done = total
+	}
+	if done < 0 {
+		done = 0
+	}
+	progress := float64(done) / float64(total)
+	c.Progress = &progress
+	return c
+}
+
+func fruitTreeNextHarvest(p parser.CropPlant, meta *CropData, today GameDate) (int, bool) {
+	days := p.DaysUntilMature
+	if days < 1 {
+		// A mature tree which was harvested today produces again overnight.
+		days = 1
+	}
+	if seasonExempt(p) {
+		return days, true
+	}
+	if meta == nil || len(meta.Seasons) == 0 || today.Season == "" {
+		return 0, false
+	}
+	// Trees grow in every season, but only bear fruit in their configured
+	// seasons. Start at maturity (or tomorrow for a mature tree), then walk to
+	// the first bearing day. Four seasons is a complete search window.
+	for offset := days; offset < days+len(parser.Seasons)*parser.DaysPerSeason; offset++ {
+		if seasonContains(meta.Seasons, today.AddDays(offset).Season) {
+			return offset, true
+		}
+	}
+	return 0, false
+}
+
+func seasonContains(seasons []string, season string) bool {
+	for _, candidate := range seasons {
+		if candidate == season {
+			return true
+		}
+	}
+	return false
+}
+
 func cropName(p parser.CropPlant, meta *CropData) string {
 	if meta != nil && meta.Name != "" {
+		if p.FruitTree {
+			return meta.Name + " tree"
+		}
 		return meta.Name
+	}
+	if p.FruitTree {
+		if p.TreeID != "" {
+			return "Fruit tree " + p.TreeID
+		}
+		return "Unknown fruit tree"
 	}
 	if p.Forage {
 		return "Wild crop"

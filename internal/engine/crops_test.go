@@ -96,6 +96,9 @@ func cropsFixture(t *testing.T) map[string]CropData {
 		"282": {ID: "282", Name: "Cranberries", Seasons: []string{"fall"}, RegrowDays: ptr(5), WikiURL: "https://example/Cranberries"},
 		"276": {ID: "276", Name: "Pumpkin", Seasons: []string{"fall"}},
 		"400": {ID: "400", Name: "Strawberry", Seasons: []string{"spring"}, RegrowDays: ptr(4)},
+		"613": {ID: "613", Name: "Apple", Seasons: []string{"fall"}, GrowthDays: ptr(28)},
+		"637": {ID: "637", Name: "Pomegranate", Seasons: []string{"fall"}, GrowthDays: ptr(28)},
+		"91":  {ID: "91", Name: "Banana", Seasons: append([]string(nil), parser.Seasons...), GrowthDays: ptr(28)},
 	}
 }
 
@@ -140,6 +143,56 @@ func TestBuildCropsSummaryAndTimeline(t *testing.T) {
 	}
 	if view.Timeline[2].Date == nil || view.Timeline[2].Date.Label != "Fall 10, Year 3" {
 		t.Errorf("third bucket date = %+v", view.Timeline[2].Date)
+	}
+}
+
+func TestFruitTreesShareTheHarvestTimeline(t *testing.T) {
+	snap := snapshotFixture(
+		parser.CropPlant{Location: "Farm", Outdoors: true, X: 1, Y: 1, FruitTree: true, TreeID: "632", DaysUntilMature: -12, FruitCount: 2},
+		parser.CropPlant{Location: "Greenhouse", Greenhouse: true, X: 2, Y: 2, FruitTree: true, TreeID: "633", DaysUntilMature: 20},
+	)
+	view := BuildCrops(snap, cropsFixture(t))
+
+	if view.Summary.TotalGrowing != 2 || view.Summary.ReadyNow != 1 || view.Summary.Unwatered != 0 {
+		t.Errorf("summary = %+v", view.Summary)
+	}
+	if len(view.Timeline) != 2 || view.Timeline[0].Days != 0 || view.Timeline[1].Days != 20 {
+		t.Fatalf("timeline = %+v", view.Timeline)
+	}
+	if view.Timeline[1].Date == nil || view.Timeline[1].Date.Label != "Fall 27, Year 3" {
+		t.Errorf("tree maturity date = %+v", view.Timeline[1].Date)
+	}
+
+	ready := view.Crops[0]
+	if !ready.FruitTree || ready.Name != "Pomegranate tree" || !ready.Ready {
+		t.Errorf("ready tree = %+v", ready)
+	}
+	if ready.Regrows == nil || !*ready.Regrows || ready.RegrowDays == nil || *ready.RegrowDays != 1 {
+		t.Errorf("tree production cadence = %+v", ready)
+	}
+	if !view.Groups[0].FruitTree {
+		t.Errorf("fruit-tree marker missing from group: %+v", view.Groups[0])
+	}
+}
+
+func TestOutdoorFruitTreeWaitsForItsBearingSeason(t *testing.T) {
+	snap := snapshotFixture(
+		// This apple matures in winter, then waits until Fall 1 to bear fruit.
+		parser.CropPlant{Location: "Farm", Outdoors: true, FruitTree: true, TreeID: "633", DaysUntilMature: 25},
+		// Banana metadata from the crop scraper says "all seasons" because it is
+		// describing Ginger Island; the actual tree bears in summer on the farm.
+		parser.CropPlant{Location: "Farm", Outdoors: true, FruitTree: true, TreeID: "69", DaysUntilMature: -10},
+	)
+	view := BuildCrops(snap, cropsFixture(t))
+
+	if got := view.Crops[0].DaysUntilHarvest; got == nil || *got != 106 {
+		t.Errorf("apple next harvest = %v days, want 106", got)
+	}
+	if got := view.Crops[1].DaysUntilHarvest; got == nil || *got != 78 {
+		t.Errorf("banana next harvest = %v days, want 78", got)
+	}
+	if view.Summary.OutOfSeason != 0 {
+		t.Errorf("fruit trees should not be counted as crops that will wither: %+v", view.Summary)
 	}
 }
 
@@ -395,8 +448,9 @@ func TestLocationLabels(t *testing.T) {
 	}
 }
 
-// Every crop id the real save has planted must be described by crops.json;
-// a crop the dataset cannot name is one the dashboard cannot explain.
+// Every crop and fruit tree the real save has planted must resolve to an entry
+// in crops.json; a plant the dataset cannot name is one the dashboard cannot
+// explain.
 func TestRealSaveCropsAreAllKnown(t *testing.T) {
 	if _, err := os.Stat("../../saved/Medow_405190910/Medow_405190910"); err != nil {
 		t.Skip("real save not present")
@@ -414,8 +468,14 @@ func TestRealSaveCropsAreAllKnown(t *testing.T) {
 		if c.Forage {
 			continue // wild seeds carry no crop id at all
 		}
-		if _, ok := crops[c.HarvestID]; !ok {
-			unknown[c.HarvestID]++
+		id := c.HarvestID
+		if c.FruitTree {
+			if spec, ok := fruitTreeSpecs[c.TreeID]; ok {
+				id = spec.HarvestID
+			}
+		}
+		if _, ok := crops[id]; !ok {
+			unknown[id]++
 		}
 	}
 	if len(unknown) > 0 {
