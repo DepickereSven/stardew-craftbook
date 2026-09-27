@@ -232,3 +232,20 @@ func TestLoadItemsSellPriceIsOptional(t *testing.T) {
 		t.Error("Wine should carry a sell_price_note explaining the variable price")
 	}
 }
+
+// Every recipe reports how many times the save can make it, crafting as well
+// as cooking; the scarcest ingredient sets the count.
+func TestEvaluateMaxMakeable(t *testing.T) {
+	snap := snapWith(map[string]int{"388": 95, "390": 100, "709": 30, "186": 3, "176": 2},
+		map[string]int{"186": -6, "176": -5})
+	av := Evaluate(snap, []Recipe{gate, cheesePress, omelet})
+	for i, want := range []int{9, 2, 2} {
+		if av[i].MaxMakeable != want {
+			t.Errorf("%s: max makeable = %d, want %d", av[i].Recipe.Name, av[i].MaxMakeable, want)
+		}
+	}
+	far := Evaluate(snapWith(map[string]int{}, nil), []Recipe{gate})
+	if far[0].MaxMakeable != 0 {
+		t.Errorf("far off: max makeable = %d", far[0].MaxMakeable)
+	}
+}
