@@ -126,10 +126,11 @@ type MissingItem struct {
 }
 
 type Availability struct {
-	Recipe  Recipe        `json:"recipe"`
-	Learned bool          `json:"learned"`
-	State   State         `json:"state"`
-	Missing []MissingItem `json:"missing"`
+	Recipe      Recipe        `json:"recipe"`
+	Learned     bool          `json:"learned"`
+	State       State         `json:"state"`
+	Missing     []MissingItem `json:"missing"`
+	MaxMakeable int           `json:"max_makeable"`
 }
 
 func LoadData() ([]Recipe, []Machine, error) {
@@ -246,7 +247,7 @@ func wikiURL(name string) string {
 func Evaluate(snap *parser.Snapshot, recipes []Recipe) []Availability {
 	out := make([]Availability, 0, len(recipes))
 	for _, r := range recipes {
-		av := Availability{Recipe: r, Missing: []MissingItem{}}
+		av := Availability{Recipe: r, Missing: []MissingItem{}, MaxMakeable: maxMakeable(snap, r)}
 		if r.Type == "cooking" {
 			av.Learned = snap.CookingLearned[r.Key]
 		} else {

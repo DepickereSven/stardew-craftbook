@@ -2135,6 +2135,7 @@
         const r = entry.recipe;
         let meta = badge(r.type);
         if (entry.state === 'craftable') {
+            if (entry.max_makeable > 0) meta += `<span class="make">make ×${fmtNum(entry.max_makeable)}</span>`;
             if (r.output_qty > 1) meta += `<span class="yields">yields ×${r.output_qty}</span>`;
         } else {
             meta += `<span class="needs">${needsSummary(entry.missing || [])}</span>`;
@@ -2364,6 +2365,7 @@
 
         const chips = [
             badge(r.type),
+            entry.max_makeable > 0 ? `<span class="chip">make ×${fmtNum(entry.max_makeable)}</span>` : '',
             r.output_qty > 1 ? `<span class="chip">yields ×${r.output_qty}</span>` : '',
             `<span class="chip state-${entry.state}">${STATE_ICON[entry.state] || ''}${STATE_LABEL[entry.state] || entry.state}</span>`
         ].join('');
