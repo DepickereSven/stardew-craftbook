@@ -1645,6 +1645,88 @@
             overflow-wrap: anywhere;
         }
 
+        .tl-more {
+            padding: 0;
+            background: none;
+            border: 0;
+            font: inherit;
+            color: var(--accent-ink);
+            font-weight: 650;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            cursor: pointer;
+        }
+
+        /* The whole harvest for one day, when the row above only has room for four. */
+        .tl-dialog {
+            width: min(420px, calc(100vw - 32px));
+            max-height: min(560px, calc(100dvh - 48px));
+            padding: 0;
+            background: var(--raised);
+            color: var(--ink);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+        }
+
+        .tl-dialog::backdrop {
+            background: rgb(0 0 0 / .45);
+        }
+
+        .tl-dialog-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 16px 10px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .tl-dialog-head h2 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .tl-dialog-head small {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--faint);
+        }
+
+        .tl-dialog-close {
+            min-width: 44px;
+            min-height: 44px;
+            background: none;
+            border: 0;
+            color: var(--muted);
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .tl-dialog ul {
+            list-style: none;
+            margin: 0;
+            padding: 6px 16px 14px;
+        }
+
+        .tl-dialog li {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 14px;
+        }
+
+        .tl-dialog li:last-child {
+            border-bottom: 0;
+        }
+
+        .tl-dialog li b {
+            font-family: var(--mono);
+            font-variant-numeric: tabular-nums;
+        }
+
         @media (max-width: 400px) {
             .tl li {
                 grid-template-columns: 76px minmax(0, 1fr) auto;
@@ -1775,6 +1857,8 @@
     <div id="detail" class="detail" hidden></div>
 </main>
 
+<dialog class="tl-dialog" id="tl-dialog" aria-labelledby="tl-dialog-title"></dialog>
+
 <footer id="footer"></footer>
 
 <script>
@@ -1818,6 +1902,7 @@
             crops: {scroll: 0}                    // no detail screen
         },
         crops: null,         // last /api/crops payload
+        cropTimeline: [],    // timeline buckets as last rendered, for the harvest dialog
         cropLocation: '',    // '' is every location
         cropSort: 'soonest', // 'soonest' | 'count'
         showLocked: false,   // crops in places this save can't reach yet
@@ -2584,13 +2669,26 @@
   </div></li>`;
     }
 
+    function openTimelineDialog(days) {
+        const b = (ui.cropTimeline || []).find(e => e.days === days);
+        if (!b) return;
+        const dlg = $('#tl-dialog');
+        dlg.innerHTML = `<div class="tl-dialog-head">
+      <h2 id="tl-dialog-title">${esc(b.label)}${b.days > 0 && b.date ? `<small>${esc(b.date.label)}</small>` : ''}</h2>
+      <button class="tl-dialog-close" data-action="close-dialog" aria-label="Close">×</button>
+    </div>
+    <ul>${b.crops.map(c => `<li><span>${esc(c.name)}</span><b>×${fmtNum(c.count)}</b></li>`).join('')}</ul>`;
+        dlg.showModal();
+    }
+
     function cropTimelineHTML(buckets) {
         if (buckets.length === 0) return '';
         const peak = Math.max(...buckets.map(b => b.count));
         return `<h3 class="crops-h">Harvest timeline</h3>
   <ul class="tl">${buckets.map(b => {
             const names = b.crops.slice(0, 4).map(c => `${esc(c.name)} ×${fmtNum(c.count)}`).join(', ');
-            const more = b.crops.length > 4 ? ` +${b.crops.length - 4} more` : '';
+            const more = b.crops.length > 4
+                ? ` <button class="tl-more" data-action="tl-more" data-days="${b.days}">+${b.crops.length - 4} more</button>` : '';
             return `<li>
       <div class="tl-when${b.days === 0 ? ' now' : ''}">${esc(b.label)}${b.days > 0 && b.date ? `<small>${esc(b.date.label)}</small>` : ''}</div>
       <div class="tl-bar"><span style="width:${(b.count / peak) * 100}%"></span></div>
@@ -2712,7 +2810,8 @@
             return;
         }
 
-        html += cropTimelineHTML(cropTimeline(groups));
+        ui.cropTimeline = cropTimeline(groups);
+        html += cropTimelineHTML(ui.cropTimeline);
 
         const byLocation = new Map();
         for (const g of groups) {
@@ -3072,6 +3171,12 @@
             renderCrops();
         }
         if (a === 'goto-recipes') switchView('recipes');
+        if (a === 'tl-more') openTimelineDialog(Number(action.dataset.days));
+    });
+
+    // Close on the × or a click on the backdrop, which lands on the dialog itself.
+    $('#tl-dialog').addEventListener('click', e => {
+        if (e.target === e.currentTarget || e.target.closest('[data-action="close-dialog"]')) e.currentTarget.close();
     });
 
     $('#items-list').addEventListener('click', e => {
