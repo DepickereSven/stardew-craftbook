@@ -6,3 +6,4 @@ docs/
 # cmd/stardew-craftbook/ source directory.
 /stardew-craftbook
 /stardew-craftbook.exe
+.DS_Store
